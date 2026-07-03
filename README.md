@@ -6,6 +6,7 @@ LebakKab Frontend adalah antarmuka web (Situs Portal) resmi untuk Pemerintah Kab
 - **Integrasi Agregator:** Menarik berita, dokumen, *banner*, dan pengaturan konfigurasi secara dinamis dari sistem LebakKab Backend (API).
 - **Berbasis Multi-tenant/Dinas:** Sistem didesain agar dapat diadaptasi untuk menyajikan informasi per-OPD secara spesifik.
 - **Performa SPA (Single Page Application):** Navigasi antar halaman (seperti dari Berita ke Beranda) terjadi secara instan tanpa perlu memuat ulang (*refresh*) halaman penuh.
+- **Optimasi SEO Dinamis:** Terintegrasi dengan `@vueuse/head` untuk mengatur judul, deskripsi, dan Open Graph (OG) tag secara dinamis per halaman, sehingga tetap ramah mesin pencari meskipun berbasis SPA.
 - **Responsive & Modern Design:** Antarmuka disesuaikan untuk kenyamanan akses melalui perangkat seluler (HP) maupun Desktop.
 - **Docker Ready:** Dilengkapi dengan konfigurasi *container* (Docker) agar siap dijalankan secara terisolasi tanpa memusingkan versi Node.js.
 
@@ -14,14 +15,15 @@ LebakKab Frontend adalah antarmuka web (Situs Portal) resmi untuk Pemerintah Kab
 - **Build Tool:** Vite (Cepat untuk *hot-reloading* dan optimisasi *build*)
 - **State Management:** Pinia / Vuex (sesuai implementasi)
 - **Router:** Vue Router 4
-- **Styling:** CSS/SCSS (TailwindCSS jika dikonfigurasi)
-- **Infrastruktur:** Node.js 18.x & Docker
+- **Styling:** TailwindCSS
+- **SEO Tool:** `@vueuse/head`
+- **Infrastruktur:** Node.js 22.x & Docker
 
 ## Panduan Instalasi (Local Development)
 
 ### Persyaratan Sistem
 Pastikan komputer Anda sudah terinstal:
-- Node.js (Versi 18.x ke atas disarankan)
+- Node.js (Versi **22.x** sangat disarankan untuk mendukung Vite v7)
 - NPM atau Yarn
 - Docker & Docker Compose (Opsional jika ingin menjalankan via container)
 
