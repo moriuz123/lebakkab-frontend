@@ -1,0 +1,13 @@
+services:
+  # Frontend Development Server (Vue 3 + Vite)
+  frontend_dev:
+    image: node:20-alpine
+    container_name: frontend_dev_server
+    restart: always
+    ports:
+      - '5173:5173'
+    volumes:
+      - .:/app
+    working_dir: /app
+    # Menjalankan instalasi jika belum ada, kemudian start dev server dengan opsi --host agar bisa diakses dari luar container
+    command: sh -c "npm install && npm run dev -- --host"

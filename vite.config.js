@@ -17,13 +17,13 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://portal.kie:8080', // URL backend
+        target: 'http://172.18.0.1:8000', // URL backend
         changeOrigin: true,
         secure: false,
         // rewrite: (path) => path.replace(/^\/api/, ''), // aktifkan jika perlu hapus prefix /api
       },
       '/storage': {
-        target: 'http://portal.kie:8080', // URL backend untuk storage
+        target: 'http://172.18.0.1:8000', // URL backend untuk storage
         changeOrigin: true,
         secure: false,
       },
