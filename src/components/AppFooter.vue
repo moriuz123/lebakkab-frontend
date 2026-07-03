@@ -102,7 +102,7 @@ import axios from '@/utils/api'
 import { Facebook, Instagram, Twitter, Mail, Phone, Share2, AtSign, Camera } from 'lucide-vue-next'
 
 export default {
-  name: 'Footer',
+  name: 'AppFooter',
   components: { Facebook, Instagram, Twitter, Mail, Phone, Share2, AtSign, Camera },
   data() {
     return {
