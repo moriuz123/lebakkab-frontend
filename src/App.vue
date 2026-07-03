@@ -22,7 +22,7 @@ import { useHead } from '@vueuse/head'
 import { computed } from 'vue'
 import FloatingWidget from '@/components/FloatingWidget.vue'
 import HeaderNav from './components/HeaderNav.vue'
-import FooterSection from './components/Footer.vue'
+import FooterSection from './components/AppFooter.vue'
 
 const settingsStore = useSettingsStore()
 
