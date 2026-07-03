@@ -47,9 +47,10 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBeritaStore } from '../stores/useBeritaStore'
+import { useHead } from '@vueuse/head'
 import SidebarDetilNews from '../components/SidebarDetilNews.vue'
 import PageHeader from '../components/PageHeader.vue'
 import { formatDate } from '@/utils/helpers'
@@ -61,6 +62,27 @@ const store = useBeritaStore()
 const loadBerita = (slug) => {
   if (slug) store.fetchBeritaDetail(slug)
 }
+
+useHead({
+  title: computed(() => store.beritaDetail?.judul ? `${store.beritaDetail.judul} - Berita` : 'Memuat Berita...'),
+  meta: [
+    {
+      name: 'description',
+      content: computed(() => {
+        if (!store.beritaDetail?.konten) return ''
+        return store.beritaDetail.konten.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...'
+      })
+    },
+    {
+      property: 'og:title',
+      content: computed(() => store.beritaDetail?.judul || '')
+    },
+    {
+      property: 'og:image',
+      content: computed(() => store.beritaDetail?.image || '')
+    }
+  ]
+})
 
 // Jalankan saat pertama kali halaman dibuka
 onMounted(() => loadBerita(route.params.slug))
