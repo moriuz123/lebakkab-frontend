@@ -85,7 +85,7 @@ export default {
         return '/images/icons/default-app-icon.webp'
       }
       const cleanPath = iconPath.startsWith('/') ? iconPath.substring(1) : iconPath
-      return $storageUrl(cleanPath)
+      return this.$storageUrl(cleanPath)
     },
 
     /**
