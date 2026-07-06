@@ -39,6 +39,29 @@
             "
           />
         </div>
+
+        <!-- ✅ Pagination Navigasi -->
+        <div v-if="pagination.last_page > 1" class="flex justify-center items-center mt-10 space-x-4">
+          <button 
+            @click="changePage(pagination.current_page - 1)" 
+            :disabled="pagination.current_page === 1"
+            class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            Sebelumnya
+          </button>
+          
+          <span class="text-gray-600 font-medium">
+            Halaman {{ pagination.current_page }} dari {{ pagination.last_page }}
+          </span>
+
+          <button 
+            @click="changePage(pagination.current_page + 1)" 
+            :disabled="pagination.current_page === pagination.last_page"
+            class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+          >
+            Selanjutnya
+          </button>
+        </div>
       </div>
 
       <!-- ✅ Sidebar -->
@@ -50,7 +73,7 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from '@/utils/api'
 import { useBeritaStore } from '@/stores/useBeritaStore'
 import PageHeader from '@/components/PageHeader.vue'
@@ -58,6 +81,7 @@ import NewsCard from '@/components/NewsCard.vue'
 import SidebarNews from '@/components/SidebarNews.vue'
 
 const store = useBeritaStore()
+const pagination = ref({ current_page: 1, last_page: 1 })
 
 // 🔹 Fungsi bersihkan HTML
 const stripHtml = (html) => {
@@ -67,12 +91,23 @@ const stripHtml = (html) => {
   return tmp.textContent || tmp.innerText || ''
 }
 
-// 🔹 Ambil semua berita
-const fetchBerita = async () => {
+// 🔹 Ambil semua berita (dengan pagination)
+const fetchBerita = async (page = 1) => {
   store.loading = true
   try {
-    const res = await axios.get('/api/berita')
+    const res = await axios.get(`/api/berita?page=${page}`)
     store.beritas = res.data.data || res.data || []
+    
+    // Set status pagination
+    pagination.value = {
+      current_page: res.data.current_page || 1,
+      last_page: res.data.last_page || 1
+    }
+    
+    // Scroll ke atas dengan halus jika pindah halaman
+    if (page > 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   } catch (err) {
     console.error('Gagal memuat berita:', err)
     store.error = err.response?.data?.message || 'Gagal memuat berita'
@@ -81,7 +116,14 @@ const fetchBerita = async () => {
   }
 }
 
+// 🔹 Ganti Halaman
+const changePage = (newPage) => {
+  if (newPage >= 1 && newPage <= pagination.value.last_page) {
+    fetchBerita(newPage)
+  }
+}
+
 onMounted(() => {
-  fetchBerita()
+  fetchBerita(1)
 })
 </script>
