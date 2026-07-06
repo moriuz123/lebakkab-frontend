@@ -25,7 +25,7 @@
           <!-- 📸 Foto Header -->
           <div v-if="kecamatan.foto_kantor" class="w-full">
             <img
-              :src="`/storage/${kecamatan.foto_kantor}`"
+              :src="$storageUrl(kecamatan.foto_kantor)"
               alt="Foto Kantor"
               class="w-full h-72 object-cover"
             />

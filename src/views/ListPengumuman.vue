@@ -44,11 +44,11 @@
           <!-- GAMBAR + ICON ZOOM -->
           <div
             class="relative h-40 w-full overflow-hidden cursor-pointer"
-            @click="openImage(`/storage/${item.gambar}`)"
+            @click="openImage($storageUrl(item.gambar))"
           >
             <img
               v-if="item.gambar"
-              :src="`/storage/${item.gambar}`"
+              :src="$storageUrl(item.gambar)"
               alt="Gambar Pengumuman"
               class="h-full w-full object-cover group-hover:scale-105 transition duration-500"
             />

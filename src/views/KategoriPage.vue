@@ -30,7 +30,7 @@
             :judul="berita.judul"
             :slug="berita.slug"
             :thumbnail="
-              berita.image?.includes('/storage') ? berita.image : `/storage/${berita.image}`
+              berita.image?.includes('/storage') ? berita.image : $storageUrl(berita.image)
             "
             :konten="berita.konten"
             :tanggal="berita.tanggal_publish"

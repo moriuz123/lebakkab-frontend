@@ -35,7 +35,7 @@
           <!-- Foto dengan overlay icon -->
           <div class="relative group cursor-pointer" @click="openPreview(foto)">
             <img
-              :src="`/storage/${foto.gambar}`"
+              :src="$storageUrl(foto.gambar)"
               :alt="foto.judul"
               class="w-full h-56 object-cover"
             />
@@ -80,7 +80,7 @@
         </button>
 
         <img
-          :src="`/storage/${previewFoto.gambar}`"
+          :src="$storageUrl(previewFoto.gambar)"
           :alt="previewFoto.judul"
           class="w-full max-h-[80vh] object-contain"
         />

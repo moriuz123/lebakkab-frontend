@@ -34,11 +34,12 @@ export const useLayananStore = defineStore('layanan', {
       try {
         const res = await axios.get(`/api/layanan/${slug}`)
 
-        // ⭐ Tambahkan prefix /storage jika backend hanya kirim nama file
+        // Tambahkan baseUrl/storage jika backend hanya kirim nama file
+        const baseStorage = import.meta.env.VITE_STORAGE_BASE_URL || '/storage'
         const data = res.data
 
         if (data.cover && !data.cover.startsWith('http') && !data.cover.startsWith('/storage')) {
-          data.cover = `/storage/${data.cover}`
+          data.cover = `${baseStorage}/${data.cover}`
         }
 
         this.layananDetail = data

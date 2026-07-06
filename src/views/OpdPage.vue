@@ -34,7 +34,7 @@
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
               <img
                 v-if="opd.logo"
-                :src="`/storage/${opd.logo}`"
+                :src="$storageUrl(opd.logo)"
                 alt="Logo OPD"
                 class="h-12 w-12 rounded-full object-cover ring-2 ring-green-500 shadow-sm bg-white"
               />

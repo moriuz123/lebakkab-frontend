@@ -31,7 +31,7 @@
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
               <img
                 v-if="kecamatan.logo"
-                :src="`/storage/${kecamatan.logo}`"
+                :src="$storageUrl(kecamatan.logo)"
                 alt="Logo Kecamatan"
                 class="h-12 w-12 rounded-full object-cover ring-2 ring-green-500 shadow-sm bg-white"
               />

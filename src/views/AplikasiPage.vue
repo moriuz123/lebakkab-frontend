@@ -64,7 +64,7 @@
               <td class="p-2 border text-center">{{ index + 1 }}</td>
               <td class="p-2 border text-center">
                 <img
-                  :src="`/storage/${app.icon}`"
+                  :src="$storageUrl(app.icon)"
                   alt="icon"
                   class="w-10 h-10 object-contain mx-auto"
                 />

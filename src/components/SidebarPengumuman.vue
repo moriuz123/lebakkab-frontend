@@ -12,7 +12,7 @@
         <li v-for="item in latestPengumuman" :key="item.id" class="flex items-start gap-3">
           <!-- Thumbnail (default jika kosong) -->
           <img
-            :src="item.gambar ? `/storage/${item.gambar}` : '/images/default-pengumuman.jpg'"
+            :src="item.gambar ? $storageUrl(item.gambar) : '/images/default-pengumuman.jpg'"
             alt="Thumbnail"
             class="w-16 h-16 object-cover rounded"
           />

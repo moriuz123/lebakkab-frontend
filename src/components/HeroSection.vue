@@ -6,7 +6,7 @@
         <img
           v-if="heroSlides.length > 0"
           :key="currentImage"
-          :src="`/storage/${heroSlides[currentImage]?.gambar}`"
+          :src="$storageUrl(heroSlides[currentImage]?.gambar)"
           alt="Hero background"
           class="w-full h-full object-cover absolute transition-opacity duration-1000"
         />

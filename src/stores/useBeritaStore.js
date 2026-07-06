@@ -12,7 +12,8 @@ const ensureImage = (item) => {
       if (item.thumbnail.startsWith('http') || item.thumbnail.startsWith('/storage')) {
         return item.thumbnail
       }
-      return `/storage/${item.thumbnail}`
+      const baseStorage = import.meta.env.VITE_STORAGE_BASE_URL || '/storage'
+      return `${baseStorage}/${item.thumbnail}`
     }
   }
   // fallback default

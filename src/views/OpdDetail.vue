@@ -26,7 +26,7 @@
           <!-- 📸 Foto Header -->
           <div v-if="opdStore.opdDetail.foto_kantor" class="w-full">
             <img
-              :src="`/storage/${opdStore.opdDetail.foto_kantor}`"
+              :src="$storageUrl(opdStore.opdDetail.foto_kantor)"
               alt="Foto Kantor"
               class="w-full h-72 object-cover"
             />

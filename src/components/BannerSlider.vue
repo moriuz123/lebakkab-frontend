@@ -3,7 +3,7 @@
     <!-- Gambar Banner -->
     <div class="w-full aspect-square">
       <img
-        :src="`/storage/${banners[current].gambar}`"
+        :src="$storageUrl(banners[current].gambar)"
         :alt="banners[current].title"
         class="w-full h-full object-cover transition-all duration-700 ease-in-out"
       />

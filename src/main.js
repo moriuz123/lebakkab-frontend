@@ -9,7 +9,11 @@ import router from './router'
 
 const head = createHead()
 
+import { getStorageUrl } from '@/utils/helpers'
+
 const app = createApp(App)
+
+app.config.globalProperties.$storageUrl = getStorageUrl
 
 app.use(createPinia())
 app.use(router)
