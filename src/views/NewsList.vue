@@ -16,6 +16,31 @@
         <!-- Loading state -->
         <div v-if="store.loading" class="text-gray-500 text-center py-8">Memuat berita...</div>
 
+        <!-- ✅ Filter Kategori Berita -->
+        <div class="mb-6 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
+          <div class="flex space-x-2">
+            <router-link
+              to="/berita"
+              class="inline-block px-4 py-2 rounded-full text-sm font-medium transition-colors"
+              :class="{
+                'bg-green-600 text-white': $route.path === '/berita',
+                'bg-gray-100 text-gray-700 hover:bg-gray-200': $route.path !== '/berita'
+              }"
+            >
+              Semua
+            </router-link>
+            
+            <router-link
+              v-for="cat in kategoriList"
+              :key="cat.id"
+              :to="`/berita/kategori/${cat.slug}`"
+              class="inline-block px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+            >
+              {{ cat.nama }}
+            </router-link>
+          </div>
+        </div>
+
         <!-- Jika kosong -->
         <div v-else-if="store.beritas.length === 0" class="text-gray-500 text-center py-8">
           Tidak ada berita tersedia.
@@ -82,6 +107,7 @@ import SidebarNews from '@/components/SidebarNews.vue'
 
 const store = useBeritaStore()
 const pagination = ref({ current_page: 1, last_page: 1 })
+const kategoriList = ref([])
 
 // 🔹 Fungsi bersihkan HTML
 const stripHtml = (html) => {
@@ -89,6 +115,16 @@ const stripHtml = (html) => {
   const tmp = document.createElement('DIV')
   tmp.innerHTML = html
   return tmp.textContent || tmp.innerText || ''
+}
+
+// 🔹 Ambil Kategori Berita
+const fetchKategori = async () => {
+  try {
+    const res = await axios.get('/api/kategori-berita')
+    kategoriList.value = res.data || []
+  } catch (err) {
+    console.error('Gagal memuat kategori:', err)
+  }
 }
 
 // 🔹 Ambil semua berita (dengan pagination)
@@ -124,6 +160,7 @@ const changePage = (newPage) => {
 }
 
 onMounted(() => {
+  fetchKategori()
   fetchBerita(1)
 })
 </script>

@@ -35,7 +35,12 @@
             :konten="berita.konten"
             :tanggal="berita.tanggal_publish"
             :kategori="berita.kategori?.nama || kategoriSlug"
-            :excerpt="berita.excerpt || berita.konten.slice(0, 120) + '...'"
+            :excerpt="
+              berita.excerpt ||
+              (berita.konten
+                ? stripHtml(berita.konten).slice(0, 120) + '...'
+                : 'Tidak ada ringkasan')
+            "
           />
         </div>
 
@@ -84,6 +89,14 @@ const route = useRoute()
 const store = useBeritaStore()
 const kategoriSlug = ref(route.params.slug)
 const pagination = ref({ current_page: 1, last_page: 1 })
+
+// 🔹 Fungsi bersihkan HTML
+const stripHtml = (html) => {
+  if (!html) return ''
+  const tmp = document.createElement('DIV')
+  tmp.innerHTML = html
+  return tmp.textContent || tmp.innerText || ''
+}
 
 // Ambil berita berdasarkan kategori
 const fetchKategoriBerita = async (slug, page = 1) => {

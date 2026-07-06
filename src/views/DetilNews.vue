@@ -19,7 +19,7 @@
             v-if="store.beritaDetail.image"
             :src="store.beritaDetail.image"
             alt="Thumbnail Berita"
-            class="w-full h-80 object-cover rounded mb-6"
+            class="w-full aspect-video md:aspect-[21/9] object-cover rounded-xl shadow-sm mb-8"
           />
 
           <!-- Tanggal & Views -->
