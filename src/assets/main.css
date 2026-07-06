@@ -18,16 +18,10 @@
   --color-light: #ffffff;
   --color-text: #374151;
   --color-bg-light: #f9fafb;
+  color-scheme: light;
 }
 
-/* 🌙 Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg-light: #1e293b;
-    --color-text: #f1f5f9;
-    --color-dark: #0f172a;
-  }
-}
+/* Dark mode dinonaktifkan sementara karena bentrok dengan komponen prose */
 
 /* ===================================================== */
 /* 3️⃣ BASE LAYER — Reset & Elemen Umum */
