@@ -13,9 +13,6 @@
     <div class="max-w-screen-xl mx-auto px-4 py-8 lg:flex lg:space-x-8">
       <!-- Konten utama -->
       <div class="lg:w-3/4">
-        <!-- Loading state -->
-        <div v-if="store.loading" class="text-gray-500 text-center py-8">Memuat berita...</div>
-
         <!-- ✅ Filter Kategori Berita -->
         <div class="mb-6 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
           <div class="flex space-x-2">
@@ -40,6 +37,9 @@
             </router-link>
           </div>
         </div>
+
+        <!-- Loading state -->
+        <div v-if="store.loading" class="text-gray-500 text-center py-8">Memuat berita...</div>
 
         <!-- Jika kosong -->
         <div v-else-if="store.beritas.length === 0" class="text-gray-500 text-center py-8">
