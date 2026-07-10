@@ -43,7 +43,14 @@ const layananList = ref([])
 onMounted(async () => {
   try {
     const res = await axios.get('/api/layanan?limit=5')
-    layananList.value = res.data || []
+    const baseStorage = import.meta.env.VITE_STORAGE_BASE_URL || '/storage'
+    
+    layananList.value = (res.data || []).map(item => {
+      if (item.cover && !item.cover.startsWith('http') && !item.cover.startsWith('/storage')) {
+        item.cover = `${baseStorage}/${item.cover}`
+      }
+      return item
+    })
   } catch (e) {
     console.error('Gagal memuat layanan terbaru:', e)
   }
