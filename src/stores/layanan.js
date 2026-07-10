@@ -15,7 +15,14 @@ export const useLayananStore = defineStore('layanan', {
       this.error = null
       try {
         const res = await axios.get('/api/layanan')
-        this.layanan = res.data
+        const baseStorage = import.meta.env.VITE_STORAGE_BASE_URL || '/storage'
+        
+        this.layanan = res.data.map(item => {
+          if (item.cover && !item.cover.startsWith('http') && !item.cover.startsWith('/storage')) {
+            item.cover = `${baseStorage}/${item.cover}`
+          }
+          return item
+        })
       } catch (err) {
         console.error('Gagal memuat data layanan:', err)
         this.error = 'Gagal memuat data layanan'

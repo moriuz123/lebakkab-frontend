@@ -26,6 +26,15 @@
           <h3 class="text-xl font-semibold text-gray-800 mb-2 line-clamp-2">
             {{ item.judul }}
           </h3>
+          
+          <div class="flex flex-wrap gap-2 mb-3">
+            <span v-if="item.jenis" class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">
+              {{ item.jenis }}
+            </span>
+            <span v-if="item.kategori_layanan" class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+              {{ item.kategori_layanan.nama }}
+            </span>
+          </div>
 
           <!-- Kontak -->
           <p class="text-gray-600 text-sm mb-1">

@@ -15,6 +15,14 @@
       <!-- Konten Utama -->
       <div v-if="!loading && layanan" class="page-main">
         <article class="page-content">
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span v-if="layanan.jenis" class="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">
+              {{ layanan.jenis }}
+            </span>
+            <span v-if="layanan.kategori_layanan" class="text-sm bg-green-100 text-green-700 px-3 py-1 rounded-full font-medium">
+              {{ layanan.kategori_layanan.nama }}
+            </span>
+          </div>
           <!-- Cover -->
           <img
             v-if="layanan.cover"
