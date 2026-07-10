@@ -42,7 +42,7 @@
     </div>
 
     <!-- ✅ Loading State -->
-    <div v-if="store.loading" class="text-center py-20 text-gray-500">Memuat detail berita...</div>
+    <div v-if="store.loading" class="page-loading-placeholder">Memuat detail berita...</div>
   </div>
 </template>
 

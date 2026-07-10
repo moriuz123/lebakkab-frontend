@@ -20,7 +20,7 @@
       </div>
 
       <!-- Loading -->
-      <div v-if="loading" class="text-center text-gray-500">Memuat data...</div>
+      <div v-if="loading" class="page-loading-placeholder">Memuat data...</div>
 
       <!-- Error -->
       <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
@@ -59,7 +59,7 @@
       </div>
 
       <!-- Kosong -->
-      <div v-if="!loading && filteredFotos.length === 0" class="text-center text-gray-500 mt-6">
+      <div v-if="!loading && filteredFotos.length === 0" class="page-loading-placeholder">
         Tidak ada foto tersedia.
       </div>
     </div>

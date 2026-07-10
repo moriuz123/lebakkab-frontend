@@ -40,7 +40,7 @@ watch(
 <template>
   <div>
     <!-- Loading State -->
-    <div v-if="loading" class="text-center py-20 text-gray-500">Memuat konten...</div>
+    <div v-if="loading" class="page-loading-placeholder">Memuat konten...</div>
 
     <!-- Halaman Statis -->
     <div v-else-if="page">

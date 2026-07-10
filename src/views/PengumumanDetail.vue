@@ -51,7 +51,7 @@
     <div v-if="loading" class="page-loading-placeholder">Memuat detail pengumuman...</div>
 
     <!-- Not Found -->
-    <div v-if="!loading && !pengumuman && !error" class="text-center py-10 text-gray-500">
+    <div v-if="!loading && !pengumuman && !error" class="page-loading-placeholder">
       Pengumuman tidak ditemukan.
     </div>
   </div>

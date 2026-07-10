@@ -378,7 +378,11 @@
 
   /* Placeholder untuk loading page */
   .page-loading-placeholder {
-    @apply flex items-center justify-center text-gray-500 text-center py-20;
+    @apply flex flex-col items-center justify-center text-gray-500 text-center py-20 font-medium tracking-wide animate-pulse;
+  }
+  .page-loading-placeholder::before {
+    content: '';
+    @apply w-10 h-10 mb-4 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin;
   }
 
   /* ===================================================== */

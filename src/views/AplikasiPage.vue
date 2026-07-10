@@ -34,7 +34,7 @@
       </div>
 
       <!-- Loading -->
-      <div v-if="aplikasiStore.loading" class="text-center text-gray-500 py-4">Memuat data...</div>
+      <div v-if="aplikasiStore.loading" class="page-loading-placeholder">Memuat data...</div>
 
       <!-- Error -->
       <div v-if="aplikasiStore.error" class="text-center text-green-500 py-4">
@@ -82,7 +82,7 @@
       </div>
 
       <!-- Empty state -->
-      <div v-else-if="!aplikasiStore.loading" class="text-center text-gray-500 py-6">
+      <div v-else-if="!aplikasiStore.loading" class="page-loading-placeholder">
         Tidak ada data aplikasi ditemukan.
       </div>
     </div>

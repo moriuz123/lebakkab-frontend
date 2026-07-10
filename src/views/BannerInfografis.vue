@@ -5,7 +5,7 @@
 
     <!-- Konten dibatasi -->
     <div class="max-w-screen-xl mx-auto px-4 py-10">
-      <div v-if="bannerStore.loading" class="text-center py-10 text-gray-500">Loading...</div>
+      <div v-if="bannerStore.loading" class="page-loading-placeholder">Loading...</div>
 
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div

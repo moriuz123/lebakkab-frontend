@@ -61,7 +61,7 @@
     <div v-if="loading" class="page-loading-placeholder">Memuat detail layanan...</div>
 
     <!-- Not Found -->
-    <div v-if="!loading && !layanan" class="text-center py-10 text-gray-500">
+    <div v-if="!loading && !layanan" class="page-loading-placeholder">
       Data layanan tidak ditemukan.
     </div>
   </div>

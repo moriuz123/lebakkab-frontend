@@ -59,7 +59,7 @@
     </div>
 
     <!-- Not Found -->
-    <div v-if="!loading && !agenda" class="text-center py-10 text-gray-500">
+    <div v-if="!loading && !agenda" class="page-loading-placeholder">
       Data agenda tidak ditemukan.
     </div>
   </div>

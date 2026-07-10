@@ -39,7 +39,7 @@
         </div>
 
         <!-- Loading state -->
-        <div v-if="store.loading" class="text-gray-500 text-center py-8">Memuat berita...</div>
+        <div v-if="store.loading" class="page-loading-placeholder">Memuat berita...</div>
 
         <!-- Jika kosong -->
         <div v-else-if="store.beritas.length === 0" class="text-gray-500 text-center py-8">

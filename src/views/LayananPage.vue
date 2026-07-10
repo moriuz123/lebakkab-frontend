@@ -5,7 +5,7 @@
 
     <div class="max-w-7xl mx-auto px-4 py-10">
       <!-- Loading -->
-      <div v-if="loading" class="text-center text-gray-500 text-lg">Loading...</div>
+      <div v-if="loading" class="page-loading-placeholder">Loading...</div>
 
       <!-- Data Layanan -->
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

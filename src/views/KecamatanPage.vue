@@ -3,7 +3,7 @@
     <PageHeader title="Data Kecamatan" />
 
     <div class="max-w-7xl mx-auto px-4 py-10">
-      <div v-if="loading" class="text-center py-10 text-gray-500">Memuat data kecamatan...</div>
+      <div v-if="loading" class="page-loading-placeholder">Memuat data kecamatan...</div>
 
       <div v-if="error" class="text-center py-10 text-red-500">{{ error }}</div>
 

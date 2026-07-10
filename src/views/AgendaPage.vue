@@ -17,7 +17,7 @@
 
     <!-- Tabel Agenda -->
     <div class="bg-white shadow rounded-lg p-4">
-      <div v-if="agendaStore.loading" class="text-gray-500">Memuat data...</div>
+      <div v-if="agendaStore.loading" class="page-loading-placeholder">Memuat data...</div>
       <div v-else-if="agendaStore.error" class="text-red-500">{{ agendaStore.error }}</div>
       <div v-else>
         <table class="min-w-full text-sm border border-gray-200">
