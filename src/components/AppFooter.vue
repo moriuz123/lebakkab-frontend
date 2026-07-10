@@ -42,25 +42,35 @@
           </div>
         </div>
 
-        <!-- Kolom 2: Tautan Cepat -->
-        <div>
+        <!-- Kolom 2: Widget 1 -->
+        <div v-if="footerWidget1">
+          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">{{ footerWidget1.title }}</h3>
+          <ul class="space-y-4 text-sm text-white">
+            <li v-for="link in footerWidget1.children" :key="link.id">
+              <a :href="link.url || '#'" class="hover:text-green-300 hover:underline transition-all">{{ link.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div v-else>
           <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">Tautan Cepat</h3>
           <ul class="space-y-4 text-sm text-white">
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">Layanan Kependudukan</a></li>
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">Informasi Wisata</a></li>
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">LPSE Kabupaten Lebak</a></li>
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">PPID Kabupaten Lebak</a></li>
+            <li><span class="opacity-75">Memuat...</span></li>
           </ul>
         </div>
 
-        <!-- Kolom 3: Informasi Publik -->
-        <div>
+        <!-- Kolom 3: Widget 2 -->
+        <div v-if="footerWidget2">
+          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">{{ footerWidget2.title }}</h3>
+          <ul class="space-y-4 text-sm text-white">
+            <li v-for="link in footerWidget2.children" :key="link.id">
+              <a :href="link.url || '#'" class="hover:text-green-300 hover:underline transition-all">{{ link.title }}</a>
+            </li>
+          </ul>
+        </div>
+        <div v-else>
           <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">Informasi Publik</h3>
           <ul class="space-y-4 text-sm text-white">
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">Peta Situs</a></li>
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">Agenda Pemkab</a></li>
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">Produk Hukum Daerah</a></li>
-            <li><a href="#" class="hover:text-green-300 hover:underline transition-all">Profil Pimpinan</a></li>
+            <li><span class="opacity-75">Memuat...</span></li>
           </ul>
         </div>
 
@@ -120,12 +130,33 @@ export default {
         whatsapp: '',
         footer_text: '',
       },
+      footerWidget1: null,
+      footerWidget2: null,
     }
   },
   mounted() {
     this.fetchFooterData()
+    this.fetchFooterWidgets()
   },
   methods: {
+    async fetchFooterWidgets() {
+      try {
+        const [res1, res2] = await Promise.all([
+          axios.get('/api/menus/footer_widget_1'),
+          axios.get('/api/menus/footer_widget_2')
+        ])
+        
+        if (res1.data.status === 'success' && res1.data.data.length > 0) {
+          this.footerWidget1 = res1.data.data[0]
+        }
+        
+        if (res2.data.status === 'success' && res2.data.data.length > 0) {
+          this.footerWidget2 = res2.data.data[0]
+        }
+      } catch (error) {
+        console.error('Gagal memuat widget footer:', error)
+      }
+    },
     async fetchFooterData() {
       try {
         const response = await axios.get('/api/settings/footer')
