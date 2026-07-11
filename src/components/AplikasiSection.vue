@@ -1,37 +1,47 @@
 <template>
-  <section class="bg-gray-50 py-12">
+  <section class="bg-white py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <!-- Header (sama dengan DokumenSection) -->
-      <div class="flex justify-between items-center mb-6">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
-          <h2 class="text-2xl font-bold text-gray-800">Aplikasi</h2>
-          <p class="text-gray-500 text-sm mt-1">Jumlah aplikasi: {{ aplikasiItems.length }}</p>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-1 bg-green-500 rounded-full"></span>
+            <span class="text-green-600 font-bold uppercase tracking-wider text-sm">Layanan Digital</span>
+          </div>
+          <h2 class="text-3xl font-black text-gray-900 tracking-tight">Aplikasi Daerah</h2>
         </div>
-
-        <!-- CTA: style sama seperti DokumenSection -->
-        <router-link
-          to="/aplikasi"
-          class="border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition"
-        >
+        <router-link to="/aplikasi" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-green-600 transition-colors">
           Lihat Semua Aplikasi
+          <div class="w-8 h-8 rounded-full bg-gray-50 shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-green-200 group-hover:bg-green-50 transition-all">
+             <ArrowRight class="w-4 h-4" />
+          </div>
         </router-link>
       </div>
 
-      <!-- Grid Aplikasi (tidak diubah, sesuai permintaan) -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <!-- Grid Aplikasi -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div
           v-for="item in aplikasiItems"
           :key="item.id"
-          class="flex items-center bg-white rounded-lg shadow-md p-5 space-x-5 hover:shadow-xl transition-shadow duration-300 cursor-pointer"
+          class="group relative bg-white p-6 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:border-green-200 hover:shadow-xl hover:shadow-green-500/10 cursor-pointer transition-all duration-300 flex flex-col items-center text-center overflow-hidden z-10"
           @click="goToLink(item.link)"
           role="link"
           tabindex="0"
           @keyup.enter="goToLink(item.link)"
         >
-          <img :src="getIconUrl(item.icon)" alt="icon" class="w-12 h-12 object-contain" />
-          <span class="text-gray-800 font-semibold text-base">
+          <!-- Hover Background Effect -->
+          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-green-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
+          
+          <div class="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:scale-110 group-hover:bg-white group-hover:shadow-md transition-all duration-300">
+            <img :src="getIconUrl(item.icon)" alt="icon" class="w-full h-full object-contain drop-shadow-sm" />
+          </div>
+          <h3 class="text-gray-800 font-bold text-base leading-snug group-hover:text-green-600 transition-colors">
             {{ item.nama }}
-          </span>
+          </h3>
+          <div class="mt-4 flex items-center gap-1 text-[10px] font-bold text-green-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
+            Akses <ArrowRight class="w-3 h-3" />
+          </div>
         </div>
       </div>
     </div>
@@ -40,33 +50,31 @@
 
 <script>
 import axios from '@/utils/api'
+import { ArrowRight } from 'lucide-vue-next'
 
 export default {
   name: 'DataAplikasiCards',
+  components: {
+    ArrowRight
+  },
   data() {
     return {
       aplikasiItems: [],
-      kategori: 'Aplikasi Layanan Publik', // ganti sesuai kebutuhan atau jadikan props
+      kategori: 'Aplikasi Layanan Publik',
     }
   },
   mounted() {
     this.fetchDataAplikasi()
   },
   methods: {
-    /**
-     * Fetch data aplikasi dari backend API menggunakan Axios.
-     * Endpoint sudah memakai proxy di vue.config.js untuk menghindari masalah CORS.
-     */
     async fetchDataAplikasi() {
       try {
         const response = await axios.get('/api/data-aplikasi', {
           params: { kategori: this.kategori },
         })
-        // sesuaikan akses response sesuai struktur API Anda
         if (response.data?.status === 'success' && Array.isArray(response.data.data)) {
           this.aplikasiItems = response.data.data
         } else if (Array.isArray(response.data)) {
-          // fallback: API langsung mengembalikan array
           this.aplikasiItems = response.data
         } else {
           console.warn('API returned unexpected format:', response.data)
@@ -76,10 +84,6 @@ export default {
       }
     },
 
-    /**
-     * Membentuk URL lengkap untuk icon aplikasi.
-     * Asumsi file icon ada di `storage/app/public/` dan sudah di-link ke `public/storage`.
-     */
     getIconUrl(iconPath) {
       if (!iconPath) {
         return '/images/icons/default-app-icon.webp'
@@ -88,27 +92,11 @@ export default {
       return this.$storageUrl(cleanPath)
     },
 
-    /**
-     * Buka link aplikasi di tab baru ketika card diklik.
-     */
     goToLink(link) {
       if (link) {
         window.open(link, '_blank')
       }
     },
-
-    /**
-     * Fungsi placeholder (tetap ada jika perlu dipakai).
-     */
-    handleMore() {
-      // tidak digunakan karena CTA sekarang mengarah ke /aplikasi
-      // tetap disediakan jika ingin reuse
-      this.$router.push('/aplikasi')
-    },
   },
 }
 </script>
-
-<style scoped>
-/* tidak mengubah style card, hanya menyertakan scoped jika Anda mau menambah style */
-</style>
