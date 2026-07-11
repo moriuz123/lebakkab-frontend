@@ -23,76 +23,66 @@
         <!-- =========================
              KOLOM BERITA (LG: 8 Cols)
              ========================= -->
-        <div class="lg:col-span-8 flex flex-col gap-6">
-          <!-- BERITA UTAMA -->
-          <div
-            v-if="featured"
-            class="group cursor-pointer bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-green-500/10 hover:border-green-200 transition-all duration-500 flex flex-col sm:flex-row overflow-hidden"
-            @click="$router.push(`/berita/${featured.slug}`)"
-          >
-            <div class="w-full sm:w-1/2 relative overflow-hidden shrink-0 h-64 sm:h-auto">
-              <img
-                :src="featured.image"
-                alt="Featured News"
-                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-              />
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 sm:from-transparent sm:bg-gradient-to-r sm:from-gray-900/10 sm:to-transparent to-transparent opacity-100"></div>
-              <div class="absolute top-4 left-4 z-10">
-                <span class="inline-block px-3 py-1.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg">Sorotan Utama</span>
-              </div>
-            </div>
-            <div class="w-full sm:w-1/2 p-6 sm:p-8 flex flex-col justify-center bg-white z-10 relative">
-              <!-- Decorative blob -->
-              <div class="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full blur-3xl opacity-50 pointer-events-none transform translate-x-10 -translate-y-10 group-hover:opacity-100 transition-opacity"></div>
-              
-              <div class="flex items-center gap-3 text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider relative z-10">
-                <span class="flex items-center gap-1.5 text-green-600 bg-green-50 px-2.5 py-1 rounded-md"><Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'short' }) }}</span>
-              </div>
-              <h2 class="text-2xl sm:text-3xl font-black mb-4 text-gray-900 leading-tight group-hover:text-green-600 transition-colors line-clamp-3 relative z-10">
-                {{ featured.title }}
-              </h2>
-              <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed font-medium relative z-10">
-                {{ featured.excerpt || 'Temukan informasi selengkapnya mengenai berita ini dan berbagai perkembangan terbaru lainnya...' }}
-              </p>
-              <div class="mt-6 relative z-10">
-                <span class="text-sm font-bold text-green-600 flex items-center gap-1 group-hover:translate-x-2 transition-transform bg-transparent w-max">
-                  Baca Selengkapnya <ArrowRight class="w-4 h-4" />
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <!-- LIST BERITA GRID -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div class="lg:col-span-8">
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-8 h-full">
+            
+            <!-- KIRI: BERITA UTAMA (60%) -->
             <div
-              v-for="(news, index) in latestNews"
-              :key="index"
-              class="flex flex-col bg-white rounded-3xl border border-gray-100 hover:border-green-200 shadow-sm hover:shadow-xl hover:shadow-green-500/10 cursor-pointer transition-all duration-300 group overflow-hidden"
-              @click="$router.push(`/berita/${news.slug}`)"
+              v-if="featured"
+              class="md:col-span-3 flex flex-col group cursor-pointer"
+              @click="$router.push(`/berita/${featured.slug}`)"
             >
-              <div class="relative overflow-hidden w-full h-48 shrink-0 bg-gray-50">
+              <div class="w-full relative overflow-hidden rounded-3xl aspect-[4/3] mb-6 shadow-sm group-hover:shadow-lg transition-all duration-500">
                 <img
-                  :src="news.image"
-                  alt="News Thumbnail"
-                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  :src="featured.image"
+                  alt="Featured News"
+                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <!-- Date Badge -->
-                <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-lg shadow-sm border border-white/20 transform translate-y-2 group-hover:translate-y-0 opacity-90 group-hover:opacity-100 transition-all duration-300">
-                  <p class="text-[10px] font-bold text-gray-700 flex items-center gap-1.5">
-                    <Clock class="w-3 h-3 text-green-500" /> {{ formatDate(news.date) }}
-                  </p>
+              </div>
+              <div class="flex-1 flex flex-col px-1">
+                <!-- Gunakan Kategori asli jika ada, sementara default ke "PEMERINTAHAN" -->
+                <span class="text-xs font-bold text-green-600 uppercase tracking-widest mb-3 flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-green-500"></span> Pemerintahan
+                </span>
+                <h2 class="text-2xl sm:text-3xl font-black text-gray-900 leading-tight mb-4 group-hover:text-green-600 transition-colors line-clamp-3">
+                  {{ featured.title }}
+                </h2>
+                <div class="flex items-center gap-2 text-sm text-gray-500 font-medium mt-auto">
+                  <Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'long' }) }}
                 </div>
               </div>
-              <div class="p-5 flex-1 flex flex-col justify-center relative">
-                <!-- Hover indicator line -->
-                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-green-500 group-hover:h-1/2 transition-all duration-300 rounded-r-md"></div>
-                
-                <h3 class="text-base font-bold leading-snug text-gray-800 line-clamp-2 group-hover:text-green-600 transition-colors pl-1">
-                  {{ news.title }}
-                </h3>
+            </div>
+
+            <!-- KANAN: LIST BERITA (40%) -->
+            <div class="md:col-span-2 flex flex-col justify-between">
+              <div class="flex flex-col divide-y divide-gray-100 h-full">
+                <!-- Tampilkan 3 berita saja agar proporsi tingginya seimbang dengan Berita Utama -->
+                <div
+                  v-for="(news, index) in latestNews.slice(0, 3)"
+                  :key="index"
+                  class="flex gap-5 py-5 first:pt-0 last:pb-0 group cursor-pointer"
+                  @click="$router.push(`/berita/${news.slug}`)"
+                >
+                  <div class="w-28 h-24 sm:w-32 sm:h-28 shrink-0 relative overflow-hidden rounded-2xl shadow-sm group-hover:shadow-md transition-shadow">
+                    <img
+                      :src="news.image"
+                      alt="News Thumbnail"
+                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
+                  <div class="flex-1 flex flex-col justify-center">
+                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 group-hover:text-green-500 transition-colors">Informasi Publik</span>
+                    <h3 class="text-sm sm:text-base font-bold text-gray-800 leading-snug line-clamp-2 group-hover:text-green-600 transition-colors mb-2">
+                      {{ news.title }}
+                    </h3>
+                    <div class="text-xs text-gray-500 font-medium mt-auto">
+                      {{ formatDate(news.date) }}
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
+            
           </div>
         </div>
 
