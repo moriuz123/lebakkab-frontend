@@ -120,35 +120,38 @@
       <!-- Bagian Kanan: Sidebar Widget -->
       <div class="lg:col-span-1 space-y-6">
         
-        <!-- Widget 1: Agenda Mendatang (Selalu Tampil) -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-6">
-          <h3 class="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
-            <CalendarDays class="w-5 h-5 text-primary-500" />
+        <!-- Widget 1: Agenda Mendatang -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-6 overflow-hidden relative group/widget">
+          <!-- Dekorasi Background -->
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover/widget:opacity-100 transition-opacity duration-700"></div>
+          
+          <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
+            <div class="p-2 bg-primary-50 rounded-lg text-primary-600 shadow-sm border border-primary-100/50">
+              <CalendarDays class="w-5 h-5" />
+            </div>
             Agenda Terdekat
           </h3>
           
           <div v-if="agendaStore.loading" class="animate-pulse space-y-4">
-            <div v-for="i in 3" :key="i" class="h-16 bg-gray-100 rounded-xl"></div>
+            <div v-for="i in 3" :key="i" class="h-16 bg-gray-50 rounded-xl"></div>
           </div>
           
-          <div v-else class="space-y-3">
+          <div v-else class="space-y-4 relative z-10">
             <router-link
-              v-for="agenda in upcomingAgendas"
+              v-for="(agenda, index) in upcomingAgendas"
               :key="'side-'+agenda.id"
               :to="`/agenda/${agenda.id}`"
-              class="group block p-3 rounded-xl hover:bg-primary-50 transition-all duration-300 border border-transparent hover:border-primary-100"
+              class="group flex items-start gap-3.5 p-3 -mx-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-transparent transition-all duration-300"
             >
-              <div class="flex items-start gap-3.5">
-                <div class="w-12 h-12 flex-shrink-0 bg-primary-50 group-hover:bg-primary-100 text-primary-600 rounded-xl flex flex-col items-center justify-center font-bold border border-primary-100/50 transition-colors">
-                  <span class="text-[9px] uppercase tracking-wider">{{ getMonthShort(agenda.tanggal_mulai) }}</span>
-                  <span class="text-lg leading-none -mt-0.5">{{ getDay(agenda.tanggal_mulai) }}</span>
-                </div>
-                <div>
-                  <h4 class="text-sm font-semibold text-gray-900 group-hover:text-primary-600 line-clamp-2 mb-1.5 leading-tight">{{ agenda.judul }}</h4>
-                  <div class="text-xs text-gray-500 flex items-center gap-1.5 font-medium">
-                    <Clock class="w-3 h-3 text-primary-400" />
-                    {{ agenda.waktu_mulai ? agenda.waktu_mulai.slice(0, 5) : '-' }} WIB
-                  </div>
+              <div class="w-12 h-12 flex-shrink-0 bg-white shadow-sm group-hover:shadow-md group-hover:shadow-primary-500/20 text-primary-600 rounded-xl flex flex-col items-center justify-center font-bold border border-gray-100 group-hover:border-primary-200 transition-all group-hover:-translate-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-primary-500">{{ getMonthShort(agenda.tanggal_mulai) }}</span>
+                <span class="text-lg leading-none -mt-0.5">{{ getDay(agenda.tanggal_mulai) }}</span>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-sm font-bold text-gray-800 group-hover:text-primary-600 line-clamp-2 mb-1.5 leading-snug group-hover:translate-x-1 transition-transform duration-300">{{ agenda.judul }}</h4>
+                <div class="text-[11px] text-gray-500 flex items-center gap-1.5 font-medium">
+                  <Clock class="w-3.5 h-3.5 text-primary-400 group-hover:animate-pulse" />
+                  {{ agenda.waktu_mulai ? agenda.waktu_mulai.slice(0, 5) : '-' }} WIB
                 </div>
               </div>
             </router-link>
@@ -160,46 +163,76 @@
         </div>
 
         <!-- Widget 2: Pengumuman Terbaru -->
-        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6">
-          <h3 class="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
-            <Megaphone class="w-5 h-5 text-primary-500" />
-            Pengumuman Terbaru
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 overflow-hidden relative group/widget">
+          <!-- Dekorasi Background -->
+          <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover/widget:opacity-100 transition-opacity duration-700"></div>
+
+          <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
+            <div class="p-2 bg-blue-50 rounded-lg text-blue-600 shadow-sm border border-blue-100/50">
+              <Megaphone class="w-5 h-5" />
+            </div>
+            Info & Pengumuman
           </h3>
           
           <div v-if="pengumumanStore.loading" class="animate-pulse space-y-4">
-            <div v-for="i in 3" :key="i" class="h-12 bg-gray-100 rounded-xl"></div>
+            <div v-for="i in 3" :key="i" class="h-12 bg-gray-50 rounded-xl"></div>
           </div>
           
-          <div v-else class="space-y-4">
+          <div v-else class="space-y-4 relative z-10">
             <router-link
-              v-for="item in recentPengumuman"
+              v-for="(item, index) in recentPengumuman"
               :key="item.id"
               :to="`/pengumuman/${item.slug}`"
-              class="group block border-b border-gray-100 pb-4 last:border-0 last:pb-0"
+              class="group flex gap-3 items-start border-b border-gray-50 pb-4 last:border-0 last:pb-0"
             >
-              <h4 class="text-sm font-semibold text-gray-900 group-hover:text-primary-600 line-clamp-2 mb-2 leading-relaxed">{{ item.judul }}</h4>
-              <span class="text-[11px] font-medium text-gray-500 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-100">{{ formatDate(item.created_at) }}</span>
+              <div class="mt-0.5 text-gray-300 group-hover:text-blue-500 transition-colors">
+                <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </div>
+              <div>
+                <h4 class="text-sm font-semibold text-gray-800 group-hover:text-blue-600 line-clamp-2 mb-2 leading-relaxed transition-colors">{{ item.judul }}</h4>
+                <div class="flex items-center gap-2">
+                  <span class="text-[10px] font-bold text-gray-400 bg-gray-100 px-2 py-0.5 rounded uppercase tracking-wider">{{ formatDate(item.created_at) }}</span>
+                  <span v-if="index === 0" class="flex h-2 w-2 relative">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                  </span>
+                </div>
+              </div>
             </router-link>
           </div>
           
-          <router-link to="/pengumuman" class="block w-full text-center text-sm font-semibold text-primary-600 bg-primary-50 hover:bg-primary-100 py-2.5 rounded-xl mt-5 transition-colors">
-            Lihat Semua Pengumuman
+          <router-link to="/pengumuman" class="relative z-10 flex items-center justify-center gap-2 w-full text-center text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white py-3 rounded-xl mt-5 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-blue-500/20">
+            Lihat Semua
+            <ArrowRight class="w-4 h-4" />
           </router-link>
         </div>
 
         <!-- Widget 3: Pusat Informasi Banner -->
-        <div class="bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl shadow-md p-6 text-white relative overflow-hidden group">
-          <div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 group-hover:rotate-12 transition-transform duration-500">
-            <Info class="w-32 h-32" />
+        <div class="rounded-2xl shadow-lg p-6 text-white relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
+          <!-- Latar Belakang Gradien Animasi -->
+          <div class="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-blue-600 group-hover:scale-105 transition-transform duration-500"></div>
+          
+          <!-- Ornamen Dekoratif -->
+          <div class="absolute -right-4 -bottom-4 opacity-20 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700">
+            <Info class="w-40 h-40" />
           </div>
-          <h3 class="text-lg font-bold mb-2 relative z-10">Pusat Informasi</h3>
-          <p class="text-primary-50 text-sm mb-5 relative z-10 leading-relaxed">
-            Dapatkan informasi lebih lanjut terkait jadwal dan acara pemerintahan daerah.
-          </p>
-          <router-link to="/kontak" class="inline-flex items-center gap-2 bg-white text-primary-600 text-sm font-bold px-4 py-2.5 rounded-xl shadow-sm hover:shadow transition-all relative z-10 group-hover:-translate-y-0.5">
-            Hubungi Kami
-            <ArrowRight class="w-4 h-4" />
-          </router-link>
+          <div class="absolute top-0 right-0 w-24 h-24 bg-white opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity"></div>
+          
+          <div class="relative z-10 flex flex-col h-full justify-between">
+            <div>
+              <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/30">
+                <Info class="w-6 h-6 text-white" />
+              </div>
+              <h3 class="text-xl font-black mb-2 tracking-tight">Pusat Informasi</h3>
+              <p class="text-white/90 text-sm mb-6 leading-relaxed font-medium">
+                Butuh bantuan atau informasi lebih lanjut terkait jadwal pemerintahan daerah?
+              </p>
+            </div>
+            
+            <router-link to="/kontak" class="inline-flex items-center justify-center gap-2 bg-white text-primary-700 text-sm font-extrabold px-5 py-3 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+              Hubungi Kami Sekarang
+            </router-link>
+          </div>
         </div>
 
       </div>
