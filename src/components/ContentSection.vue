@@ -24,7 +24,7 @@
              KOLOM BERITA (LG: 8 Cols)
              ========================= -->
         <div class="lg:col-span-8">
-          <div class="grid grid-cols-1 md:grid-cols-5 gap-8 h-full">
+          <div class="grid grid-cols-1 md:grid-cols-5 gap-6 h-full">
             
             <!-- KIRI: BERITA UTAMA (60%) -->
             <div
@@ -32,7 +32,7 @@
               class="md:col-span-3 flex flex-col group cursor-pointer"
               @click="$router.push(`/berita/${featured.slug}`)"
             >
-              <div class="w-full relative overflow-hidden rounded-3xl aspect-[4/3] mb-6 shadow-sm group-hover:shadow-lg transition-all duration-500">
+              <div class="w-full relative overflow-hidden rounded-2xl aspect-[16/9] mb-4 shadow-sm group-hover:shadow-md transition-all duration-500">
                 <img
                   :src="featured.image"
                   alt="Featured News"
@@ -41,14 +41,14 @@
               </div>
               <div class="flex-1 flex flex-col px-1">
                 <!-- Gunakan Kategori asli jika ada, sementara default ke "PEMERINTAHAN" -->
-                <span class="text-xs font-bold text-green-600 uppercase tracking-widest mb-3 flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-green-500"></span> Pemerintahan
+                <span class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Pemerintahan
                 </span>
-                <h2 class="text-2xl sm:text-3xl font-black text-gray-900 leading-tight mb-4 group-hover:text-green-600 transition-colors line-clamp-3">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2 group-hover:text-green-600 transition-colors line-clamp-3">
                   {{ featured.title }}
                 </h2>
-                <div class="flex items-center gap-2 text-sm text-gray-500 font-medium mt-auto">
-                  <Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'long' }) }}
+                <div class="flex items-center gap-1.5 text-xs text-gray-500 font-medium mt-auto">
+                  <Calendar class="w-3 h-3"/> {{ formatDate(featured.date, { month: 'long' }) }}
                 </div>
               </div>
             </div>
@@ -60,10 +60,10 @@
                 <div
                   v-for="(news, index) in latestNews.slice(0, 3)"
                   :key="index"
-                  class="flex gap-5 py-5 first:pt-0 last:pb-0 group cursor-pointer"
+                  class="flex gap-4 py-4 first:pt-0 last:pb-0 group cursor-pointer"
                   @click="$router.push(`/berita/${news.slug}`)"
                 >
-                  <div class="w-28 h-24 sm:w-32 sm:h-28 shrink-0 relative overflow-hidden rounded-2xl shadow-sm group-hover:shadow-md transition-shadow">
+                  <div class="w-24 h-20 sm:w-28 sm:h-24 shrink-0 relative overflow-hidden rounded-xl shadow-sm group-hover:shadow-md transition-shadow">
                     <img
                       :src="news.image"
                       alt="News Thumbnail"
@@ -71,11 +71,11 @@
                     />
                   </div>
                   <div class="flex-1 flex flex-col justify-center">
-                    <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1.5 group-hover:text-green-500 transition-colors">Informasi Publik</span>
-                    <h3 class="text-sm sm:text-base font-bold text-gray-800 leading-snug line-clamp-2 group-hover:text-green-600 transition-colors mb-2">
+                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-green-500 transition-colors">Informasi Publik</span>
+                    <h3 class="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 group-hover:text-green-600 transition-colors mb-1.5">
                       {{ news.title }}
                     </h3>
-                    <div class="text-xs text-gray-500 font-medium mt-auto">
+                    <div class="text-[11px] text-gray-500 font-medium mt-auto">
                       {{ formatDate(news.date) }}
                     </div>
                   </div>
