@@ -8,7 +8,7 @@
         <!-- Filter Section -->
         <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div class="flex items-center gap-4">
-            <div class="p-3 bg-primary-50 text-primary-600 rounded-xl border border-primary-100">
+            <div class="p-3 bg-green-50 text-green-600 rounded-xl border border-green-100">
               <CalendarDays class="w-6 h-6" />
             </div>
             <div>
@@ -20,14 +20,14 @@
           <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
             <div class="relative flex-1 md:w-40">
               <label class="absolute -top-2 left-3 bg-white px-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-wider rounded-sm transition-colors duration-200">Dari Tanggal</label>
-              <input type="date" v-model="startDate" class="w-full border border-gray-200 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-gray-50/50 hover:bg-white transition-all outline-none shadow-inner" />
+              <input type="date" v-model="startDate" class="w-full border border-gray-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-gray-50/50 hover:bg-white transition-all outline-none shadow-inner" />
             </div>
             <div class="hidden md:block text-gray-300">
               <ArrowRight class="w-4 h-4" />
             </div>
             <div class="relative flex-1 md:w-40">
               <label class="absolute -top-2 left-3 bg-white px-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-wider rounded-sm transition-colors duration-200">Sampai Tanggal</label>
-              <input type="date" v-model="endDate" class="w-full border border-gray-200 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-gray-50/50 hover:bg-white transition-all outline-none shadow-inner" />
+              <input type="date" v-model="endDate" class="w-full border border-gray-200 focus:border-green-500 focus:ring-1 focus:ring-green-500 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-gray-50/50 hover:bg-white transition-all outline-none shadow-inner" />
             </div>
             
             <button v-if="startDate || endDate" @click="startDate = ''; endDate = ''" class="p-2.5 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors border border-transparent hover:border-red-100" title="Reset Filter">
@@ -61,24 +61,24 @@
             v-for="agenda in filteredAgendas"
             :key="agenda.id"
             :to="`/agenda/${agenda.id}`"
-            class="group block bg-white rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-primary-500/10 border border-gray-100 transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden"
+            class="group block bg-white rounded-2xl p-4 sm:p-5 shadow-sm hover:shadow-xl hover:shadow-green-500/10 border border-gray-100 transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden"
           >
-            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-primary-400 to-primary-600 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+            <div class="absolute left-0 top-0 bottom-0 w-1.5 bg-gradient-to-b from-green-400 to-green-600 opacity-80 group-hover:opacity-100 transition-opacity"></div>
             
             <div class="flex flex-col sm:flex-row gap-4 sm:gap-6 items-start sm:items-center ml-2">
-              <div class="flex-shrink-0 bg-primary-50/70 rounded-xl p-3 text-center min-w-[70px] border border-primary-100/50 group-hover:bg-primary-100 transition-colors">
-                <span class="block text-primary-600 font-extrabold text-xs uppercase tracking-widest mb-1">{{ getMonthShort(agenda.tanggal_mulai) }}</span>
+              <div class="flex-shrink-0 bg-green-50/70 rounded-xl p-3 text-center min-w-[70px] border border-green-100/50 group-hover:bg-green-100 transition-colors">
+                <span class="block text-green-600 font-extrabold text-xs uppercase tracking-widest mb-1">{{ getMonthShort(agenda.tanggal_mulai) }}</span>
                 <span class="block text-gray-900 font-black text-2xl leading-none">{{ getDay(agenda.tanggal_mulai) }}</span>
               </div>
               
               <div class="flex-1 min-w-0 w-full">
-                <h3 class="text-lg font-bold text-gray-900 group-hover:text-primary-600 transition-colors line-clamp-2 mb-2 pr-4">
+                <h3 class="text-lg font-bold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2 mb-2 pr-4">
                   {{ agenda.judul }}
                 </h3>
                 
                 <div class="flex flex-col sm:flex-row flex-wrap sm:items-center gap-x-5 gap-y-2 text-sm text-gray-600">
                   <div class="flex items-center gap-1.5 font-medium bg-gray-50 px-2.5 py-1 rounded-md border border-gray-100">
-                    <Clock class="w-4 h-4 text-primary-500" />
+                    <Clock class="w-4 h-4 text-green-500" />
                     <span v-if="agenda.opsi_waktu_selesai === 'selesai'">
                       {{ agenda.waktu_mulai ? agenda.waktu_mulai.slice(0, 5) : '-' }} WIB - Selesai
                     </span>
@@ -97,7 +97,7 @@
                 </div>
               </div>
               
-              <div class="hidden sm:flex flex-shrink-0 items-center justify-center w-10 h-10 rounded-full bg-gray-50 text-gray-400 border border-gray-100 group-hover:bg-primary-500 group-hover:text-white group-hover:border-primary-500 transition-all duration-300">
+              <div class="hidden sm:flex flex-shrink-0 items-center justify-center w-10 h-10 rounded-full bg-gray-50 text-gray-400 border border-gray-100 group-hover:bg-green-500 group-hover:text-white group-hover:border-green-500 transition-all duration-300">
                 <ArrowRight class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
               </div>
             </div>
@@ -110,7 +110,7 @@
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-1">Tidak Ada Agenda</h3>
             <p class="text-gray-500 max-w-sm">Maaf, kami tidak menemukan agenda pemerintahan pada rentang tanggal yang Anda pilih.</p>
-            <button v-if="startDate || endDate" @click="startDate = ''; endDate = ''" class="mt-6 text-sm font-semibold text-primary-600 bg-primary-50 hover:bg-primary-100 px-5 py-2.5 rounded-xl transition-colors">
+            <button v-if="startDate || endDate" @click="startDate = ''; endDate = ''" class="mt-6 text-sm font-semibold text-green-600 bg-green-50 hover:bg-green-100 px-5 py-2.5 rounded-xl transition-colors">
               Hapus Filter Tanggal
             </button>
           </div>
@@ -123,10 +123,10 @@
         <!-- Widget 1: Agenda Mendatang -->
         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-6 overflow-hidden relative group/widget">
           <!-- Dekorasi Background -->
-          <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover/widget:opacity-100 transition-opacity duration-700"></div>
+          <div class="absolute -top-10 -right-10 w-32 h-32 bg-green-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 group-hover/widget:opacity-100 transition-opacity duration-700"></div>
           
           <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
-            <div class="p-2 bg-primary-50 rounded-lg text-primary-600 shadow-sm border border-primary-100/50">
+            <div class="p-2 bg-green-50 rounded-lg text-green-600 shadow-sm border border-green-100/50">
               <CalendarDays class="w-5 h-5" />
             </div>
             Agenda Terdekat
@@ -141,16 +141,16 @@
               v-for="(agenda, index) in upcomingAgendas"
               :key="'side-'+agenda.id"
               :to="`/agenda/${agenda.id}`"
-              class="group flex items-start gap-3.5 p-3 -mx-3 rounded-xl hover:bg-gradient-to-r hover:from-primary-50 hover:to-transparent transition-all duration-300"
+              class="group flex items-start gap-3.5 p-3 -mx-3 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-transparent transition-all duration-300"
             >
-              <div class="w-12 h-12 flex-shrink-0 bg-white shadow-sm group-hover:shadow-md group-hover:shadow-primary-500/20 text-primary-600 rounded-xl flex flex-col items-center justify-center font-bold border border-gray-100 group-hover:border-primary-200 transition-all group-hover:-translate-y-0.5">
-                <span class="text-[9px] uppercase tracking-wider text-primary-500">{{ getMonthShort(agenda.tanggal_mulai) }}</span>
+              <div class="w-12 h-12 flex-shrink-0 bg-white shadow-sm group-hover:shadow-md group-hover:shadow-green-500/20 text-green-600 rounded-xl flex flex-col items-center justify-center font-bold border border-gray-100 group-hover:border-green-200 transition-all group-hover:-translate-y-0.5">
+                <span class="text-[9px] uppercase tracking-wider text-green-500">{{ getMonthShort(agenda.tanggal_mulai) }}</span>
                 <span class="text-lg leading-none -mt-0.5">{{ getDay(agenda.tanggal_mulai) }}</span>
               </div>
               <div class="flex-1">
-                <h4 class="text-sm font-bold text-gray-800 group-hover:text-primary-600 line-clamp-2 mb-1.5 leading-snug group-hover:translate-x-1 transition-transform duration-300">{{ agenda.judul }}</h4>
+                <h4 class="text-sm font-bold text-gray-800 group-hover:text-green-600 line-clamp-2 mb-1.5 leading-snug group-hover:translate-x-1 transition-transform duration-300">{{ agenda.judul }}</h4>
                 <div class="text-[11px] text-gray-500 flex items-center gap-1.5 font-medium">
-                  <Clock class="w-3.5 h-3.5 text-primary-400 group-hover:animate-pulse" />
+                  <Clock class="w-3.5 h-3.5 text-green-400 group-hover:animate-pulse" />
                   {{ agenda.waktu_mulai ? agenda.waktu_mulai.slice(0, 5) : '-' }} WIB
                 </div>
               </div>
@@ -210,7 +210,7 @@
         <!-- Widget 3: Pusat Informasi Banner -->
         <div class="rounded-2xl shadow-lg p-6 text-white relative overflow-hidden group hover:-translate-y-1 transition-transform duration-300 cursor-pointer">
           <!-- Latar Belakang Gradien Animasi -->
-          <div class="absolute inset-0 bg-gradient-to-br from-primary-600 via-primary-500 to-blue-600 group-hover:scale-105 transition-transform duration-500"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-green-600 via-green-500 to-blue-600 group-hover:scale-105 transition-transform duration-500"></div>
           
           <!-- Ornamen Dekoratif -->
           <div class="absolute -right-4 -bottom-4 opacity-20 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700">
@@ -229,7 +229,7 @@
               </p>
             </div>
             
-            <router-link to="/kontak" class="inline-flex items-center justify-center gap-2 bg-white text-primary-700 text-sm font-extrabold px-5 py-3 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
+            <router-link to="/kontak" class="inline-flex items-center justify-center gap-2 bg-white text-green-700 text-sm font-extrabold px-5 py-3 rounded-xl shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300">
               Hubungi Kami Sekarang
             </router-link>
           </div>
