@@ -36,9 +36,15 @@
           <div class="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:scale-110 group-hover:bg-white group-hover:shadow-md transition-all duration-300">
             <img :src="getIconUrl(item.icon)" alt="icon" class="w-full h-full object-contain drop-shadow-sm" />
           </div>
+          
           <h3 class="text-gray-800 font-bold text-base leading-snug group-hover:text-green-600 transition-colors">
             {{ item.nama }}
           </h3>
+          
+          <p v-if="item.deskripsi" class="text-xs text-gray-500 mt-2 line-clamp-2 leading-relaxed">
+            {{ item.deskripsi }}
+          </p>
+
           <div class="mt-4 flex items-center gap-1 text-[10px] font-bold text-green-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
             Akses <ArrowRight class="w-3 h-3" />
           </div>

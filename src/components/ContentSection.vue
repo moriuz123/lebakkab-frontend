@@ -23,57 +23,74 @@
         <!-- =========================
              KOLOM BERITA (LG: 8 Cols)
              ========================= -->
-        <div class="lg:col-span-8">
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 h-full">
-            <!-- BERITA UTAMA -->
-            <div
-              v-if="featured"
-              class="col-span-1 group cursor-pointer relative overflow-hidden rounded-3xl shadow-md hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 h-full min-h-[350px] md:min-h-0"
-              @click="$router.push(`/berita/${featured.slug}`)"
-            >
+        <div class="lg:col-span-8 flex flex-col gap-6">
+          <!-- BERITA UTAMA -->
+          <div
+            v-if="featured"
+            class="group cursor-pointer bg-white rounded-3xl border border-gray-100 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-green-500/10 hover:border-green-200 transition-all duration-500 flex flex-col sm:flex-row overflow-hidden"
+            @click="$router.push(`/berita/${featured.slug}`)"
+          >
+            <div class="w-full sm:w-1/2 relative overflow-hidden shrink-0 h-64 sm:h-auto">
               <img
                 :src="featured.image"
                 alt="Featured News"
                 class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-90"></div>
-              
-              <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 flex flex-col justify-end">
-                <div>
-                  <span class="inline-block px-3 py-1 bg-green-500 text-white text-[10px] font-bold uppercase tracking-widest rounded-lg mb-3 shadow-lg">Berita Utama</span>
-                  <h2 class="text-2xl sm:text-3xl font-bold mb-3 text-white leading-tight group-hover:text-green-300 transition-colors line-clamp-3">
-                    {{ featured.title }}
-                  </h2>
-                  <div class="flex items-center gap-3 text-xs font-medium text-gray-300">
-                    <span class="flex items-center gap-1.5"><Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'long' }) }}</span>
-                  </div>
-                </div>
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 sm:from-transparent sm:bg-gradient-to-r sm:from-gray-900/10 sm:to-transparent to-transparent opacity-100"></div>
+              <div class="absolute top-4 left-4 z-10">
+                <span class="inline-block px-3 py-1.5 bg-green-500 text-white text-[10px] font-black uppercase tracking-widest rounded-lg shadow-lg">Sorotan Utama</span>
               </div>
             </div>
+            <div class="w-full sm:w-1/2 p-6 sm:p-8 flex flex-col justify-center bg-white z-10 relative">
+              <!-- Decorative blob -->
+              <div class="absolute top-0 right-0 w-32 h-32 bg-green-50 rounded-full blur-3xl opacity-50 pointer-events-none transform translate-x-10 -translate-y-10 group-hover:opacity-100 transition-opacity"></div>
+              
+              <div class="flex items-center gap-3 text-xs font-bold text-gray-400 mb-3 uppercase tracking-wider relative z-10">
+                <span class="flex items-center gap-1.5 text-green-600 bg-green-50 px-2.5 py-1 rounded-md"><Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'short' }) }}</span>
+              </div>
+              <h2 class="text-2xl sm:text-3xl font-black mb-4 text-gray-900 leading-tight group-hover:text-green-600 transition-colors line-clamp-3 relative z-10">
+                {{ featured.title }}
+              </h2>
+              <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed font-medium relative z-10">
+                {{ featured.excerpt || 'Temukan informasi selengkapnya mengenai berita ini dan berbagai perkembangan terbaru lainnya...' }}
+              </p>
+              <div class="mt-6 relative z-10">
+                <span class="text-sm font-bold text-green-600 flex items-center gap-1 group-hover:translate-x-2 transition-transform bg-transparent w-max">
+                  Baca Selengkapnya <ArrowRight class="w-4 h-4" />
+                </span>
+              </div>
+            </div>
+          </div>
 
-            <!-- LIST BERITA -->
-            <div class="col-span-1 flex flex-col gap-4">
-              <div
-                v-for="(news, index) in latestNews"
-                :key="index"
-                class="flex items-center gap-4 bg-white p-3 pr-5 rounded-2xl border border-gray-100 hover:border-green-200 shadow-sm hover:shadow-lg hover:shadow-green-500/5 cursor-pointer transition-all duration-300 group h-full"
-                @click="$router.push(`/berita/${news.slug}`)"
-              >
-                <div class="relative overflow-hidden rounded-xl w-24 h-24 sm:w-28 sm:h-28 shrink-0">
-                  <img
-                    :src="news.image"
-                    alt="News Thumbnail"
-                    class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                </div>
-                <div class="flex-1 py-1">
-                  <p class="text-[10px] font-bold text-green-600 mb-1.5 uppercase tracking-wider flex items-center gap-1">
-                    <Clock class="w-3 h-3" /> {{ formatDate(news.date) }}
+          <!-- LIST BERITA GRID -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div
+              v-for="(news, index) in latestNews"
+              :key="index"
+              class="flex flex-col bg-white rounded-3xl border border-gray-100 hover:border-green-200 shadow-sm hover:shadow-xl hover:shadow-green-500/10 cursor-pointer transition-all duration-300 group overflow-hidden"
+              @click="$router.push(`/berita/${news.slug}`)"
+            >
+              <div class="relative overflow-hidden w-full h-48 shrink-0 bg-gray-50">
+                <img
+                  :src="news.image"
+                  alt="News Thumbnail"
+                  class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <!-- Date Badge -->
+                <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md px-2.5 py-1.5 rounded-lg shadow-sm border border-white/20 transform translate-y-2 group-hover:translate-y-0 opacity-90 group-hover:opacity-100 transition-all duration-300">
+                  <p class="text-[10px] font-bold text-gray-700 flex items-center gap-1.5">
+                    <Clock class="w-3 h-3 text-green-500" /> {{ formatDate(news.date) }}
                   </p>
-                  <h3 class="text-sm sm:text-base font-bold leading-snug text-gray-800 line-clamp-2 group-hover:text-green-600 transition-colors">
-                    {{ news.title }}
-                  </h3>
                 </div>
+              </div>
+              <div class="p-5 flex-1 flex flex-col justify-center relative">
+                <!-- Hover indicator line -->
+                <div class="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-green-500 group-hover:h-1/2 transition-all duration-300 rounded-r-md"></div>
+                
+                <h3 class="text-base font-bold leading-snug text-gray-800 line-clamp-2 group-hover:text-green-600 transition-colors pl-1">
+                  {{ news.title }}
+                </h3>
               </div>
             </div>
           </div>
