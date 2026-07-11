@@ -1,49 +1,46 @@
 <template>
-  <div class="bg-gray-50 min-h-screen pb-16">
+  <div class="bg-gray-50/50 min-h-screen pb-24">
     <!-- RESTORE ORIGINAL PAGE HEADER -->
     <PageHeader title="Daftar Pengumuman" subtitle="Informasi terbaru untuk masyarakat" />
 
-    <div class="max-w-5xl mx-auto px-4 py-10">
+    <div class="max-w-7xl mx-auto px-4 py-8">
       
-      <!-- Search Bar -->
-      <div v-if="!store.loading && !store.error" class="mb-10 relative">
-        <div class="relative bg-white rounded-2xl shadow-sm border border-gray-200 flex items-center px-5 py-2 hover:border-green-400 focus-within:border-green-500 focus-within:ring-4 focus-within:ring-green-500/10 transition-all duration-300">
-          <Search class="w-5 h-5 text-gray-400" />
+      <!-- Modern Search Bar -->
+      <div v-if="!store.loading && !store.error" class="mb-12 max-w-2xl mx-auto">
+        <div class="relative bg-white rounded-full shadow-lg shadow-gray-200/50 flex items-center px-6 py-2.5 hover:shadow-xl hover:shadow-green-500/10 focus-within:shadow-xl focus-within:shadow-green-500/20 focus-within:ring-2 focus-within:ring-green-500 transition-all duration-500">
+          <Search class="w-6 h-6 text-green-600/70" />
           <input
             v-model="store.searchQuery"
             @input="store.currentPage = 1"
             type="text"
-            placeholder="Cari informasi pengumuman..."
-            class="w-full bg-transparent border-none focus:ring-0 text-gray-700 py-3 px-4 font-medium outline-none"
+            placeholder="Ketik untuk mencari pengumuman..."
+            class="w-full bg-transparent border-none focus:ring-0 text-gray-800 text-lg py-3 px-4 placeholder-gray-400 font-semibold outline-none"
           />
           <button 
             v-if="store.searchQuery"
             @click="store.searchQuery = ''; store.currentPage = 1"
-            class="p-2 text-gray-400 hover:text-red-500 bg-gray-50 hover:bg-red-50 rounded-lg transition-all"
+            class="p-2.5 text-gray-400 hover:text-white bg-gray-50 hover:bg-red-500 rounded-full transition-all duration-300"
           >
-            <X class="w-4 h-4" />
+            <X class="w-5 h-5" />
           </button>
         </div>
       </div>
 
       <!-- Loading State -->
-      <div v-if="store.loading" class="space-y-5">
-        <div v-for="i in 5" :key="i" class="animate-pulse bg-white rounded-2xl p-4 shadow-sm border border-gray-100 flex flex-col sm:flex-row gap-6">
-          <div class="w-full sm:w-56 h-48 sm:h-36 bg-gray-200 rounded-xl flex-shrink-0"></div>
-          <div class="flex-1 py-2 pr-4">
-            <div class="h-5 bg-gray-200 rounded w-1/4 mb-5"></div>
-            <div class="h-7 bg-gray-200 rounded w-full mb-3"></div>
-            <div class="h-7 bg-gray-200 rounded w-2/3"></div>
-          </div>
-        </div>
+      <div v-if="store.loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-flow-row-dense">
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] md:col-span-2 md:row-span-2 min-h-[400px] md:min-h-[584px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[280px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[280px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[280px]"></div>
       </div>
 
       <!-- Error State -->
-      <div v-else-if="store.error" class="bg-red-50 text-red-600 p-8 rounded-2xl border border-red-100 text-center max-w-2xl mx-auto shadow-sm">
-        <AlertCircle class="w-12 h-12 mx-auto mb-3 opacity-50" />
-        <p class="font-semibold text-lg">{{ store.error }}</p>
-        <button @click="store.fetchPengumuman()" class="mt-4 bg-white px-6 py-2.5 rounded-xl text-red-600 font-bold hover:bg-red-50 border border-red-200 transition-colors shadow-sm">
-          Coba Lagi
+      <div v-else-if="store.error" class="bg-red-50 text-red-600 p-8 rounded-3xl border border-red-100 text-center max-w-2xl mx-auto shadow-sm">
+        <AlertCircle class="w-16 h-16 mx-auto mb-4 opacity-50" />
+        <p class="font-bold text-xl mb-2">Terjadi Kesalahan</p>
+        <p class="font-medium text-red-500/80 mb-6">{{ store.error }}</p>
+        <button @click="store.fetchPengumuman()" class="bg-white px-8 py-3 rounded-xl text-red-600 font-bold hover:bg-red-600 hover:text-white border border-red-200 hover:border-red-600 transition-all shadow-sm hover:shadow-md">
+          Muat Ulang
         </button>
       </div>
 
@@ -59,94 +56,108 @@
         </button>
       </div>
 
-      <!-- Content Layout (Horizontal List) -->
-      <div v-else class="space-y-5">
-        <div
-          v-for="item in store.paginatedPengumuman"
+      <!-- BENTO GRID CARDS -->
+      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-flow-row-dense">
+        <router-link
+          v-for="(item, index) in store.paginatedPengumuman"
           :key="item.id"
-          class="bg-white rounded-2xl p-3 sm:p-4 shadow-sm hover:shadow-xl hover:shadow-green-500/10 transition-all duration-300 border border-gray-100 flex flex-col sm:flex-row gap-5 sm:gap-6 group transform hover:-translate-y-1"
+          :to="`/pengumuman/${item.slug}`"
+          :class="[
+            'block relative rounded-[2rem] overflow-hidden group shadow-md hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-1',
+            index === 0 && !store.searchQuery ? 'md:col-span-2 md:row-span-2 min-h-[400px] md:min-h-[584px]' : 'min-h-[300px] md:min-h-[280px]'
+          ]"
         >
-          <!-- Image (Left Side) -->
-          <div class="relative w-full sm:w-56 h-56 sm:h-auto sm:min-h-[170px] rounded-xl overflow-hidden flex-shrink-0 bg-gray-50">
-            <div v-if="!item.gambar" class="absolute inset-0 flex items-center justify-center">
-              <Megaphone class="w-12 h-12 text-gray-300" />
-            </div>
-            <img
-              v-if="item.gambar"
-              :src="$storageUrl(item.gambar)"
-              alt="Pengumuman"
-              class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-            />
-            
-            <button
-              v-if="item.gambar"
-              @click.prevent="openImage($storageUrl(item.gambar))"
-              class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300 backdrop-blur-sm"
-            >
-              <div class="bg-white/20 p-3 rounded-full text-white">
-                <ZoomIn class="w-6 h-6" />
-              </div>
-            </button>
-          </div>
-
-          <!-- Content (Right Side) -->
-          <div class="flex-1 flex flex-col py-1 pr-2 sm:pr-4">
-            <div class="flex flex-wrap items-center gap-3 mb-3">
-              <span class="bg-green-50 text-green-700 text-[10px] font-bold px-3 py-1 rounded-md border border-green-100/50 uppercase tracking-wider">
-                Pengumuman
-              </span>
-              <span class="text-xs font-semibold text-gray-400 flex items-center gap-1.5">
-                <Calendar class="w-3.5 h-3.5" />
-                {{ formatDate(item.created_at, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
-              </span>
-            </div>
-
-            <h2 class="text-lg sm:text-xl font-bold text-gray-900 mb-3 group-hover:text-green-600 transition-colors leading-snug line-clamp-2">
-              {{ item.judul }}
-            </h2>
-
-            <div class="mt-auto flex justify-start sm:justify-end border-t border-gray-50 pt-4">
-              <router-link
-                :to="`/pengumuman/${item.slug}`"
-                class="inline-flex items-center justify-center w-full sm:w-auto gap-2 text-sm font-bold text-green-700 bg-green-50 hover:bg-green-600 hover:text-white px-5 py-2.5 rounded-xl transition-colors group/link"
-              >
-                Baca Detail
-                <ArrowRight class="w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-              </router-link>
+          <!-- Background Image or Gradient -->
+          <div v-if="!item.gambar" class="absolute inset-0 bg-gradient-to-br from-green-600 via-teal-600 to-blue-700">
+            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+              <Megaphone class="w-32 h-32 text-white/10 group-hover:scale-125 transition-transform duration-1000" />
             </div>
           </div>
-        </div>
+          
+          <img
+            v-if="item.gambar"
+            :src="$storageUrl(item.gambar)"
+            alt="Pengumuman"
+            class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 group-hover:-rotate-1 transition-transform duration-1000 ease-out"
+          />
+          
+          <!-- Gradient Overlays for Readability -->
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
+          <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent opacity-60"></div>
+          
+          <!-- Lencana Terbaru (Hanya untuk item pertama) -->
+          <div v-if="index === 0 && !store.searchQuery" class="absolute top-6 right-6 flex items-center gap-2 bg-red-500 text-white px-4 py-1.5 rounded-full font-bold text-xs shadow-lg uppercase tracking-widest animate-bounce z-20">
+            <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
+            Terbaru
+          </div>
+
+          <!-- Date Badge -->
+          <div class="absolute top-6 left-6 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-full text-white text-xs font-bold border border-white/30 flex items-center gap-2 transition-colors z-20">
+             <Calendar class="w-4 h-4" />
+             {{ formatDate(item.created_at, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
+          </div>
+
+          <!-- Zoom Icon -->
+          <div
+            v-if="item.gambar"
+            @click.prevent="openImage($storageUrl(item.gambar))"
+            class="absolute top-6 right-6 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 z-20"
+            :class="{ 'right-36': index === 0 && !store.searchQuery }"
+          >
+            <ZoomIn class="w-5 h-5" />
+          </div>
+
+          <!-- Content at Bottom -->
+          <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 z-20">
+             <h2 :class="[
+                'font-extrabold text-white mb-4 line-clamp-3 leading-snug drop-shadow-md group-hover:text-green-300 transition-colors',
+                index === 0 && !store.searchQuery ? 'text-2xl md:text-4xl' : 'text-xl'
+             ]">
+                {{ item.judul }}
+             </h2>
+             
+             <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center gap-2 text-white font-bold bg-white/20 backdrop-blur-md w-fit px-5 py-2.5 rounded-xl border border-white/20 hover:bg-green-500 hover:border-green-500">
+                Baca Pengumuman
+                <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+             </div>
+          </div>
+        </router-link>
       </div>
 
       <!-- Pagination -->
-      <div class="flex justify-center mt-12 gap-2" v-if="store.totalPages > 1">
+      <div class="flex justify-center mt-16 gap-3" v-if="store.totalPages > 1">
         <button
           @click="store.prevPage"
           :disabled="store.currentPage === 1"
-          class="p-2.5 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-colors shadow-sm"
+          class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-900 hover:text-white disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-all duration-300 shadow-sm"
         >
           <ChevronLeft class="w-5 h-5" />
+          <span class="font-bold hidden sm:block">Sebelumnya</span>
         </button>
 
-        <button
-          v-for="page in store.totalPages"
-          :key="page"
-          @click="store.goToPage(page)"
-          :class="[
-            'w-11 h-11 rounded-xl font-bold transition-all shadow-sm flex items-center justify-center',
-            store.currentPage === page
-              ? 'bg-green-500 text-white border-transparent'
-              : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 hover:border-green-300',
-          ]"
-        >
-          {{ page }}
-        </button>
+        <div class="flex gap-2 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
+          <button
+            v-for="page in store.totalPages"
+            :key="page"
+            @click="store.goToPage(page)"
+            :class="[
+              'w-10 h-10 rounded-xl font-bold transition-all flex items-center justify-center',
+              store.currentPage === page
+                ? 'bg-green-500 text-white shadow-md shadow-green-500/30'
+                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
+            ]"
+          >
+            {{ page }}
+          </button>
+        </div>
 
         <button
           @click="store.nextPage"
           :disabled="store.currentPage === store.totalPages"
-          class="p-2.5 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-colors shadow-sm"
+          class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-900 hover:text-white disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-all duration-300 shadow-sm"
         >
+          <span class="font-bold hidden sm:block">Selanjutnya</span>
           <ChevronRight class="w-5 h-5" />
         </button>
       </div>
@@ -156,13 +167,13 @@
     <Transition name="fade">
       <div
         v-if="selectedImage"
-        class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4"
+        class="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-[100] p-4 sm:p-10"
         @click="closeImage"
       >
-        <button @click.stop="closeImage" class="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-2.5 rounded-full transition-all backdrop-blur-md hover:scale-110">
+        <button @click.stop="closeImage" class="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 hover:bg-white/30 p-3 rounded-full transition-all backdrop-blur-md hover:scale-110 hover:rotate-90 duration-300">
           <X class="w-6 h-6" />
         </button>
-        <img :src="selectedImage" class="max-w-full max-h-[90vh] rounded-2xl shadow-2xl ring-1 ring-white/10" @click.stop />
+        <img :src="selectedImage" class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl ring-1 ring-white/10 transform transition-transform" @click.stop />
       </div>
     </Transition>
   </div>
@@ -194,11 +205,12 @@ onMounted(() => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+  transform: scale(0.95);
 }
 </style>
