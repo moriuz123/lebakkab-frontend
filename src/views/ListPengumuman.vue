@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-50/50 min-h-screen pb-24">
+  <div class="bg-[#F5F5F7] min-h-screen pb-24">
     <!-- RESTORE ORIGINAL PAGE HEADER -->
     <PageHeader title="Daftar Pengumuman" subtitle="Informasi terbaru untuk masyarakat" />
 
@@ -7,13 +7,13 @@
       
       <!-- Modern Search Bar -->
       <div v-if="!store.loading && !store.error" class="mb-12 max-w-2xl mx-auto">
-        <div class="relative bg-white rounded-full shadow-lg shadow-gray-200/50 flex items-center px-6 py-2.5 hover:shadow-xl hover:shadow-green-500/10 focus-within:shadow-xl focus-within:shadow-green-500/20 focus-within:ring-2 focus-within:ring-green-500 transition-all duration-500">
+        <div class="relative bg-white rounded-full shadow-md shadow-gray-200/50 flex items-center px-6 py-2.5 hover:shadow-xl hover:shadow-green-500/10 focus-within:shadow-xl focus-within:shadow-green-500/20 focus-within:ring-2 focus-within:ring-green-500 transition-all duration-500">
           <Search class="w-6 h-6 text-green-600/70" />
           <input
             v-model="store.searchQuery"
             @input="store.currentPage = 1"
             type="text"
-            placeholder="Ketik untuk mencari pengumuman..."
+            placeholder="Cari pengumuman..."
             class="w-full bg-transparent border-none focus:ring-0 text-gray-800 text-lg py-3 px-4 placeholder-gray-400 font-semibold outline-none"
           />
           <button 
@@ -27,11 +27,11 @@
       </div>
 
       <!-- Loading State -->
-      <div v-if="store.loading" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-flow-row-dense">
-        <div class="animate-pulse bg-gray-200 rounded-[2rem] md:col-span-2 md:row-span-2 min-h-[400px] md:min-h-[584px]"></div>
-        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[280px]"></div>
-        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[280px]"></div>
-        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[280px]"></div>
+      <div v-if="store.loading" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 md:auto-rows-[240px] grid-flow-row-dense">
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] md:col-span-2 md:row-span-2 min-h-[300px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[200px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[200px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] md:col-span-2 min-h-[200px]"></div>
       </div>
 
       <!-- Error State -->
@@ -56,108 +56,125 @@
         </button>
       </div>
 
-      <!-- BENTO GRID CARDS -->
-      <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 grid-flow-row-dense">
+      <!-- TRUE STRUCTURAL BENTO GRID -->
+      <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 md:auto-rows-[240px] grid-flow-row-dense">
         <router-link
           v-for="(item, index) in store.paginatedPengumuman"
           :key="item.id"
           :to="`/pengumuman/${item.slug}`"
           :class="[
-            'block relative rounded-[2rem] overflow-hidden group shadow-md hover:shadow-2xl hover:shadow-green-500/20 transition-all duration-500 transform hover:-translate-y-1',
-            index === 0 && !store.searchQuery ? 'md:col-span-2 md:row-span-2 min-h-[400px] md:min-h-[584px]' : 'min-h-[300px] md:min-h-[280px]'
+            'bg-white rounded-[2rem] p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 border border-gray-100/50 flex flex-col group overflow-hidden',
+            getBentoClass(index)
           ]"
         >
-          <!-- Background Image or Gradient -->
-          <div v-if="!item.gambar" class="absolute inset-0 bg-gradient-to-br from-green-600 via-teal-600 to-blue-700">
-            <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-            <div class="absolute inset-0 flex items-center justify-center">
-              <Megaphone class="w-32 h-32 text-white/10 group-hover:scale-125 transition-transform duration-1000" />
-            </div>
-          </div>
-          
-          <img
-            v-if="item.gambar"
-            :src="$storageUrl(item.gambar)"
-            alt="Pengumuman"
-            class="absolute inset-0 w-full h-full object-cover group-hover:scale-110 group-hover:-rotate-1 transition-transform duration-1000 ease-out"
-          />
-          
-          <!-- Gradient Overlays for Readability -->
-          <div class="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-500"></div>
-          <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-transparent opacity-60"></div>
-          
-          <!-- Lencana Terbaru (Hanya untuk item pertama) -->
-          <div v-if="index === 0 && !store.searchQuery" class="absolute top-6 right-6 flex items-center gap-2 bg-red-500 text-white px-4 py-1.5 rounded-full font-bold text-xs shadow-lg uppercase tracking-widest animate-bounce z-20">
-            <div class="w-2 h-2 bg-white rounded-full animate-ping"></div>
-            Terbaru
-          </div>
-
-          <!-- Date Badge -->
-          <div class="absolute top-6 left-6 bg-white/20 hover:bg-white/30 backdrop-blur-md px-4 py-2 rounded-full text-white text-xs font-bold border border-white/30 flex items-center gap-2 transition-colors z-20">
-             <Calendar class="w-4 h-4" />
-             {{ formatDate(item.created_at, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
-          </div>
-
-          <!-- Zoom Icon -->
-          <div
-            v-if="item.gambar"
-            @click.prevent="openImage($storageUrl(item.gambar))"
-            class="absolute top-6 right-6 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-3 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 z-20"
-            :class="{ 'right-36': index === 0 && !store.searchQuery }"
-          >
-            <ZoomIn class="w-5 h-5" />
-          </div>
-
-          <!-- Content at Bottom -->
-          <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 transform translate-y-8 group-hover:translate-y-0 transition-transform duration-500 z-20">
-             <h2 :class="[
-                'font-extrabold text-white mb-4 line-clamp-3 leading-snug drop-shadow-md group-hover:text-green-300 transition-colors',
-                index === 0 && !store.searchQuery ? 'text-2xl md:text-4xl' : 'text-xl'
-             ]">
-                {{ item.judul }}
-             </h2>
-             
-             <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center gap-2 text-white font-bold bg-white/20 backdrop-blur-md w-fit px-5 py-2.5 rounded-xl border border-white/20 hover:bg-green-500 hover:border-green-500">
-                Baca Pengumuman
-                <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+           <!-- === LARGE BENTO CARD (2x2) === -->
+           <template v-if="getBentoType(index) === 'large'">
+             <div class="w-full h-48 md:h-[55%] rounded-2xl overflow-hidden mb-4 md:mb-5 relative shrink-0 bg-gray-50">
+               <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Megaphone class="w-16 h-16"/></div>
+               
+               <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-gray-900 shadow-sm flex items-center gap-1.5">
+                 <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div> Terbaru
+               </div>
+               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-4 right-4 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><ZoomIn class="w-4 h-4" /></button>
              </div>
-          </div>
+             
+             <div class="flex-1 flex flex-col justify-between">
+               <div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
+                 <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 leading-snug line-clamp-3 group-hover:text-green-600 transition-colors">{{ item.judul }}</h2>
+               </div>
+               <div class="mt-4 flex items-center gap-2 text-sm font-bold text-green-600 bg-green-50 w-fit px-4 py-2 rounded-xl">
+                  Baca Selengkapnya <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+               </div>
+             </div>
+           </template>
+
+           <!-- === WIDE BENTO CARD (2x1) === -->
+           <template v-else-if="getBentoType(index) === 'wide'">
+             <div class="flex flex-col md:flex-row gap-5 h-full w-full">
+               <div class="w-full md:w-2/5 h-40 md:h-full rounded-2xl overflow-hidden shrink-0 bg-gray-50 relative">
+                  <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Megaphone class="w-10 h-10"/></div>
+                  <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><ZoomIn class="w-4 h-4" /></button>
+               </div>
+               <div class="flex-1 flex flex-col justify-center py-2">
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
+                 <h2 class="text-lg md:text-xl font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-green-600 transition-colors">{{ item.judul }}</h2>
+                 <div class="mt-auto pt-4 flex items-center gap-2 text-sm font-bold text-gray-500 group-hover:text-green-600 transition-colors">
+                    Detail Pengumuman <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                 </div>
+               </div>
+             </div>
+           </template>
+
+           <!-- === TALL BENTO CARD (1x2) === -->
+           <template v-else-if="getBentoType(index) === 'tall'">
+             <div class="w-full h-48 md:h-[50%] rounded-2xl overflow-hidden mb-4 shrink-0 bg-gray-50 relative">
+               <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Megaphone class="w-12 h-12"/></div>
+               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><ZoomIn class="w-4 h-4" /></button>
+             </div>
+             <div class="flex-1 flex flex-col justify-between">
+               <div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short', year: 'numeric' }) }}</div>
+                 <h2 class="text-lg font-bold text-gray-900 leading-snug line-clamp-5 group-hover:text-green-600 transition-colors">{{ item.judul }}</h2>
+               </div>
+               <div class="mt-4 bg-gray-50 group-hover:bg-green-50 p-3 rounded-xl flex items-center justify-center transition-colors">
+                  <ArrowRight class="w-5 h-5 text-gray-400 group-hover:text-green-600" />
+               </div>
+             </div>
+           </template>
+
+           <!-- === SMALL BENTO CARD (1x1) === -->
+           <template v-else>
+             <div class="flex-1 flex flex-col h-full relative">
+               <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short' }) }}</div>
+               <h2 class="text-base font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-green-600 transition-colors z-10">{{ item.judul }}</h2>
+               
+               <div class="mt-auto pt-4 flex justify-between items-end">
+                  <div class="bg-gray-50 group-hover:bg-green-50 p-2.5 rounded-full transition-colors shrink-0">
+                     <ArrowRight class="w-4 h-4 text-gray-400 group-hover:text-green-600" />
+                  </div>
+                  <div v-if="item.gambar" class="w-16 h-16 rounded-xl overflow-hidden shadow-sm shrink-0 relative">
+                     <img :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                  </div>
+               </div>
+             </div>
+           </template>
+
         </router-link>
       </div>
 
       <!-- Pagination -->
-      <div class="flex justify-center mt-16 gap-3" v-if="store.totalPages > 1">
+      <div class="flex justify-center mt-12 gap-2" v-if="store.totalPages > 1">
         <button
           @click="store.prevPage"
           :disabled="store.currentPage === 1"
-          class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-900 hover:text-white disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-all duration-300 shadow-sm"
+          class="p-3 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-colors shadow-sm"
         >
           <ChevronLeft class="w-5 h-5" />
-          <span class="font-bold hidden sm:block">Sebelumnya</span>
         </button>
 
-        <div class="flex gap-2 bg-white p-2 rounded-2xl shadow-sm border border-gray-100">
-          <button
-            v-for="page in store.totalPages"
-            :key="page"
-            @click="store.goToPage(page)"
-            :class="[
-              'w-10 h-10 rounded-xl font-bold transition-all flex items-center justify-center',
-              store.currentPage === page
-                ? 'bg-green-500 text-white shadow-md shadow-green-500/30'
-                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900',
-            ]"
-          >
-            {{ page }}
-          </button>
-        </div>
+        <button
+          v-for="page in store.totalPages"
+          :key="page"
+          @click="store.goToPage(page)"
+          :class="[
+            'w-12 h-12 rounded-xl font-bold transition-all shadow-sm flex items-center justify-center text-sm',
+            store.currentPage === page
+              ? 'bg-green-500 text-white border-transparent'
+              : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 hover:border-green-300',
+          ]"
+        >
+          {{ page }}
+        </button>
 
         <button
           @click="store.nextPage"
           :disabled="store.currentPage === store.totalPages"
-          class="flex items-center gap-2 px-5 py-3 rounded-2xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-900 hover:text-white disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-all duration-300 shadow-sm"
+          class="p-3 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-colors shadow-sm"
         >
-          <span class="font-bold hidden sm:block">Selanjutnya</span>
           <ChevronRight class="w-5 h-5" />
         </button>
       </div>
@@ -167,13 +184,13 @@
     <Transition name="fade">
       <div
         v-if="selectedImage"
-        class="fixed inset-0 bg-black/95 backdrop-blur-xl flex items-center justify-center z-[100] p-4 sm:p-10"
+        class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[100] p-4 sm:p-10"
         @click="closeImage"
       >
         <button @click.stop="closeImage" class="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 hover:bg-white/30 p-3 rounded-full transition-all backdrop-blur-md hover:scale-110 hover:rotate-90 duration-300">
           <X class="w-6 h-6" />
         </button>
-        <img :src="selectedImage" class="max-w-full max-h-full object-contain rounded-2xl shadow-2xl ring-1 ring-white/10 transform transition-transform" @click.stop />
+        <img :src="selectedImage" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl ring-1 ring-white/10 transform transition-transform" @click.stop />
       </div>
     </Transition>
   </div>
@@ -197,6 +214,25 @@ const closeImage = () => {
   selectedImage.value = null
 }
 
+// ==== BENTO GRID LOGIC ====
+// Pattern ensures a perfect dense packing in a 3 or 4 column grid
+const bentoPatterns = [
+  { class: 'md:col-span-2 md:row-span-2', type: 'large' }, // Index 0
+  { class: 'md:col-span-1 md:row-span-1', type: 'small' }, // Index 1
+  { class: 'md:col-span-1 md:row-span-1', type: 'small' }, // Index 2
+  { class: 'md:col-span-2 md:row-span-1', type: 'wide' },  // Index 3
+  { class: 'md:col-span-1 md:row-span-2', type: 'tall' },  // Index 4
+  { class: 'md:col-span-1 md:row-span-1', type: 'small' }  // Index 5
+]
+
+const getBentoClass = (index) => {
+  return bentoPatterns[index % bentoPatterns.length].class
+}
+
+const getBentoType = (index) => {
+  return bentoPatterns[index % bentoPatterns.length].type
+}
+
 onMounted(() => {
   store.fetchPengumuman()
 })
@@ -205,12 +241,11 @@ onMounted(() => {
 <style scoped>
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 0.3s ease;
 }
 
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
-  transform: scale(0.95);
 }
 </style>
