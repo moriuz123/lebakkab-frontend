@@ -174,7 +174,7 @@
             <router-link
               v-for="item in recentPengumuman"
               :key="item.id"
-              :to="`/pengumuman/${item.id}`"
+              :to="`/pengumuman/${item.slug}`"
               class="group block border-b border-gray-100 pb-4 last:border-0 last:pb-0"
             >
               <h4 class="text-sm font-semibold text-gray-900 group-hover:text-primary-600 line-clamp-2 mb-2 leading-relaxed">{{ item.judul }}</h4>
