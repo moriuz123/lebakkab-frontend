@@ -2,8 +2,8 @@
   <aside class="space-y-6">
     <!-- Layanan Terbaru -->
     <BannerSlider />
-    <section class="sidebar-section bg-white shadow-md rounded-lg p-4">
-      <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Layanan Terbaru</h3>
+    <section class="sidebar-widget">
+      <h3 class="sidebar-title">Layanan Terbaru</h3>
 
       <div v-if="layananList.length === 0" class="text-gray-500 text-sm">Tidak ada layanan.</div>
 

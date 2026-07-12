@@ -177,20 +177,20 @@
 
   /* Layout halaman (utama + sidebar) */
   .page-container {
-    @apply max-w-screen-xl mx-auto px-4 py-8 lg:flex lg:space-x-8;
+    @apply max-w-7xl mx-auto px-4 py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-3 gap-8;
     min-height: 500px;
   }
 
   .page-content {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply bg-white rounded-2xl shadow-[0_2px_15px_-3px_rgba(6,81,237,0.05)] border border-gray-100 p-6 sm:p-8;
   }
 
   .page-main {
-    @apply lg:w-3/4;
+    @apply lg:col-span-2 space-y-8;
   }
 
   .page-sidebar {
-    @apply lg:w-1/4 mt-8 lg:mt-0;
+    @apply lg:col-span-1 space-y-6 mt-0;
   }
 
   /* Elemen konten berita / artikel */

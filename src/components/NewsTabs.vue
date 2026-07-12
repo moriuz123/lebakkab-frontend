@@ -1,5 +1,5 @@
 <template>
-  <div class="news-tabs bg-white rounded-2xl shadow-md p-4 border border-gray-100 font-poppins">
+  <div class="sidebar-widget font-poppins">
     <!-- 🔹 Tabs Header -->
     <div class="tabs-header flex border-b border-gray-200 mb-4">
       <button

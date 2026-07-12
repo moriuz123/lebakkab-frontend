@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-white rounded-xl shadow-lg border border-gray-100 p-6 space-y-4">
-    <h2 class="font-semibold text-gray-800 text-lg border-b pb-2 mb-2">Daftar Kecamatan</h2>
+  <div class="sidebar-widget space-y-4">
+    <h2 class="sidebar-title">Daftar Kecamatan</h2>
 
     <div v-if="loading" class="text-gray-400 text-sm">Memuat data...</div>
 

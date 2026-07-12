@@ -10,18 +10,18 @@
     />
 
     <!-- ✅ Layout konten & sidebar -->
-    <div class="max-w-screen-xl mx-auto px-4 py-8 lg:flex lg:space-x-8">
+    <div class="page-container">
       <!-- Konten utama -->
-      <div class="lg:w-3/4">
+      <div class="page-main">
         <!-- ✅ Filter Kategori Berita -->
         <div class="mb-6 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
           <div class="flex space-x-2">
             <router-link
               to="/berita"
-              class="inline-block px-4 py-2 rounded-full text-sm font-medium transition-colors"
+              class="inline-block px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm"
               :class="{
-                'bg-green-600 text-white': $route.path === '/berita',
-                'bg-gray-100 text-gray-700 hover:bg-gray-200': $route.path !== '/berita'
+                'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-blue-500/30': $route.path === '/berita',
+                'bg-white text-gray-700 border border-transparent hover:border-gray-200 hover:bg-gray-50': $route.path !== '/berita'
               }"
             >
               Semua
@@ -31,7 +31,7 @@
               v-for="cat in kategoriList"
               :key="cat.id"
               :to="`/berita/kategori/${cat.slug}`"
-              class="inline-block px-4 py-2 rounded-full text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+              class="inline-block px-5 py-2.5 rounded-full text-sm font-semibold border border-transparent shadow-sm bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-200 transition-all duration-300"
             >
               {{ cat.nama }}
             </router-link>
@@ -90,7 +90,7 @@
       </div>
 
       <!-- ✅ Sidebar -->
-      <aside class="lg:w-1/4 mt-8 lg:mt-0">
+      <aside class="page-sidebar">
         <SidebarNews />
       </aside>
     </div>

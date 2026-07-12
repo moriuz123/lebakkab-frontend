@@ -6,8 +6,8 @@
     </section>
 
     <!-- Pengumuman Terbaru -->
-    <section class="sidebar-section">
-      <h3 class="text-lg font-semibold text-gray-700 mb-4">Pengumuman Terbaru</h3>
+    <section class="sidebar-widget">
+      <h3 class="sidebar-title">Pengumuman Terbaru</h3>
       <ul class="space-y-4">
         <li v-for="item in latestPengumuman" :key="item.id" class="flex items-start gap-3">
           <!-- Thumbnail (default jika kosong) -->

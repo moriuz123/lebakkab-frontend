@@ -37,7 +37,7 @@
 
       <!-- ✅ Sidebar -->
       <aside class="page-sidebar" v-if="!store.loading">
-        <SidebarDetilNews />
+        <SidebarNews />
       </aside>
     </div>
 
@@ -51,7 +51,7 @@ import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBeritaStore } from '../stores/useBeritaStore'
 import { useHead } from '@vueuse/head'
-import SidebarDetilNews from '../components/SidebarDetilNews.vue'
+import SidebarNews from '../components/SidebarNews.vue'
 import PageHeader from '../components/PageHeader.vue'
 import { formatDate } from '@/utils/helpers'
 
