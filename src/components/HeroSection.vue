@@ -28,11 +28,7 @@
         Pemerintah Kabupaten Lebak
       </h2>
 
-      <!-- Taglines -->
-      <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 sm:gap-6 mb-10 z-30">
-        <img v-if="logoTagline" :src="logoTagline + cacheBuster" alt="Tagline" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
-        <img v-if="logoTagline2" :src="logoTagline2 + cacheBuster" alt="Tagline 2" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
-      </div>
+
 
       <!-- Form Pencarian (Glassmorphism) -->
       <div class="w-full max-w-xl lg:max-w-2xl relative group mb-10 z-30">
@@ -79,14 +75,23 @@
       </div>
     </div>
 
-    <!-- Logo Hero (Symmetrically positioned) -->
-    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex justify-center lg:justify-end items-center">
+    <!-- Logo Hero & Taglines (Symmetrically positioned) -->
+    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex flex-col justify-center items-center lg:items-end gap-4 sm:gap-6 lg:pr-10">
+      
+      <!-- Logo Hero -->
       <img
         v-if="logoHero"
         :src="logoHero"
         alt="Hero Logo"
-        class="w-auto h-[50%] sm:h-[60%] lg:h-[75%] max-h-[700px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 transform hover:scale-105"
+        class="w-auto h-[40%] sm:h-[50%] lg:h-[60%] max-h-[600px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 transform hover:scale-105 pointer-events-auto"
       />
+
+      <!-- Taglines -->
+      <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto mt-4">
+        <!-- Tagline 1 diperbesar ~20% -->
+        <img v-if="logoTagline" :src="logoTagline + cacheBuster" alt="Tagline 1" class="h-14 sm:h-20 lg:h-24 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+        <img v-if="logoTagline2" :src="logoTagline2 + cacheBuster" alt="Tagline 2" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+      </div>
     </div>
 
     <!-- Scroll Down Indicator -->
