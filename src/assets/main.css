@@ -382,7 +382,11 @@
   }
   .page-loading-placeholder::before {
     content: '';
-    @apply w-10 h-10 mb-4 border-4 border-gray-200 border-t-green-600 rounded-full animate-spin;
+    @apply block w-[72px] h-[72px] mb-4 animate-spin;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path id="circle" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" /><text fill="%2316a34a" font-family="sans-serif" font-weight="bold" font-size="15"><textPath href="%23circle">lebak ruhay • lebak ruhay • </textPath></text></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   /* ===================================================== */
