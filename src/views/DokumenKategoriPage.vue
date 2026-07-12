@@ -39,7 +39,7 @@
 
             <div 
               v-else
-              v-for="doc in dokumentStore.dokuments" 
+              v-for="doc in paginatedDokument" 
               :key="doc.id"
               class="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
             >
@@ -77,6 +77,13 @@
                 </a>
               </div>
             </div>
+            
+            <PaginationNav
+              v-if="totalPages > 1"
+              :current-page="currentPage"
+              :total-pages="totalPages"
+              @update:page="(page) => currentPage = page"
+            />
           </div>
         </div>
 
@@ -200,8 +207,9 @@
 import { useRoute } from 'vue-router'
 import { useDokumentStore } from '@/stores/dokument'
 import { usePengumumanStore } from '@/stores/pengumuman'
-import { onMounted, ref, computed } from 'vue'
+import { onMounted, ref, computed, watch } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 import VuePdfApp from 'vue3-pdf-app'
 import 'vue3-pdf-app/dist/icons/main.css'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
@@ -217,6 +225,23 @@ const selectedFileUrl = ref(null)
 onMounted(() => {
   dokumentStore.fetchDokumentsByKategori(route.params.slug)
   pengumumanStore.fetchPengumuman()
+})
+
+const currentPage = ref(1)
+const itemsPerPage = 8
+
+const totalPages = computed(() => {
+  return Math.ceil(dokumentStore.dokuments.length / itemsPerPage) || 1
+})
+
+const paginatedDokument = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return dokumentStore.dokuments.slice(start, end)
+})
+
+watch(() => route.params.slug, () => {
+  currentPage.value = 1
 })
 
 const recentPengumuman = computed(() => {

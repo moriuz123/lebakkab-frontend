@@ -33,7 +33,7 @@
           <!-- Document List -->
           <div v-else class="space-y-4">
             <div 
-              v-for="dokument in filteredDokument" 
+              v-for="dokument in paginatedDokument" 
               :key="dokument.id"
               class="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
             >
@@ -79,6 +79,13 @@
                 Reset Filter
               </button>
             </div>
+
+            <PaginationNav
+              v-if="totalPages > 1"
+              :current-page="currentPage"
+              :total-pages="totalPages"
+              @update:page="(page) => currentPage = page"
+            />
           </div>
         </div>
 
@@ -237,8 +244,9 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 import { useDokumentStore } from '@/stores/dokument'
 import { usePengumumanStore } from '@/stores/pengumuman'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
@@ -266,6 +274,23 @@ const filteredDokument = computed(() => {
     const matchSearch = item.judul.toLowerCase().includes(searchQuery.value.toLowerCase())
     return matchCategory && matchSearch
   })
+})
+
+const currentPage = ref(1)
+const itemsPerPage = 8
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredDokument.value.length / itemsPerPage) || 1
+})
+
+const paginatedDokument = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage
+  const end = start + itemsPerPage
+  return filteredDokument.value.slice(start, end)
+})
+
+watch([searchQuery, selectedCategory], () => {
+  currentPage.value = 1
 })
 
 const kategoriList = computed(() => {
