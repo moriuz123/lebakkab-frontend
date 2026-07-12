@@ -16,7 +16,12 @@ export const usePejabatStore = defineStore('pejabat', {
         // Attempting to fetch from API if exists. If not, fallback to mock data
         const response = await axios.get('/api/pejabat').catch(() => null)
         if (response && response.data && response.data.data) {
-          this.pejabats = response.data.data
+          this.pejabats = response.data.data.map(p => {
+            if (!p.slug) {
+              p.slug = (p.nama || p.jabatan || 'pejabat-tanpa-nama').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+            }
+            return p
+          })
         } else {
           // Fallback MOCK DATA
           this.pejabats = [
@@ -78,7 +83,7 @@ export const usePejabatStore = defineStore('pejabat', {
           if (this.pejabats.length === 0) {
             await this.fetchPejabats()
           }
-          this.pejabatDetail = this.pejabats.find((p) => p.slug === slug)
+          this.pejabatDetail = this.pejabats.find((p) => p.slug === slug || p.id == slug)
           if (!this.pejabatDetail) {
              throw new Error('Data pejabat tidak ditemukan')
           }
