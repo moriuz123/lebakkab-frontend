@@ -147,37 +147,13 @@
       </div>
 
       <!-- Pagination -->
-      <div class="flex justify-center mt-12 gap-2" v-if="store.totalPages > 1">
-        <button
-          @click="store.prevPage"
-          :disabled="store.currentPage === 1"
-          class="p-3 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-colors shadow-sm"
-        >
-          <ChevronLeft class="w-5 h-5" />
-        </button>
-
-        <button
-          v-for="page in store.totalPages"
-          :key="page"
-          @click="store.goToPage(page)"
-          :class="[
-            'w-12 h-12 rounded-xl font-bold transition-all shadow-sm flex items-center justify-center text-sm',
-            store.currentPage === page
-              ? 'bg-green-500 text-white border-transparent'
-              : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 hover:border-green-300',
-          ]"
-        >
-          {{ page }}
-        </button>
-
-        <button
-          @click="store.nextPage"
-          :disabled="store.currentPage === store.totalPages"
-          class="p-3 rounded-xl bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-green-600 disabled:opacity-50 disabled:hover:bg-white disabled:hover:text-gray-600 transition-colors shadow-sm"
-        >
-          <ChevronRight class="w-5 h-5" />
-        </button>
-      </div>
+      <!-- PaginationNav -->
+      <PaginationNav
+        v-if="store.totalPages > 1"
+        :current-page="store.currentPage"
+        :total-pages="store.totalPages"
+        @update:page="store.goToPage"
+      />
     </div>
 
     <!-- Image Modal -->
@@ -200,8 +176,9 @@
 import { ref, onMounted } from 'vue'
 import { usePengumumanStore } from '@/stores/pengumuman'
 import PageHeader from '@/components/PageHeader.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 import { formatDate } from '@/utils/helpers'
-import { Search, SearchX, X, AlertCircle, ZoomIn, Calendar, ArrowRight, ChevronLeft, ChevronRight, Megaphone } from 'lucide-vue-next'
+import { Search, SearchX, X, AlertCircle, ZoomIn, Calendar, ArrowRight, Megaphone } from 'lucide-vue-next'
 
 const store = usePengumumanStore()
 const selectedImage = ref(null)

@@ -87,25 +87,12 @@
         </div>
 
         <!-- Pagination -->
-        <div class="flex justify-center items-center mt-10 space-x-3">
-          <button
-            @click="prevPage"
-            :disabled="currentPage === 1"
-            class="px-3 py-1 border rounded disabled:opacity-50 hover:bg-gray-100 transition"
-          >
-            Prev
-          </button>
-          <span class="text-sm font-medium text-gray-700">
-            Halaman {{ currentPage }} dari {{ totalPages }}
-          </span>
-          <button
-            @click="nextPage"
-            :disabled="currentPage === totalPages"
-            class="px-3 py-1 border rounded disabled:opacity-50 hover:bg-gray-100 transition"
-          >
-            Next
-          </button>
-        </div>
+        <PaginationNav
+          v-if="totalPages > 1"
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @update:page="(page) => currentPage = page"
+        />
       </div>
     </div>
   </div>
@@ -115,6 +102,7 @@
 import { useOpdStore } from '@/stores/opd'
 import { onMounted, computed, ref, watch } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 
 const opdStore = useOpdStore()
 const currentPage = ref(1)
@@ -148,10 +136,5 @@ watch(searchQuery, () => {
   currentPage.value = 1
 })
 
-function nextPage() {
-  if (currentPage.value < totalPages.value) currentPage.value++
-}
-function prevPage() {
-  if (currentPage.value > 1) currentPage.value--
-}
+// Old pagination functions removed
 </script>

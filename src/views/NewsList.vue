@@ -66,27 +66,12 @@
         </div>
 
         <!-- ✅ Pagination Navigasi -->
-        <div v-if="pagination.last_page > 1" class="flex justify-center items-center mt-10 space-x-4">
-          <button 
-            @click="changePage(pagination.current_page - 1)" 
-            :disabled="pagination.current_page === 1"
-            class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          >
-            Sebelumnya
-          </button>
-          
-          <span class="text-gray-600 font-medium">
-            Halaman {{ pagination.current_page }} dari {{ pagination.last_page }}
-          </span>
-
-          <button 
-            @click="changePage(pagination.current_page + 1)" 
-            :disabled="pagination.current_page === pagination.last_page"
-            class="px-4 py-2 bg-white border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-          >
-            Selanjutnya
-          </button>
-        </div>
+        <PaginationNav
+          v-if="pagination.last_page > 1"
+          :current-page="pagination.current_page"
+          :total-pages="pagination.last_page"
+          @update:page="changePage"
+        />
       </div>
 
       <!-- ✅ Sidebar -->
@@ -104,6 +89,7 @@ import { useBeritaStore } from '@/stores/useBeritaStore'
 import PageHeader from '@/components/PageHeader.vue'
 import NewsCard from '@/components/NewsCard.vue'
 import SidebarNews from '@/components/SidebarNews.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 
 const store = useBeritaStore()
 const pagination = ref({ current_page: 1, last_page: 1 })
