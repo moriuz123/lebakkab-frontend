@@ -115,6 +115,12 @@ const toggle = () => {
 }
 
 const resolveUrl = (item) => {
+  // Selalu gunakan URL dari backend jika tersedia (backend sudah meng-handle prefix yang tepat)
+  if (item.url) {
+    return item.url
+  }
+
+  // Fallback jika item.url kosong
   switch (item.link_type) {
     case 'home':
       return '/'
@@ -124,7 +130,11 @@ const resolveUrl = (item) => {
       return `/berita/kategori/${item.slug || item.link_ref}`
     case 'kategori_dokumen':
       return `/dokumen/kategori/${item.slug || item.link_ref}`
+    case 'pejabat':
+      return `/profil-pejabat/${item.link_ref}`
     case 'modul':
+      if (item.link_ref === 'profil-daerah') return '/profil-kabupaten'
+      if (item.link_ref === 'pejabat') return '/profil-pejabat'
       return `/${item.link_ref}`
     case 'eksternal':
       return item.url || '#'
