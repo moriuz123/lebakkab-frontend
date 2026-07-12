@@ -21,7 +21,7 @@
     <div class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0">
       
       <!-- Typography -->
-      <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-2 sm:mb-4 drop-shadow-2xl leading-[1.1]">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight mb-2 sm:mb-4 drop-shadow-2xl leading-[1.1]">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">Selamat Datang</span> <br class="hidden lg:block"/> di Portal Resmi
       </h1>
       <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-6 max-w-2xl">
