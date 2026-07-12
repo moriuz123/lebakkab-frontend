@@ -3,7 +3,7 @@
     <!-- Background Gradient / Image Overlay -->
     <div class="absolute inset-0 z-0">
       <img :src="'/storage/images/header-bg.jpg'" alt="Header Background" class="w-full h-full object-cover opacity-30" @error="(e) => e.target.style.display = 'none'" />
-      <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-gray-900/80 to-blue-900/90 mix-blend-multiply"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-green-900/90 via-emerald-900/80 to-green-900/90 mix-blend-multiply"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent"></div>
     </div>
 
@@ -25,7 +25,7 @@
             >
               {{ crumb.label }}
             </router-link>
-            <span v-else class="text-blue-300 font-semibold">{{ crumb.label }}</span>
+            <span v-else class="text-green-300 font-semibold">{{ crumb.label }}</span>
             <span v-if="index < breadcrumbs.length - 1" class="mx-2 sm:mx-3 text-gray-400">/</span>
           </li>
         </template>
@@ -34,7 +34,7 @@
             <router-link to="/" class="text-gray-300 hover:text-white transition-colors">Beranda</router-link>
           </li>
           <li class="mx-2 sm:mx-3 text-gray-400">/</li>
-          <li class="text-blue-300 font-semibold truncate max-w-[200px] sm:max-w-md">{{ title }}</li>
+          <li class="text-green-300 font-semibold truncate max-w-[200px] sm:max-w-md">{{ title }}</li>
         </template>
       </ol>
     </nav>
