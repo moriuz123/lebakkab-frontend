@@ -30,8 +30,8 @@
 
       <!-- Taglines -->
       <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 sm:gap-6 mb-10 z-30">
-        <img v-if="logoTagline" :src="logoTagline" alt="Tagline" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
-        <img v-if="logoTagline2" :src="logoTagline2" alt="Tagline 2" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+        <img v-if="logoTagline" :src="logoTagline + cacheBuster" alt="Tagline" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+        <img v-if="logoTagline2" :src="logoTagline2 + cacheBuster" alt="Tagline 2" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
       </div>
 
       <!-- Form Pencarian (Glassmorphism) -->
@@ -208,6 +208,9 @@ const resolveUrl = (item) => {
 const logoHero = computed(() => settingsStore.data?.logo_hero_url || null)
 const logoTagline = computed(() => settingsStore.data?.logo_tagline_url || null)
 const logoTagline2 = computed(() => settingsStore.data?.logo_tagline2_url || null)
+
+// Cache buster for images to prevent stale caching
+const cacheBuster = `?v=${Date.now()}`
 
 // === Search ===
 const searchQuery = ref('')
