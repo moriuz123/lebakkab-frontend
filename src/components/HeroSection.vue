@@ -75,15 +75,15 @@
       </div>
     </div>
 
-    <!-- Logo Hero & Taglines (Symmetrically positioned) -->
-    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex flex-col justify-center items-center gap-4 sm:gap-6 lg:pr-10">
+    <!-- Logo Hero & Taglines (Symmetrically positioned with offset to align with form) -->
+    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex flex-col justify-center items-center gap-4 sm:gap-6 lg:pr-10 pt-24 lg:pt-32">
       
       <!-- Logo Hero -->
       <img
         v-if="logoHero"
         :src="logoHero"
         alt="Hero Logo"
-        class="w-auto h-[32%] sm:h-[40%] lg:h-[48%] max-h-[480px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 transform hover:scale-105 pointer-events-auto"
+        class="w-auto h-[35%] sm:h-[45%] lg:h-[53%] max-h-[530px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 animate-floating pointer-events-auto"
       />
 
       <!-- Taglines -->
@@ -246,5 +246,14 @@ onMounted(() => {
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+@keyframes floating {
+  0% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-12px) scale(1.02); }
+  100% { transform: translateY(0px) scale(1); }
+}
+.animate-floating {
+  animation: floating 4s ease-in-out infinite;
 }
 </style>
