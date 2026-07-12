@@ -25,7 +25,8 @@ import SearchPage from '@/views/SearchPage.vue' // ✅ import baru
 import BannerUcapan from '@/views/BannerUcapan.vue'
 import BannerInfografis from '@/views/BannerInfografis.vue'
 import KritikSaranPage from '@/views/KritikSaranPage.vue'
-
+import PejabatPage from '@/views/PejabatPage.vue'
+import PejabatDetail from '@/views/PejabatDetail.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
@@ -164,6 +165,17 @@ const router = createRouter({
       path: '/kritik-saran',
       name: 'KritikSaranPage',
       component: KritikSaranPage,
+    },
+    {
+      path: '/profil-pejabat',
+      name: 'Pejabat',
+      component: PejabatPage,
+    },
+    {
+      path: '/profil-pejabat/:slug',
+      name: 'PejabatDetail',
+      component: PejabatDetail,
+      props: true,
     },
     {
       path: '/pencarian',
