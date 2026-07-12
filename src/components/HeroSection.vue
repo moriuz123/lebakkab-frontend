@@ -76,14 +76,14 @@
     </div>
 
     <!-- Logo Hero & Taglines (Symmetrically positioned) -->
-    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex flex-col justify-center items-center lg:items-end gap-4 sm:gap-6 lg:pr-10">
+    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex flex-col justify-center items-center gap-4 sm:gap-6 lg:pr-10">
       
       <!-- Logo Hero -->
       <img
         v-if="logoHero"
         :src="logoHero"
         alt="Hero Logo"
-        class="w-auto h-[40%] sm:h-[50%] lg:h-[60%] max-h-[600px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 transform hover:scale-105 pointer-events-auto"
+        class="w-auto h-[32%] sm:h-[40%] lg:h-[48%] max-h-[480px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 transform hover:scale-105 pointer-events-auto"
       />
 
       <!-- Taglines -->
