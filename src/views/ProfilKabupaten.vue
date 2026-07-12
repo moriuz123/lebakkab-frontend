@@ -1,167 +1,144 @@
 <template>
-  <div class="bg-[#f8fafc] min-h-screen pb-20 font-sans selection:bg-green-500 selection:text-white">
-    <!-- Hero / Header Section -->
-    <div class="relative bg-green-900 overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40 rounded-b-[4rem] lg:rounded-b-[6rem] shadow-2xl mb-16 lg:mb-24 z-10">
-      <!-- Decorative Backgrounds -->
-      <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-green-500 rounded-full mix-blend-multiply filter blur-[120px] opacity-40 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-30 -translate-x-1/4 translate-y-1/4"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/50 to-green-950"></div>
-      </div>
-
-      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
-        <!-- Logo -->
-        <div 
-          v-if="profil && (profil.gambar_lambang_url || profil.gambar_lambang)" 
-          class="w-32 h-32 md:w-40 md:h-40 bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl mb-8 transform transition hover:scale-110 hover:rotate-3 duration-500"
-        >
-          <img 
-            :src="profil.gambar_lambang_url || getStorageUrl(profil.gambar_lambang)" 
-            alt="Lambang Kabupaten Lebak" 
-            class="w-full h-full object-contain drop-shadow-xl"
-          />
-        </div>
-        
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6">
-          Profil <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-yellow-300">Kabupaten Lebak</span>
-        </h1>
-        <p class="mt-4 text-lg md:text-2xl text-green-100 max-w-3xl mx-auto font-light leading-relaxed">
-          Mengenal lebih dekat identitas, sejarah, dan potensi daerah dengan visi yang kuat menuju masa depan.
-        </p>
-      </div>
-    </div>
-
-    <!-- Loading & Error State -->
-    <div v-if="loading" class="flex flex-col items-center justify-center py-20 gap-4">
-      <div class="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
-      <p class="text-gray-500 font-medium animate-pulse">Memuat Data Profil Wilayah...</p>
+  <div class="bg-white min-h-screen pb-24 font-sans selection:bg-emerald-500 selection:text-white">
+    
+    <!-- Loading & Error -->
+    <div v-if="loading" class="fixed inset-0 z-50 bg-white flex flex-col items-center justify-center space-y-4">
+      <div class="w-12 h-12 border-2 border-emerald-100 border-t-emerald-600 rounded-full animate-spin"></div>
+      <p class="text-sm font-medium text-slate-500 tracking-widest uppercase">Memuat Profil...</p>
     </div>
     
-    <div v-else-if="error" class="max-w-7xl mx-auto px-6 py-20">
-       <div class="bg-red-50 text-red-600 p-8 rounded-3xl text-center border border-red-100 shadow-sm max-w-2xl mx-auto">
-        <span class="font-bold text-xl">{{ error }}</span>
+    <div v-else-if="error" class="min-h-screen flex items-center justify-center p-6">
+       <div class="bg-red-50 text-red-600 p-8 rounded-2xl text-center max-w-md w-full border border-red-100">
+        <span class="font-medium">{{ error }}</span>
       </div>
     </div>
 
-    <!-- Main Content Container -->
-    <div v-else-if="profil" class="max-w-7xl mx-auto px-6 lg:px-8 -mt-24 sm:-mt-32 relative z-20 space-y-8 sm:space-y-12">
-
-      <!-- ================= BENTO GRID 1: Sejarah & Visi Misi ================= -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+    <div v-else-if="profil" class="animate-fade-in">
+      
+      <!-- 1. HERO SECTION (Minimalist & High-End) -->
+      <header class="relative pt-32 pb-24 lg:pt-48 lg:pb-32 overflow-hidden border-b border-slate-100">
+        <!-- Subtle Grid Background -->
+        <div class="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
         
-        <!-- Visi Misi (Kiri/Besar) -->
-        <div v-if="profil.visi_misi" class="lg:col-span-7 bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-2xl transition-all duration-500 group relative overflow-hidden">
-          <!-- Dekorasi -->
-          <div class="absolute top-0 right-0 w-64 h-64 bg-green-50 rounded-full mix-blend-multiply filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           
-          <div class="flex items-center gap-4 mb-8 relative z-10">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-green-500/30 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-              <Target class="w-7 h-7" />
+          <div class="flex-1 text-center lg:text-left">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-100 text-emerald-600 text-xs font-bold tracking-widest uppercase mb-8">
+              <MapPin class="w-3.5 h-3.5" /> Banten, Indonesia
             </div>
-            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Visi & Misi</h2>
+            <h1 class="text-5xl sm:text-6xl lg:text-8xl font-extrabold text-slate-900 tracking-tighter leading-[1.1] mb-6">
+              Kabupaten <br class="hidden lg:block"/>
+              <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-400">Lebak</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-500 font-medium max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+              Mengenal lebih dekat identitas, sejarah, dan potensi daerah dengan visi yang kuat menuju masa depan yang inklusif dan berkelanjutan.
+            </p>
           </div>
           
-          <div class="prose prose-lg md:prose-xl prose-green max-w-none 
-                      prose-headings:font-black prose-headings:text-gray-800 prose-headings:mt-0 
-                      prose-p:text-gray-600 prose-p:leading-relaxed
-                      prose-li:text-gray-600 prose-li:marker:text-green-500 prose-ul:space-y-3 relative z-10" 
+          <div class="w-48 h-48 sm:w-64 sm:h-64 lg:w-80 lg:h-80 relative shrink-0">
+            <!-- Glow behind logo -->
+            <div class="absolute inset-0 bg-emerald-400 rounded-full filter blur-[80px] opacity-20 animate-pulse"></div>
+            <img 
+              v-if="profil.gambar_lambang_url || profil.gambar_lambang" 
+              :src="profil.gambar_lambang_url || getStorageUrl(profil.gambar_lambang)" 
+              alt="Lambang Kabupaten Lebak" 
+              class="relative z-10 w-full h-full object-contain drop-shadow-2xl transform hover:scale-105 transition-transform duration-700"
+            />
+          </div>
+        </div>
+      </header>
+
+      <!-- 2. MAKNA LAMBANG (Split Layout) -->
+      <section v-if="profil.arti_lambang" class="py-24 bg-slate-50 border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+            <div class="lg:col-span-4 lg:sticky lg:top-32">
+              <h2 class="text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight mb-4">Arti Lambang Daerah</h2>
+              <p class="text-slate-500 text-lg">Setiap elemen pada lambang Kabupaten Lebak memiliki makna historis dan filosofis yang mendalam.</p>
+              <div class="hidden lg:block w-12 h-1 bg-emerald-500 mt-8 rounded-full"></div>
+            </div>
+            <div class="lg:col-span-8">
+              <div class="prose prose-lg prose-slate max-w-none 
+                          prose-headings:font-bold prose-headings:text-slate-900 
+                          prose-p:text-slate-600 prose-p:leading-loose"
+                   style="white-space: pre-wrap;"
+                   v-html="profil.arti_lambang">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. VISI & MISI (Elegant Typography) -->
+      <section v-if="profil.visi_misi" class="py-24 max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="bg-slate-900 rounded-[2rem] p-10 sm:p-16 lg:p-24 relative overflow-hidden text-center shadow-2xl">
+          <!-- Background decoration -->
+          <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/noise-lines.png')] opacity-10"></div>
+          <div class="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20"></div>
+          
+          <Target class="w-12 h-12 text-emerald-400 mx-auto mb-8 relative z-10" />
+          
+          <div class="prose prose-xl sm:prose-2xl prose-invert max-w-4xl mx-auto relative z-10
+                      prose-headings:font-black prose-headings:tracking-tight prose-headings:text-white
+                      prose-p:font-light prose-p:leading-relaxed prose-p:text-slate-300
+                      prose-li:text-slate-300 prose-li:text-left prose-ul:text-left" 
                v-html="profil.visi_misi">
           </div>
         </div>
+      </section>
 
-        <!-- Sejarah (Kanan/Kecil) -->
-        <div v-if="profil.sejarah_singkat" class="lg:col-span-5 bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2rem] p-8 md:p-12 shadow-2xl text-white relative overflow-hidden group">
-          <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+      <!-- 4. SEJARAH SINGKAT (Magazine Reading Style) -->
+      <section v-if="profil.sejarah_singkat" class="py-24 bg-white border-y border-slate-100">
+        <div class="max-w-4xl mx-auto px-6 lg:px-8">
+          <div class="text-center mb-16">
+            <BookOpen class="w-10 h-10 text-emerald-600 mx-auto mb-6" />
+            <h2 class="text-4xl font-extrabold text-slate-900 tracking-tight">Sejarah Singkat</h2>
+          </div>
+          <article class="prose prose-lg sm:prose-xl prose-slate max-w-none mx-auto
+                          prose-headings:font-bold prose-headings:text-slate-900 
+                          prose-p:text-slate-600 prose-p:leading-relaxed text-justify" 
+                   v-html="profil.sejarah_singkat">
+          </article>
+        </div>
+      </section>
+
+      <!-- 5. STATISTIK & POTENSI (Clean Minimalist Cards) -->
+      <section class="py-24 max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
           
-          <div class="flex items-center gap-4 mb-8 relative z-10">
-            <div class="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white transform group-hover:-translate-y-2 transition-all duration-300">
-              <BookOpen class="w-7 h-7" />
+          <!-- Kondisi Geografis -->
+          <div v-if="profil.kondisi_geografis" class="group p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-emerald-200 hover:bg-white hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300">
+            <Compass class="w-8 h-8 text-emerald-600 mb-6 group-hover:scale-110 transition-transform" />
+            <h3 class="text-xl font-bold text-slate-900 mb-4">Geografis</h3>
+            <div class="prose prose-sm prose-slate max-w-none" v-html="profil.kondisi_geografis"></div>
+          </div>
+
+          <!-- Demografi -->
+          <div v-if="profil.demografi" class="group p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-emerald-200 hover:bg-white hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300">
+            <Users class="w-8 h-8 text-emerald-600 mb-6 group-hover:scale-110 transition-transform" />
+            <h3 class="text-xl font-bold text-slate-900 mb-4">Demografi</h3>
+            <div class="prose prose-sm prose-slate max-w-none" v-html="profil.demografi"></div>
+          </div>
+
+          <!-- Potensi -->
+          <div v-if="profil.potensi_daerah" class="group p-8 rounded-3xl bg-slate-50 border border-slate-100 hover:border-emerald-200 hover:bg-white hover:shadow-xl hover:shadow-emerald-900/5 transition-all duration-300">
+            <TrendingUp class="w-8 h-8 text-emerald-600 mb-6 group-hover:scale-110 transition-transform" />
+            <h3 class="text-xl font-bold text-slate-900 mb-4">Potensi Daerah</h3>
+            <div class="prose prose-sm prose-slate max-w-none" v-html="profil.potensi_daerah"></div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- 6. PETA WILAYAH (Full Bleed Content) -->
+      <section v-if="profil.peta_wilayah" class="max-w-7xl mx-auto px-6 lg:px-8 pb-12">
+         <div class="bg-slate-50 p-4 sm:p-6 rounded-[2rem] border border-slate-100">
+            <h3 class="text-xl font-bold text-slate-900 mb-6 px-4">Peta Administrasi Kabupaten Lebak</h3>
+            <div class="map-container relative w-full h-[500px] sm:h-[600px] rounded-[1.5rem] overflow-hidden bg-slate-200 ring-1 ring-slate-900/5">
+              <div class="w-full h-full" v-html="profil.peta_wilayah"></div>
             </div>
-            <h2 class="text-3xl font-extrabold tracking-tight">Sejarah</h2>
-          </div>
-
-          <div class="prose prose-invert prose-lg max-w-none 
-                      prose-headings:font-black prose-headings:text-white
-                      prose-p:text-gray-300 prose-p:leading-relaxed relative z-10" 
-               v-html="profil.sejarah_singkat">
-          </div>
-        </div>
-      </div>
-
-      <!-- ================= BENTO GRID 2: Demografi, Geografis, Peta ================= -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8">
-        
-        <!-- Kondisi Geografis -->
-        <div v-if="profil.kondisi_geografis" class="lg:col-span-4 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
-          <div class="absolute bottom-0 right-0 w-40 h-40 bg-blue-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 translate-y-1/3"></div>
-          
-          <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 relative z-10">
-            <MapPin class="w-6 h-6" />
-          </div>
-          <h3 class="text-2xl font-black text-gray-900 mb-4 relative z-10">Geografis</h3>
-          <div class="prose prose-green prose-sm sm:prose-base max-w-none prose-p:text-gray-600 prose-li:text-gray-600 relative z-10" v-html="profil.kondisi_geografis"></div>
-        </div>
-
-        <!-- Demografi -->
-        <div v-if="profil.demografi" class="lg:col-span-4 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
-           <div class="absolute top-0 right-0 w-40 h-40 bg-purple-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 -translate-y-1/3"></div>
-           
-           <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300 relative z-10">
-             <Users class="w-6 h-6" />
-           </div>
-           <h3 class="text-2xl font-black text-gray-900 mb-4 relative z-10">Demografi</h3>
-           <div class="prose prose-purple prose-sm sm:prose-base max-w-none prose-p:text-gray-600 relative z-10" v-html="profil.demografi"></div>
-        </div>
-
-        <!-- Potensi Daerah -->
-        <div v-if="profil.potensi_daerah" class="lg:col-span-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-orange-100/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-500 group relative overflow-hidden">
-          <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 relative z-10">
-            <TrendingUp class="w-6 h-6" />
-          </div>
-          <h3 class="text-2xl font-black text-gray-900 mb-4 relative z-10">Potensi</h3>
-          <div class="prose prose-orange prose-sm sm:prose-base max-w-none prose-p:text-gray-700 relative z-10" v-html="profil.potensi_daerah"></div>
-        </div>
-
-        <!-- Peta Wilayah (Lebar Penuh Bawah) -->
-        <div v-if="profil.peta_wilayah" class="lg:col-span-12 bg-white rounded-[2rem] p-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50">
-           <div class="map-container relative w-full h-[400px] sm:h-[500px] rounded-[1.5rem] overflow-hidden bg-gray-100 filter grayscale hover:grayscale-0 transition-all duration-1000">
-             <div class="absolute inset-0 z-0 pointer-events-none shadow-[inset_0_0_40px_rgba(0,0,0,0.1)] rounded-[1.5rem]"></div>
-             <div class="w-full h-full" v-html="profil.peta_wilayah"></div>
-           </div>
-        </div>
-      </div>
-
-      <!-- ================= ARTI LAMBANG ================= -->
-      <div v-if="profil.arti_lambang" class="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 overflow-hidden flex flex-col md:flex-row group hover:shadow-2xl transition-shadow duration-500">
-        
-        <!-- Kiri: Logo Besar dengan Background -->
-        <div class="md:w-5/12 lg:w-2/5 bg-gradient-to-br from-green-50 via-white to-gray-50 flex items-center justify-center p-12 sm:p-20 relative">
-          <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-200/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
-          <img 
-            v-if="profil.gambar_lambang_url || profil.gambar_lambang" 
-            :src="profil.gambar_lambang_url || getStorageUrl(profil.gambar_lambang)" 
-            alt="Lambang Kabupaten Lebak" 
-            class="w-full max-w-[280px] h-auto object-contain drop-shadow-2xl relative z-10 transform group-hover:scale-110 transition-transform duration-700"
-          />
-        </div>
-        
-        <!-- Kanan: Penjelasan -->
-        <div class="md:w-7/12 lg:w-3/5 p-8 sm:p-12 lg:p-16">
-          <div class="flex items-center gap-4 mb-8">
-             <div class="w-12 h-12 rounded-2xl bg-gray-100 text-gray-700 flex items-center justify-center">
-               <Shield class="w-6 h-6" />
-             </div>
-             <h3 class="text-3xl font-black text-gray-900">Makna Lambang Daerah</h3>
-          </div>
-          <div 
-            class="prose prose-lg prose-green max-w-none prose-p:text-gray-600 prose-p:leading-loose text-justify columns-1 sm:columns-2 gap-8" 
-            style="white-space: pre-wrap;" 
-            v-html="profil.arti_lambang">
-          </div>
-        </div>
-
-      </div>
+         </div>
+      </section>
 
     </div>
   </div>
@@ -171,7 +148,7 @@
 import { ref, onMounted } from 'vue'
 import axios from '@/utils/api'
 import { getStorageUrl } from '@/utils/helpers'
-import { MapPin, Target, Users, TrendingUp, Shield, BookOpen } from 'lucide-vue-next'
+import { MapPin, Target, Users, TrendingUp, Compass, BookOpen } from 'lucide-vue-next'
 
 const profil = ref(null)
 const loading = ref(true)
@@ -210,13 +187,23 @@ onMounted(() => {
   border-radius: 1.5rem !important;
 }
 
-/* Ensure empty paragraphs don't mess up layout in prose */
+/* Cleanup extra spacing in prose */
 ::v-deep(.prose p:empty) {
   display: none;
 }
-::v-deep(.prose br) {
-  content: "";
-  display: block;
-  margin-top: 0.5em;
+::v-deep(.prose p) {
+  margin-bottom: 1.5em;
+}
+::v-deep(.prose h3) {
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
 }
 </style>
