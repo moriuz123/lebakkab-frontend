@@ -27,6 +27,7 @@ import BannerInfografis from '@/views/BannerInfografis.vue'
 import KritikSaranPage from '@/views/KritikSaranPage.vue'
 import PejabatPage from '@/views/PejabatPage.vue'
 import PejabatDetail from '@/views/PejabatDetail.vue'
+import ProfilKabupaten from '@/views/ProfilKabupaten.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
@@ -165,6 +166,11 @@ const router = createRouter({
       path: '/kritik-saran',
       name: 'KritikSaranPage',
       component: KritikSaranPage,
+    },
+    {
+      path: '/profil-kabupaten',
+      name: 'ProfilKabupaten',
+      component: ProfilKabupaten,
     },
     {
       path: '/profil-pejabat',
