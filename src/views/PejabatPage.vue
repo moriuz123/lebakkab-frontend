@@ -31,8 +31,8 @@
             <div class="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent z-10 opacity-70 group-hover:opacity-40 transition-opacity duration-500"></div>
             
             <img 
-              v-if="pejabat.foto" 
-              :src="pejabat.foto" 
+              v-if="pejabat.foto || pejabat.foto_url" 
+              :src="pejabat.foto_url || getStorageUrl(pejabat.foto)" 
               :alt="pejabat.nama"
               class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
@@ -56,7 +56,7 @@
             </h3>
             
             <p class="text-gray-500 text-sm mb-6 line-clamp-3 leading-relaxed flex-grow">
-              {{ pejabat.deskripsi }}
+              {{ pejabat.pesan_singkat || pejabat.deskripsi }}
             </p>
             
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
@@ -81,6 +81,7 @@
 import { onMounted } from 'vue'
 import PageHeader from '@/components/PageHeader.vue'
 import { usePejabatStore } from '@/stores/pejabat'
+import { getStorageUrl } from '@/utils/helpers'
 import { User, ArrowRight, Calendar } from 'lucide-vue-next'
 
 const store = usePejabatStore()

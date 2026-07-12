@@ -28,8 +28,8 @@
           
           <div class="relative z-10 w-full h-full min-h-[400px] flex items-end justify-center pt-10 px-8 pb-0">
             <img 
-              v-if="store.pejabatDetail.foto"
-              :src="store.pejabatDetail.foto"
+              v-if="store.pejabatDetail.foto || store.pejabatDetail.foto_url"
+              :src="store.pejabatDetail.foto_url || getStorageUrl(store.pejabatDetail.foto)"
               :alt="store.pejabatDetail.nama"
               class="w-full max-w-[280px] h-auto object-cover object-bottom drop-shadow-2xl filter contrast-105"
             />
@@ -63,8 +63,7 @@
             <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
               <Info class="w-4 h-4" /> Tentang
             </h3>
-            <p class="text-gray-700 leading-relaxed text-lg font-medium bg-gray-50/50 p-5 rounded-2xl border border-gray-100">
-              {{ store.pejabatDetail.deskripsi }}
+            <p class="text-gray-700 leading-relaxed text-lg font-medium bg-gray-50/50 p-5 rounded-2xl border border-gray-100" v-html="store.pejabatDetail.pesan_singkat || store.pejabatDetail.deskripsi || 'Tidak ada deskripsi'">
             </p>
           </div>
 
@@ -75,8 +74,7 @@
               <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                 <GraduationCap class="w-4 h-4" /> Pendidikan
               </h3>
-              <p class="text-gray-800 font-semibold leading-snug">
-                {{ store.pejabatDetail.pendidikan || 'Tidak ada data pendidikan' }}
+              <p class="text-gray-800 font-semibold leading-snug" v-html="store.pejabatDetail.riwayat_pendidikan || store.pejabatDetail.pendidikan || 'Tidak ada data pendidikan'">
               </p>
             </div>
             
@@ -85,23 +83,22 @@
               <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                 <Briefcase class="w-4 h-4" /> Riwayat Karir
               </h3>
-              <p class="text-gray-800 font-semibold leading-snug">
-                {{ store.pejabatDetail.karir || 'Tidak ada data riwayat karir' }}
+              <p class="text-gray-800 font-semibold leading-snug" v-html="store.pejabatDetail.riwayat_jabatan || store.pejabatDetail.karir || 'Tidak ada data riwayat karir'">
               </p>
             </div>
           </div>
           
           <!-- Sosial Media (Jika ada) -->
-          <div v-if="store.pejabatDetail.sosmed && Object.keys(store.pejabatDetail.sosmed).length > 0" class="pt-8 border-t border-gray-100 flex items-center gap-4">
+          <div v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed) && Object.keys(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).length > 0" class="pt-8 border-t border-gray-100 flex items-center gap-4">
             <span class="text-sm font-bold text-gray-500">Kanal Resmi:</span>
             <div class="flex gap-3">
-              <a v-if="store.pejabatDetail.sosmed.instagram" :href="store.pejabatDetail.sosmed.instagram" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
+              <a v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).instagram" :href="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).instagram" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
                 <Instagram class="w-5 h-5" />
               </a>
-              <a v-if="store.pejabatDetail.sosmed.twitter" :href="store.pejabatDetail.sosmed.twitter" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-400 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
+              <a v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).twitter" :href="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).twitter" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-400 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
                 <Twitter class="w-5 h-5" />
               </a>
-              <a v-if="store.pejabatDetail.sosmed.facebook" :href="store.pejabatDetail.sosmed.facebook" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
+              <a v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).facebook" :href="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).facebook" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
                 <Facebook class="w-5 h-5" />
               </a>
             </div>
@@ -126,6 +123,7 @@ import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
 import { usePejabatStore } from '@/stores/pejabat'
+import { getStorageUrl } from '@/utils/helpers'
 import { User, Calendar, Info, GraduationCap, Briefcase, Instagram, Twitter, Facebook, ArrowLeft } from 'lucide-vue-next'
 
 const store = usePejabatStore()
