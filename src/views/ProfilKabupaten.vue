@@ -41,7 +41,7 @@
         </div>
         <div class="relative group">
           <div class="absolute inset-0 bg-gradient-to-tr from-green-500 to-blue-500 rounded-[2.5rem] transform rotate-3 scale-105 opacity-20 group-hover:rotate-6 group-hover:scale-110 transition-all duration-700 z-0"></div>
-          <img src="/storage/images/header-bg.jpg" alt="Pemandangan Kabupaten Lebak" class="relative z-10 w-full aspect-square md:aspect-[4/3] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white transform group-hover:-translate-y-2 transition-all duration-700" @error="(e) => e.target.src = 'https://via.placeholder.com/800x600?text=Lebak+Kabupaten'" />
+          <img :src="'/storage/images/header-bg.jpg'" alt="Pemandangan Kabupaten Lebak" class="relative z-10 w-full aspect-square md:aspect-[4/3] object-cover rounded-[2.5rem] shadow-2xl border-4 border-white transform group-hover:-translate-y-2 transition-all duration-700" @error="(e) => e.target.src = 'https://via.placeholder.com/800x600?text=Lebak+Kabupaten'" />
         </div>
       </div>
     </section>
