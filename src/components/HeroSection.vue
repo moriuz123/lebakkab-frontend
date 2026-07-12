@@ -28,6 +28,21 @@
         Pemerintah Kabupaten Lebak
       </h2>
 
+      <!-- Mobile: Logo Hero & Taglines (Above Form) -->
+      <div class="flex lg:hidden flex-col items-center justify-center gap-3 mb-6 z-30 w-full pointer-events-auto">
+        <!-- Logo Hero -->
+        <img
+          v-if="logoHero"
+          :src="logoHero"
+          alt="Hero Logo Mobile"
+          class="h-32 sm:h-40 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] opacity-95 animate-floating"
+        />
+        <!-- Taglines -->
+        <div class="flex items-center justify-center gap-4 mt-2">
+          <img v-if="logoTagline" :src="logoTagline + cacheBuster" alt="Tagline 1" class="h-10 sm:h-14 object-contain drop-shadow-lg" />
+          <img v-if="logoTagline2" :src="logoTagline2 + cacheBuster" alt="Tagline 2" class="h-8 sm:h-11 object-contain drop-shadow-lg" />
+        </div>
+      </div>
 
 
       <!-- Form Pencarian (Glassmorphism) -->
@@ -75,8 +90,8 @@
       </div>
     </div>
 
-    <!-- Logo Hero & Taglines (Symmetrically positioned with offset to align with form) -->
-    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex flex-col justify-center items-center gap-4 sm:gap-6 lg:pr-10 pt-24 lg:pt-32">
+    <!-- Desktop: Logo Hero & Taglines (Symmetrically positioned with offset to align with form) -->
+    <div class="hidden lg:flex absolute inset-y-0 right-10 w-1/2 z-10 pointer-events-none flex-col justify-center items-center gap-6 pr-10 pt-32">
       
       <!-- Logo Hero -->
       <img
