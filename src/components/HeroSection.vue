@@ -24,9 +24,15 @@
       <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black text-white tracking-tight mb-2 sm:mb-4 drop-shadow-2xl leading-[1.1]">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">Selamat Datang</span> <br class="hidden lg:block"/> di Portal Resmi
       </h1>
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-8 sm:mb-10 max-w-2xl">
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-6 max-w-2xl">
         Pemerintah Kabupaten Lebak
       </h2>
+
+      <!-- Taglines -->
+      <div class="flex flex-wrap justify-center lg:justify-start items-center gap-4 sm:gap-6 mb-10 z-30">
+        <img v-if="logoTagline" :src="logoTagline" alt="Tagline" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+        <img v-if="logoTagline2" :src="logoTagline2" alt="Tagline 2" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+      </div>
 
       <!-- Form Pencarian (Glassmorphism) -->
       <div class="w-full max-w-xl lg:max-w-2xl relative group mb-10 z-30">
@@ -73,13 +79,13 @@
       </div>
     </div>
 
-    <!-- Foto Bupati (Absolute Position on right) -->
-    <div class="absolute bottom-0 right-0 lg:right-10 w-full lg:w-1/2 h-[45%] sm:h-[55%] lg:h-[85%] z-10 pointer-events-none flex justify-center lg:justify-end items-end">
+    <!-- Logo Hero (Symmetrically positioned) -->
+    <div class="absolute inset-y-0 right-0 lg:right-10 w-full lg:w-1/2 z-10 pointer-events-none flex justify-center lg:justify-end items-center">
       <img
-        v-if="fotoBupati"
-        :src="fotoBupati"
-        alt="Bupati dan Wakil Bupati"
-        class="h-full object-contain object-bottom drop-shadow-[0_20px_50px_rgba(0,0,0,0.8)] opacity-95 hover:opacity-100 transition-opacity duration-500"
+        v-if="logoHero"
+        :src="logoHero"
+        alt="Hero Logo"
+        class="w-auto h-[50%] sm:h-[60%] lg:h-[75%] max-h-[700px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 transform hover:scale-105"
       />
     </div>
 
@@ -198,8 +204,10 @@ const resolveUrl = (item) => {
   }
 }
 
-// === Foto Bupati ===
-const fotoBupati = computed(() => settingsStore.data?.photo_bupati || null)
+// === Logos ===
+const logoHero = computed(() => settingsStore.data?.logo_hero_url || null)
+const logoTagline = computed(() => settingsStore.data?.logo_tagline_url || null)
+const logoTagline2 = computed(() => settingsStore.data?.logo_tagline2_url || null)
 
 // === Search ===
 const searchQuery = ref('')
