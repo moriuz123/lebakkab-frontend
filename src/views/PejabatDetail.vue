@@ -50,10 +50,21 @@
             {{ store.pejabatDetail.nama }}
           </h2>
           
-          <p class="text-sm font-semibold text-gray-500 mb-8 flex items-center gap-2">
+          <p class="text-sm font-semibold text-gray-500 mb-4 flex items-center gap-2">
             <Calendar class="w-4 h-4 text-green-500" />
             Periode Masa Jabatan: <span class="text-gray-800">{{ store.pejabatDetail.periode }}</span>
           </p>
+
+          <div class="flex flex-wrap gap-4 mb-8">
+            <div v-if="store.pejabatDetail.nip" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-100 text-sm font-medium text-gray-600">
+              <BadgeCheck class="w-4 h-4 text-blue-500" />
+              NIP: <span class="text-gray-900">{{ store.pejabatDetail.nip }}</span>
+            </div>
+            <div v-if="store.pejabatDetail.pangkat_golongan" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-100 text-sm font-medium text-gray-600">
+              <Star class="w-4 h-4 text-yellow-500" />
+              Pangkat/Golongan: <span class="text-gray-900">{{ store.pejabatDetail.pangkat_golongan }}</span>
+            </div>
+          </div>
 
           <!-- Divider -->
           <div class="w-16 h-1 bg-green-500 rounded-full mb-8"></div>
@@ -124,7 +135,7 @@ import { useRoute } from 'vue-router'
 import PageHeader from '@/components/PageHeader.vue'
 import { usePejabatStore } from '@/stores/pejabat'
 import { getStorageUrl } from '@/utils/helpers'
-import { User, Calendar, Info, GraduationCap, Briefcase, Instagram, Twitter, Facebook, ArrowLeft } from 'lucide-vue-next'
+import { User, Calendar, Info, GraduationCap, Briefcase, Instagram, Twitter, Facebook, ArrowLeft, BadgeCheck, Star } from 'lucide-vue-next'
 
 const store = usePejabatStore()
 const route = useRoute()
