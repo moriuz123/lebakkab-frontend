@@ -2,7 +2,7 @@
   <section class="relative bg-gray-900 py-16 sm:py-20 lg:py-24 overflow-hidden flex flex-col justify-center items-center text-center min-h-[250px] sm:min-h-[300px]">
     <!-- Background Gradient / Image Overlay -->
     <div class="absolute inset-0 z-0">
-      <img src="/storage/images/header-bg.jpg" alt="Header Background" class="w-full h-full object-cover opacity-30" @error="(e) => e.target.style.display = 'none'" />
+      <img :src="'/storage/images/header-bg.jpg'" alt="Header Background" class="w-full h-full object-cover opacity-30" @error="(e) => e.target.style.display = 'none'" />
       <div class="absolute inset-0 bg-gradient-to-r from-blue-900/90 via-gray-900/80 to-blue-900/90 mix-blend-multiply"></div>
       <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent"></div>
     </div>
