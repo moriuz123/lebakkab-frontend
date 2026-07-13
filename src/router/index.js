@@ -128,6 +128,12 @@ const router = createRouter({
       component: LayananPage,
     },
     {
+      path: '/layanan/kategori/:slug',
+      name: 'LayananKategoriPage',
+      component: () => import('@/views/LayananKategoriPage.vue'),
+      props: true,
+    },
+    {
       path: '/layanan/:slug',
       name: 'LayananDetail',
       component: LayananDetail,
