@@ -13,23 +13,38 @@
         />
       </transition-group>
       <!-- Gradient Overlay for better text readability -->
-      <div class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent"></div>
-      <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent"
+      ></div>
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"
+      ></div>
     </div>
 
     <!-- Hero content -->
-    <div class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0">
-      
+    <div
+      class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0"
+    >
       <!-- Typography -->
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight mb-2 sm:mb-4 drop-shadow-2xl leading-[1.1]">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200">Selamat Datang</span> <br class="hidden lg:block"/> di Portal Resmi
+      <h1
+        class="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight mb-2 sm:mb-4 drop-shadow-2xl leading-[1.1]"
+      >
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-200"
+          >Selamat Datang</span
+        >
+        <br class="hidden lg:block" />
+        di Portal Resmi
       </h1>
-      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-6 max-w-2xl">
+      <h2
+        class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-6 max-w-2xl"
+      >
         Pemerintah Kabupaten Lebak
       </h2>
 
       <!-- Mobile: Logo Hero & Taglines (Above Form) -->
-      <div class="flex lg:hidden flex-col items-center justify-center gap-3 mb-6 z-30 w-full pointer-events-auto">
+      <div
+        class="flex lg:hidden flex-col items-center justify-center gap-3 mb-6 z-30 w-full pointer-events-auto"
+      >
         <!-- Logo Hero -->
         <img
           v-if="logoHero"
@@ -39,16 +54,30 @@
         />
         <!-- Taglines -->
         <div class="flex items-center justify-center gap-4 mt-2">
-          <img v-if="logoTagline" :src="logoTagline + cacheBuster" alt="Tagline 1" class="h-10 sm:h-14 object-contain drop-shadow-lg" />
-          <img v-if="logoTagline2" :src="logoTagline2 + cacheBuster" alt="Tagline 2" class="h-8 sm:h-11 object-contain drop-shadow-lg" />
+          <img
+            v-if="logoTagline"
+            :src="logoTagline + cacheBuster"
+            alt="Tagline 1"
+            class="h-10 sm:h-14 object-contain drop-shadow-lg"
+          />
+          <img
+            v-if="logoTagline2"
+            :src="logoTagline2 + cacheBuster"
+            alt="Tagline 2"
+            class="h-8 sm:h-11 object-contain drop-shadow-lg"
+          />
         </div>
       </div>
 
-
       <!-- Form Pencarian (Glassmorphism) -->
       <div class="w-full max-w-xl lg:max-w-2xl relative group mb-10 z-30">
-        <div class="absolute inset-0 bg-green-500/20 blur-xl rounded-2xl group-hover:bg-green-500/30 transition-all duration-500"></div>
-        <form @submit.prevent="doSearch" class="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-1.5 sm:p-2 shadow-2xl overflow-hidden transition-all duration-300 focus-within:bg-white/20 focus-within:border-white/40">
+        <div
+          class="absolute inset-0 bg-green-500/20 blur-xl rounded-2xl group-hover:bg-green-500/30 transition-all duration-500"
+        ></div>
+        <form
+          @submit.prevent="doSearch"
+          class="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-1.5 sm:p-2 shadow-2xl overflow-hidden transition-all duration-300 focus-within:bg-white/20 focus-within:border-white/40"
+        >
           <Search class="w-5 h-5 sm:w-6 sm:h-6 text-white/70 ml-3 sm:ml-4 flex-shrink-0" />
           <input
             v-model="searchQuery"
@@ -67,7 +96,11 @@
 
       <!-- Icon Menu (Glass Dock) -->
       <div v-if="menus.length > 0" class="w-full max-w-3xl z-30">
-        <p class="text-white/60 text-xs sm:text-sm font-bold uppercase tracking-widest mb-4 lg:text-left">Layanan Cepat</p>
+        <p
+          class="text-white/60 text-xs sm:text-sm font-bold uppercase tracking-widest mb-4 lg:text-left"
+        >
+          DATA SEKTORAL LEBAK
+        </p>
         <div class="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-5">
           <a
             v-for="(item, index) in menus"
@@ -78,11 +111,22 @@
             rel="noopener noreferrer"
             :title="item.title"
           >
-            <div class="absolute inset-0 bg-white/5 rounded-2xl blur-md group-hover:bg-green-500/20 transition-all duration-300"></div>
-            <div class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-green-400 group-hover:to-green-600 group-hover:border-green-400/50 group-hover:shadow-green-500/50 flex items-center justify-center">
-              <component :is="getIcon(item.icon)" class="h-6 w-6 sm:h-8 sm:w-8" stroke="currentColor" stroke-width="1.5" />
+            <div
+              class="absolute inset-0 bg-white/5 rounded-2xl blur-md group-hover:bg-green-500/20 transition-all duration-300"
+            ></div>
+            <div
+              class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-green-400 group-hover:to-green-600 group-hover:border-green-400/50 group-hover:shadow-green-500/50 flex items-center justify-center"
+            >
+              <component
+                :is="getIcon(item.icon)"
+                class="h-6 w-6 sm:h-8 sm:w-8"
+                stroke="currentColor"
+                stroke-width="1.5"
+              />
             </div>
-            <span class="mt-2.5 text-[10px] sm:text-xs font-bold text-gray-300 group-hover:text-green-300 transition-colors text-center leading-tight tracking-wide drop-shadow-md">
+            <span
+              class="mt-2.5 text-[10px] sm:text-xs font-bold text-gray-300 group-hover:text-green-300 transition-colors text-center leading-tight tracking-wide drop-shadow-md"
+            >
               {{ item.title }}
             </span>
           </a>
@@ -91,8 +135,9 @@
     </div>
 
     <!-- Desktop: Logo Hero & Taglines (Symmetrically positioned with offset to align with form) -->
-    <div class="hidden lg:flex absolute inset-y-0 right-10 w-1/2 z-10 pointer-events-none flex-col justify-center items-center gap-6 pr-10 pt-32">
-      
+    <div
+      class="hidden lg:flex absolute inset-y-0 right-10 w-1/2 z-10 pointer-events-none flex-col justify-center items-center gap-6 pr-10 pt-32"
+    >
       <!-- Logo Hero -->
       <img
         v-if="logoHero"
@@ -104,13 +149,25 @@
       <!-- Taglines -->
       <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto mt-4">
         <!-- Tagline 1 diperbesar ~20% -->
-        <img v-if="logoTagline" :src="logoTagline + cacheBuster" alt="Tagline 1" class="h-14 sm:h-20 lg:h-24 object-contain drop-shadow-lg transition-transform hover:scale-105" />
-        <img v-if="logoTagline2" :src="logoTagline2 + cacheBuster" alt="Tagline 2" class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105" />
+        <img
+          v-if="logoTagline"
+          :src="logoTagline + cacheBuster"
+          alt="Tagline 1"
+          class="h-14 sm:h-20 lg:h-24 object-contain drop-shadow-lg transition-transform hover:scale-105"
+        />
+        <img
+          v-if="logoTagline2"
+          :src="logoTagline2 + cacheBuster"
+          alt="Tagline 2"
+          class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105"
+        />
       </div>
     </div>
 
     <!-- Scroll Down Indicator -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden sm:flex flex-col items-center text-white/50">
+    <div
+      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden sm:flex flex-col items-center text-white/50"
+    >
       <span class="text-xs font-bold tracking-widest uppercase mb-2">Jelajahi</span>
       <ChevronDown class="w-6 h-6" />
     </div>
@@ -264,9 +321,15 @@ onMounted(() => {
 }
 
 @keyframes floating {
-  0% { transform: translateY(0px) scale(1); }
-  50% { transform: translateY(-12px) scale(1.02); }
-  100% { transform: translateY(0px) scale(1); }
+  0% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-12px) scale(1.02);
+  }
+  100% {
+    transform: translateY(0px) scale(1);
+  }
 }
 .animate-floating {
   animation: floating 4s ease-in-out infinite;
