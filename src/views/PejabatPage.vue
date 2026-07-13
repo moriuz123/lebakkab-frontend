@@ -1,17 +1,42 @@
 <template>
-  <div class="bg-gray-50/50 min-h-screen pb-20">
-    <PageHeader title="Profil Pejabat Daerah" subtitle="Pimpinan Pemerintah Kabupaten Lebak" />
+  <div class="bg-gray-50/50 min-h-screen pb-20 font-sans selection:bg-green-500 selection:text-white">
+    
+    <!-- Premium Hero / Header Section -->
+    <div class="relative bg-emerald-900 overflow-hidden pt-28 pb-36 lg:pt-36 lg:pb-48 rounded-b-[3rem] lg:rounded-b-[5rem] shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)] mb-16 lg:mb-24 z-10 border-b border-emerald-800">
+      <!-- Decorative Backgrounds -->
+      <div class="absolute inset-0 z-0">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[120px] opacity-20 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
+        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-teal-600 rounded-full mix-blend-screen filter blur-[100px] opacity-20 -translate-x-1/4 translate-y-1/4"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-900/50 to-emerald-950"></div>
+      </div>
 
-    <section class="max-w-7xl mx-auto px-4 py-8 sm:py-16">
+      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-800/50 border border-emerald-400/30 backdrop-blur-md mb-8 shadow-inner">
+           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+           <span class="text-emerald-100 text-sm font-semibold tracking-wide uppercase">Pemerintah Daerah</span>
+        </div>
+        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6 leading-tight">
+          Profil <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">Pejabat Daerah</span>
+        </h1>
+        <p class="mt-4 text-lg md:text-xl text-emerald-100/90 max-w-2xl mx-auto font-medium leading-relaxed">
+          Mengenal pimpinan dan jajaran pejabat Pemerintah Kabupaten Lebak yang berdedikasi melayani masyarakat.
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Content Container (Overlapping Hero) -->
+    <section class="max-w-7xl mx-auto px-6 lg:px-8 -mt-28 sm:-mt-36 relative z-20">
       
       <!-- Loading State -->
-      <div v-if="store.loading" class="flex justify-center py-20">
-        <div class="page-loading-placeholder">Memuat Data Pejabat...</div>
+      <div v-if="store.loading" class="flex flex-col items-center justify-center py-20 gap-4 bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-xl border border-white/50 min-h-[400px]">
+        <div class="w-16 h-16 border-4 border-emerald-100 border-t-emerald-600 rounded-full animate-spin"></div>
+        <p class="text-gray-500 font-semibold animate-pulse">Memuat Data Pejabat...</p>
       </div>
 
       <!-- Error State -->
-      <div v-else-if="store.error" class="bg-red-50 text-red-600 p-8 rounded-2xl text-center border border-red-100 shadow-sm max-w-2xl mx-auto">
-        <span class="font-bold text-lg">{{ store.error }}</span>
+      <div v-else-if="store.error" class="bg-red-50/90 backdrop-blur-md text-red-600 p-10 rounded-[2.5rem] text-center border border-red-100 shadow-xl max-w-2xl mx-auto mt-10">
+        <span class="font-bold text-xl">{{ store.error }}</span>
       </div>
 
       <!-- Content Grid -->
@@ -79,7 +104,6 @@
 
 <script setup>
 import { onMounted } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
 import { usePejabatStore } from '@/stores/pejabat'
 import { getStorageUrl } from '@/utils/helpers'
 import { User, ArrowRight, Calendar } from 'lucide-vue-next'
