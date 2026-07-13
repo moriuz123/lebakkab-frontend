@@ -121,8 +121,8 @@
 
           <div v-else class="space-y-3">
             <router-link
-              v-for="(kategori, index) in kategoriLayananLimited"
-              :key="index"
+              v-for="kategori in kategoriLayananLimited"
+              :key="kategori.id"
               to="/layanan"
               class="group flex items-center gap-3 pb-3 border-b border-gray-100 last:border-0"
             >
@@ -130,7 +130,7 @@
                  <ArrowRight class="w-4 h-4" />
               </div>
               <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-emerald-600 transition-colors">
-                {{ kategori }}
+                {{ kategori.nama }}
               </h3>
             </router-link>
           </div>
@@ -158,11 +158,17 @@ const loadingLayanan = ref(true)
 const agendasLimited = computed(() => agendas.value.slice(0, 4))
 const pengumumanLimited = computed(() => pengumuman.value.slice(0, 4))
 
-// Mengambil kategori unik dari daftar layanan
+// Mengambil kategori unik dari daftar layanan berdasarkan relasi kategori_layanan
 const kategoriLayananLimited = computed(() => {
-  const categories = layanan.value.map(l => l.jenis || l.kategori_layanan?.nama || 'Lainnya').filter(Boolean)
-  const uniqueCategories = [...new Set(categories)]
-  return uniqueCategories.slice(0, 6)
+  const map = new Map()
+  layanan.value.forEach(l => {
+    if (l.kategori_layanan && l.kategori_layanan.nama) {
+      if (!map.has(l.kategori_layanan.id)) {
+        map.set(l.kategori_layanan.id, l.kategori_layanan)
+      }
+    }
+  })
+  return Array.from(map.values()).slice(0, 6)
 })
 
 async function fetchAgendas() {
