@@ -48,10 +48,10 @@
 
       <!-- Pagination -->
       <div v-if="kategoriPagination && kategoriPagination.last_page > 1" class="mt-16">
-        <Pagination
+        <PaginationNav
           :currentPage="kategoriPagination.current_page"
           :totalPages="kategoriPagination.last_page"
-          @changePage="handlePageChange"
+          @update:page="handlePageChange"
         />
       </div>
     </div>
@@ -63,7 +63,7 @@ import { onMounted } from 'vue'
 import { useLayananStore } from '@/stores/layanan'
 import { storeToRefs } from 'pinia'
 import PageHeader from '@/components/PageHeader.vue'
-import Pagination from '@/components/Pagination.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 import { getStorageUrl } from '@/utils/helpers'
 
 const store = useLayananStore()

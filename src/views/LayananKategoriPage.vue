@@ -113,10 +113,10 @@
 
           <!-- Pagination -->
           <div v-if="layananPagination && layananPagination.last_page > 1" class="mt-12">
-            <Pagination
+            <PaginationNav
               :currentPage="layananPagination.current_page"
               :totalPages="layananPagination.last_page"
-              @changePage="handlePageChange"
+              @update:page="handlePageChange"
             />
           </div>
         </main>
@@ -131,7 +131,7 @@ import { useRoute } from 'vue-router'
 import { useLayananStore } from '@/stores/layanan'
 import { storeToRefs } from 'pinia'
 import PageHeader from '@/components/PageHeader.vue'
-import Pagination from '@/components/Pagination.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 import axios from '@/utils/api'
 
 const route = useRoute()
