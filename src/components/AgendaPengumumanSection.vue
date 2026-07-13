@@ -108,7 +108,7 @@
             <router-link to="/layanan" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline">Semua Layanan</router-link>
           </div>
 
-          <div v-if="loadingLayanan.value" class="space-y-4">
+          <div v-if="loadingKategoriLayanan.value" class="space-y-4">
             <div v-for="i in 4" :key="i" class="flex gap-4 animate-pulse">
               <div class="w-10 h-10 bg-gray-100 rounded-full"></div>
               <div class="flex-1 py-3"><div class="h-3 bg-gray-100 rounded w-1/2"></div></div>
@@ -123,15 +123,21 @@
             <router-link
               v-for="kategori in kategoriLayananLimited"
               :key="kategori.id"
-              to="/layanan"
-              class="group flex items-center gap-3 pb-3 border-b border-gray-100 last:border-0"
+              :to="{ name: 'LayananKategoriPage', params: { slug: kategori.slug } }"
+              class="group flex items-center justify-between pb-3 border-b border-gray-100 last:border-0 hover:bg-emerald-50/50 p-2 rounded-xl transition-colors"
             >
-              <div class="shrink-0 w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
-                 <ArrowRight class="w-4 h-4" />
+              <div class="flex items-center gap-3">
+                <div class="shrink-0 w-10 h-10 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors overflow-hidden border border-emerald-100">
+                   <img v-if="kategori.thumbnail" :src="getStorageUrl(kategori.thumbnail)" class="w-6 h-6 object-contain group-hover:brightness-0 group-hover:invert" />
+                   <ArrowRight v-else class="w-4 h-4" />
+                </div>
+                <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-emerald-600 transition-colors">
+                  {{ kategori.nama }}
+                </h3>
               </div>
-              <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-emerald-600 transition-colors">
-                {{ kategori.nama }}
-              </h3>
+              <span class="text-xs font-bold bg-gray-100 text-gray-500 px-2.5 py-1 rounded-full group-hover:bg-emerald-100 group-hover:text-emerald-700 transition-colors">
+                {{ kategori.informasi_layanans_count || 0 }}
+              </span>
             </router-link>
           </div>
         </div>
@@ -146,30 +152,19 @@ import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import dayjs from 'dayjs'
 import { ArrowRight } from 'lucide-vue-next'
+import { getStorageUrl } from '@/utils/helpers'
 
 const agendas = ref([])
 const pengumuman = ref([])
-const layanan = ref([])
+const kategoriLayanan = ref([])
 
 const loadingAgenda = ref(true)
 const loadingPengumuman = ref(true)
-const loadingLayanan = ref(true)
+const loadingKategoriLayanan = ref(true)
 
 const agendasLimited = computed(() => agendas.value.slice(0, 4))
 const pengumumanLimited = computed(() => pengumuman.value.slice(0, 4))
-
-// Mengambil kategori unik dari daftar layanan berdasarkan relasi kategori_layanan
-const kategoriLayananLimited = computed(() => {
-  const map = new Map()
-  layanan.value.forEach(l => {
-    if (l.kategori_layanan && l.kategori_layanan.nama) {
-      if (!map.has(l.kategori_layanan.id)) {
-        map.set(l.kategori_layanan.id, l.kategori_layanan)
-      }
-    }
-  })
-  return Array.from(map.values()).slice(0, 6)
-})
+const kategoriLayananLimited = computed(() => kategoriLayanan.value.slice(0, 5))
 
 async function fetchAgendas() {
   loadingAgenda.value = true
@@ -197,17 +192,17 @@ async function fetchPengumuman() {
   }
 }
 
-async function fetchLayanan() {
-  loadingLayanan.value = true
+async function fetchKategoriLayanan() {
+  loadingKategoriLayanan.value = true
   try {
-    const res = await axios.get('/api/layanan')
+    const res = await axios.get('/api/kategori-layanan')
     const payload = res?.data?.data || res?.data || []
-    layanan.value = Array.isArray(payload) ? payload : []
+    kategoriLayanan.value = Array.isArray(payload) ? payload : []
   } catch (err) {
-    console.error('Error fetch layanan', err)
-    layanan.value = []
+    console.error('Error fetch kategori layanan', err)
+    kategoriLayanan.value = []
   } finally {
-    loadingLayanan.value = false
+    loadingKategoriLayanan.value = false
   }
 }
 
@@ -232,6 +227,6 @@ const formatYear = (date) => {
 onMounted(() => {
   fetchAgendas()
   fetchPengumuman()
-  fetchLayanan()
+  fetchKategoriLayanan()
 })
 </script>
