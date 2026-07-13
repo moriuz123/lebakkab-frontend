@@ -1,58 +1,53 @@
 <template>
-  <section class="py-12 relative overflow-hidden bg-slate-50">
+  <section class="py-8 relative bg-white">
     <!-- Modern & Stylish Background -->
     <div class="absolute inset-0 z-0 pointer-events-none">
       <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
-      <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[80px] -translate-y-1/2"></div>
-      <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-orange-400/20 rounded-full mix-blend-multiply filter blur-[80px] translate-y-1/3"></div>
-      <div class="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-emerald-400/10 rounded-full mix-blend-multiply filter blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+      <div class="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-50/50 rounded-full mix-blend-multiply filter blur-[80px]"></div>
+      <div class="absolute bottom-0 left-0 w-[300px] h-[300px] bg-orange-50/50 rounded-full mix-blend-multiply filter blur-[80px]"></div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
       
       <!-- 3 Columns Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
         
         <!-- ===========================
              KOLOM 1: Agenda (Tema Biru)
              =========================== -->
-        <div class="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-          <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-6 h-1 bg-blue-500 rounded-full"></span>
-                <span class="text-blue-600 font-bold uppercase tracking-widest text-[10px]">Kegiatan</span>
-              </div>
-              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Agenda</h2>
-            </div>
-            <router-link to="/agenda" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-blue-50 text-slate-400 hover:text-blue-600 border border-slate-200 hover:border-blue-200 flex items-center justify-center transition-all">
-               <ArrowRight class="w-4 h-4" />
-            </router-link>
+        <div class="flex flex-col">
+          <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200/60">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-blue-500 rounded-full"></span>
+              Agenda Daerah
+            </h2>
+            <router-link to="/agenda" class="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline">Lihat Semua</router-link>
           </div>
 
-          <div v-if="loadingAgenda.value" class="space-y-3">
-            <div v-for="i in 4" :key="i" class="flex gap-4 p-3 rounded-2xl bg-slate-50/50 animate-pulse">
-              <div class="w-14 h-16 bg-slate-200 rounded-xl"></div>
-              <div class="flex-1 py-1 space-y-2"><div class="h-3 bg-slate-200 rounded w-3/4"></div><div class="h-3 bg-slate-200 rounded w-1/2"></div></div>
+          <div v-if="loadingAgenda.value" class="space-y-4">
+            <div v-for="i in 4" :key="i" class="flex gap-4 animate-pulse">
+              <div class="w-12 h-14 bg-gray-100 rounded-lg"></div>
+              <div class="flex-1 space-y-2"><div class="h-3 bg-gray-100 rounded w-3/4"></div><div class="h-3 bg-gray-100 rounded w-1/2"></div></div>
             </div>
           </div>
           
-          <div v-else-if="agendasLimited.length === 0" class="text-center py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-            <p class="text-slate-500 text-sm font-medium">Belum ada agenda.</p>
+          <div v-else-if="agendasLimited.length === 0" class="py-4 text-gray-500 text-sm font-medium">
+            Belum ada agenda.
           </div>
 
-          <div v-else class="space-y-3">
+          <div v-else class="space-y-5">
             <router-link
               v-for="item in agendasLimited"
               :key="item.id"
               :to="`/agenda/${item.slug || item.id}`"
-              class="group flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
+              class="group flex items-start gap-4"
             >
-              <div class="shrink-0 w-14 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex flex-col items-center justify-center border border-slate-200 group-hover:from-blue-500 group-hover:to-blue-600 group-hover:border-blue-400 transition-all duration-300">
-                <span class="text-[9px] font-bold text-slate-500 group-hover:text-blue-100 uppercase">{{ formatMonth(item.tanggal_mulai) }}</span>
-                <span class="text-xl font-black text-blue-600 group-hover:text-white leading-none my-0.5">{{ formatDay(item.tanggal_mulai) }}</span>
+              <div class="shrink-0 flex flex-col items-center justify-center w-14 h-[4.5rem] bg-blue-50/50 group-hover:bg-blue-100/50 text-blue-700 rounded-lg transition-colors border border-blue-100/50">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-blue-500">{{ formatMonth(item.tanggal_mulai) }}</span>
+                <span class="text-xl font-black leading-none my-0.5">{{ formatDay(item.tanggal_mulai) }}</span>
+                <span class="text-[9px] font-bold opacity-70">{{ formatYear(item.tanggal_mulai) }}</span>
               </div>
-              <h3 class="font-bold text-sm text-slate-700 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
+              <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-blue-600 transition-colors line-clamp-3">
                 {{ item.judul || item.title || '—' }}
               </h3>
             </router-link>
@@ -62,43 +57,39 @@
         <!-- ===========================
              KOLOM 2: Pengumuman (Orange)
              =========================== -->
-        <div class="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-          <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-6 h-1 bg-orange-500 rounded-full"></span>
-                <span class="text-orange-600 font-bold uppercase tracking-widest text-[10px]">Informasi</span>
-              </div>
-              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Pengumuman</h2>
-            </div>
-            <router-link to="/pengumuman" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-orange-50 text-slate-400 hover:text-orange-600 border border-slate-200 hover:border-orange-200 flex items-center justify-center transition-all">
-               <ArrowRight class="w-4 h-4" />
-            </router-link>
+        <div class="flex flex-col">
+          <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200/60">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-orange-500 rounded-full"></span>
+              Pengumuman
+            </h2>
+            <router-link to="/pengumuman" class="text-sm font-semibold text-orange-600 hover:text-orange-700 hover:underline">Lihat Semua</router-link>
           </div>
 
-          <div v-if="loadingPengumuman.value" class="space-y-3">
-            <div v-for="i in 4" :key="i" class="flex gap-4 p-3 rounded-2xl bg-slate-50/50 animate-pulse">
-              <div class="w-14 h-16 bg-slate-200 rounded-xl"></div>
-              <div class="flex-1 py-1 space-y-2"><div class="h-3 bg-slate-200 rounded w-3/4"></div><div class="h-3 bg-slate-200 rounded w-1/2"></div></div>
+          <div v-if="loadingPengumuman.value" class="space-y-4">
+            <div v-for="i in 4" :key="i" class="flex gap-4 animate-pulse">
+              <div class="w-12 h-14 bg-gray-100 rounded-lg"></div>
+              <div class="flex-1 space-y-2"><div class="h-3 bg-gray-100 rounded w-3/4"></div><div class="h-3 bg-gray-100 rounded w-1/2"></div></div>
             </div>
           </div>
           
-          <div v-else-if="pengumumanLimited.length === 0" class="text-center py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-            <p class="text-slate-500 text-sm font-medium">Belum ada pengumuman.</p>
+          <div v-else-if="pengumumanLimited.length === 0" class="py-4 text-gray-500 text-sm font-medium">
+            Belum ada pengumuman.
           </div>
 
-          <div v-else class="space-y-3">
+          <div v-else class="space-y-5">
             <router-link
               v-for="item in pengumumanLimited"
               :key="item.id"
               :to="`/pengumuman/${item.slug || item.id}`"
-              class="group flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300"
+              class="group flex items-start gap-4"
             >
-              <div class="shrink-0 w-14 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex flex-col items-center justify-center border border-slate-200 group-hover:from-orange-400 group-hover:to-orange-500 group-hover:border-orange-400 transition-all duration-300">
-                <span class="text-[9px] font-bold text-slate-500 group-hover:text-orange-100 uppercase">{{ formatMonth(item.tgl_pelaksanaan || item.created_at) }}</span>
-                <span class="text-xl font-black text-orange-500 group-hover:text-white leading-none my-0.5">{{ formatDay(item.tgl_pelaksanaan || item.created_at) }}</span>
+              <div class="shrink-0 flex flex-col items-center justify-center w-14 h-[4.5rem] bg-orange-50/50 group-hover:bg-orange-100/50 text-orange-700 rounded-lg transition-colors border border-orange-100/50">
+                <span class="text-[10px] font-bold uppercase tracking-widest text-orange-500">{{ formatMonth(item.tgl_pelaksanaan || item.created_at) }}</span>
+                <span class="text-xl font-black leading-none my-0.5">{{ formatDay(item.tgl_pelaksanaan || item.created_at) }}</span>
+                <span class="text-[9px] font-bold opacity-70">{{ formatYear(item.tgl_pelaksanaan || item.created_at) }}</span>
               </div>
-              <h3 class="font-bold text-sm text-slate-700 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">
+              <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-orange-600 transition-colors line-clamp-3">
                 {{ item.judul || item.title || '—' }}
               </h3>
             </router-link>
@@ -106,46 +97,40 @@
         </div>
 
         <!-- ===========================
-             KOLOM 3: Layanan (Emerald)
+             KOLOM 3: Kategori Layanan (Emerald)
              =========================== -->
-        <div class="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] md:col-span-2 lg:col-span-1">
-          <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
-            <div>
-              <div class="flex items-center gap-2 mb-1">
-                <span class="w-6 h-1 bg-emerald-500 rounded-full"></span>
-                <span class="text-emerald-600 font-bold uppercase tracking-widest text-[10px]">Publik</span>
-              </div>
-              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Layanan</h2>
-            </div>
-            <router-link to="/layanan" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-400 hover:text-emerald-600 border border-slate-200 hover:border-emerald-200 flex items-center justify-center transition-all">
-               <ArrowRight class="w-4 h-4" />
-            </router-link>
+        <div class="flex flex-col md:col-span-2 lg:col-span-1">
+          <div class="flex items-center justify-between mb-6 pb-2 border-b border-gray-200/60">
+            <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+              <span class="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
+              Layanan Publik
+            </h2>
+            <router-link to="/layanan" class="text-sm font-semibold text-emerald-600 hover:text-emerald-700 hover:underline">Semua Layanan</router-link>
           </div>
 
-          <div v-if="loadingLayanan.value" class="space-y-3">
-            <div v-for="i in 4" :key="i" class="flex gap-4 p-3 rounded-2xl bg-slate-50/50 animate-pulse">
-              <div class="w-14 h-16 bg-slate-200 rounded-xl"></div>
-              <div class="flex-1 py-1 space-y-2"><div class="h-3 bg-slate-200 rounded w-3/4"></div><div class="h-3 bg-slate-200 rounded w-1/2"></div></div>
+          <div v-if="loadingLayanan.value" class="space-y-4">
+            <div v-for="i in 4" :key="i" class="flex gap-4 animate-pulse">
+              <div class="w-10 h-10 bg-gray-100 rounded-full"></div>
+              <div class="flex-1 py-3"><div class="h-3 bg-gray-100 rounded w-1/2"></div></div>
             </div>
           </div>
           
-          <div v-else-if="layananLimited.length === 0" class="text-center py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
-            <p class="text-slate-500 text-sm font-medium">Belum ada layanan.</p>
+          <div v-else-if="kategoriLayananLimited.length === 0" class="py-4 text-gray-500 text-sm font-medium">
+            Belum ada kategori layanan.
           </div>
 
           <div v-else class="space-y-3">
             <router-link
-              v-for="item in layananLimited"
-              :key="item.id"
-              :to="`/layanan/${item.id}`"
-              class="group flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300"
+              v-for="(kategori, index) in kategoriLayananLimited"
+              :key="index"
+              to="/layanan"
+              class="group flex items-center gap-3 pb-3 border-b border-gray-100 last:border-0"
             >
-              <div class="shrink-0 w-14 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex flex-col items-center justify-center border border-slate-200 group-hover:from-emerald-400 group-hover:to-emerald-500 group-hover:border-emerald-400 transition-all duration-300">
-                 <Briefcase class="w-6 h-6 text-emerald-500 group-hover:text-white mb-1" />
-                 <span class="text-[8px] font-bold text-slate-400 group-hover:text-emerald-100 uppercase tracking-widest">Akses</span>
+              <div class="shrink-0 w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                 <ArrowRight class="w-4 h-4" />
               </div>
-              <h3 class="font-bold text-sm text-slate-700 leading-snug group-hover:text-emerald-600 transition-colors line-clamp-2">
-                {{ item.judul || item.title || '—' }}
+              <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-emerald-600 transition-colors">
+                {{ kategori }}
               </h3>
             </router-link>
           </div>
@@ -160,7 +145,7 @@
 import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import dayjs from 'dayjs'
-import { ArrowRight, Briefcase } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
 
 const agendas = ref([])
 const pengumuman = ref([])
@@ -172,7 +157,13 @@ const loadingLayanan = ref(true)
 
 const agendasLimited = computed(() => agendas.value.slice(0, 4))
 const pengumumanLimited = computed(() => pengumuman.value.slice(0, 4))
-const layananLimited = computed(() => layanan.value.slice(0, 4))
+
+// Mengambil kategori unik dari daftar layanan
+const kategoriLayananLimited = computed(() => {
+  const categories = layanan.value.map(l => l.jenis || l.kategori_layanan?.nama || 'Lainnya').filter(Boolean)
+  const uniqueCategories = [...new Set(categories)]
+  return uniqueCategories.slice(0, 6)
+})
 
 async function fetchAgendas() {
   loadingAgenda.value = true
@@ -224,6 +215,12 @@ const formatMonth = (date) => {
   if (!date) return ''
   const d = dayjs(date)
   return d.isValid() ? d.format('MMM') : ''
+}
+
+const formatYear = (date) => {
+  if (!date) return ''
+  const d = dayjs(date)
+  return d.isValid() ? d.format('YYYY') : ''
 }
 
 onMounted(() => {
