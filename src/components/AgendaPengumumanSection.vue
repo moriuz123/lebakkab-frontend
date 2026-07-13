@@ -1,120 +1,152 @@
 <template>
-  <section class="py-16 bg-white relative overflow-hidden">
-    <!-- Decorative background elements -->
-    <div class="absolute top-0 right-0 w-96 h-96 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none -translate-y-1/2 translate-x-1/3"></div>
-    <div class="absolute bottom-0 left-0 w-96 h-96 bg-orange-50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 pointer-events-none translate-y-1/3 -translate-x-1/3"></div>
+  <section class="py-12 relative overflow-hidden bg-slate-50">
+    <!-- Modern & Stylish Background -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute inset-0 bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+      <div class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[80px] -translate-y-1/2"></div>
+      <div class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-orange-400/20 rounded-full mix-blend-multiply filter blur-[80px] translate-y-1/3"></div>
+      <div class="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-emerald-400/10 rounded-full mix-blend-multiply filter blur-[100px] -translate-x-1/2 -translate-y-1/2"></div>
+    </div>
 
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+      
+      <!-- 3 Columns Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         
         <!-- ===========================
-             KIRI: Agenda (Tema Biru)
+             KOLOM 1: Agenda (Tema Biru)
              =========================== -->
-        <div>
-          <!-- Header Agenda -->
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b border-gray-100 pb-4">
+        <div class="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
             <div>
-              <div class="flex items-center gap-2 mb-2">
-                <span class="w-8 h-1 bg-blue-500 rounded-full"></span>
-                <span class="text-blue-600 font-bold uppercase tracking-wider text-sm">Kegiatan</span>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-6 h-1 bg-blue-500 rounded-full"></span>
+                <span class="text-blue-600 font-bold uppercase tracking-widest text-[10px]">Kegiatan</span>
               </div>
-              <h2 class="text-3xl font-black text-gray-900 tracking-tight">Agenda Daerah</h2>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Agenda</h2>
             </div>
-            <router-link to="/agenda" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-blue-600 transition-colors">
-              Semua Agenda
-              <div class="w-8 h-8 rounded-full bg-gray-50 shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-blue-200 group-hover:bg-blue-50 transition-all">
-                 <ArrowRight class="w-4 h-4" />
-              </div>
+            <router-link to="/agenda" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-blue-50 text-slate-400 hover:text-blue-600 border border-slate-200 hover:border-blue-200 flex items-center justify-center transition-all">
+               <ArrowRight class="w-4 h-4" />
             </router-link>
           </div>
 
-          <!-- Loading State -->
-          <div v-if="loadingAgenda.value" class="space-y-4">
-            <div v-for="i in 5" :key="i" class="flex gap-4 p-4 rounded-3xl bg-gray-50 animate-pulse">
-              <div class="w-16 h-20 bg-gray-200 rounded-2xl"></div>
-              <div class="flex-1 py-2 space-y-3"><div class="h-4 bg-gray-200 rounded w-3/4"></div><div class="h-4 bg-gray-200 rounded w-1/2"></div></div>
+          <div v-if="loadingAgenda.value" class="space-y-3">
+            <div v-for="i in 4" :key="i" class="flex gap-4 p-3 rounded-2xl bg-slate-50/50 animate-pulse">
+              <div class="w-14 h-16 bg-slate-200 rounded-xl"></div>
+              <div class="flex-1 py-1 space-y-2"><div class="h-3 bg-slate-200 rounded w-3/4"></div><div class="h-3 bg-slate-200 rounded w-1/2"></div></div>
             </div>
           </div>
-
-          <!-- Empty State -->
-          <div v-else-if="agendasLimited.length === 0" class="text-center py-10 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-            <p class="text-gray-500 font-medium">Belum ada agenda tersedia.</p>
+          
+          <div v-else-if="agendasLimited.length === 0" class="text-center py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+            <p class="text-slate-500 text-sm font-medium">Belum ada agenda.</p>
           </div>
 
-          <!-- List Agenda -->
-          <div v-else class="space-y-4">
+          <div v-else class="space-y-3">
             <router-link
               v-for="item in agendasLimited"
               :key="item.id"
               :to="`/agenda/${item.slug || item.id}`"
-              class="group flex items-center gap-5 p-3 pr-5 bg-white rounded-3xl border border-gray-100 hover:border-blue-200 hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1 transition-all duration-300"
+              class="group flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 hover:border-blue-200 hover:shadow-lg hover:shadow-blue-500/5 transition-all duration-300"
             >
-              <div class="flex-shrink-0 w-16 h-20 bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl flex flex-col items-center justify-center shadow-inner group-hover:scale-105 group-hover:from-blue-500 group-hover:to-blue-600 group-hover:text-white transition-all duration-300 text-blue-600 border border-blue-200 group-hover:border-blue-400">
-                <span class="text-[10px] font-bold uppercase tracking-widest">{{ formatMonth(item.tanggal_mulai) }}</span>
-                <span class="text-2xl font-black leading-none my-0.5">{{ formatDay(item.tanggal_mulai) }}</span>
-                <span class="text-[10px] font-bold opacity-80">{{ formatYear(item.tanggal_mulai) }}</span>
+              <div class="shrink-0 w-14 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex flex-col items-center justify-center border border-slate-200 group-hover:from-blue-500 group-hover:to-blue-600 group-hover:border-blue-400 transition-all duration-300">
+                <span class="text-[9px] font-bold text-slate-500 group-hover:text-blue-100 uppercase">{{ formatMonth(item.tanggal_mulai) }}</span>
+                <span class="text-xl font-black text-blue-600 group-hover:text-white leading-none my-0.5">{{ formatDay(item.tanggal_mulai) }}</span>
               </div>
-              <div>
-                <h3 class="font-bold text-gray-900 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
-                  {{ item.judul || item.title || '—' }}
-                </h3>
-              </div>
+              <h3 class="font-bold text-sm text-slate-700 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
+                {{ item.judul || item.title || '—' }}
+              </h3>
             </router-link>
           </div>
         </div>
 
         <!-- ===========================
-             KANAN: Pengumuman (Tema Orange)
+             KOLOM 2: Pengumuman (Orange)
              =========================== -->
-        <div>
-          <!-- Header Pengumuman -->
-          <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-8 gap-4 border-b border-gray-100 pb-4">
+        <div class="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
             <div>
-              <div class="flex items-center gap-2 mb-2">
-                <span class="w-8 h-1 bg-orange-500 rounded-full"></span>
-                <span class="text-orange-600 font-bold uppercase tracking-wider text-sm">Informasi</span>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-6 h-1 bg-orange-500 rounded-full"></span>
+                <span class="text-orange-600 font-bold uppercase tracking-widest text-[10px]">Informasi</span>
               </div>
-              <h2 class="text-3xl font-black text-gray-900 tracking-tight">Pengumuman</h2>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Pengumuman</h2>
             </div>
-            <router-link to="/pengumuman" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-orange-600 transition-colors">
-              Semua Pengumuman
-              <div class="w-8 h-8 rounded-full bg-gray-50 shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-orange-200 group-hover:bg-orange-50 transition-all">
-                 <ArrowRight class="w-4 h-4" />
-              </div>
+            <router-link to="/pengumuman" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-orange-50 text-slate-400 hover:text-orange-600 border border-slate-200 hover:border-orange-200 flex items-center justify-center transition-all">
+               <ArrowRight class="w-4 h-4" />
             </router-link>
           </div>
 
-          <!-- Loading State -->
-          <div v-if="loadingPengumuman.value" class="space-y-4">
-            <div v-for="i in 5" :key="i" class="flex gap-4 p-4 rounded-3xl bg-gray-50 animate-pulse">
-              <div class="w-16 h-20 bg-gray-200 rounded-2xl"></div>
-              <div class="flex-1 py-2 space-y-3"><div class="h-4 bg-gray-200 rounded w-3/4"></div><div class="h-4 bg-gray-200 rounded w-1/2"></div></div>
+          <div v-if="loadingPengumuman.value" class="space-y-3">
+            <div v-for="i in 4" :key="i" class="flex gap-4 p-3 rounded-2xl bg-slate-50/50 animate-pulse">
+              <div class="w-14 h-16 bg-slate-200 rounded-xl"></div>
+              <div class="flex-1 py-1 space-y-2"><div class="h-3 bg-slate-200 rounded w-3/4"></div><div class="h-3 bg-slate-200 rounded w-1/2"></div></div>
             </div>
           </div>
-
-          <!-- Empty State -->
-          <div v-else-if="pengumumanLimited.length === 0" class="text-center py-10 bg-gray-50 rounded-3xl border border-dashed border-gray-200">
-            <p class="text-gray-500 font-medium">Belum ada pengumuman tersedia.</p>
+          
+          <div v-else-if="pengumumanLimited.length === 0" class="text-center py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+            <p class="text-slate-500 text-sm font-medium">Belum ada pengumuman.</p>
           </div>
 
-          <!-- List Pengumuman -->
-          <div v-else class="space-y-4">
+          <div v-else class="space-y-3">
             <router-link
               v-for="item in pengumumanLimited"
               :key="item.id"
               :to="`/pengumuman/${item.slug || item.id}`"
-              class="group flex items-center gap-5 p-3 pr-5 bg-white rounded-3xl border border-gray-100 hover:border-orange-200 hover:shadow-xl hover:shadow-orange-500/10 hover:-translate-y-1 transition-all duration-300"
+              class="group flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 hover:border-orange-200 hover:shadow-lg hover:shadow-orange-500/5 transition-all duration-300"
             >
-              <div class="flex-shrink-0 w-16 h-20 bg-gradient-to-br from-orange-50 to-orange-100 rounded-2xl flex flex-col items-center justify-center shadow-inner group-hover:scale-105 group-hover:from-orange-500 group-hover:to-orange-600 group-hover:text-white transition-all duration-300 text-orange-600 border border-orange-200 group-hover:border-orange-400">
-                <span class="text-[10px] font-bold uppercase tracking-widest">{{ formatMonth(item.tgl_pelaksanaan || item.created_at) }}</span>
-                <span class="text-2xl font-black leading-none my-0.5">{{ formatDay(item.tgl_pelaksanaan || item.created_at) }}</span>
-                <span class="text-[10px] font-bold opacity-80">{{ formatYear(item.tgl_pelaksanaan || item.created_at) }}</span>
+              <div class="shrink-0 w-14 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex flex-col items-center justify-center border border-slate-200 group-hover:from-orange-400 group-hover:to-orange-500 group-hover:border-orange-400 transition-all duration-300">
+                <span class="text-[9px] font-bold text-slate-500 group-hover:text-orange-100 uppercase">{{ formatMonth(item.tgl_pelaksanaan || item.created_at) }}</span>
+                <span class="text-xl font-black text-orange-500 group-hover:text-white leading-none my-0.5">{{ formatDay(item.tgl_pelaksanaan || item.created_at) }}</span>
               </div>
-              <div>
-                <h3 class="font-bold text-gray-900 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">
-                  {{ item.judul || item.title || '—' }}
-                </h3>
+              <h3 class="font-bold text-sm text-slate-700 leading-snug group-hover:text-orange-600 transition-colors line-clamp-2">
+                {{ item.judul || item.title || '—' }}
+              </h3>
+            </router-link>
+          </div>
+        </div>
+
+        <!-- ===========================
+             KOLOM 3: Layanan (Emerald)
+             =========================== -->
+        <div class="bg-white/60 backdrop-blur-xl p-6 rounded-[2rem] border border-white shadow-[0_8px_30px_rgb(0,0,0,0.04)] md:col-span-2 lg:col-span-1">
+          <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1">
+                <span class="w-6 h-1 bg-emerald-500 rounded-full"></span>
+                <span class="text-emerald-600 font-bold uppercase tracking-widest text-[10px]">Publik</span>
               </div>
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight">Layanan</h2>
+            </div>
+            <router-link to="/layanan" class="w-8 h-8 rounded-full bg-slate-50 hover:bg-emerald-50 text-slate-400 hover:text-emerald-600 border border-slate-200 hover:border-emerald-200 flex items-center justify-center transition-all">
+               <ArrowRight class="w-4 h-4" />
+            </router-link>
+          </div>
+
+          <div v-if="loadingLayanan.value" class="space-y-3">
+            <div v-for="i in 4" :key="i" class="flex gap-4 p-3 rounded-2xl bg-slate-50/50 animate-pulse">
+              <div class="w-14 h-16 bg-slate-200 rounded-xl"></div>
+              <div class="flex-1 py-1 space-y-2"><div class="h-3 bg-slate-200 rounded w-3/4"></div><div class="h-3 bg-slate-200 rounded w-1/2"></div></div>
+            </div>
+          </div>
+          
+          <div v-else-if="layananLimited.length === 0" class="text-center py-8 bg-slate-50/50 rounded-2xl border border-dashed border-slate-200">
+            <p class="text-slate-500 text-sm font-medium">Belum ada layanan.</p>
+          </div>
+
+          <div v-else class="space-y-3">
+            <router-link
+              v-for="item in layananLimited"
+              :key="item.id"
+              :to="`/layanan/${item.id}`"
+              class="group flex items-center gap-4 p-3 bg-white rounded-2xl border border-slate-100 hover:border-emerald-200 hover:shadow-lg hover:shadow-emerald-500/5 transition-all duration-300"
+            >
+              <div class="shrink-0 w-14 h-16 bg-gradient-to-br from-slate-50 to-slate-100 rounded-xl flex flex-col items-center justify-center border border-slate-200 group-hover:from-emerald-400 group-hover:to-emerald-500 group-hover:border-emerald-400 transition-all duration-300">
+                 <Briefcase class="w-6 h-6 text-emerald-500 group-hover:text-white mb-1" />
+                 <span class="text-[8px] font-bold text-slate-400 group-hover:text-emerald-100 uppercase tracking-widest">Akses</span>
+              </div>
+              <h3 class="font-bold text-sm text-slate-700 leading-snug group-hover:text-emerald-600 transition-colors line-clamp-2">
+                {{ item.judul || item.title || '—' }}
+              </h3>
             </router-link>
           </div>
         </div>
@@ -128,34 +160,27 @@
 import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import dayjs from 'dayjs'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, Briefcase } from 'lucide-vue-next'
 
 const agendas = ref([])
 const pengumuman = ref([])
+const layanan = ref([])
 
 const loadingAgenda = ref(true)
 const loadingPengumuman = ref(true)
+const loadingLayanan = ref(true)
 
-const agendasLimited = computed(() => agendas.value.slice(0, 5))
-const pengumumanLimited = computed(() => pengumuman.value.slice(0, 5))
+const agendasLimited = computed(() => agendas.value.slice(0, 4))
+const pengumumanLimited = computed(() => pengumuman.value.slice(0, 4))
+const layananLimited = computed(() => layanan.value.slice(0, 4))
 
 async function fetchAgendas() {
   loadingAgenda.value = true
   try {
-    let res = null
-    const urls = ['/api/agendas', '/api/agenda']
-    for (const u of urls) {
-      try {
-        res = await axios.get(u)
-        if (res) break
-      } catch (e) {
-        res = null
-      }
-    }
-    const payload = res ? (Array.isArray(res.data) ? res.data : (res.data?.data ?? [])) : []
+    const res = await axios.get('/api/agendas').catch(() => axios.get('/api/agenda'))
+    const payload = res?.data?.data || res?.data || []
     agendas.value = Array.isArray(payload) ? payload : []
   } catch (err) {
-    console.error('Error fetch agendas', err)
     agendas.value = []
   } finally {
     loadingAgenda.value = false
@@ -165,37 +190,27 @@ async function fetchAgendas() {
 async function fetchPengumuman() {
   loadingPengumuman.value = true
   try {
-    let res = null
-    const urls = ['/api/pengumuman', '/api/pengumumans', '/api/announcements']
-    for (const u of urls) {
-      try {
-        res = await axios.get(u)
-        if (res) break
-      } catch (e) {
-        res = null
-      }
-    }
-
-    if (!res) {
-      pengumuman.value = []
-      return
-    }
-
-    let payload = []
-    if (Array.isArray(res.data)) {
-      payload = res.data
-    } else if (Array.isArray(res.data?.data)) {
-      payload = res.data.data
-    } else {
-      payload = []
-    }
-
+    let res = await axios.get('/api/pengumuman').catch(() => axios.get('/api/pengumumans'))
+    const payload = res?.data?.data || res?.data || []
     pengumuman.value = Array.isArray(payload) ? payload : []
   } catch (err) {
-    console.error('Error fetch pengumuman', err)
     pengumuman.value = []
   } finally {
     loadingPengumuman.value = false
+  }
+}
+
+async function fetchLayanan() {
+  loadingLayanan.value = true
+  try {
+    const res = await axios.get('/api/layanan')
+    const payload = res?.data?.data || res?.data || []
+    layanan.value = Array.isArray(payload) ? payload : []
+  } catch (err) {
+    console.error('Error fetch layanan', err)
+    layanan.value = []
+  } finally {
+    loadingLayanan.value = false
   }
 }
 
@@ -211,14 +226,9 @@ const formatMonth = (date) => {
   return d.isValid() ? d.format('MMM') : ''
 }
 
-const formatYear = (date) => {
-  if (!date) return ''
-  const d = dayjs(date)
-  return d.isValid() ? d.format('YYYY') : ''
-}
-
 onMounted(() => {
   fetchAgendas()
   fetchPengumuman()
+  fetchLayanan()
 })
 </script>
