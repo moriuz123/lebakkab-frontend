@@ -5,46 +5,46 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Overriding green & emerald to match SPBE Lebak Blue Theme
+        // ColorHunt Palette: #e8edf2, #2c3947, #547a95, #c2a56d
         green: {
-          50: '#e8f0fb',
-          100: '#d1e1f7',
-          200: '#a3c4f0',
-          300: '#75a6e8',
-          400: '#4789e1',
-          500: '#1e5ca8', // Primary SPBE
-          600: '#184a86',
-          700: '#123765',
-          800: '#0a2463', // Secondary SPBE
-          900: '#071840', // Darkest SPBE
-          950: '#040c20',
+          50: '#e8edf2', // The lightest color
+          100: '#d1dbe5',
+          200: '#a3b7cb',
+          300: '#7593b2',
+          400: '#648ba8',
+          500: '#547a95', // Primary Mid (Buttons, Cards)
+          600: '#42637a',
+          700: '#314b5f',
+          800: '#2c3947', 
+          900: '#2c3947', // Primary Dark (Hero BGs)
+          950: '#1d2630',
         },
         emerald: {
-          50: '#e8f0fb',
-          100: '#d1e1f7',
-          200: '#a3c4f0',
-          300: '#75a6e8',
-          400: '#4789e1',
-          500: '#1e5ca8',
-          600: '#184a86',
-          700: '#123765',
-          800: '#0a2463',
-          900: '#071840',
-          950: '#040c20',
+          50: '#e8edf2',
+          100: '#d1dbe5',
+          200: '#a3b7cb',
+          300: '#7593b2',
+          400: '#648ba8',
+          500: '#547a95', 
+          600: '#42637a',
+          700: '#314b5f',
+          800: '#2c3947',
+          900: '#2c3947', 
+          950: '#1d2630',
         },
-        // We can override teal for gradient accents to something golden/amber
+        // Muted Gold / Khaki Accent
         teal: {
-          50: '#fffbeb',
-          100: '#fef3c7',
-          200: '#fde68a',
-          300: '#fcd34d',
-          400: '#fbbf24',
-          500: '#f5b030', // SPBE Gold hover
-          600: '#e8a020', // SPBE Gold
-          700: '#b45309',
-          800: '#92400e',
-          900: '#78350f',
-          950: '#451a03',
+          50: '#f9f6f0',
+          100: '#f3ede2',
+          200: '#e7dac4',
+          300: '#dbc8a7',
+          400: '#d0b589',
+          500: '#c2a56d', // The Core Gold Accent (Buttons)
+          600: '#c2a56d', // The Core Gold Accent (Hover)
+          700: '#a8894f',
+          800: '#82693d',
+          900: '#5b4a2b',
+          950: '#352b19',
         },
       }
     },
