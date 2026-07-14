@@ -4,8 +4,8 @@
     <template v-if="hasChildren">
       <button
         type="button"
-        class="flex items-center space-x-1 px-2 py-1 focus:outline-none"
-        :class="[isScrolled ? 'text-white' : 'text-white']"
+        class="flex items-center space-x-1 px-2 py-1 focus:outline-none transition-colors duration-300"
+        :class="[isScrolled ? 'text-gray-700 hover:text-teal-600 font-semibold' : 'text-white hover:text-gray-200']"
         @click.prevent="toggle"
         :aria-expanded="isOpen.toString()"
       >
@@ -29,11 +29,11 @@
       <!-- Dropdown anak -->
       <div
         v-show="isOpen"
-        class="absolute left-0 top-full mt-0 bg-green-600 shadow-lg rounded-md min-w-[200px] z-50"
+        class="absolute left-0 top-full mt-0 bg-white shadow-xl rounded-xl border border-gray-100 min-w-[200px] z-50 overflow-hidden"
       >
-        <ul class="py-1">
-          <li v-for="child in item.children" :key="child.id" class="px-3 py-2 hover:bg-green-700">
-            <MenuItem :item="child" :is-scrolled="isScrolled" />
+        <ul class="py-2">
+          <li v-for="child in item.children" :key="child.id" class="px-4 py-2 hover:bg-gray-50 transition-colors">
+            <MenuItem :item="child" :is-scrolled="true" />
           </li>
         </ul>
       </div>
@@ -47,9 +47,9 @@
           :href="resolveUrl(item)"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-2 py-1 block whitespace-nowrap"
+          class="px-2 py-1 block whitespace-nowrap transition-colors duration-300"
           :class="[
-            isScrolled ? 'text-white hover:text-gray-100' : 'text-white hover:text-gray-100',
+            isScrolled ? 'text-gray-700 hover:text-teal-600 font-semibold' : 'text-white hover:text-gray-200',
           ]"
         >
           {{ item.title }}
@@ -60,9 +60,9 @@
       <template v-else-if="item.link_type && item.link_type !== 'parent'">
         <a
           :href="resolveUrl(item)"
-          class="px-2 py-1 block whitespace-nowrap"
+          class="px-2 py-1 block whitespace-nowrap transition-colors duration-300"
           :class="[
-            isScrolled ? 'text-white hover:text-gray-100' : 'text-white hover:text-gray-100',
+            isScrolled ? 'text-gray-700 hover:text-teal-600 font-semibold' : 'text-white hover:text-gray-200',
           ]"
         >
           {{ item.title }}
@@ -72,8 +72,8 @@
       <!-- Induk tanpa link -->
       <template v-else>
         <span
-          class="px-2 py-1 block cursor-default"
-          :class="[isScrolled ? 'text-white' : 'text-white']"
+          class="px-2 py-1 block cursor-default transition-colors duration-300"
+          :class="[isScrolled ? 'text-gray-700 font-semibold' : 'text-white']"
         >
           {{ item.title }}
         </span>
