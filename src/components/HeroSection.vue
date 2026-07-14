@@ -27,10 +27,9 @@
     >
       <!-- Typography -->
       <h1 class="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-[1.15] tracking-tight drop-shadow-lg">
-        Sistem Pemerintahan Berbasis Elektronik <br class="hidden sm:block" />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">
-          Kabupaten Lebak
-        </span>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">Selamat Datang</span><br class="hidden lg:block" />
+        di Sistem Pemerintahan Berbasis Elektronik <br class="hidden sm:block" />
+        Kabupaten Lebak
       </h1>
       <h2
         class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-6 max-w-2xl"
