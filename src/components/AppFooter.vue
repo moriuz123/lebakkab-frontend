@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="relative bg-[#071840] font-sans mt-12 overflow-hidden"
+    class="relative bg-[#071840] font-sans overflow-hidden"
   >
     <!-- Gradient & Pattern Overlay -->
     <div
