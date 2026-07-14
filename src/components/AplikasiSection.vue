@@ -20,34 +20,55 @@
       </div>
 
       <!-- Grid Aplikasi -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <div
           v-for="item in aplikasiItems"
           :key="item.id"
-          class="group relative bg-white p-6 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] border border-gray-100 hover:border-[#1e5ca8] hover:shadow-xl hover:shadow-[#1e5ca8]/10 cursor-pointer transition-all duration-300 flex flex-col items-center text-center overflow-hidden z-10"
-          @click="goToLink(item.link)"
-          role="link"
-          tabindex="0"
-          @keyup.enter="goToLink(item.link)"
+          class="group bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-6 flex flex-col transition-all duration-300 hover:-translate-y-1"
         >
-          <!-- Hover Background Effect -->
-          <div class="absolute inset-0 bg-gradient-to-b from-transparent to-blue-50/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"></div>
-          
-          <div class="w-16 h-16 bg-gray-50 rounded-2xl flex items-center justify-center p-3 mb-4 group-hover:scale-110 group-hover:bg-white group-hover:shadow-md transition-all duration-300">
-            <img :src="getIconUrl(item.icon)" alt="icon" class="w-full h-full object-contain drop-shadow-sm" />
+          <!-- App Icon & Header -->
+          <div class="flex items-start gap-4 mb-4">
+            <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl p-2 border border-gray-100 flex items-center justify-center group-hover:scale-105 transition-transform duration-300">
+              <img
+                :src="getIconUrl(item.icon)"
+                alt="icon"
+                class="w-full h-full object-contain"
+                @error="$event.target.src = '/images/default-layanan.jpg'"
+              />
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="font-bold text-gray-800 text-lg truncate" :title="item.nama">{{ item.nama }}</h3>
+              <p class="text-sm text-gray-500 truncate" :title="item.kategori || 'Aplikasi Layanan Publik'">{{ item.kategori || 'Aplikasi Layanan Publik' }}</p>
+            </div>
           </div>
-          
-          <h3 class="text-gray-800 font-bold text-base leading-snug group-hover:text-[#e8a020] transition-colors">
-            {{ item.nama }}
-          </h3>
-          
-          <p v-if="item.deskripsi" class="text-xs text-gray-500 mt-2 line-clamp-2 leading-relaxed">
-            {{ item.deskripsi }}
+
+          <!-- Badges -->
+          <div class="flex flex-wrap gap-2 mb-4">
+            <span v-if="item.jenis" class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+              {{ item.jenis }}
+            </span>
+            <span v-else class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-100">
+              Website
+            </span>
+          </div>
+
+          <!-- Description -->
+          <p class="text-gray-600 text-sm line-clamp-3 mb-6 flex-1">
+            {{ item.deskripsi || 'Tidak ada deskripsi tersedia.' }}
           </p>
 
-          <div class="mt-4 flex items-center gap-1 text-[10px] font-bold text-[#e8a020] uppercase tracking-widest opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-            Akses <ArrowRight class="w-3 h-3" />
-          </div>
+          <!-- Action Button -->
+          <a
+            :href="item.link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-auto block w-full text-center bg-gray-50 hover:bg-[#0a2463] hover:text-white text-[#e8a020] font-semibold px-4 py-2.5 rounded-xl transition-colors border border-[#1e5ca8] hover:border-[#1e5ca8] flex items-center justify-center gap-2"
+          >
+            Buka Aplikasi
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
         </div>
       </div>
     </div>
