@@ -4,7 +4,7 @@
   >
     <!-- Gradient & Pattern Overlay -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-[#071840]/95 via-[#0a2463]/90 to-[#071840]/60 mix-blend-multiply z-0"
+      class="absolute inset-0 bg-gradient-to-br from-[#071840] via-[#0a2463] to-[#2a6cbd] z-0"
     ></div>
     <!-- Corak Batik Overlay (Kawung Motif) -->
     <div 
