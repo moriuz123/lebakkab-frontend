@@ -91,12 +91,15 @@
               </div>
             </div>
 
-            <!-- Tombol Aksi Utama -->
-            <div v-if="layanan.link_rujukan" class="mt-10 flex justify-center lg:justify-start relative z-10">
-              <a :href="layanan.link_rujukan" target="_blank" rel="noopener noreferrer" 
-                 class="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-emerald-600/30 hover:shadow-xl hover:shadow-emerald-600/40 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+            <!-- Link Rujukan / Akses Layanan -->
+            <div v-if="layanan.link_rujukan" class="mt-12 flex justify-center lg:justify-start">
+             <a :href="layanan.link_rujukan" target="_blank" rel="noopener noreferrer" 
+                 class="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-teal-600 to-teal-500 text-white px-10 py-4 rounded-full font-bold shadow-lg shadow-teal-600/30 hover:shadow-xl hover:shadow-teal-600/40 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                
+                <!-- Hover highlight effect -->
                 <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-                <span class="relative z-10">Akses Layanan Publik Ini</span>
+                
+                <span class="relative z-10 text-lg">Akses Layanan Ini</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
