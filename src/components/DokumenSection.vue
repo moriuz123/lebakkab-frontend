@@ -80,16 +80,16 @@ const goToDot = (index) => {
 </script>
 
 <template>
-  <section class="relative overflow-hidden py-10 mt-6">
+  <section class="relative overflow-hidden py-10">
     <!-- Gradient Background Transparent -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-[#0a2463]/10 via-[#1e5ca8]/5 to-[#e8a020]/10 z-0 pointer-events-none"
+      class="absolute inset-0 bg-gradient-to-br from-[#071840] from-60% to-[#2a6cbd] z-0 pointer-events-none"
     ></div>
     
     <!-- Corak Batik Overlay (Kawung Motif) for Light Theme -->
     <div 
-      class="absolute inset-0 opacity-[0.08] pointer-events-none mix-blend-multiply z-0" 
-      style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%230a2463' stroke-width='2' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%230a2463' /%3E%3C/g%3E%3C/svg%3E&quot;); background-size: 80px 80px;"
+      class="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-overlay z-0" 
+      style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%23ffffff' /%3E%3C/g%3E%3C/svg%3E&quot;); background-size: 80px 80px;"
     ></div>
 
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
@@ -101,11 +101,11 @@ const goToDot = (index) => {
             <span class="w-8 h-1 bg-[#1e5ca8] rounded-full"></span>
             <span class="text-[#e8a020] font-bold uppercase tracking-wider text-sm">Transparansi</span>
           </div>
-          <h2 class="text-3xl font-black text-gray-900 tracking-tight">Dokumen Publik</h2>
+          <h2 class="text-3xl font-black text-white tracking-tight">Dokumen Publik</h2>
         </div>
-        <router-link to="/dokumen" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-[#e8a020] transition-colors">
+        <router-link to="/dokumen" class="group flex items-center gap-2 text-sm font-bold text-white/70 hover:text-[#e8a020] transition-colors">
           Lihat Semua Dokumen
-          <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-[#1e5ca8] group-hover:bg-[#f8f9fc] transition-all">
+          <div class="w-8 h-8 rounded-full bg-white/10 shadow-sm border border-white/20 flex items-center justify-center group-hover:border-[#e8a020] group-hover:bg-[#e8a020] group-hover:text-[#071840] text-white transition-all">
              <ArrowRight class="w-4 h-4" />
           </div>
         </router-link>
