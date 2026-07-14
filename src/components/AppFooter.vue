@@ -1,8 +1,18 @@
 <template>
   <footer
-    class="bg-[#071840] font-sans mt-12"
+    class="relative bg-[#071840] font-sans mt-12 overflow-hidden"
   >
-    <div class="container mx-auto px-6 max-w-screen-xl py-12">
+    <!-- Gradient & Pattern Overlay -->
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-[#071840]/95 via-[#0a2463]/90 to-[#071840]/60 mix-blend-multiply z-0"
+    ></div>
+    <!-- Corak Batik Overlay (Kawung Motif) -->
+    <div 
+      class="absolute inset-0 opacity-[0.12] pointer-events-none mix-blend-overlay z-0" 
+      style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%23ffffff' /%3E%3C/g%3E%3C/svg%3E&quot;); background-size: 80px 80px;"
+    ></div>
+
+    <div class="relative container mx-auto px-6 max-w-screen-xl py-12 z-10">
       <!-- Grid 4 Kolom -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         <!-- Kolom 1: Profil -->
@@ -151,7 +161,7 @@
     </div>
 
     <!-- Bagian Bawah -->
-    <div class="border-t border-white/10">
+    <div class="relative border-t border-white/10 z-10 bg-black/20">
       <div
         class="container mx-auto px-6 max-w-screen-xl py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-[13.6px] text-white/55 font-normal"
       >
