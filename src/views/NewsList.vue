@@ -107,7 +107,7 @@ const stripHtml = (html) => {
 const fetchKategori = async () => {
   try {
     const res = await axios.get('/api/kategori-berita')
-    kategoriList.value = res.data || []
+    kategoriList.value = (res.data || []).slice(0, 8)
   } catch (err) {
     console.error('Gagal memuat kategori:', err)
   }

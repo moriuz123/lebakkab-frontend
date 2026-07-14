@@ -43,7 +43,7 @@ export const useBeritaStore = defineStore('berita', {
         const res = await axios.get(`/api/berita?page=${page}&per_page=8&limit=8`)
         const raw = res.data.data || res.data || []
         const list = Array.isArray(raw) ? raw : []
-        this.beritas = list.map((it) => ({ ...it, image: ensureImage(it) }))
+        this.beritas = list.slice(0, 8).map((it) => ({ ...it, image: ensureImage(it) }))
         this.pagination = {
           current_page: res.data.current_page || 1,
           last_page: res.data.last_page || 1,
