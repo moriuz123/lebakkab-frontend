@@ -88,8 +88,9 @@ const stripHtml = (html) => {
 const fetchKategoriBerita = async (slug, page = 1) => {
   store.loading = true
   try {
-    const res = await axios.get(`/api/berita/kategori/${slug}?page=${page}`)
-    store.beritas = res.data.data || res.data || []
+    const res = await axios.get(`/api/berita/kategori/${slug}?page=${page}&limit=8&per_page=8`)
+    const raw = res.data.data || res.data || []
+    store.beritas = (Array.isArray(raw) ? raw : []).slice(0, 8)
     
     // Set status pagination
     pagination.value = {
