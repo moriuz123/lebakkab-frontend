@@ -1,6 +1,6 @@
 <template>
   <footer
-    class="bg-gradient-to-r from-green-900 via-green-800 to-green-900 text-white font-sans mt-12 shadow-inner"
+    class="bg-[#071840] font-sans mt-12"
   >
     <div class="container mx-auto px-6 max-w-screen-xl py-12">
       <!-- Grid 4 Kolom -->
@@ -9,7 +9,7 @@
         <div class="flex flex-col">
           <div class="flex items-center gap-4 mb-6">
             <div
-              class="w-14 h-14 bg-white rounded flex items-center justify-center p-1.5 shrink-0 shadow-sm"
+              class="w-9 h-10 shrink-0"
             >
               <img
                 v-if="footer.logo_url"
@@ -19,30 +19,30 @@
               />
             </div>
             <div>
-              <h2 class="text-xl text-white font-bold leading-tight">
-                {{ footer.site_name || 'Kabupaten Lebak' }}
-              </h2>
-              <p class="text-[10px] text-white font-bold tracking-wider uppercase mt-1">
-                {{ footer.satuan_kerja || 'WORKING WITH HEART' }}
-              </p>
+              <div class="text-[15px] font-bold text-white">
+                {{ footer.site_name || 'SPBE Kabupaten Lebak' }}
+              </div>
+              <div class="text-xs text-white/45">
+                {{ footer.satuan_kerja || 'Sistem Pemerintahan Berbasis Elektronik' }}
+              </div>
             </div>
           </div>
-          <p class="text-sm text-white mb-6 leading-relaxed">
-            Portal Informasi dan Layanan Publik Terpadu Pemerintah Kabupaten Lebak, Provinsi Banten.
+          <p class="text-[13.6px] text-white/55 leading-[1.8] mb-6 max-w-[38ch]">
+            Mewujudkan tata kelola pemerintahan yang transparan, efektif, dan efisien melalui pemanfaatan teknologi informasi dan komunikasi di Kabupaten Lebak.
           </p>
           <div class="flex gap-3">
             <a
               v-if="footer.facebook"
               :href="footer.facebook"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
+              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
             >
               <Facebook class="w-4 h-4" />
             </a>
             <a
               v-else
               href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
+              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
             >
               <Share2 class="w-4 h-4" />
             </a>
@@ -51,14 +51,14 @@
               v-if="footer.twitter"
               :href="footer.twitter"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
+              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
             >
               <Twitter class="w-4 h-4" />
             </a>
             <a
               v-else
               href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
+              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
             >
               <AtSign class="w-4 h-4" />
             </a>
@@ -67,14 +67,14 @@
               v-if="footer.instagram"
               :href="footer.instagram"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
+              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
             >
               <Instagram class="w-4 h-4" />
             </a>
             <a
               v-else
               href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
+              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
             >
               <Camera class="w-4 h-4" />
             </a>
@@ -83,21 +83,21 @@
 
         <!-- Kolom 2: Widget 1 -->
         <div v-if="footerWidget1">
-          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">
+          <h6 class="text-[12.8px] font-bold text-white/85 uppercase tracking-widest mb-4">
             {{ footerWidget1.title }}
-          </h3>
+          </h6>
           <ul class="space-y-4 text-sm text-white">
             <li v-for="link in footerWidget1.children" :key="link.id">
               <a
                 :href="link.url || '#'"
-                class="inline-block hover:text-teal-500 hover:translate-x-1 transition-all duration-300"
+                class="inline-block text-[13.6px] text-white/55 hover:text-white/90 hover:pl-1.5 transition-all duration-200"
                 >{{ link.title }}</a
               >
             </li>
           </ul>
         </div>
         <div v-else>
-          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">Tautan Cepat</h3>
+          <h6 class="text-[12.8px] font-bold text-white/85 uppercase tracking-widest mb-4">Tautan Cepat</h6>
           <ul class="space-y-4 text-sm text-white">
             <li><span class="opacity-75">Memuat...</span></li>
           </ul>
@@ -105,23 +105,23 @@
 
         <!-- Kolom 3: Widget 2 -->
         <div v-if="footerWidget2">
-          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">
+          <h6 class="text-[12.8px] font-bold text-white/85 uppercase tracking-widest mb-4">
             {{ footerWidget2.title }}
-          </h3>
+          </h6>
           <ul class="space-y-4 text-sm text-white">
             <li v-for="link in footerWidget2.children" :key="link.id">
               <a
                 :href="link.url || '#'"
-                class="inline-block hover:text-teal-500 hover:translate-x-1 transition-all duration-300"
+                class="inline-block text-[13.6px] text-white/55 hover:text-white/90 hover:pl-1.5 transition-all duration-200"
                 >{{ link.title }}</a
               >
             </li>
           </ul>
         </div>
         <div v-else>
-          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">
+          <h6 class="text-[12.8px] font-bold text-white/85 uppercase tracking-widest mb-4">
             Informasi Publik
-          </h3>
+          </h6>
           <ul class="space-y-4 text-sm text-white">
             <li><span class="opacity-75">Memuat...</span></li>
           </ul>
@@ -129,8 +129,8 @@
 
         <!-- Kolom 4: Hubungi Kami -->
         <div>
-          <h3 class="text-sm font-bold text-white mb-6 uppercase tracking-wider">Hubungi Kami</h3>
-          <div class="space-y-4 text-sm text-white">
+          <h6 class="text-[12.8px] font-bold text-white/85 uppercase tracking-widest mb-4">Hubungi Kami</h6>
+          <div class="space-y-4 text-[13.6px] text-white/55">
             <p class="leading-relaxed whitespace-pre-line">
               {{
                 footer.address ||
@@ -138,11 +138,11 @@
               }}
             </p>
             <div class="flex items-center gap-3">
-              <Mail class="w-4 h-4 text-white" />
+              <Mail class="w-4 h-4" />
               <span>{{ footer.email || 'kontak@lebakkab.go.id' }}</span>
             </div>
             <div class="flex items-center gap-3">
-              <Phone class="w-4 h-4 text-white" />
+              <Phone class="w-4 h-4" />
               <span>{{ footer.phone || '+62 252 201 001' }}</span>
             </div>
           </div>
@@ -151,17 +151,17 @@
     </div>
 
     <!-- Bagian Bawah -->
-    <div class="bg-gradient-to-r from-green-950 to-green-900 border-t border-white/10">
+    <div class="border-t border-white/10">
       <div
-        class="container mx-auto px-6 max-w-screen-xl py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white font-medium"
+        class="container mx-auto px-6 max-w-screen-xl py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-[13.6px] text-white/55 font-normal"
       >
-        <p class="text-white">
+        <p>
           &copy; {{ new Date().getFullYear() }} Pemerintah Kabupaten Lebak. Dikembangkan oleh
           Diskominfo Lebak.
         </p>
-        <div class="flex gap-6 font-medium">
-          <a href="#" class="hover:text-teal-500 transition-colors duration-300">Syarat & Ketentuan</a>
-          <a href="#" class="hover:text-teal-500 transition-colors duration-300">Kebijakan Privasi</a>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-white/90 transition-colors duration-200">Syarat & Ketentuan</a>
+          <a href="#" class="hover:text-white/90 transition-colors duration-200">Kebijakan Privasi</a>
         </div>
       </div>
     </div>
