@@ -1,36 +1,14 @@
 <template>
   <div class="bg-[#f8fafc] min-h-screen pb-20 font-sans selection:bg-[#1e5ca8] selection:text-white">
-    <!-- Hero / Header Section -->
-    <div class="relative bg-emerald-900 overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40 rounded-b-[4rem] lg:rounded-b-[6rem] shadow-2xl mb-16 lg:mb-24 z-10">
-      <!-- Decorative Backgrounds -->
-      <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-[#1e5ca8] rounded-full mix-blend-multiply filter blur-[120px] opacity-40 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-30 -translate-x-1/4 translate-y-1/4"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-900/50 to-[#071840]"></div>
-      </div>
-
-      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
-        <!-- Logo -->
-        <div 
-          v-if="profil && (profil.gambar_lambang_url || profil.gambar_lambang)" 
-          class="w-32 h-32 md:w-40 md:h-40 bg-white/10 backdrop-blur-md p-4 rounded-3xl border border-white/20 shadow-2xl mb-8 transform transition hover:scale-110 hover:rotate-3 duration-500"
-        >
-          <img 
-            :src="profil.gambar_lambang_url || getStorageUrl(profil.gambar_lambang)" 
-            alt="Lambang Kabupaten Lebak" 
-            class="w-full h-full object-contain drop-shadow-xl"
-          />
-        </div>
-        
-        <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6">
-          Profil <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#0a2463] to-yellow-300">Kabupaten Lebak</span>
-        </h1>
-        <p class="mt-4 text-lg md:text-2xl text-[#e8a020] max-w-3xl mx-auto font-light leading-relaxed">
-          Mengenal lebih dekat identitas, sejarah, dan potensi daerah dengan visi yang kuat menuju masa depan.
-        </p>
-      </div>
-    </div>
+    <!-- Gunakan komponen PageHeader2 yang lebih ramping dan smooth -->
+    <PageHeader2
+      title="Profil Kabupaten Lebak"
+      subtitle="Mengenal lebih dekat identitas, sejarah, dan potensi daerah dengan visi yang kuat menuju masa depan."
+      :breadcrumbs="[
+        { label: 'Beranda', link: '/' },
+        { label: 'Profil', link: '/profil' },
+      ]"
+    />
 
     <!-- Loading & Error State -->
     <div v-if="loading" class="flex flex-col items-center justify-center py-20 gap-4">
@@ -45,7 +23,7 @@
     </div>
 
     <!-- Main Content Container -->
-    <div v-else-if="profil" class="max-w-7xl mx-auto px-6 lg:px-8 -mt-24 sm:-mt-32 relative z-20 space-y-8 sm:space-y-12">
+    <div v-else-if="profil" class="max-w-7xl mx-auto px-6 lg:px-8 relative z-20 space-y-8 sm:space-y-12">
 
       <!-- ================= BENTO GRID 1: Sejarah & Visi Misi ================= -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
@@ -55,11 +33,25 @@
           <!-- Dekorasi -->
           <div class="absolute top-0 right-0 w-64 h-64 bg-[#f8f9fc] rounded-full mix-blend-multiply filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
           
-          <div class="flex items-center gap-4 mb-8 relative z-10">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0a2463] to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-[#1e5ca8]/30 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
-              <Target class="w-7 h-7" />
+          <div class="flex items-start gap-6 mb-8 relative z-10">
+            <!-- Logo Lebak in Visi Misi section -->
+            <div 
+              v-if="profil && (profil.gambar_lambang_url || profil.gambar_lambang)" 
+              class="w-20 h-20 bg-gray-50/80 p-2 rounded-2xl border border-gray-100 shadow-sm shrink-0 flex items-center justify-center"
+            >
+              <img 
+                :src="profil.gambar_lambang_url || getStorageUrl(profil.gambar_lambang)" 
+                alt="Lambang Kabupaten Lebak" 
+                class="w-full h-full object-contain"
+              />
             </div>
-            <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Visi & Misi</h2>
+            
+            <div>
+              <div class="w-12 h-12 mb-3 rounded-xl bg-gradient-to-br from-[#0a2463] to-emerald-600 flex items-center justify-center text-white shadow-md shadow-[#1e5ca8]/30">
+                <Target class="w-6 h-6" />
+              </div>
+              <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Visi & Misi</h2>
+            </div>
           </div>
           
           <div class="prose prose-lg md:prose-xl prose-blue max-w-none 
@@ -170,6 +162,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from '@/utils/api'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import { getStorageUrl } from '@/utils/helpers'
 import { MapPin, Target, Users, TrendingUp, Shield, BookOpen } from 'lucide-vue-next'
 
