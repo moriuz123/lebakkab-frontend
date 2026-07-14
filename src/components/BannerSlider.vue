@@ -1,33 +1,38 @@
 <template>
-  <div v-if="banners.length" class="relative bg-white shadow-md rounded-lg overflow-hidden">
+  <div v-if="banners.length" class="relative bg-white shadow-sm border border-gray-100 rounded-3xl overflow-hidden group">
     <!-- Gambar Banner -->
-    <div class="w-full aspect-square">
+    <div class="w-full aspect-square bg-gray-50">
       <img
         :src="$storageUrl(banners[current].gambar)"
         :alt="banners[current].title"
-        class="w-full h-full object-cover transition-all duration-700 ease-in-out"
+        class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
       />
     </div>
 
+    <!-- Gradient Overlay untuk tombol navigasi -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+
     <!-- Tombol Navigasi -->
     <button
-      class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white px-2 py-1 rounded"
+      class="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-[#1e5ca8] p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 pointer-events-auto"
       @click="prevSlide"
     >
-      Prev
+      <ChevronLeft class="w-5 h-5" />
     </button>
     <button
-      class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-black/50 text-white px-2 py-1 rounded"
+      class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-[#1e5ca8] p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 pointer-events-auto"
       @click="nextSlide"
     >
-      Next
+      <ChevronRight class="w-5 h-5" />
     </button>
   </div>
+
 </template>
 
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import axios from '@/utils/api'
+import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 
 const banners = ref([])
 const current = ref(0)

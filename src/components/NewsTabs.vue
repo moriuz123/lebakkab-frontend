@@ -1,18 +1,17 @@
 <template>
-  <div class="sidebar-widget font-poppins">
+  <div class="bg-white shadow-sm border border-gray-100 rounded-3xl p-6">
     <!-- 🔹 Tabs Header -->
-    <div class="tabs-header flex border-b border-gray-200 mb-4">
+    <div class="flex bg-gray-100 rounded-xl p-1.5 mb-6">
       <button
-        class="tab-button flex-1 py-2 text-center font-semibold tracking-wide"
-        :class="activeTab === 'latest' ? 'active-tab' : 'inactive-tab'"
+        class="flex-1 py-2.5 text-center font-bold text-sm rounded-lg transition-all duration-300"
+        :class="activeTab === 'latest' ? 'bg-white text-[#1e5ca8] shadow-sm' : 'text-gray-500 hover:text-gray-700'"
         @click="activeTab = 'latest'"
       >
         Terbaru
       </button>
-
       <button
-        class="tab-button flex-1 py-2 text-center font-semibold tracking-wide"
-        :class="activeTab === 'popular' ? 'active-tab' : 'inactive-tab'"
+        class="flex-1 py-2.5 text-center font-bold text-sm rounded-lg transition-all duration-300"
+        :class="activeTab === 'popular' ? 'bg-white text-[#1e5ca8] shadow-sm' : 'text-gray-500 hover:text-gray-700'"
         @click="activeTab = 'popular'"
       >
         Terpopuler
@@ -20,33 +19,36 @@
     </div>
 
     <!-- 🔹 Loading -->
-    <div v-if="store.loading" class="text-center py-6 text-gray-500 italic">Memuat berita...</div>
+    <div v-if="store.loading" class="text-center py-8 text-gray-400 text-sm font-medium">Memuat berita...</div>
 
     <!-- 🔹 Daftar Berita -->
-    <ul v-else class="space-y-4">
+    <ul v-else class="space-y-2">
       <li
         v-for="item in displayedNews"
         :key="item.id"
-        class="news-item flex gap-3 items-start border border-gray-100 rounded-lg p-3 bg-gradient-to-r from-blue-50 to-emerald-50 hover:shadow-md hover:border-[#1e5ca8] transition-all duration-300"
+        class="group flex gap-4 items-start p-3 -mx-3 rounded-2xl hover:bg-blue-50/50 transition-colors duration-300"
       >
         <!-- Thumbnail -->
-        <img
-          :src="resolveThumbnail(item.thumbnail)"
-          alt="thumbnail"
-          class="news-thumb w-16 h-16 object-cover rounded-md flex-shrink-0 ring-1 ring-emerald-900"
-        />
+        <div class="relative w-20 h-20 flex-shrink-0 rounded-xl overflow-hidden shadow-sm border border-gray-100">
+          <img
+            :src="resolveThumbnail(item.thumbnail)"
+            alt="thumbnail"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+        </div>
 
         <!-- Judul dan Tanggal -->
-        <div class="flex-1">
+        <div class="flex-1 min-w-0 py-1">
           <RouterLink
             :to="`/berita/${item.slug}`"
-            class="news-title block font-semibold text-sm text-[#001D39] hover:text-[#e8a020] leading-snug"
+            class="block font-bold text-gray-800 group-hover:text-[#1e5ca8] transition-colors leading-snug text-sm line-clamp-2 mb-2"
           >
             {{ item.judul }}
           </RouterLink>
-          <p class="news-date text-xs text-gray-600 mt-1">
+          <div class="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
+            <Calendar class="w-3.5 h-3.5 text-gray-400" />
             {{ formatDate(item.tanggal_publish) }}
-          </p>
+          </div>
         </div>
       </li>
     </ul>
@@ -57,6 +59,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { useBeritaStore } from '@/stores/useBeritaStore'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
+import { Calendar } from 'lucide-vue-next'
 
 const store = useBeritaStore()
 const activeTab = ref('latest')
