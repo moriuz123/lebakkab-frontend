@@ -163,7 +163,7 @@
     <!-- Bagian Bawah -->
     <div class="relative border-t border-[#e8a020] z-20 bg-gradient-to-r from-[#071840] to-[#0a2463]">
       <div
-        class="container mx-auto px-6 max-w-screen-xl py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-[13.6px] text-white/55"
+        class="container mx-auto px-6 max-w-screen-xl py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-white"
       >
         <p>
           &copy; {{ new Date().getFullYear() }} Pemerintah Kabupaten Lebak. Dikembangkan oleh
