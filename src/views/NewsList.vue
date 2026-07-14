@@ -117,7 +117,7 @@ const fetchKategori = async () => {
 const fetchBerita = async (page = 1) => {
   store.loading = true
   try {
-    const res = await axios.get(`/api/berita?page=${page}`)
+    const res = await axios.get(`/api/berita?page=${page}&per_page=8&limit=8`)
     store.beritas = res.data.data || res.data || []
     
     // Set status pagination

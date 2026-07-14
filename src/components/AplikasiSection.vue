@@ -102,9 +102,9 @@ export default {
           params: { kategori: this.kategori },
         })
         if (response.data?.status === 'success' && Array.isArray(response.data.data)) {
-          this.aplikasiItems = response.data.data
+          this.aplikasiItems = response.data.data.slice(0, 8)
         } else if (Array.isArray(response.data)) {
-          this.aplikasiItems = response.data
+          this.aplikasiItems = response.data.slice(0, 8)
         } else {
           console.warn('API returned unexpected format:', response.data)
         }
