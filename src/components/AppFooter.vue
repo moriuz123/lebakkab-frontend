@@ -4,7 +4,7 @@
   >
     <!-- Gradient & Pattern Overlay -->
     <div
-      class="absolute inset-0 bg-gradient-to-br from-[#071840] via-[#0a2463] to-[#2a6cbd] z-0"
+      class="absolute inset-0 bg-gradient-to-br from-[#071840] from-80% to-[#2a6cbd] z-0"
     ></div>
     <!-- Corak Batik Overlay (Kawung Motif) -->
     <div 
@@ -161,7 +161,7 @@
     </div>
 
     <!-- Bagian Bawah -->
-    <div class="relative border-t border-white/10 z-10 bg-black/20">
+    <div class="relative border-t border-[#e8a020]/40 z-10 bg-black/20">
       <div
         class="container mx-auto px-6 max-w-screen-xl py-5 flex flex-col md:flex-row justify-between items-center gap-4 text-[13.6px] text-white/55 font-normal"
       >
