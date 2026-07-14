@@ -22,7 +22,7 @@
               <h2 class="text-xl text-white font-bold leading-tight">
                 {{ footer.site_name || 'Kabupaten Lebak' }}
               </h2>
-              <p class="text-[10px] text-white font-semibold tracking-wider uppercase mt-1">
+              <p class="text-[10px] text-white font-bold tracking-wider uppercase mt-1">
                 {{ footer.satuan_kerja || 'WORKING WITH HEART' }}
               </p>
             </div>
@@ -159,7 +159,7 @@
           &copy; {{ new Date().getFullYear() }} Pemerintah Kabupaten Lebak. Dikembangkan oleh
           Diskominfo Lebak.
         </p>
-        <div class="flex gap-6 font-semibold">
+        <div class="flex gap-6 font-medium">
           <a href="#" class="hover:text-green-300 transition-colors">Syarat & Ketentuan</a>
           <a href="#" class="hover:text-green-300 transition-colors">Kebijakan Privasi</a>
         </div>

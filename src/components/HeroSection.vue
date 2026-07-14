@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full h-screen min-h-[600px] overflow-hidden bg-gray-900">
+  <section class="relative w-full h-screen min-h-[600px] overflow-hidden bg-emerald-900">
     <!-- Background carousel -->
     <div class="absolute inset-0 z-0">
       <transition-group name="fade">
@@ -12,12 +12,17 @@
           :class="{ 'scale-105 transition-transform duration-[10000ms]': true }"
         />
       </transition-group>
-      <!-- Gradient Overlay for better text readability -->
+      <!-- Gradient & Pattern Overlay for SPBE styling -->
       <div
-        class="absolute inset-0 bg-gradient-to-r from-gray-900/90 via-gray-900/60 to-transparent"
+        class="absolute inset-0 bg-gradient-to-br from-emerald-900/95 via-emerald-800/80 to-emerald-900/40 mix-blend-multiply"
+      ></div>
+      <!-- Subtle Pattern Overlay -->
+      <div 
+        class="absolute inset-0 opacity-[0.03] pointer-events-none" 
+        style="background-image: radial-gradient(white 1px, transparent 1px); background-size: 24px 24px;"
       ></div>
       <div
-        class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"
+        class="absolute inset-0 bg-gradient-to-t from-emerald-900 via-transparent to-transparent opacity-90"
       ></div>
     </div>
 
@@ -25,13 +30,13 @@
     <div
       class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0"
     >
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.15] tracking-tight drop-shadow-lg">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.15] tracking-tight drop-shadow-lg">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">Selamat Datang</span><br class="hidden lg:block" />
         di Portal Resmi <br class="hidden sm:block" />
         Kabupaten Lebak
       </h1>
       <h2
-        class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-200 drop-shadow-xl mb-6 max-w-2xl"
+        class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-200 drop-shadow-xl mb-6 max-w-2xl"
       >
         Pemerintah Kabupaten Lebak
       </h2>
