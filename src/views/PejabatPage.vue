@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-50/50 min-h-screen pb-20 font-sans selection:bg-green-500 selection:text-white">
+  <div class="bg-gray-50/50 min-h-screen pb-20 font-sans selection:bg-[#1e5ca8] selection:text-white">
     
     <!-- Premium Hero / Header Section -->
     <div class="relative bg-emerald-900 overflow-hidden pt-28 pb-36 lg:pt-36 lg:pb-48 rounded-b-[3rem] lg:rounded-b-[5rem] shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)] mb-16 lg:mb-24 z-10 border-b border-emerald-800">
@@ -8,7 +8,7 @@
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
         <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[120px] opacity-20 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
         <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-teal-600 rounded-full mix-blend-screen filter blur-[100px] opacity-20 -translate-x-1/4 translate-y-1/4"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-900/50 to-emerald-950"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a2463]/50 to-emerald-950"></div>
       </div>
 
       <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
@@ -46,10 +46,10 @@
           v-for="(pejabat, index) in store.pejabats"
           :key="pejabat.id"
           :to="`/profil-pejabat/${pejabat.slug}`"
-          class="group relative bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-2xl hover:shadow-green-500/10 hover:border-green-100 transition-all duration-500 transform hover:-translate-y-2 flex flex-col h-full"
+          class="group relative bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-2xl hover:shadow-[#1e5ca8]/10 hover:border-[#1e5ca8] transition-all duration-500 transform hover:-translate-y-2 flex flex-col h-full"
         >
           <!-- Dekorasi Background Belakang -->
-          <div class="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+          <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
 
           <!-- Bagian Foto -->
           <div class="relative w-full aspect-[4/3] bg-gray-100 overflow-hidden z-10">
@@ -76,7 +76,7 @@
 
           <!-- Bagian Text & Info -->
           <div class="p-6 relative z-10 flex flex-col flex-grow bg-white group-hover:bg-transparent transition-colors duration-500">
-            <h3 class="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-green-700 transition-colors line-clamp-2">
+            <h3 class="text-xl font-extrabold text-gray-900 mb-2 group-hover:text-[#e8a020] transition-colors line-clamp-2">
               {{ pejabat.nama }}
             </h3>
             
@@ -86,10 +86,10 @@
             
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
               <div class="flex items-center gap-1.5 text-xs font-bold text-gray-400">
-                <Calendar class="w-4 h-4 text-green-500" />
+                <Calendar class="w-4 h-4 text-[#e8a020]" />
                 Periode {{ pejabat.periode }}
               </div>
-              <div class="w-8 h-8 rounded-full bg-green-50 text-green-600 flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
+              <div class="w-8 h-8 rounded-full bg-[#f8f9fc] text-[#e8a020] flex items-center justify-center group-hover:bg-[#0a2463] group-hover:text-white transition-colors duration-300">
                 <ArrowRight class="w-4 h-4" />
               </div>
             </div>

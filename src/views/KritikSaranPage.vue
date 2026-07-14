@@ -33,13 +33,13 @@
 
         <button
           type="submit"
-          class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded transition"
+          class="bg-[#0a2463] hover:bg-[#1e5ca8] text-white px-5 py-2 rounded transition"
           :disabled="loading"
         >
           {{ loading ? 'Mengirim...' : 'Kirim Sekarang' }}
         </button>
 
-        <p v-if="message" :class="success ? 'text-green-600 mt-3' : 'text-red-600 mt-3'">
+        <p v-if="message" :class="success ? 'text-[#e8a020] mt-3' : 'text-red-600 mt-3'">
           {{ message }}
         </p>
       </form>

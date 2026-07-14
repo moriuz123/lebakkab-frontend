@@ -18,7 +18,7 @@
           v-model="searchQuery"
           type="text"
           placeholder="Masukkan nama OPD..."
-          class="w-full sm:w-1/2 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="w-full sm:w-1/2 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-900"
         />
       </div>
 
@@ -28,7 +28,7 @@
           <div
             v-for="opd in paginatedOpds"
             :key="opd.slug"
-            class="relative bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 p-4 flex flex-col"
+            class="relative bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-lg hover:border-[#1e5ca8] transition-all duration-300 p-4 flex flex-col"
           >
             <!-- Logo floating -->
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
@@ -36,11 +36,11 @@
                 v-if="opd.logo"
                 :src="$storageUrl(opd.logo)"
                 alt="Logo OPD"
-                class="h-12 w-12 rounded-full object-cover ring-2 ring-green-500 shadow-sm bg-white"
+                class="h-12 w-12 rounded-full object-cover ring-2 ring-emerald-900 shadow-sm bg-white"
               />
               <div
                 v-else
-                class="h-12 w-12 flex items-center justify-center bg-gray-100 text-gray-500 rounded-full ring-2 ring-green-400 text-[10px]"
+                class="h-12 w-12 flex items-center justify-center bg-gray-100 text-gray-500 rounded-full ring-2 ring-emerald-900 text-[10px]"
               >
                 No Logo
               </div>
@@ -64,7 +64,7 @@
                     v-if="opd.website"
                     :href="opd.website"
                     target="_blank"
-                    class="text-green-700 hover:underline break-all"
+                    class="text-[#e8a020] hover:underline break-all"
                   >
                     {{ opd.website }}
                   </a>
@@ -78,7 +78,7 @@
             <div class="mt-auto pt-4">
               <router-link
                 :to="{ name: 'OpdDetail', params: { slug: opd.slug } }"
-                class="block text-center text-white bg-green-600 hover:bg-green-700 text-sm py-2 rounded-lg transition"
+                class="block text-center text-white bg-[#0a2463] hover:bg-[#1e5ca8] text-sm py-2 rounded-lg transition"
               >
                 Lihat Detail
               </router-link>

@@ -50,7 +50,7 @@ watch(
       <div class="page-container">
         <!-- Konten Utama -->
         <div class="page-main">
-          <article class="page-content prose prose-lg prose-green max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800">
+          <article class="page-content prose prose-lg prose-blue max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800">
             <div v-html="page.isi" class="text-gray-800 leading-relaxed"></div>
           </article>
         </div>

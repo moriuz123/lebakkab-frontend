@@ -21,7 +21,7 @@
           />
           <button
             type="submit"
-            class="px-8 py-4 bg-green-600 hover:bg-green-700 transition-colors text-white font-medium rounded-xl flex items-center gap-2"
+            class="px-8 py-4 bg-[#0a2463] hover:bg-[#1e5ca8] transition-colors text-white font-medium rounded-xl flex items-center gap-2"
           >
             <span>Cari</span>
           </button>
@@ -32,7 +32,7 @@
       <div class="max-w-6xl mx-auto">
         <div v-if="q && !loading" class="mb-8 flex items-center justify-between">
           <h1 class="text-2xl font-bold text-gray-800">
-            Hasil Pencarian untuk <span class="text-green-600">"{{ q }}"</span>
+            Hasil Pencarian untuk <span class="text-[#e8a020]">"{{ q }}"</span>
           </h1>
         </div>
 
@@ -214,8 +214,8 @@
           </div>
           
           <div v-else-if="!q" class="flex flex-col items-center justify-center py-20 text-center">
-            <div class="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mb-6">
-              <Search class="w-12 h-12 text-green-400" />
+            <div class="w-24 h-24 bg-[#f8f9fc] rounded-full flex items-center justify-center mb-6">
+              <Search class="w-12 h-12 text-[#e8a020]" />
             </div>
             <h3 class="text-2xl font-bold text-gray-800 mb-2">Mulai Pencarian</h3>
             <p class="text-gray-500 max-w-md mx-auto">

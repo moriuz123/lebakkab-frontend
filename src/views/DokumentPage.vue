@@ -63,7 +63,7 @@
                 <a 
                   :href="getFileUrl(dokument.file_path)"
                   :download="dokument.judul + '.pdf'"
-                  class="flex items-center gap-2 text-sm font-bold text-green-600 bg-green-50 hover:bg-green-600 hover:text-white px-4 py-2 sm:p-2.5 sm:px-4 rounded-xl transition-colors w-full sm:w-auto justify-center"
+                  class="flex items-center gap-2 text-sm font-bold text-[#e8a020] bg-[#f8f9fc] hover:bg-[#0a2463] hover:text-white px-4 py-2 sm:p-2.5 sm:px-4 rounded-xl transition-colors w-full sm:w-auto justify-center"
                 >
                   <Download class="w-4 h-4" />
                   <span class="sm:hidden lg:block">Unduh</span>

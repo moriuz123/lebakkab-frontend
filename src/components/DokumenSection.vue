@@ -84,21 +84,21 @@ const goToDot = (index) => {
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
       
       <!-- Decorative Background Blurs -->
-      <div class="absolute top-0 right-0 w-64 h-64 bg-green-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
+      <div class="absolute top-0 right-0 w-64 h-64 bg-emerald-900 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
       <div class="absolute bottom-0 left-0 w-64 h-64 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20 pointer-events-none"></div>
 
       <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 relative z-10">
         <div>
           <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-1 bg-green-500 rounded-full"></span>
-            <span class="text-green-600 font-bold uppercase tracking-wider text-sm">Transparansi</span>
+            <span class="w-8 h-1 bg-[#1e5ca8] rounded-full"></span>
+            <span class="text-[#e8a020] font-bold uppercase tracking-wider text-sm">Transparansi</span>
           </div>
           <h2 class="text-3xl font-black text-gray-900 tracking-tight">Dokumen Publik</h2>
         </div>
-        <router-link to="/dokumen" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-green-600 transition-colors">
+        <router-link to="/dokumen" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-[#e8a020] transition-colors">
           Lihat Semua Dokumen
-          <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-green-200 group-hover:bg-green-50 transition-all">
+          <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-[#1e5ca8] group-hover:bg-[#f8f9fc] transition-all">
              <ArrowRight class="w-4 h-4" />
           </div>
         </router-link>
@@ -116,14 +116,14 @@ const goToDot = (index) => {
         <!-- Tombol navigasi -->
         <button
           @click="scrollLeft"
-          class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-green-600 hover:bg-green-50 hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
+          class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
           aria-label="Previous"
         >
           <ChevronLeft class="w-6 h-6" />
         </button>
         <button
           @click="scrollRight"
-          class="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-green-600 hover:bg-green-50 hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
+          class="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
           aria-label="Next"
         >
           <ChevronRight class="w-6 h-6" />
@@ -139,10 +139,10 @@ const goToDot = (index) => {
           <div
             v-for="doc in dokuments"
             :key="doc.id"
-            class="snap-center w-[280px] sm:w-[320px] bg-white border border-gray-100 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-green-500/10 hover:border-green-200 transition-all duration-500 flex-shrink-0 group overflow-hidden flex flex-col relative"
+            class="snap-center w-[280px] sm:w-[320px] bg-white border border-gray-100 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-[#1e5ca8]/10 hover:border-[#1e5ca8] transition-all duration-500 flex-shrink-0 group overflow-hidden flex flex-col relative"
           >
             <!-- Decorative Background Shape -->
-            <div class="absolute -right-12 -top-12 w-32 h-32 bg-green-50 rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute -right-12 -top-12 w-32 h-32 bg-[#f8f9fc] rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <!-- Icon Section -->
             <div class="p-6 pb-2 relative z-10 flex items-start justify-between">
@@ -156,7 +156,7 @@ const goToDot = (index) => {
 
             <!-- Info -->
             <div class="p-6 pt-3 relative z-10 flex-1 flex flex-col">
-              <h3 class="font-bold text-gray-900 text-lg leading-tight mb-2 group-hover:text-green-600 transition-colors" :title="doc.judul">
+              <h3 class="font-bold text-gray-900 text-lg leading-tight mb-2 group-hover:text-[#e8a020] transition-colors" :title="doc.judul">
                 {{ doc.judul }}
               </h3>
               <p class="text-sm text-gray-500 line-clamp-2 mb-6 font-medium leading-relaxed">{{ doc.deskripsi || 'Tidak ada deskripsi' }}</p>
@@ -170,7 +170,7 @@ const goToDot = (index) => {
                 </button>
                 <button
                   @click="unduh(doc)"
-                  class="flex items-center justify-center gap-2 text-sm font-bold text-green-600 bg-green-50 border border-transparent hover:bg-green-600 hover:text-white py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                  class="flex items-center justify-center gap-2 text-sm font-bold text-[#e8a020] bg-[#f8f9fc] border border-transparent hover:bg-[#0a2463] hover:text-white py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
                   <Download class="w-4 h-4" /> Unduh
                 </button>
@@ -187,7 +187,7 @@ const goToDot = (index) => {
             @click="goToDot(index)"
             :class="[
               'rounded-full cursor-pointer transition-all duration-300',
-              activeIndex === index ? 'bg-green-600 w-8 h-2' : 'bg-gray-300 w-2 h-2 hover:bg-green-400',
+              activeIndex === index ? 'bg-[#0a2463] w-8 h-2' : 'bg-gray-300 w-2 h-2 hover:bg-[#1e5ca8]',
             ]"
             :aria-label="`Go to slide ${index + 1}`"
           ></button>

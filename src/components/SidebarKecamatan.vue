@@ -14,10 +14,10 @@
       >
         <router-link
           :to="`/kecamatan/${item.slug}`"
-          class="flex items-center text-gray-700 hover:text-green-600 font-medium text-sm"
+          class="flex items-center text-gray-700 hover:text-[#e8a020] font-medium text-sm"
           active-class="router-link-active"
         >
-          <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+          <span class="w-2 h-2 bg-[#1e5ca8] rounded-full mr-2"></span>
           {{ item.nama }}
         </router-link>
       </li>

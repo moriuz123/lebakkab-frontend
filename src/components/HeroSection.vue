@@ -14,11 +14,11 @@
       </transition-group>
       <!-- Gradient & Pattern Overlay for SPBE styling -->
       <div
-        class="absolute inset-0 bg-gradient-to-br from-emerald-900/95 via-emerald-800/80 to-emerald-900/40 mix-blend-multiply"
+        class="absolute inset-0 bg-gradient-to-br from-emerald-900/95 via-[#0a2463]/80 to-emerald-900/40 mix-blend-multiply"
       ></div>
       <!-- Corak Batik Overlay (Kawung Motif) -->
       <div 
-        class="absolute inset-0 opacity-[0.12] pointer-events-none mix-blend-overlay" 
+        class="absolute inset-0 opacity-[0.25] pointer-events-none mix-blend-overlay" 
         style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%23ffffff' /%3E%3C/g%3E%3C/svg%3E&quot;); background-size: 80px 80px;"
       ></div>
       <div
@@ -72,7 +72,7 @@
       <!-- Form Pencarian (Glassmorphism) -->
       <div class="w-full max-w-xl lg:max-w-2xl relative group mb-10 z-30">
         <div
-          class="absolute inset-0 bg-green-500/20 blur-xl rounded-2xl group-hover:bg-green-500/30 transition-all duration-500"
+          class="absolute inset-0 bg-[#1e5ca8]/20 blur-xl rounded-2xl group-hover:bg-[#1e5ca8]/30 transition-all duration-500"
         ></div>
         <form
           @submit.prevent="doSearch"
@@ -112,10 +112,10 @@
             :title="item.title"
           >
             <div
-              class="absolute inset-0 bg-white/5 rounded-2xl blur-md group-hover:bg-green-500/20 transition-all duration-300"
+              class="absolute inset-0 bg-white/5 rounded-2xl blur-md group-hover:bg-[#1e5ca8]/20 transition-all duration-300"
             ></div>
             <div
-              class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-green-400 group-hover:to-green-600 group-hover:border-green-400/50 group-hover:shadow-green-500/50 flex items-center justify-center"
+              class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-[#0a2463] group-hover:to-[#071840] group-hover:border-[#1e5ca8]/50 group-hover:shadow-[#1e5ca8]/50 flex items-center justify-center"
             >
               <component
                 :is="getIcon(item.icon)"
@@ -125,7 +125,7 @@
               />
             </div>
             <span
-              class="mt-2.5 text-[10px] sm:text-xs font-bold text-gray-300 group-hover:text-green-300 transition-colors text-center leading-tight tracking-wide drop-shadow-md"
+              class="mt-2.5 text-[10px] sm:text-xs font-bold text-gray-300 group-hover:text-[#e8a020] transition-colors text-center leading-tight tracking-wide drop-shadow-md"
             >
               {{ item.title }}
             </span>

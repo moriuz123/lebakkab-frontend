@@ -18,7 +18,7 @@
         <div class="flex-1">
           <router-link
             :to="`/layanan/${item.slug}`"
-            class="font-medium text-gray-800 hover:text-green-600 line-clamp-2"
+            class="font-medium text-gray-800 hover:text-[#e8a020] line-clamp-2"
           >
             {{ item.judul }}
           </router-link>

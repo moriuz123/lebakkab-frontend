@@ -5,7 +5,7 @@
       <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
         <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-900/50 to-emerald-950"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a2463]/50 to-emerald-950"></div>
       </div>
       
       <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">

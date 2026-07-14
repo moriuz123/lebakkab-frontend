@@ -23,8 +23,8 @@
       <div v-else-if="store.pejabatDetail" class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden flex flex-col md:flex-row">
         
         <!-- Kolom Foto Kiri -->
-        <div class="md:w-5/12 lg:w-2/5 relative bg-gradient-to-b from-green-50 to-white flex-shrink-0">
-          <div class="absolute inset-0 z-0 opacity-30 mix-blend-multiply bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-green-300 via-transparent to-transparent"></div>
+        <div class="md:w-5/12 lg:w-2/5 relative bg-gradient-to-b from-blue-50 to-white flex-shrink-0">
+          <div class="absolute inset-0 z-0 opacity-30 mix-blend-multiply bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#0a2463] via-transparent to-transparent"></div>
           
           <div class="relative z-10 w-full h-full min-h-[400px] flex items-end justify-center pt-10 px-8 pb-0">
             <img 
@@ -42,7 +42,7 @@
 
         <!-- Kolom Data Kanan -->
         <div class="md:w-7/12 lg:w-3/5 p-8 sm:p-12 lg:p-14 relative z-10">
-          <div class="inline-block px-4 py-1.5 rounded-full bg-green-100 text-green-700 font-extrabold text-xs tracking-widest uppercase mb-4 shadow-sm border border-green-200">
+          <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-900 text-[#e8a020] font-extrabold text-xs tracking-widest uppercase mb-4 shadow-sm border border-[#1e5ca8]">
             {{ store.pejabatDetail.jabatan }}
           </div>
           
@@ -51,7 +51,7 @@
           </h2>
           
           <p class="text-sm font-semibold text-gray-500 mb-4 flex items-center gap-2">
-            <Calendar class="w-4 h-4 text-green-500" />
+            <Calendar class="w-4 h-4 text-[#e8a020]" />
             Periode Masa Jabatan: <span class="text-gray-800">{{ store.pejabatDetail.periode }}</span>
           </p>
 
@@ -67,7 +67,7 @@
           </div>
 
           <!-- Divider -->
-          <div class="w-16 h-1 bg-green-500 rounded-full mb-8"></div>
+          <div class="w-16 h-1 bg-[#1e5ca8] rounded-full mb-8"></div>
 
           <!-- Section Deskripsi -->
           <div class="mb-10">

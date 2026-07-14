@@ -8,7 +8,7 @@
       <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-10 flex flex-col md:flex-row items-end md:items-center gap-4">
         <div class="w-full md:w-1/4">
           <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-          <select v-model="selectedKategori" class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-green-500 focus:border-green-500 transition-colors">
+          <select v-model="selectedKategori" class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-emerald-900 focus:border-[#1e5ca8] transition-colors">
             <option value="">Semua Kategori</option>
             <option value="Aplikasi Layanan Publik">Layanan Publik</option>
             <option value="Internal Pemerintah">Internal Pemerintah</option>
@@ -17,7 +17,7 @@
 
         <div class="w-full md:w-1/4">
           <label class="block text-sm font-medium text-gray-700 mb-1">Jenis</label>
-          <select v-model="selectedJenis" class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-green-500 focus:border-green-500 transition-colors">
+          <select v-model="selectedJenis" class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-emerald-900 focus:border-[#1e5ca8] transition-colors">
             <option value="">Semua Jenis</option>
             <option value="Website">Website</option>
             <option value="Mobile">Mobile</option>
@@ -30,14 +30,14 @@
             v-model="searchQuery"
             type="text"
             placeholder="Cari nama aplikasi..."
-            class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-green-500 focus:border-green-500 transition-colors"
+            class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-emerald-900 focus:border-[#1e5ca8] transition-colors"
             @keyup.enter="loadData"
           />
         </div>
 
         <button
           @click="loadData"
-          class="w-full md:w-auto bg-green-600 hover:bg-green-700 text-white font-medium px-8 py-2.5 rounded-xl transition-all shadow-md shadow-green-200 flex items-center justify-center gap-2"
+          class="w-full md:w-auto bg-[#0a2463] hover:bg-[#1e5ca8] text-white font-medium px-8 py-2.5 rounded-xl transition-all shadow-md shadow-[#1e5ca8] flex items-center justify-center gap-2"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -94,7 +94,7 @@
             :href="app.link"
             target="_blank"
             rel="noopener noreferrer"
-            class="mt-auto block w-full text-center bg-gray-50 hover:bg-green-600 hover:text-white text-green-700 font-semibold px-4 py-2.5 rounded-xl transition-colors border border-green-100 hover:border-green-600 flex items-center justify-center gap-2"
+            class="mt-auto block w-full text-center bg-gray-50 hover:bg-[#0a2463] hover:text-white text-[#e8a020] font-semibold px-4 py-2.5 rounded-xl transition-colors border border-[#1e5ca8] hover:border-[#1e5ca8] flex items-center justify-center gap-2"
           >
             Buka Aplikasi
             <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

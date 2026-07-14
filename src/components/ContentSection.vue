@@ -6,14 +6,14 @@
       <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
         <div>
           <div class="flex items-center gap-2 mb-2">
-            <span class="w-8 h-1 bg-green-500 rounded-full"></span>
-            <span class="text-green-600 font-bold uppercase tracking-wider text-sm">Update Publik</span>
+            <span class="w-8 h-1 bg-[#1e5ca8] rounded-full"></span>
+            <span class="text-[#e8a020] font-bold uppercase tracking-wider text-sm">Update Publik</span>
           </div>
           <h2 class="text-3xl font-black text-gray-900 tracking-tight">Berita Terkini</h2>
         </div>
-        <router-link to="/berita" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-green-600 transition-colors">
+        <router-link to="/berita" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-[#e8a020] transition-colors">
           Lihat Semua Berita
-          <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-green-200 group-hover:bg-green-50 transition-all">
+          <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-[#1e5ca8] group-hover:bg-[#f8f9fc] transition-all">
              <ArrowRight class="w-4 h-4" />
           </div>
         </router-link>
@@ -41,10 +41,10 @@
               </div>
               <div class="flex-1 flex flex-col px-1">
                 <!-- Gunakan Kategori asli jika ada, sementara default ke "PEMERINTAHAN" -->
-                <span class="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-green-500"></span> Pemerintahan
+                <span class="text-[10px] font-bold text-[#e8a020] uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-[#1e5ca8]"></span> Pemerintahan
                 </span>
-                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2 group-hover:text-green-600 transition-colors line-clamp-3">
+                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2 group-hover:text-[#e8a020] transition-colors line-clamp-3">
                   {{ featured.title }}
                 </h2>
                 <div class="flex items-center gap-1.5 text-xs text-gray-500 font-medium mt-auto">
@@ -71,8 +71,8 @@
                     />
                   </div>
                   <div class="flex-1 flex flex-col justify-center">
-                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-green-500 transition-colors">Informasi Publik</span>
-                    <h3 class="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 group-hover:text-green-600 transition-colors mb-1.5">
+                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-[#e8a020] transition-colors">Informasi Publik</span>
+                    <h3 class="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 group-hover:text-[#e8a020] transition-colors mb-1.5">
                       {{ news.title }}
                     </h3>
                     <div class="text-[11px] text-gray-500 font-medium mt-auto">
@@ -93,9 +93,9 @@
           <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm h-full flex flex-col">
             <div class="flex items-center justify-between mb-6 shrink-0">
               <h3 class="text-lg font-black text-gray-900 flex items-center gap-2">
-                <ImageIcon class="w-5 h-5 text-green-500" /> Banner
+                <ImageIcon class="w-5 h-5 text-[#e8a020]" /> Banner
               </h3>
-              <button @click="nextBanner" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-green-600 hover:bg-green-50 transition-colors" title="Ganti Banner">
+              <button @click="nextBanner" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-[#e8a020] hover:bg-[#f8f9fc] transition-colors" title="Ganti Banner">
                 <RefreshCw class="w-4 h-4" />
               </button>
             </div>

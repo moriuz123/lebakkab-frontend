@@ -99,7 +99,7 @@
 
   /* Form Input Field (moved from KritikSaranPage.vue) */
   .input-field {
-    @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500;
+    @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-900;
   }
 
   /* Sidebar umum */
@@ -238,10 +238,10 @@
   }
 
   .aduan-btn {
-    @apply block text-center bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition;
+    @apply block text-center bg-emerald-900 text-white px-4 py-2 rounded hover:bg-emerald-900 transition;
   }
   dis-btn {
-    @apply bg-green-50 text-green-800 px-3 py-2 rounded hover:bg-green-100 transition text-sm w-full text-left;
+    @apply bg-gray-50 text-teal-500 px-3 py-2 rounded hover:bg-emerald-900 transition text-sm w-full text-left;
   }
 }
 
@@ -398,7 +398,7 @@
   }
 
   .footer-top {
-    @apply bg-gradient-to-r from-green-800 via-emerald-700 to-green-600;
+    @apply bg-gradient-to-r from-emerald-900 via-emerald-700 to-emerald-900;
     color: #ffffff !important;
   }
 
@@ -419,7 +419,7 @@
   }
 
   .footer-bottom {
-    @apply bg-green-900 py-2 border-t border-emerald-800 text-center;
+    @apply bg-emerald-900 py-2 border-t border-emerald-800 text-center;
   }
 
   .footer-bottom p {

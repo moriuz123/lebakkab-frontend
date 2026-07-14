@@ -27,20 +27,20 @@
       <li
         v-for="item in displayedNews"
         :key="item.id"
-        class="news-item flex gap-3 items-start border border-gray-100 rounded-lg p-3 bg-gradient-to-r from-green-50 to-emerald-50 hover:shadow-md hover:border-green-200 transition-all duration-300"
+        class="news-item flex gap-3 items-start border border-gray-100 rounded-lg p-3 bg-gradient-to-r from-blue-50 to-emerald-50 hover:shadow-md hover:border-[#1e5ca8] transition-all duration-300"
       >
         <!-- Thumbnail -->
         <img
           :src="resolveThumbnail(item.thumbnail)"
           alt="thumbnail"
-          class="news-thumb w-16 h-16 object-cover rounded-md flex-shrink-0 ring-1 ring-green-200"
+          class="news-thumb w-16 h-16 object-cover rounded-md flex-shrink-0 ring-1 ring-emerald-900"
         />
 
         <!-- Judul dan Tanggal -->
         <div class="flex-1">
           <RouterLink
             :to="`/berita/${item.slug}`"
-            class="news-title block font-semibold text-sm text-[#001D39] hover:text-green-700 leading-snug"
+            class="news-title block font-semibold text-sm text-[#001D39] hover:text-[#e8a020] leading-snug"
           >
             {{ item.judul }}
           </RouterLink>

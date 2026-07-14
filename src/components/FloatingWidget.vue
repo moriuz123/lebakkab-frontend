@@ -11,7 +11,7 @@
       <button 
         @click="isMenuOpen = !isMenuOpen"
         @mouseenter="isMenuOpen = true"
-        class="bg-gradient-to-b from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 text-white py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-white/20 cursor-pointer mt-4 group"
+        class="bg-gradient-to-b from-[#0a2463] to-emerald-600 hover:from-[#0a2463] hover:to-emerald-500 text-white py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-white/20 cursor-pointer mt-4 group"
       >
         <div class="bg-white/20 rounded-full p-1 mb-1">
           <ChevronLeft class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
@@ -23,11 +23,11 @@
       <!-- Drawer Content -->
       <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)]">
         <!-- Decorative top accent -->
-        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-green-500 to-emerald-400"></div>
+        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#0a2463] to-emerald-400"></div>
         
         <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
-          <h3 class="text-gray-800 font-bold text-lg leading-tight">Layanan<br/><span class="text-green-600">Pintar</span></h3>
-          <div class="bg-green-100 p-2.5 rounded-xl text-green-600 shadow-inner">
+          <h3 class="text-gray-800 font-bold text-lg leading-tight">Layanan<br/><span class="text-[#e8a020]">Pintar</span></h3>
+          <div class="bg-emerald-900 p-2.5 rounded-xl text-[#e8a020] shadow-inner">
             <Settings class="w-5 h-5" />
           </div>
         </div>
@@ -37,9 +37,9 @@
             <button
               v-if="item.type !== 'link'"
               @click="handleAction(item.type)"
-              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-green-50 hover:text-green-700 transition-colors border border-gray-100 group text-gray-700"
+              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
             >
-              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-green-600">
+              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
                 <component :is="item.icon" class="w-5 h-5" />
               </div>
               <span class="text-sm font-semibold">{{ item.label }}</span>
@@ -47,9 +47,9 @@
             <a
               v-else
               :href="item.link"
-              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-green-50 hover:text-green-700 transition-colors border border-gray-100 group text-gray-700"
+              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
             >
-              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-green-600">
+              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
                 <component :is="item.icon" class="w-5 h-5" />
               </div>
               <span class="text-sm font-semibold">{{ item.label }}</span>
@@ -64,7 +64,7 @@
 
     <!-- === MOBILE BOTTOM MENU === -->
     <div
-      class="fixed bottom-0 left-0 right-0 bg-green-600 flex justify-around items-center py-2 z-50 md:hidden shadow-[0_-2px_8px_rgba(0,0,0,0.2)]"
+      class="fixed bottom-0 left-0 right-0 bg-[#0a2463] flex justify-around items-center py-2 z-50 md:hidden shadow-[0_-2px_8px_rgba(0,0,0,0.2)]"
     >
       <div
         v-for="(item, index) in mobileItems"
@@ -129,12 +129,12 @@
             <a 
               href="https://wa.me/6281944114581" 
               target="_blank" 
-              class="flex items-center justify-between bg-gray-50 hover:bg-green-50 border border-gray-100 hover:border-green-200 p-4 rounded-xl text-gray-700 hover:text-green-700 font-semibold transition-all group"
+              class="flex items-center justify-between bg-gray-50 hover:bg-[#f8f9fc] border border-gray-100 hover:border-[#1e5ca8] p-4 rounded-xl text-gray-700 hover:text-[#e8a020] font-semibold transition-all group"
             >
               <div class="flex items-center gap-2">
-                <span class="text-green-600 font-bold">Bot WhatsApp</span>
+                <span class="text-[#e8a020] font-bold">Bot WhatsApp</span>
               </div>
-              <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-green-500" />
+              <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-[#e8a020]" />
             </a>
           </div>
         </div>
@@ -316,8 +316,8 @@
       class="fixed top-10 left-1/2 -translate-x-1/2 z-[100] transition-all duration-500 ease-out flex items-center justify-center pointer-events-none"
       :class="customAlert.show ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'"
     >
-      <div v-if="customAlert.show" class="bg-white shadow-2xl rounded-xl p-4 flex items-center gap-4 min-w-[320px] max-w-md pointer-events-auto border-l-4" :class="customAlert.type === 'success' ? 'border-green-500' : (customAlert.type === 'error' ? 'border-red-500' : 'border-orange-500')">
-        <div class="rounded-full p-2 flex-shrink-0" :class="customAlert.type === 'success' ? 'bg-green-100 text-green-600' : (customAlert.type === 'error' ? 'bg-red-100 text-red-600' : 'bg-orange-100 text-orange-600')">
+      <div v-if="customAlert.show" class="bg-white shadow-2xl rounded-xl p-4 flex items-center gap-4 min-w-[320px] max-w-md pointer-events-auto border-l-4" :class="customAlert.type === 'success' ? 'border-[#1e5ca8]' : (customAlert.type === 'error' ? 'border-red-500' : 'border-orange-500')">
+        <div class="rounded-full p-2 flex-shrink-0" :class="customAlert.type === 'success' ? 'bg-emerald-900 text-[#e8a020]' : (customAlert.type === 'error' ? 'bg-red-100 text-red-600' : 'bg-orange-100 text-orange-600')">
           <CheckCircle2 v-if="customAlert.type === 'success'" class="w-6 h-6" />
           <XCircle v-if="customAlert.type === 'error'" class="w-6 h-6" />
           <AlertCircle v-if="customAlert.type === 'warning'" class="w-6 h-6" />

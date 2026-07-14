@@ -31,7 +31,7 @@
           </div>
 
           <!-- Tanggal pelaksanaan (BARU) -->
-          <div v-if="pengumuman.tgl_pelaksanaan" class="page-meta mt-1 text-green-700 font-medium">
+          <div v-if="pengumuman.tgl_pelaksanaan" class="page-meta mt-1 text-[#e8a020] font-medium">
             📅 Pelaksanaan:
             {{ formatDate(pengumuman.tgl_pelaksanaan, { weekday: 'long', month: 'long' }) }}
           </div>

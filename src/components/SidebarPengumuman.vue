@@ -21,7 +21,7 @@
           <div class="flex-1">
             <router-link
               :to="`/pengumuman/${item.slug}`"
-              class="block text-gray-700 hover:text-green-600 font-medium"
+              class="block text-gray-700 hover:text-[#e8a020] font-medium"
             >
               {{ item.judul }}
             </router-link>

@@ -1,13 +1,13 @@
 <template>
-  <div class="bg-[#f8fafc] min-h-screen pb-20 font-sans selection:bg-green-500 selection:text-white">
+  <div class="bg-[#f8fafc] min-h-screen pb-20 font-sans selection:bg-[#1e5ca8] selection:text-white">
     <!-- Hero / Header Section -->
-    <div class="relative bg-green-900 overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40 rounded-b-[4rem] lg:rounded-b-[6rem] shadow-2xl mb-16 lg:mb-24 z-10">
+    <div class="relative bg-emerald-900 overflow-hidden pt-24 pb-32 lg:pt-32 lg:pb-40 rounded-b-[4rem] lg:rounded-b-[6rem] shadow-2xl mb-16 lg:mb-24 z-10">
       <!-- Decorative Backgrounds -->
       <div class="absolute inset-0 z-0">
         <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
-        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-green-500 rounded-full mix-blend-multiply filter blur-[120px] opacity-40 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
+        <div class="absolute top-0 right-0 w-[800px] h-[800px] bg-[#1e5ca8] rounded-full mix-blend-multiply filter blur-[120px] opacity-40 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
         <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-600 rounded-full mix-blend-multiply filter blur-[120px] opacity-30 -translate-x-1/4 translate-y-1/4"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-green-900/50 to-green-950"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-900/50 to-[#071840]"></div>
       </div>
 
       <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
@@ -24,9 +24,9 @@
         </div>
         
         <h1 class="text-4xl md:text-6xl lg:text-7xl font-black text-white tracking-tight mb-6">
-          Profil <span class="text-transparent bg-clip-text bg-gradient-to-r from-green-300 to-yellow-300">Kabupaten Lebak</span>
+          Profil <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#0a2463] to-yellow-300">Kabupaten Lebak</span>
         </h1>
-        <p class="mt-4 text-lg md:text-2xl text-green-100 max-w-3xl mx-auto font-light leading-relaxed">
+        <p class="mt-4 text-lg md:text-2xl text-[#e8a020] max-w-3xl mx-auto font-light leading-relaxed">
           Mengenal lebih dekat identitas, sejarah, dan potensi daerah dengan visi yang kuat menuju masa depan.
         </p>
       </div>
@@ -34,7 +34,7 @@
 
     <!-- Loading & Error State -->
     <div v-if="loading" class="flex flex-col items-center justify-center py-20 gap-4">
-      <div class="w-16 h-16 border-4 border-green-200 border-t-green-600 rounded-full animate-spin"></div>
+      <div class="w-16 h-16 border-4 border-[#1e5ca8] border-t-[#e8a020] rounded-full animate-spin"></div>
       <p class="text-gray-500 font-medium animate-pulse">Memuat Data Profil Wilayah...</p>
     </div>
     
@@ -53,19 +53,19 @@
         <!-- Visi Misi (Kiri/Besar) -->
         <div v-if="profil.visi_misi" class="lg:col-span-7 bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-2xl transition-all duration-500 group relative overflow-hidden">
           <!-- Dekorasi -->
-          <div class="absolute top-0 right-0 w-64 h-64 bg-green-50 rounded-full mix-blend-multiply filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
+          <div class="absolute top-0 right-0 w-64 h-64 bg-[#f8f9fc] rounded-full mix-blend-multiply filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
           
           <div class="flex items-center gap-4 mb-8 relative z-10">
-            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-green-500/30 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
+            <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0a2463] to-emerald-600 flex items-center justify-center text-white shadow-lg shadow-[#1e5ca8]/30 transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
               <Target class="w-7 h-7" />
             </div>
             <h2 class="text-3xl font-extrabold text-gray-900 tracking-tight">Visi & Misi</h2>
           </div>
           
-          <div class="prose prose-lg md:prose-xl prose-green max-w-none 
+          <div class="prose prose-lg md:prose-xl prose-blue max-w-none 
                       prose-headings:font-black prose-headings:text-gray-800 prose-headings:mt-0 
                       prose-p:text-gray-600 prose-p:leading-relaxed
-                      prose-li:text-gray-600 prose-li:marker:text-green-500 prose-ul:space-y-3 relative z-10" 
+                      prose-li:text-gray-600 prose-li:marker:text-[#e8a020] prose-ul:space-y-3 relative z-10" 
                v-html="profil.visi_misi">
           </div>
         </div>
@@ -100,7 +100,7 @@
             <MapPin class="w-6 h-6" />
           </div>
           <h3 class="text-2xl font-black text-gray-900 mb-4 relative z-10">Geografis</h3>
-          <div class="prose prose-green prose-sm sm:prose-base max-w-none prose-p:text-gray-600 prose-li:text-gray-600 relative z-10" v-html="profil.kondisi_geografis"></div>
+          <div class="prose prose-blue prose-sm sm:prose-base max-w-none prose-p:text-gray-600 prose-li:text-gray-600 relative z-10" v-html="profil.kondisi_geografis"></div>
         </div>
 
         <!-- Demografi -->
@@ -136,8 +136,8 @@
       <div v-if="profil.arti_lambang" class="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 overflow-hidden flex flex-col md:flex-row group hover:shadow-2xl transition-shadow duration-500">
         
         <!-- Kiri: Logo Besar dengan Background -->
-        <div class="md:w-5/12 lg:w-2/5 bg-gradient-to-br from-green-50 via-white to-gray-50 flex items-center justify-center p-12 sm:p-20 relative">
-          <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-green-200/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+        <div class="md:w-5/12 lg:w-2/5 bg-gradient-to-br from-blue-50 via-white to-gray-50 flex items-center justify-center p-12 sm:p-20 relative">
+          <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0a2463]/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
           <img 
             v-if="profil.gambar_lambang_url || profil.gambar_lambang" 
             :src="profil.gambar_lambang_url || getStorageUrl(profil.gambar_lambang)" 
@@ -155,7 +155,7 @@
              <h3 class="text-3xl font-black text-gray-900">Makna Lambang Daerah</h3>
           </div>
           <div 
-            class="prose prose-lg prose-green max-w-none prose-p:text-gray-600 prose-p:leading-loose text-justify columns-1 sm:columns-2 gap-8" 
+            class="prose prose-lg prose-blue max-w-none prose-p:text-gray-600 prose-p:leading-loose text-justify columns-1 sm:columns-2 gap-8" 
             style="white-space: pre-wrap;" 
             v-html="profil.arti_lambang">
           </div>
