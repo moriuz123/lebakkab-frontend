@@ -25,10 +25,9 @@
     <div
       class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0"
     >
-      <!-- Typography -->
-      <h1 class="text-3xl sm:text-4xl lg:text-6xl font-black text-white leading-[1.15] tracking-tight drop-shadow-lg">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-[1.15] tracking-tight drop-shadow-lg">
         <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">Selamat Datang</span><br class="hidden lg:block" />
-        di Sistem Pemerintahan Berbasis Elektronik <br class="hidden sm:block" />
+        di Portal Resmi <br class="hidden sm:block" />
         Kabupaten Lebak
       </h1>
       <h2
