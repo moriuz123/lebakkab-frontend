@@ -1,20 +1,22 @@
 <template>
   <aside class="hidden lg:block lg:sticky lg:top-24">
-    <div class="sidebar-widget space-y-4">
-      <h2 class="sidebar-title">Halaman Terkait</h2>
+    <div class="bg-white shadow-sm border border-gray-100 rounded-3xl p-6 mb-6">
+      <h2 class="text-xl font-bold text-gray-900 mb-5 pb-3 border-b border-gray-100">Halaman Terkait</h2>
 
-      <ul class="space-y-2">
+      <ul class="space-y-1">
         <li
           v-for="item in links"
           :key="item.slug"
-          class="transition-all duration-200 hover:translate-x-1"
         >
           <router-link
             :to="`/page/${item.slug}`"
-            class="flex items-center text-gray-700 hover:text-[#e8a020] font-medium text-sm"
+            class="group flex items-center p-3 -mx-3 rounded-2xl hover:bg-blue-50/50 transition-colors duration-300"
+            active-class="bg-blue-50/50 text-[#1e5ca8]"
           >
-            <span class="w-2 h-2 bg-[#1e5ca8] rounded-full mr-2"></span>
-            {{ item.judul }}
+            <div class="w-8 h-8 rounded-full bg-blue-50 text-[#1e5ca8] flex items-center justify-center mr-3 group-hover:bg-[#1e5ca8] group-hover:text-white transition-colors shadow-sm border border-blue-100/50">
+              <span class="w-1.5 h-1.5 bg-current rounded-full"></span>
+            </div>
+            <span class="text-gray-700 group-hover:text-[#1e5ca8] font-semibold text-sm leading-snug">{{ item.judul }}</span>
           </router-link>
         </li>
       </ul>
