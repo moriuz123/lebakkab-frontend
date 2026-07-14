@@ -35,14 +35,14 @@
               v-if="footer.facebook"
               :href="footer.facebook"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 text-white transition-colors"
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
             >
               <Facebook class="w-4 h-4" />
             </a>
             <a
               v-else
               href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 text-white transition-colors"
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
             >
               <Share2 class="w-4 h-4" />
             </a>
@@ -51,14 +51,14 @@
               v-if="footer.twitter"
               :href="footer.twitter"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 text-white transition-colors"
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
             >
               <Twitter class="w-4 h-4" />
             </a>
             <a
               v-else
               href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 text-white transition-colors"
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
             >
               <AtSign class="w-4 h-4" />
             </a>
@@ -67,14 +67,14 @@
               v-if="footer.instagram"
               :href="footer.instagram"
               target="_blank"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 text-white transition-colors"
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
             >
               <Instagram class="w-4 h-4" />
             </a>
             <a
               v-else
               href="#"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-green-600 text-white transition-colors"
+              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:-translate-y-1 text-white transition-all duration-300"
             >
               <Camera class="w-4 h-4" />
             </a>
@@ -90,7 +90,7 @@
             <li v-for="link in footerWidget1.children" :key="link.id">
               <a
                 :href="link.url || '#'"
-                class="hover:text-green-300 hover:underline transition-all"
+                class="inline-block hover:text-teal-500 hover:translate-x-1 transition-all duration-300"
                 >{{ link.title }}</a
               >
             </li>
@@ -112,7 +112,7 @@
             <li v-for="link in footerWidget2.children" :key="link.id">
               <a
                 :href="link.url || '#'"
-                class="hover:text-green-300 hover:underline transition-all"
+                class="inline-block hover:text-teal-500 hover:translate-x-1 transition-all duration-300"
                 >{{ link.title }}</a
               >
             </li>
@@ -160,8 +160,8 @@
           Diskominfo Lebak.
         </p>
         <div class="flex gap-6 font-medium">
-          <a href="#" class="hover:text-green-300 transition-colors">Syarat & Ketentuan</a>
-          <a href="#" class="hover:text-green-300 transition-colors">Kebijakan Privasi</a>
+          <a href="#" class="hover:text-teal-500 transition-colors duration-300">Syarat & Ketentuan</a>
+          <a href="#" class="hover:text-teal-500 transition-colors duration-300">Kebijakan Privasi</a>
         </div>
       </div>
     </div>
