@@ -31,6 +31,9 @@
         <!-- Visi Misi -->
         <div v-if="profil.visi_misi" class="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-2xl transition-all duration-500 group relative overflow-hidden">
           <!-- Dekorasi -->
+          <div class="absolute inset-0 flex items-center justify-end opacity-[0.03] pointer-events-none overflow-hidden pr-10">
+            <span class="text-[10rem] font-black tracking-tighter leading-none text-gray-900">VISI MISI</span>
+          </div>
           <div class="absolute top-0 right-0 w-64 h-64 bg-[#f8f9fc] rounded-full mix-blend-multiply filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
           
           <div class="flex items-start gap-6 mb-8 relative z-10">
@@ -64,6 +67,10 @@
 
         <!-- Sejarah -->
         <div v-if="profil.sejarah_singkat" class="bg-gradient-to-br from-[#071840] to-gray-900 rounded-[2rem] p-8 md:p-12 shadow-2xl text-white relative overflow-hidden group">
+          <!-- Dekorasi -->
+          <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none overflow-hidden">
+            <span class="text-[12rem] font-black tracking-tighter leading-none text-white whitespace-nowrap">SEJARAH DAERAH</span>
+          </div>
           <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
           
           <div class="flex items-center gap-4 mb-8 relative z-10">
@@ -86,6 +93,9 @@
         
         <!-- Kondisi Geografis -->
         <div v-if="profil.kondisi_geografis" class="lg:col-span-6 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
+          <div class="absolute inset-0 flex items-end justify-end opacity-[0.03] pointer-events-none overflow-hidden pb-4 pr-4">
+            <span class="text-[8rem] font-black tracking-tighter leading-none text-blue-900">GEO</span>
+          </div>
           <div class="absolute bottom-0 right-0 w-40 h-40 bg-blue-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 translate-y-1/3"></div>
           
           <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 relative z-10">
@@ -97,6 +107,9 @@
 
         <!-- Demografi -->
         <div v-if="profil.demografi" class="lg:col-span-6 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
+           <div class="absolute inset-0 flex items-end justify-end opacity-[0.03] pointer-events-none overflow-hidden pb-4 pr-4">
+             <span class="text-[8rem] font-black tracking-tighter leading-none text-purple-900">DEMO</span>
+           </div>
            <div class="absolute top-0 right-0 w-40 h-40 bg-purple-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 -translate-y-1/3"></div>
            
            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300 relative z-10">

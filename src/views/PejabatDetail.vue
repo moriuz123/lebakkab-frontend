@@ -19,82 +19,122 @@
         </div>
       </div>
 
-      <!-- Detail Layout -->
-      <div v-else-if="store.pejabatDetail" class="bg-white rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 overflow-hidden flex flex-col md:flex-row">
+      <!-- Detail Layout (Sticky Sidebar + Scrollable Content) -->
+      <div v-else-if="store.pejabatDetail" class="flex flex-col lg:flex-row gap-8 lg:gap-10 items-start relative z-20">
         
-        <!-- Kolom Foto Kiri -->
-        <div class="md:w-5/12 lg:w-2/5 relative bg-gradient-to-b from-blue-50 to-white flex-shrink-0">
-          <div class="absolute inset-0 z-0 opacity-30 mix-blend-multiply bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-[#0a2463] via-transparent to-transparent"></div>
+        <!-- Kolom Kiri: Sticky Profile Card -->
+        <div class="w-full lg:w-1/3 lg:sticky lg:top-24 bg-white rounded-3xl shadow-xl shadow-[#1e5ca8]/5 border border-gray-100/60 overflow-hidden flex flex-col group">
           
-          <div class="relative z-10 w-full h-full min-h-[400px] flex items-end justify-center pt-10 px-8 pb-0">
+          <div class="relative bg-gradient-to-b from-[#0a2463] to-[#1e5ca8] pt-12 px-8 flex justify-center overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute inset-0 z-0">
+               <div class="absolute top-0 right-0 w-64 h-64 bg-[#e8a020] rounded-full mix-blend-screen filter blur-[80px] opacity-30 translate-x-1/2 -translate-y-1/2"></div>
+            </div>
+            
             <img 
               v-if="store.pejabatDetail.foto || store.pejabatDetail.foto_url"
               :src="store.pejabatDetail.foto_url || getStorageUrl(store.pejabatDetail.foto)"
               :alt="store.pejabatDetail.nama"
-              class="w-full max-w-[280px] h-auto object-cover object-bottom drop-shadow-2xl filter contrast-105"
+              class="relative z-10 w-full max-w-[220px] h-auto object-cover object-bottom drop-shadow-[0_20px_20px_rgba(0,0,0,0.3)] filter contrast-105 group-hover:scale-105 transition-transform duration-700"
             />
-            <div v-else class="w-full h-[400px] flex flex-col items-center justify-center text-gray-300 pb-10">
-              <User class="w-32 h-32 mb-4 opacity-50" />
-              <span class="font-medium text-lg">Foto Resmi</span>
+            <div v-else class="relative z-10 w-full h-[300px] flex flex-col items-center justify-center text-white/50 pb-8">
+              <User class="w-24 h-24 mb-4" />
+              <span class="font-medium text-sm">Foto Resmi</span>
+            </div>
+          </div>
+
+          <div class="p-8 text-center bg-white relative z-20">
+            <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-blue-50 text-[#1e5ca8] font-bold text-xs tracking-wider uppercase mb-5 border border-blue-100 shadow-sm">
+              {{ store.pejabatDetail.jabatan }}
+            </div>
+            
+            <h2 class="text-2xl font-black text-gray-900 mb-2 leading-snug group-hover:text-[#e8a020] transition-colors">
+              {{ store.pejabatDetail.nama }}
+            </h2>
+            
+            <div class="w-12 h-1 bg-gray-200 rounded-full mx-auto mb-6"></div>
+
+            <div class="space-y-4 text-left">
+              <div v-if="store.pejabatDetail.periode" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#1e5ca8]/30 transition-colors">
+                <div class="w-10 h-10 rounded-xl bg-orange-50 text-[#e8a020] flex items-center justify-center shrink-0">
+                   <Calendar class="w-5 h-5" />
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-400 uppercase mb-0.5">Periode Jabatan</p>
+                  <p class="font-semibold text-gray-900">{{ store.pejabatDetail.periode }}</p>
+                </div>
+              </div>
+
+              <div v-if="store.pejabatDetail.nip" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#1e5ca8]/30 transition-colors">
+                <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+                   <BadgeCheck class="w-5 h-5" />
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-400 uppercase mb-0.5">NIP</p>
+                  <p class="font-semibold text-gray-900">{{ store.pejabatDetail.nip }}</p>
+                </div>
+              </div>
+
+              <div v-if="store.pejabatDetail.pangkat_golongan" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#1e5ca8]/30 transition-colors">
+                <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
+                   <Star class="w-5 h-5" />
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-gray-400 uppercase mb-0.5">Pangkat / Golongan</p>
+                  <p class="font-semibold text-gray-900">{{ store.pejabatDetail.pangkat_golongan }}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Kolom Data Kanan -->
-        <div class="md:w-7/12 lg:w-3/5 p-8 sm:p-12 lg:p-14 relative z-10">
-          <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-900 text-[#e8a020] font-extrabold text-xs tracking-widest uppercase mb-4 shadow-sm border border-[#1e5ca8]">
-            {{ store.pejabatDetail.jabatan }}
-          </div>
+        <!-- Kolom Kanan: Main Content (Scrolls) -->
+        <div class="w-full lg:w-2/3 space-y-8">
           
-          <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-2 leading-tight">
-            {{ store.pejabatDetail.nama }}
-          </h2>
-          
-          <p class="text-sm font-semibold text-gray-500 mb-4 flex items-center gap-2">
-            <Calendar class="w-4 h-4 text-[#e8a020]" />
-            Periode Masa Jabatan: <span class="text-gray-800">{{ store.pejabatDetail.periode }}</span>
-          </p>
-
-          <div class="flex flex-wrap gap-4 mb-8">
-            <div v-if="store.pejabatDetail.nip" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-100 text-sm font-medium text-gray-600">
-              <BadgeCheck class="w-4 h-4 text-blue-500" />
-              NIP: <span class="text-gray-900">{{ store.pejabatDetail.nip }}</span>
+          <!-- Section Deskripsi / Tentang -->
+          <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 p-8 sm:p-12 relative overflow-hidden group">
+            <div class="absolute top-0 right-0 w-40 h-40 bg-gray-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
+            
+            <div class="flex items-center gap-4 mb-8 relative z-10">
+              <div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-700 flex items-center justify-center border border-gray-100 shadow-sm group-hover:bg-[#1e5ca8] group-hover:text-white transition-colors duration-500">
+                <Info class="w-7 h-7" />
+              </div>
+              <h3 class="text-2xl font-black text-gray-900">Tentang Pejabat</h3>
             </div>
-            <div v-if="store.pejabatDetail.pangkat_golongan" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-100 text-sm font-medium text-gray-600">
-              <Star class="w-4 h-4 text-yellow-500" />
-              Pangkat/Golongan: <span class="text-gray-900">{{ store.pejabatDetail.pangkat_golongan }}</span>
+            
+            <div class="prose prose-lg prose-blue max-w-none text-gray-600 leading-loose relative z-10" v-html="store.pejabatDetail.pesan_singkat || store.pejabatDetail.deskripsi || 'Tidak ada deskripsi tersedia.'">
             </div>
           </div>
 
-          <!-- Divider -->
-          <div class="w-16 h-1 bg-[#1e5ca8] rounded-full mb-8"></div>
-
-          <!-- Section Deskripsi -->
-          <div class="mb-10">
-            <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-              <Info class="w-4 h-4" /> Tentang
-            </h3>
-            <div class="prose prose-blue max-w-none text-gray-700 leading-relaxed font-medium bg-gray-50/50 p-6 rounded-2xl border border-gray-100" v-html="store.pejabatDetail.pesan_singkat || store.pejabatDetail.deskripsi || 'Tidak ada deskripsi'">
-            </div>
-          </div>
-
-          <!-- Grid Info Spesifik -->
-          <div class="grid grid-cols-1 gap-10 mb-10">
+          <!-- Section Pendidikan & Karir -->
+          <div class="grid grid-cols-1 gap-8">
             <!-- Pendidikan -->
-            <div>
-              <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                <GraduationCap class="w-4 h-4" /> Pendidikan
-              </h3>
-              <div class="prose prose-sm sm:prose-base prose-blue max-w-none text-gray-800 font-medium leading-snug" v-html="store.pejabatDetail.riwayat_pendidikan || store.pejabatDetail.pendidikan || 'Tidak ada data pendidikan'">
+            <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 p-8 sm:p-12 relative overflow-hidden group">
+              <div class="absolute bottom-0 right-0 w-40 h-40 bg-blue-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-1/2 translate-x-1/2"></div>
+              
+              <div class="flex items-center gap-4 mb-8 relative z-10">
+                <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors duration-500">
+                  <GraduationCap class="w-7 h-7" />
+                </div>
+                <h3 class="text-2xl font-black text-gray-900">Riwayat Pendidikan</h3>
+              </div>
+              
+              <div class="prose prose-blue max-w-none text-gray-700 leading-relaxed relative z-10" v-html="store.pejabatDetail.riwayat_pendidikan || store.pejabatDetail.pendidikan || 'Tidak ada data pendidikan.'">
               </div>
             </div>
             
             <!-- Karir -->
-            <div>
-              <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
-                <Briefcase class="w-4 h-4" /> Riwayat Karir
-              </h3>
-              <div class="prose prose-sm sm:prose-base prose-blue max-w-none text-gray-800 font-medium leading-snug" v-html="store.pejabatDetail.riwayat_jabatan || store.pejabatDetail.karir || 'Tidak ada data riwayat karir'">
+            <div class="bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 p-8 sm:p-12 relative overflow-hidden group">
+              <div class="absolute bottom-0 left-0 w-40 h-40 bg-orange-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-y-1/2 -translate-x-1/2"></div>
+              
+              <div class="flex items-center gap-4 mb-8 relative z-10">
+                <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-100 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500">
+                  <Briefcase class="w-7 h-7" />
+                </div>
+                <h3 class="text-2xl font-black text-gray-900">Riwayat Karir & Jabatan</h3>
+              </div>
+              
+              <div class="prose prose-orange max-w-none text-gray-700 leading-relaxed relative z-10" v-html="store.pejabatDetail.riwayat_jabatan || store.pejabatDetail.karir || 'Tidak ada data riwayat karir.'">
               </div>
             </div>
           </div>
