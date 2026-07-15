@@ -146,40 +146,39 @@ const goToDot = (index) => {
           <div
             v-for="doc in dokuments"
             :key="doc.id"
-            class="snap-center w-[280px] sm:w-[320px] bg-white border border-gray-100 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-[#1e5ca8]/10 hover:border-[#1e5ca8] transition-all duration-500 flex-shrink-0 group overflow-hidden flex flex-col relative"
+            class="snap-center w-[220px] sm:w-[240px] bg-white/95 backdrop-blur-md border border-white/30 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-[#1e5ca8]/20 hover:border-[#1e5ca8]/50 transition-all duration-500 flex-shrink-0 group overflow-hidden flex flex-col relative"
           >
             <!-- Decorative Background Shape -->
             <div class="absolute -right-12 -top-12 w-32 h-32 bg-[#f8f9fc] rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
 
             <!-- Icon Section -->
-            <div class="p-6 pb-2 relative z-10 flex items-start justify-between">
-              <div class="w-14 h-14 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
-                <FileText class="w-7 h-7" />
+            <div class="p-5 pb-2 relative z-10 flex items-start justify-between">
+              <div class="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
+                <FileText class="w-6 h-6" />
               </div>
-              <span v-if="doc.kategori?.nama" class="bg-gray-50 text-gray-600 text-[10px] font-bold px-3 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[130px] truncate">
+              <span v-if="doc.kategori?.nama" class="bg-gray-50 text-gray-600 text-[9px] font-bold px-2.5 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[110px] truncate">
                 {{ doc.kategori.nama }}
               </span>
             </div>
 
             <!-- Info -->
-            <div class="p-6 pt-3 relative z-10 flex-1 flex flex-col">
-              <h3 class="font-bold text-gray-900 text-lg leading-tight mb-2 group-hover:text-[#e8a020] transition-colors" :title="doc.judul">
+            <div class="p-5 pt-3 relative z-10 flex-1 flex flex-col">
+              <h3 class="font-bold text-gray-900 text-sm leading-snug mb-5 group-hover:text-[#e8a020] transition-colors line-clamp-3" :title="doc.judul">
                 {{ doc.judul }}
               </h3>
-              <p class="text-sm text-gray-500 line-clamp-2 mb-6 font-medium leading-relaxed">{{ doc.deskripsi || 'Tidak ada deskripsi' }}</p>
               
-              <div class="mt-auto grid grid-cols-2 gap-3">
+              <div class="mt-auto grid grid-cols-2 gap-2">
                 <button
                   @click="openFlipbook(doc)"
-                  class="flex items-center justify-center gap-2 text-sm font-bold text-blue-600 bg-blue-50 border border-transparent hover:bg-blue-600 hover:text-white py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                  class="flex items-center justify-center gap-1.5 text-xs font-bold text-blue-600 bg-blue-50/80 border border-transparent hover:bg-blue-600 hover:text-white py-2 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  <Eye class="w-4 h-4" /> Lihat
+                  <Eye class="w-3.5 h-3.5" /> Lihat
                 </button>
                 <button
                   @click="unduh(doc)"
-                  class="flex items-center justify-center gap-2 text-sm font-bold text-[#e8a020] bg-[#f8f9fc] border border-transparent hover:bg-[#0a2463] hover:text-white py-2.5 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
+                  class="flex items-center justify-center gap-1.5 text-xs font-bold text-[#e8a020] bg-[#f8f9fc]/80 border border-transparent hover:bg-[#0a2463] hover:text-white py-2 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  <Download class="w-4 h-4" /> Unduh
+                  <Download class="w-3.5 h-3.5" /> Unduh
                 </button>
               </div>
             </div>
