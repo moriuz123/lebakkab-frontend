@@ -4,12 +4,15 @@
     <template v-if="hasChildren">
       <button
         type="button"
-        class="flex items-center space-x-1 px-4 py-2 rounded-full focus:outline-none transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
-        :class="[isScrolled ? 'text-gray-700 hover:text-[#1e5ca8] hover:bg-blue-50/80' : 'text-white hover:text-white hover:bg-white/20 backdrop-blur-sm']"
+        class="group/btn flex items-center space-x-1.5 py-2 focus:outline-none transition-colors duration-200 font-medium text-[15px]"
+        :class="[isScrolled ? 'text-gray-700 hover:text-[#0a2463]' : 'text-white/90 hover:text-white']"
         @click.prevent="toggle"
         :aria-expanded="isOpen.toString()"
       >
-        <span>{{ item.title }}</span>
+        <span class="relative">
+          {{ item.title }}
+          <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#e8a020] transition-all duration-300 group-hover/btn:w-full"></span>
+        </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-4 w-4"
@@ -29,11 +32,12 @@
       <!-- Dropdown anak -->
       <div
         v-show="isOpen"
-        class="absolute left-0 top-full mt-2 bg-white/95 backdrop-blur-xl shadow-2xl rounded-2xl border border-gray-100/50 min-w-[220px] z-50 overflow-hidden transform origin-top-left transition-all"
+        class="absolute left-0 top-full mt-4 bg-white shadow-xl rounded-lg border border-gray-100 min-w-[240px] z-50 overflow-hidden transform origin-top-left transition-all"
       >
+        <div class="absolute top-0 left-0 w-full h-1 bg-[#0a2463]"></div>
         <ul class="py-2">
           <li v-for="child in item.children" :key="child.id">
-            <MenuItem :item="child" :is-scrolled="true" />
+            <MenuItem :item="child" :is-scrolled="true" :is-child="true" />
           </li>
         </ul>
       </div>
@@ -47,12 +51,16 @@
           :href="resolveUrl(item)"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-4 py-2 rounded-full block whitespace-nowrap transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
+          class="group/link py-2 block whitespace-nowrap transition-colors duration-200 font-medium text-[15px]"
           :class="[
-            isScrolled ? 'text-gray-700 hover:text-[#1e5ca8] hover:bg-blue-50/80' : 'text-white hover:text-white hover:bg-white/20 backdrop-blur-sm',
+            isScrolled ? 'text-gray-700 hover:text-[#0a2463]' : 'text-white/90 hover:text-white',
+            isChild ? 'px-4 hover:bg-gray-50 hover:text-[#0a2463] w-full text-left font-normal text-[14px]' : ''
           ]"
         >
-          {{ item.title }}
+          <span :class="{'relative': !isChild}">
+            {{ item.title }}
+            <span v-if="!isChild" class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#e8a020] transition-all duration-300 group-hover/link:w-full"></span>
+          </span>
         </a>
       </template>
 
@@ -60,20 +68,27 @@
       <template v-else-if="item.link_type && item.link_type !== 'parent'">
         <a
           :href="resolveUrl(item)"
-          class="px-4 py-2 rounded-full block whitespace-nowrap transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
+          class="group/link py-2 block whitespace-nowrap transition-colors duration-200 font-medium text-[15px]"
           :class="[
-            isScrolled ? 'text-gray-700 hover:text-[#1e5ca8] hover:bg-blue-50/80' : 'text-white hover:text-white hover:bg-white/20 backdrop-blur-sm',
+            isScrolled ? 'text-gray-700 hover:text-[#0a2463]' : 'text-white/90 hover:text-white',
+            isChild ? 'px-4 hover:bg-gray-50 hover:text-[#0a2463] w-full text-left font-normal text-[14px]' : ''
           ]"
         >
-          {{ item.title }}
+          <span :class="{'relative': !isChild}">
+            {{ item.title }}
+            <span v-if="!isChild" class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#e8a020] transition-all duration-300 group-hover/link:w-full"></span>
+          </span>
         </a>
       </template>
 
       <!-- Induk tanpa link -->
       <template v-else>
         <span
-          class="px-4 py-2 rounded-full block cursor-default transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
-          :class="[isScrolled ? 'text-gray-700' : 'text-white']"
+          class="py-2 block cursor-default transition-colors duration-200 font-medium text-[15px]"
+          :class="[
+            isScrolled ? 'text-gray-700' : 'text-white',
+            isChild ? 'px-4 text-gray-400 font-normal text-[14px]' : ''
+          ]"
         >
           {{ item.title }}
         </span>
@@ -89,6 +104,7 @@ import MenuItem from './MenuItem.vue'
 const props = defineProps({
   item: { type: Object, required: true },
   isScrolled: { type: Boolean, default: false },
+  isChild: { type: Boolean, default: false }, // Prop to know if this is rendered inside a dropdown
 })
 
 const isOpen = ref(false)
