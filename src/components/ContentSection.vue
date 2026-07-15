@@ -29,55 +29,54 @@
             <!-- KIRI: BERITA UTAMA (60%) -->
             <div
               v-if="featured"
-              class="md:col-span-3 flex flex-col group cursor-pointer"
+              class="md:col-span-3 flex flex-col group cursor-pointer relative overflow-hidden rounded-2xl shadow-sm hover:shadow-lg transition-all duration-500 min-h-[300px]"
               @click="$router.push(`/berita/${featured.slug}`)"
             >
-              <div class="w-full relative overflow-hidden rounded-2xl aspect-[16/9] mb-4 shadow-sm group-hover:shadow-md transition-all duration-500">
-                <img
-                  :src="featured.image"
-                  alt="Featured News"
-                  class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <div class="flex-1 flex flex-col px-1">
-                <!-- Gunakan Kategori asli jika ada, sementara default ke "PEMERINTAHAN" -->
-                <span class="text-[10px] font-bold text-[#e8a020] uppercase tracking-widest mb-2 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-[#1e5ca8]"></span> Pemerintahan
+              <img
+                :src="featured.image"
+                alt="Featured News"
+                class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <!-- Gradient Overlay -->
+              <div class="absolute inset-0 bg-gradient-to-t from-[#0a2463]/90 via-[#0a2463]/40 to-transparent"></div>
+              
+              <div class="absolute bottom-0 left-0 w-full p-6 sm:p-8 flex flex-col z-10">
+                <span class="w-max px-3 py-1 bg-[#e8a020] text-[#0a2463] text-[10px] font-black uppercase tracking-widest rounded-full mb-3 shadow-sm">
+                  Berita Utama
                 </span>
-                <h2 class="text-xl sm:text-2xl font-bold text-gray-900 leading-tight mb-2 group-hover:text-[#e8a020] transition-colors line-clamp-3">
+                <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-white leading-tight mb-3 group-hover:text-gray-200 transition-colors line-clamp-3 drop-shadow-md">
                   {{ featured.title }}
                 </h2>
-                <div class="flex items-center gap-1.5 text-xs text-gray-500 font-medium mt-auto">
-                  <Calendar class="w-3 h-3"/> {{ formatDate(featured.date, { month: 'long' }) }}
+                <div class="flex items-center gap-2 text-sm text-gray-300 font-medium">
+                  <Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'long', year: 'numeric' }) }}
                 </div>
               </div>
             </div>
 
             <!-- KANAN: LIST BERITA (40%) -->
             <div class="md:col-span-2 flex flex-col justify-between">
-              <div class="flex flex-col divide-y divide-gray-100 h-full">
-                <!-- Tampilkan 3 berita saja agar proporsi tingginya seimbang dengan Berita Utama -->
-                <div
-                  v-for="(news, index) in latestNews.slice(0, 3)"
-                  :key="index"
-                  class="flex gap-4 py-4 first:pt-0 last:pb-0 group cursor-pointer"
-                  @click="$router.push(`/berita/${news.slug}`)"
-                >
-                  <div class="w-24 h-20 sm:w-28 sm:h-24 shrink-0 relative overflow-hidden rounded-xl shadow-sm group-hover:shadow-md transition-shadow">
-                    <img
-                      :src="news.image"
-                      alt="News Thumbnail"
-                      class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                  </div>
-                  <div class="flex-1 flex flex-col justify-center">
-                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1 group-hover:text-[#e8a020] transition-colors">Informasi Publik</span>
-                    <h3 class="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 group-hover:text-[#e8a020] transition-colors mb-1.5">
-                      {{ news.title }}
-                    </h3>
-                    <div class="text-[11px] text-gray-500 font-medium mt-auto">
-                      {{ formatDate(news.date) }}
-                    </div>
+              <div class="flex flex-col h-full bg-white rounded-2xl p-5 border border-gray-100 border-t-4 border-t-[#e8a020] shadow-sm">
+                <h3 class="text-sm font-black text-gray-900 uppercase tracking-widest mb-4 flex items-center gap-2 border-b border-gray-100 pb-3">
+                  <span class="w-2 h-2 rounded-full bg-[#1e5ca8]"></span> Berita Lainnya
+                </h3>
+                <div class="flex flex-col divide-y divide-gray-100 h-full justify-between">
+                  <div
+                    v-for="(news, index) in latestNews.slice(0, 3)"
+                    :key="index"
+                    class="flex gap-4 py-3 first:pt-0 last:pb-0 group cursor-pointer"
+                    @click="$router.push(`/berita/${news.slug}`)"
+                  >
+                     <div class="w-24 h-20 shrink-0 relative overflow-hidden rounded-xl shadow-sm border border-gray-100">
+                        <img :src="news.image" class="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                     </div>
+                     <div class="flex-1 flex flex-col justify-center">
+                        <h4 class="text-sm font-semibold text-gray-800 leading-snug line-clamp-2 group-hover:text-[#1e5ca8] transition-colors mb-2">
+                           {{ news.title }}
+                        </h4>
+                        <div class="text-[11px] text-gray-500 font-medium mt-auto flex items-center gap-1.5">
+                           <Calendar class="w-3 h-3"/> {{ formatDate(news.date) }}
+                        </div>
+                     </div>
                   </div>
                 </div>
               </div>
@@ -90,17 +89,17 @@
              KOLOM BANNER (LG: 4 Cols)
              ========================= -->
         <div class="lg:col-span-4" v-if="banners.length">
-          <div class="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm h-full flex flex-col">
-            <div class="flex items-center justify-between mb-6 shrink-0">
-              <h3 class="text-lg font-black text-gray-900 flex items-center gap-2">
-                <ImageIcon class="w-5 h-5 text-[#e8a020]" /> Banner
+          <div class="bg-white p-5 rounded-2xl border border-gray-100 border-t-4 border-t-[#1e5ca8] shadow-sm h-full flex flex-col relative overflow-hidden group">
+            <div class="flex items-center justify-between mb-4 shrink-0 relative z-10">
+              <h3 class="text-sm font-black text-gray-900 uppercase tracking-widest flex items-center gap-2">
+                <ImageIcon class="w-4 h-4 text-[#1e5ca8]" /> Publikasi Banner
               </h3>
-              <button @click="nextBanner" class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-[#e8a020] hover:bg-[#f8f9fc] transition-colors" title="Ganti Banner">
-                <RefreshCw class="w-4 h-4" />
+              <button @click="nextBanner" class="w-7 h-7 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-[#1e5ca8] hover:bg-blue-50 transition-colors" title="Ganti Banner">
+                <RefreshCw class="w-3.5 h-3.5" />
               </button>
             </div>
 
-            <div class="relative overflow-hidden rounded-2xl aspect-square md:aspect-auto md:flex-1 shadow-inner group">
+            <div class="relative overflow-hidden rounded-xl h-full min-h-[300px] w-full shadow-inner bg-gray-50 flex-1">
               <img
                 :src="banners[previousBanner]"
                 alt="Banner Previous"

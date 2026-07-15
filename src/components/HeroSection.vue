@@ -31,7 +31,7 @@
       class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0"
     >
       <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.15] tracking-tight drop-shadow-lg">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-teal-200">Selamat Datang</span><br class="hidden lg:block" />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e8a020] to-yellow-300">Selamat Datang</span><br class="hidden lg:block" />
         di Portal Resmi <br class="hidden sm:block" />
         Kabupaten Lebak
       </h1>
@@ -87,7 +87,7 @@
           />
           <button
             type="submit"
-            class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-teal-500/20 transform transition-all duration-300 hover:scale-[1.02] active:scale-95 flex-shrink-0"
+            class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-[#e8a020] to-[#d48f10] hover:from-[#c98918] hover:to-[#b3770d] text-[#0a2463] font-black rounded-xl shadow-lg shadow-[#e8a020]/20 transform transition-all duration-300 hover:scale-[1.02] active:scale-95 flex-shrink-0"
           >
             Cari
           </button>
