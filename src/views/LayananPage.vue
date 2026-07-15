@@ -35,37 +35,52 @@
       </div>
 
       <!-- Categories Grid -->
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 sm:gap-8">
+      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         <router-link
           v-for="kategori in kategoriLayanans"
           :key="kategori.slug"
           :to="{ name: 'LayananKategoriPage', params: { slug: kategori.slug } }"
-          class="group bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-2xl hover:shadow-emerald-500/10 hover:border-emerald-200 transition-all duration-500 flex flex-col items-center text-center relative overflow-hidden transform hover:-translate-y-2"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-6 overflow-hidden transition-all duration-300 min-h-[180px] flex flex-col"
         >
-          <!-- Hover Effect Background -->
-          <div class="absolute inset-0 bg-gradient-to-br from-emerald-50/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
-          
-          <div class="w-28 h-28 mb-6 relative z-10 flex items-center justify-center">
-            <div class="absolute inset-0 bg-emerald-100/50 rounded-[1.5rem] rotate-3 group-hover:rotate-12 group-hover:scale-110 transition-all duration-500 origin-center"></div>
-            <div class="absolute inset-0 bg-emerald-50 rounded-[1.5rem] -rotate-3 group-hover:-rotate-6 group-hover:scale-105 transition-all duration-500 origin-center"></div>
-            
-            <img 
-              v-if="kategori.thumbnail" 
-              :src="getStorageUrl(kategori.thumbnail)" 
-              :alt="kategori.nama"
-              class="w-16 h-16 object-contain relative z-20 drop-shadow-md group-hover:scale-110 transition-transform duration-500"
-            />
-            <div v-else class="w-16 h-16 rounded-full flex items-center justify-center text-emerald-500 relative z-20">
-              <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+          <!-- Default State -->
+          <div class="flex flex-col h-full transition-opacity duration-300 group-hover:opacity-0">
+            <div class="flex items-start gap-4 mb-4">
+              <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl p-2 border border-gray-100 flex items-center justify-center relative overflow-hidden">
+                <img 
+                  v-if="kategori.thumbnail" 
+                  :src="getStorageUrl(kategori.thumbnail)" 
+                  :alt="kategori.nama"
+                  class="w-full h-full object-contain relative z-20"
+                />
+                <div v-else class="w-full h-full flex items-center justify-center text-gray-400">
+                  <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                </div>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="font-bold text-gray-800 text-lg line-clamp-2" :title="kategori.nama">{{ kategori.nama }}</h3>
+                <p class="text-sm text-gray-500 mt-1">Kategori Layanan</p>
+              </div>
+            </div>
+
+            <!-- Badges -->
+            <div class="flex flex-wrap gap-2 mt-auto">
+              <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">
+                {{ kategori.informasi_layanans_count || 0 }} Layanan Tersedia
+              </span>
             </div>
           </div>
-          
-          <h3 class="text-xl font-bold text-gray-900 group-hover:text-emerald-600 transition-colors duration-300 mb-3 relative z-10">
-            {{ kategori.nama }}
-          </h3>
-          <div class="inline-flex items-center gap-1.5 bg-gray-50 group-hover:bg-emerald-50 text-gray-500 group-hover:text-emerald-700 px-4 py-1.5 rounded-full text-sm font-semibold transition-colors duration-300 relative z-10 border border-gray-100 group-hover:border-emerald-100">
-            <span>{{ kategori.informasi_layanans_count || 0 }}</span>
-            <span>Layanan Tersedia</span>
+
+          <!-- Hover State (Navy Overlay, Button) -->
+          <div class="absolute inset-0 bg-gradient-to-br from-[#071840] to-[#0a2463] p-6 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+            <p class="text-white/90 text-sm mb-4 text-center flex-1 flex items-center justify-center leading-relaxed">
+              Jelajahi {{ kategori.informasi_layanans_count || 0 }} layanan yang tersedia pada kategori ini.
+            </p>
+            <div class="mt-auto block w-full text-center bg-[#e8a020] text-[#071840] font-bold px-4 py-2.5 rounded-xl transition-all shadow-lg flex items-center justify-center gap-2">
+              Lihat Layanan
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+              </svg>
+            </div>
           </div>
         </router-link>
       </div>
