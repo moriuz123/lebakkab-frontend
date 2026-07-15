@@ -36,13 +36,13 @@
             :key="tab.id"
             @click="activeTab = tab.id"
             :class="[
-              'px-6 py-3 rounded-xl font-bold transition-all duration-300 whitespace-nowrap flex items-center gap-2',
+              'px-4 py-2.5 md:px-5 md:py-3 rounded-xl text-sm md:text-base font-bold transition-all duration-300 whitespace-nowrap flex items-center gap-1.5 md:gap-2',
               activeTab === tab.id 
                 ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30 -translate-y-1' 
                 : 'bg-gray-50 text-gray-600 hover:bg-blue-50 hover:text-blue-600'
             ]"
           >
-            <component :is="tab.icon" class="w-5 h-5" />
+            <component :is="tab.icon" class="w-4 h-4 md:w-5 md:h-5" />
             {{ tab.label }}
           </button>
         </div>
@@ -363,18 +363,18 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Info, Map, FileSignature, PlaySquare, MessageSquare, Search } from 'lucide-vue-next'
+import { Info, Map, FileSignature, PlaySquare, MessageSquare, Search, HelpCircle } from 'lucide-vue-next'
 import axios from '@/utils/api'
 import { getStorageUrl } from '@/utils/helpers'
 
 const tabs = [
-  { id: 'tentang', label: 'Tentang TTE', icon: Info },
-  { id: 'alur', label: 'Alur & Prosedur', icon: Map },
-  { id: 'daftar', label: 'Daftar TTE', icon: FileSignature },
-  { id: 'status', label: 'Cek Status', icon: Search },
-  { id: 'tutorial', label: 'Video Tutorial', icon: PlaySquare },
-  { id: 'ulasan', label: 'Ulasan Layanan', icon: MessageSquare },
-  { id: 'bantuan', label: 'Bantuan', icon: Info },
+  { id: 'tentang', label: 'Tentang', icon: Info },
+  { id: 'alur', label: 'Alur', icon: Map },
+  { id: 'daftar', label: 'Daftar', icon: FileSignature },
+  { id: 'status', label: 'Status', icon: Search },
+  { id: 'tutorial', label: 'Tutorial', icon: PlaySquare },
+  { id: 'ulasan', label: 'Ulasan', icon: MessageSquare },
+  { id: 'bantuan', label: 'Bantuan', icon: HelpCircle },
 ]
 
 const activeTab = ref('tentang')
