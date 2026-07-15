@@ -1,33 +1,16 @@
 <template>
   <div class="bg-[#f8fafc] min-h-screen pb-24 font-sans selection:bg-emerald-500 selection:text-white">
-    <!-- Premium Header -->
-    <div class="relative bg-emerald-900 overflow-hidden pt-28 pb-32 lg:pt-36 lg:pb-40 rounded-b-[3rem] shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)] mb-12 z-10 border-b border-emerald-800">
-      <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a2463]/50 to-emerald-950"></div>
-      </div>
-      
-      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
-        <!-- Breadcrumb Custom -->
-        <nav class="flex items-center gap-2 text-sm text-emerald-200/80 mb-6 font-medium">
-          <router-link to="/" class="hover:text-white transition-colors">Beranda</router-link>
-          <span class="w-1 h-1 rounded-full bg-emerald-500/50"></span>
-          <router-link to="/layanan" class="hover:text-white transition-colors">Layanan</router-link>
-          <span class="w-1 h-1 rounded-full bg-emerald-500/50"></span>
-          <span class="text-white">Kategori</span>
-        </nav>
-        
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-6 leading-tight">
-          Portal <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 to-teal-200">Layanan Digital</span>
-        </h1>
-        <p class="text-lg md:text-xl text-emerald-100/90 max-w-2xl mx-auto font-medium leading-relaxed">
-          Temukan berbagai layanan publik secara digital dan terintegrasi untuk masyarakat Kabupaten Lebak.
-        </p>
-      </div>
-    </div>
+    <PageHeader2
+      title="Portal Layanan Digital"
+      subtitle="Temukan berbagai layanan publik secara digital dan terintegrasi untuk masyarakat Kabupaten Lebak."
+      :breadcrumbs="[
+        { label: 'Beranda', link: '/' },
+        { label: 'Layanan', link: '/layanan' },
+        { label: 'Kategori', link: '' },
+      ]"
+    />
 
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 -mt-24 sm:-mt-28 relative z-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 mt-12 relative z-20">
       <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
         
         <!-- Sidebar Kiri (Kategori) -->
@@ -165,6 +148,7 @@ import { onMounted, watch, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useLayananStore } from '@/stores/layanan'
 import { storeToRefs } from 'pinia'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 import axios from '@/utils/api'
 
