@@ -4,8 +4,8 @@
     <template v-if="hasChildren">
       <button
         type="button"
-        class="flex items-center space-x-1 px-2 py-1 focus:outline-none transition-colors duration-300"
-        :class="[isScrolled ? 'text-gray-700 hover:text-teal-600 font-semibold' : 'text-white hover:text-gray-200']"
+        class="flex items-center space-x-1 px-4 py-2 rounded-full focus:outline-none transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
+        :class="[isScrolled ? 'text-gray-700 hover:text-[#1e5ca8] hover:bg-blue-50/80' : 'text-white hover:text-white hover:bg-white/20 backdrop-blur-sm']"
         @click.prevent="toggle"
         :aria-expanded="isOpen.toString()"
       >
@@ -29,10 +29,10 @@
       <!-- Dropdown anak -->
       <div
         v-show="isOpen"
-        class="absolute left-0 top-full mt-0 bg-white shadow-xl rounded-xl border border-gray-100 min-w-[200px] z-50 overflow-hidden"
+        class="absolute left-0 top-full mt-2 bg-white/95 backdrop-blur-xl shadow-2xl rounded-2xl border border-gray-100/50 min-w-[220px] z-50 overflow-hidden transform origin-top-left transition-all"
       >
         <ul class="py-2">
-          <li v-for="child in item.children" :key="child.id" class="px-4 py-2 hover:bg-gray-50 transition-colors">
+          <li v-for="child in item.children" :key="child.id">
             <MenuItem :item="child" :is-scrolled="true" />
           </li>
         </ul>
@@ -47,9 +47,9 @@
           :href="resolveUrl(item)"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-2 py-1 block whitespace-nowrap transition-colors duration-300"
+          class="px-4 py-2 rounded-full block whitespace-nowrap transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
           :class="[
-            isScrolled ? 'text-gray-700 hover:text-teal-600 font-semibold' : 'text-white hover:text-gray-200',
+            isScrolled ? 'text-gray-700 hover:text-[#1e5ca8] hover:bg-blue-50/80' : 'text-white hover:text-white hover:bg-white/20 backdrop-blur-sm',
           ]"
         >
           {{ item.title }}
@@ -60,9 +60,9 @@
       <template v-else-if="item.link_type && item.link_type !== 'parent'">
         <a
           :href="resolveUrl(item)"
-          class="px-2 py-1 block whitespace-nowrap transition-colors duration-300"
+          class="px-4 py-2 rounded-full block whitespace-nowrap transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
           :class="[
-            isScrolled ? 'text-gray-700 hover:text-teal-600 font-semibold' : 'text-white hover:text-gray-200',
+            isScrolled ? 'text-gray-700 hover:text-[#1e5ca8] hover:bg-blue-50/80' : 'text-white hover:text-white hover:bg-white/20 backdrop-blur-sm',
           ]"
         >
           {{ item.title }}
@@ -72,8 +72,8 @@
       <!-- Induk tanpa link -->
       <template v-else>
         <span
-          class="px-2 py-1 block cursor-default transition-colors duration-300"
-          :class="[isScrolled ? 'text-gray-700 font-semibold' : 'text-white']"
+          class="px-4 py-2 rounded-full block cursor-default transition-all duration-300 font-semibold text-[13px] tracking-wide uppercase"
+          :class="[isScrolled ? 'text-gray-700' : 'text-white']"
         >
           {{ item.title }}
         </span>

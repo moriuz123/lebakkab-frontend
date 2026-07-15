@@ -3,35 +3,35 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     :class="[
-      'fixed top-0 w-full z-50 transition-all duration-300',
+      'fixed top-0 w-full z-50 transition-all duration-500 border-t-4 border-t-[#e8a020]',
       isScrolled || isHovered
-        ? 'bg-white shadow-lg'
-        : 'bg-transparent backdrop-blur-sm',
+        ? 'bg-white/95 backdrop-blur-md shadow-[0_10px_30px_-10px_rgba(0,0,0,0.1)]'
+        : 'bg-gradient-to-b from-[#0a2463]/80 via-[#0a2463]/40 to-transparent',
     ]"
   >
-    <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3">
+    <div :class="['max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-500', isScrolled || isHovered ? 'py-3' : 'py-5']">
       <!-- Logo + Identitas -->
-      <a href="/" class="flex items-center space-x-3 group">
+      <a href="/" class="flex items-center space-x-4 group">
         <img
           v-if="header.logo_url"
           :src="header.logo_url"
           alt="Logo"
-          class="h-12 w-auto transition-transform group-hover:scale-105"
+          :class="['w-auto transition-all duration-500 group-hover:scale-105 group-hover:rotate-1', isScrolled || isHovered ? 'h-10' : 'h-12']"
         />
 
         <!-- TITLE FIX — jarak lebih rapat -->
-        <div class="header-title font-poppins">
-          <p class="header-parent text-xs transition-colors duration-300" :class="isScrolled || isHovered ? 'text-gray-500' : 'text-white'">
+        <div class="header-title flex flex-col justify-center">
+          <p class="header-parent text-[11px] font-bold tracking-widest uppercase transition-colors duration-500" :class="isScrolled || isHovered ? 'text-gray-500' : 'text-blue-100'">
             {{ header.satuan_kerja }}
           </p>
-          <p class="header-name text-lg font-bold transition-colors duration-300" :class="isScrolled || isHovered ? 'text-gray-900' : 'text-white'">
+          <p class="header-name text-lg md:text-xl font-black tracking-tight transition-colors duration-500 leading-tight" :class="isScrolled || isHovered ? 'text-[#0a2463]' : 'text-white'">
             {{ header.site_name }}
           </p>
         </div>
       </a>
 
       <!-- Menu Dinamis Desktop -->
-      <nav class="hidden md:flex space-x-6 text-sm font-medium font-poppins relative">
+      <nav class="hidden md:flex items-center space-x-2 relative z-10">
         <template v-for="item in menu" :key="item.id">
           <MenuItem :item="item" :is-scrolled="isScrolled || isHovered" />
         </template>
@@ -81,7 +81,7 @@
     <transition name="slide-ffade">
       <div
         v-if="isMobileOpen"
-        class="md:hidden bg-white shadow-lg px-4 py-4 space-y-2 font-poppins border-t border-gray-100"
+        class="md:hidden bg-white/95 backdrop-blur-md shadow-2xl px-6 py-6 space-y-4 border-t border-gray-100 max-h-[80vh] overflow-y-auto"
       >
         <template v-for="item in menu" :key="item.id">
           <MenuItem :item="item" :is-scrolled="true" />
