@@ -7,16 +7,15 @@
       :class="isMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
       @mouseleave="isMenuOpen = false"
     >
-      <!-- Toggle Button -->
       <button 
         @click="isMenuOpen = !isMenuOpen"
         @mouseenter="isMenuOpen = true"
-        class="bg-gradient-to-b from-[#0a2463] to-emerald-600 hover:from-[#0a2463] hover:to-emerald-500 text-white py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-white/20 cursor-pointer mt-4 group"
+        class="bg-[#e8a020] hover:bg-[#d48f10] text-[#0a2463] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#c98918] cursor-pointer mt-4 group"
       >
-        <div class="bg-white/20 rounded-full p-1 mb-1">
+        <div class="bg-white/30 rounded-full p-1 mb-1">
           <ChevronLeft class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
         </div>
-        <span class="vertical-text-right text-[13px] font-bold tracking-[0.2em] uppercase">Layanan Pintar</span>
+        <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">Interaksi</span>
         <MenuIcon class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
       </button>
 
@@ -26,8 +25,8 @@
         <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#0a2463] to-emerald-400"></div>
         
         <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
-          <h3 class="text-gray-800 font-bold text-lg leading-tight">Layanan<br/><span class="text-[#e8a020]">Pintar</span></h3>
-          <div class="bg-emerald-900 p-2.5 rounded-xl text-[#e8a020] shadow-inner">
+          <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">Interaksi</h3>
+          <div class="bg-[#0a2463] p-2.5 rounded-xl text-[#e8a020] shadow-inner">
             <Settings class="w-5 h-5" />
           </div>
         </div>
