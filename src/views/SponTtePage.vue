@@ -155,8 +155,16 @@
         <div v-if="activeTab === 'tutorial'" class="animate-fade-in space-y-8">
            <div v-for="info in infoData.tutorial" :key="info.id" class="mb-10">
             <h2 class="text-xl font-bold text-gray-900 mb-4">{{ info.judul }}</h2>
-            <div v-if="info.konten" v-html="info.konten" class="prose prose-blue max-w-none text-gray-700 mb-4"></div>
-            <!-- Asumsikan gambar digunakan untuk thumbnail atau kita render iframe kalau kontennya HTML iframe -->
+            <div v-if="getYoutubeEmbedUrl(info.konten)" class="aspect-video w-full rounded-2xl overflow-hidden shadow-lg border border-gray-100 mb-4">
+              <iframe 
+                :src="getYoutubeEmbedUrl(info.konten)" 
+                class="w-full h-full"
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div v-else-if="info.konten" v-html="info.konten" class="prose prose-blue max-w-none text-gray-700 mb-4"></div>
           </div>
           <div v-if="!infoData.tutorial?.length" class="text-center py-12 text-gray-500">
             Video tutorial belum tersedia.
@@ -284,6 +292,21 @@ const fetchInfo = async () => {
   } finally {
     loadingInfo.value = false
   }
+}
+
+const getYoutubeEmbedUrl = (htmlContent) => {
+  if (!htmlContent) return null;
+  // Menghapus tag HTML (seperti <p>) yang mungkin ditambahkan oleh RichEditor
+  const text = htmlContent.replace(/<[^>]+>/g, '').trim();
+  
+  // Regex untuk mencocokkan URL Youtube (youtube.com atau youtu.be)
+  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+  const match = text.match(regExp);
+
+  if (match && match[2].length === 11) {
+    return `https://www.youtube.com/embed/${match[2]}`;
+  }
+  return null;
 }
 
 const fetchOpds = async () => {
