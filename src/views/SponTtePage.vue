@@ -88,10 +88,15 @@
             <form @submit.prevent="submitRegistration" class="space-y-6">
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-sm font-semibold text-gray-700 mb-2">Instansi / OPD *</label>
-                  <select v-model="formReg.opd_id" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4">
-                    <option value="" disabled>Pilih Instansi/OPD</option>
-                    <option v-for="opd in opds" :key="opd.id" :value="opd.id">{{ opd.nama }}</option>
+                  <label class="block text-sm font-semibold text-gray-700 mb-2">Instansi / OPD / Kecamatan *</label>
+                  <select v-model="formReg.instansi_combined" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4">
+                    <option value="" disabled>Pilih Instansi</option>
+                    <optgroup label="OPD / Dinas">
+                      <option v-for="opd in opds" :key="'opd-'+opd.id" :value="'opd-'+opd.id">{{ opd.nama }}</option>
+                    </optgroup>
+                    <optgroup label="Kecamatan">
+                      <option v-for="kec in kecamatans" :key="'kec-'+kec.id" :value="'kec-'+kec.id">{{ kec.nama }}</option>
+                    </optgroup>
                   </select>
                 </div>
                 <div>
@@ -252,8 +257,16 @@
                 <input type="email" v-model="formFb.email" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4">
               </div>
               <div>
-                <label class="block text-sm font-semibold text-gray-700 mb-2">Instansi / OPD</label>
-                <input type="text" v-model="formFb.instansi" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">Instansi / OPD / Kecamatan</label>
+                <select v-model="formFb.instansi" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4">
+                  <option value="" disabled>Pilih Instansi</option>
+                  <optgroup label="OPD / Dinas">
+                    <option v-for="opd in opds" :key="'fb-opd-'+opd.id" :value="opd.nama">{{ opd.nama }}</option>
+                  </optgroup>
+                  <optgroup label="Kecamatan">
+                    <option v-for="kec in kecamatans" :key="'fb-kec-'+kec.id" :value="kec.nama">{{ kec.nama }}</option>
+                  </optgroup>
+                </select>
               </div>
               <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-2">Beri Penilaian Layanan (Opsional)</label>
@@ -318,10 +331,11 @@ const infoData = ref({
 
 // Data OPD untuk select box
 const opds = ref([])
+const kecamatans = ref([])
 
 // Form Pendaftaran
 const formReg = ref({
-  opd_id: '',
+  instansi_combined: '',
   nik: '',
   nama_lengkap: '',
   nip: '',
@@ -391,6 +405,15 @@ const fetchOpds = async () => {
   }
 }
 
+const fetchKecamatans = async () => {
+  try {
+    const res = await axios.get('/api/kecamatan')
+    kecamatans.value = res.data.data || res.data
+  } catch (error) {
+    console.error('Failed to fetch Kecamatans', error)
+  }
+}
+
 const handleFileUpload = (e) => {
   const file = e.target.files[0]
   if (file && file.type === 'application/pdf') {
@@ -408,8 +431,16 @@ const submitRegistration = async () => {
 
   try {
     const formData = new FormData()
+    
+    // Parse instansi_combined
+    const [instansi_type, instansi_id] = formReg.value.instansi_combined.split('-');
+    formData.append('instansi_type', instansi_type);
+    formData.append('instansi_id', instansi_id);
+    
     Object.keys(formReg.value).forEach(key => {
-      formData.append(key, formReg.value[key])
+      if (key !== 'instansi_combined') {
+        formData.append(key, formReg.value[key])
+      }
     })
 
     await axios.post('/api/spon-tte/register', formData, {
@@ -421,7 +452,7 @@ const submitRegistration = async () => {
     regSuccess.value = true
     // Reset form
     formReg.value = {
-      opd_id: '', nik: '', nama_lengkap: '', nip: '', jabatan: '', email: '', no_hp: '', surat_rekomendasi: null
+      instansi_combined: '', nik: '', nama_lengkap: '', nip: '', jabatan: '', email: '', no_hp: '', surat_rekomendasi: null
     }
   } catch (error) {
     regError.value = error.response?.data?.message || 'Terjadi kesalahan saat mengirim pengajuan.'
@@ -473,6 +504,7 @@ const checkStatus = async () => {
 onMounted(() => {
   fetchInfo()
   fetchOpds()
+  fetchKecamatans()
 })
 </script>
 
