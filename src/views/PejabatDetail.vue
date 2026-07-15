@@ -74,19 +74,19 @@
             <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
               <Info class="w-4 h-4" /> Tentang
             </h3>
-            <p class="text-gray-700 leading-relaxed text-lg font-medium bg-gray-50/50 p-5 rounded-2xl border border-gray-100" v-html="store.pejabatDetail.pesan_singkat || store.pejabatDetail.deskripsi || 'Tidak ada deskripsi'">
-            </p>
+            <div class="prose prose-blue max-w-none text-gray-700 leading-relaxed font-medium bg-gray-50/50 p-6 rounded-2xl border border-gray-100" v-html="store.pejabatDetail.pesan_singkat || store.pejabatDetail.deskripsi || 'Tidak ada deskripsi'">
+            </div>
           </div>
 
           <!-- Grid Info Spesifik -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-10">
+          <div class="grid grid-cols-1 gap-10 mb-10">
             <!-- Pendidikan -->
             <div>
               <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                 <GraduationCap class="w-4 h-4" /> Pendidikan
               </h3>
-              <p class="text-gray-800 font-semibold leading-snug" v-html="store.pejabatDetail.riwayat_pendidikan || store.pejabatDetail.pendidikan || 'Tidak ada data pendidikan'">
-              </p>
+              <div class="prose prose-sm sm:prose-base prose-blue max-w-none text-gray-800 font-medium leading-snug" v-html="store.pejabatDetail.riwayat_pendidikan || store.pejabatDetail.pendidikan || 'Tidak ada data pendidikan'">
+              </div>
             </div>
             
             <!-- Karir -->
@@ -94,8 +94,8 @@
               <h3 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-3 flex items-center gap-2">
                 <Briefcase class="w-4 h-4" /> Riwayat Karir
               </h3>
-              <p class="text-gray-800 font-semibold leading-snug" v-html="store.pejabatDetail.riwayat_jabatan || store.pejabatDetail.karir || 'Tidak ada data riwayat karir'">
-              </p>
+              <div class="prose prose-sm sm:prose-base prose-blue max-w-none text-gray-800 font-medium leading-snug" v-html="store.pejabatDetail.riwayat_jabatan || store.pejabatDetail.karir || 'Tidak ada data riwayat karir'">
+              </div>
             </div>
           </div>
           

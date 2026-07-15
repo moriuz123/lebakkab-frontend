@@ -25,11 +25,11 @@
     <!-- Main Content Container -->
     <div v-else-if="profil" class="max-w-7xl mx-auto px-6 lg:px-8 relative z-20 space-y-8 sm:space-y-12">
 
-      <!-- ================= BENTO GRID 1: Sejarah & Visi Misi ================= -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8">
+      <!-- ================= BAGIAN 1: Visi Misi ================= -->
+      <div class="grid grid-cols-1 gap-6 sm:gap-8">
         
-        <!-- Visi Misi (Kiri/Besar) -->
-        <div v-if="profil.visi_misi" class="lg:col-span-7 bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-2xl transition-all duration-500 group relative overflow-hidden">
+        <!-- Visi Misi -->
+        <div v-if="profil.visi_misi" class="bg-white rounded-[2rem] p-8 md:p-12 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-2xl transition-all duration-500 group relative overflow-hidden">
           <!-- Dekorasi -->
           <div class="absolute top-0 right-0 w-64 h-64 bg-[#f8f9fc] rounded-full mix-blend-multiply filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 -translate-y-1/2 translate-x-1/2"></div>
           
@@ -62,8 +62,8 @@
           </div>
         </div>
 
-        <!-- Sejarah (Kanan/Kecil) -->
-        <div v-if="profil.sejarah_singkat" class="lg:col-span-5 bg-gradient-to-br from-gray-900 to-gray-800 rounded-[2rem] p-8 md:p-12 shadow-2xl text-white relative overflow-hidden group">
+        <!-- Sejarah -->
+        <div v-if="profil.sejarah_singkat" class="bg-gradient-to-br from-[#071840] to-gray-900 rounded-[2rem] p-8 md:p-12 shadow-2xl text-white relative overflow-hidden group">
           <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
           
           <div class="flex items-center gap-4 mb-8 relative z-10">
