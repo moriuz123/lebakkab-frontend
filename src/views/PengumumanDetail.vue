@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader
+    <PageHeader2
       title="Pengumuman Daerah"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -81,7 +81,7 @@ import axios from '@/utils/api'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
 import { Calendar, CalendarDays } from 'lucide-vue-next'
 
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarPengumuman from '@/components/SidebarPengumuman.vue'
 
 const route = useRoute()

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Page Header -->
-    <PageHeader title="Galeri Foto" />
+    <PageHeader2 title="Galeri Foto" />
 
     <div class="max-w-6xl mx-auto px-4 py-10">
       <!-- Filter Kategori -->
@@ -97,7 +97,7 @@
 import { onMounted, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useFotoStore } from '@/stores/foto'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 
 import { ZoomIn, X } from 'lucide-vue-next'
 

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50/50 min-h-screen pb-20">
-    <PageHeader title="Daftar Dokumen" subtitle="Pusat unduhan dan publikasi dokumen resmi" />
+    <PageHeader2 title="Daftar Dokumen" subtitle="Pusat unduhan dan publikasi dokumen resmi" />
 
     <section class="max-w-7xl mx-auto px-4 py-8 sm:py-12">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -245,7 +245,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 import { useDokumentStore } from '@/stores/dokument'
 import { usePengumumanStore } from '@/stores/pengumuman'

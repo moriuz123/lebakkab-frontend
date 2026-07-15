@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Header -->
-    <PageHeader
+    <PageHeader2
       :title="agenda?.judul || 'Detail Agenda'"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -68,7 +68,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import AgendaSidebar from '@/components/AgendaSidebar.vue'
 import { useAgendaStore } from '@/stores/agenda'
 

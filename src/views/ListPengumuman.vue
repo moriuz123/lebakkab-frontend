@@ -1,7 +1,7 @@
 <template>
   <div class="bg-[#F5F5F7] min-h-screen pb-24">
     <!-- RESTORE ORIGINAL PAGE HEADER -->
-    <PageHeader title="Daftar Pengumuman" subtitle="Informasi terbaru untuk masyarakat" />
+    <PageHeader2 title="Daftar Pengumuman" subtitle="Informasi terbaru untuk masyarakat" />
 
     <div class="max-w-7xl mx-auto px-4 py-8">
       
@@ -175,7 +175,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { usePengumumanStore } from '@/stores/pengumuman'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 import { formatDate } from '@/utils/helpers'
 import { Search, SearchX, X, AlertCircle, ZoomIn, Calendar, ArrowRight, Megaphone } from 'lucide-vue-next'

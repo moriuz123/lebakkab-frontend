@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ✅ Page Header -->
-    <PageHeader
+    <PageHeader2
       :title="`Berita Kategori: ${kategoriSlug}`"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -66,7 +66,7 @@ import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import { useBeritaStore } from '@/stores/useBeritaStore'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import NewsCard from '@/components/NewsCard.vue'
 import SidebarNews from '@/components/SidebarNews.vue'
 import PaginationNav from '@/components/PaginationNav.vue'

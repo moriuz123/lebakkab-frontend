@@ -1,5 +1,5 @@
 <template>
-  <PageHeader title="Agenda Kegiatan" />
+  <PageHeader2 title="Agenda Kegiatan" />
   <div class="max-w-7xl mx-auto px-4 py-8 sm:py-12">
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
       
@@ -245,7 +245,7 @@
 import { onMounted, ref, computed } from 'vue'
 import { useAgendaStore } from '@/stores/agenda'
 import { usePengumumanStore } from '@/stores/pengumuman'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import { formatDate } from '@/utils/helpers'
 import { CalendarDays, Clock, MapPin, ArrowRight, X, CalendarX2, Megaphone, Info } from 'lucide-vue-next'
 

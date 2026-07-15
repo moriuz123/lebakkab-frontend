@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50/50 min-h-screen pb-20">
-    <PageHeader :title="store.pejabatDetail?.nama || 'Profil Pejabat'" :subtitle="store.pejabatDetail?.jabatan || 'Pemerintah Kabupaten Lebak'" />
+    <PageHeader2 :title="store.pejabatDetail?.nama || 'Profil Pejabat'" :subtitle="store.pejabatDetail?.jabatan || 'Pemerintah Kabupaten Lebak'" />
 
     <section class="max-w-5xl mx-auto px-4 py-8 sm:py-16">
       
@@ -132,7 +132,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import { usePejabatStore } from '@/stores/pejabat'
 import { getStorageUrl } from '@/utils/helpers'
 import { User, Calendar, Info, GraduationCap, Briefcase, Instagram, Twitter, Facebook, ArrowLeft, BadgeCheck, Star } from 'lucide-vue-next'

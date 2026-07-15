@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 🌿 Page Header -->
-    <PageHeader
+    <PageHeader2
       :title="opdStore.opdDetail?.nama || 'Detail OPD'"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -131,7 +131,7 @@
 import { onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useOpdStore } from '@/stores/opd'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarOpdDetil from '@/components/SidebarOpdDetil.vue'
 import { MapPin, Phone, Mail, Globe } from 'lucide-vue-next'
 

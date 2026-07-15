@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ✅ Header -->
-    <PageHeader
+    <PageHeader2
       title="Berita Daerah"
       :breadcrumbs="[
         { label: 'Home', link: '/' },

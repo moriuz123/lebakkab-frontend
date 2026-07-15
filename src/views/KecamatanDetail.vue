@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- 🌿 Page Header -->
-    <PageHeader
+    <PageHeader2
       :title="kecamatan?.nama || 'Detail Kecamatan'"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -128,7 +128,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useKecamatanStore } from '@/stores/kecamatan'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarKecamatan from '@/components/SidebarKecamatan.vue'
 import { MapPin, Phone, Mail, Globe } from 'lucide-vue-next'
 

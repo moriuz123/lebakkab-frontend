@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Header -->
-    <PageHeader title="Data OPD" />
+    <PageHeader2 title="Data OPD" />
 
     <!-- Konten Utama -->
     <div class="max-w-7xl mx-auto px-4 py-10">
@@ -101,7 +101,7 @@
 <script setup>
 import { useOpdStore } from '@/stores/opd'
 import { onMounted, computed, ref, watch } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 
 const opdStore = useOpdStore()

@@ -1,6 +1,6 @@
 <template>
   <div class="bg-gray-50/50 min-h-screen pb-20">
-    <PageHeader :title="`Dokumen - ${dokumentStore.kategori?.nama || 'Kategori'}`" subtitle="Daftar dokumen berdasarkan kategori terpilih" />
+    <PageHeader2 :title="`Dokumen - ${dokumentStore.kategori?.nama || 'Kategori'}`" subtitle="Daftar dokumen berdasarkan kategori terpilih" />
 
     <section class="max-w-7xl mx-auto px-4 py-8 sm:py-12">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -208,7 +208,7 @@ import { useRoute } from 'vue-router'
 import { useDokumentStore } from '@/stores/dokument'
 import { usePengumumanStore } from '@/stores/pengumuman'
 import { onMounted, ref, computed, watch } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 import VuePdfApp from 'vue3-pdf-app'
 import 'vue3-pdf-app/dist/icons/main.css'

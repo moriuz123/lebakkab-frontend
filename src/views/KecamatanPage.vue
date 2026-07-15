@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader title="Data Kecamatan" />
+    <PageHeader2 title="Data Kecamatan" />
 
     <div class="max-w-7xl mx-auto px-4 py-10">
       <div v-if="loading" class="page-loading-placeholder">Memuat data kecamatan...</div>
@@ -93,7 +93,7 @@
 <script setup>
 import { useKecamatanStore } from '@/stores/kecamatan'
 import { onMounted, computed, ref, watch } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 
 const kecamatanStore = useKecamatanStore()

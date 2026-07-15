@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader title="Kritik & Saran" subtitle="Kami menghargai setiap masukan dari Anda" />
+    <PageHeader2 title="Kritik & Saran" subtitle="Kami menghargai setiap masukan dari Anda" />
 
     <section class="max-w-3xl mx-auto p-6 bg-white rounded-lg shadow mt-6">
       <h2 class="text-2xl font-bold mb-4 text-gray-800">Kirim Kritik & Saran Anda</h2>
@@ -49,7 +49,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import axios from '@/utils/api'
 
 const form = ref({

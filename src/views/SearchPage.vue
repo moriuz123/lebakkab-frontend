@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-gray-50 pb-12">
     <!-- Page Header -->
-    <PageHeader
+    <PageHeader2
       title="Hasil Pencarian"
       subtitle="Cari dan temukan informasi berita, layanan, dokumen, hingga agenda pemerintahan daerah dengan mudah"
     />
@@ -232,7 +232,7 @@
 import { ref, watch, onMounted, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import axios from '@/utils/api'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import { 
   Search, 
   SearchX, 

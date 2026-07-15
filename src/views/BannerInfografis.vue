@@ -1,7 +1,7 @@
 <template>
   <section>
     <!-- Page Header (full width) -->
-    <PageHeader title="Banner Infografis" subtitle="Kumpulan informasi dalam bentuk visual" />
+    <PageHeader2 title="Banner Infografis" subtitle="Kumpulan informasi dalam bentuk visual" />
 
     <!-- Konten dibatasi -->
     <div class="max-w-screen-xl mx-auto px-4 py-10">
@@ -67,7 +67,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useBannerStore } from '@/stores/bannerStore'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 
 const bannerStore = useBannerStore()
 const previewImage = ref(null)

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-50 min-h-screen pb-16">
     <!-- Header -->
-    <PageHeader title="Daftar Aplikasi" />
+    <PageHeader2 title="Daftar Aplikasi" />
 
     <div class="max-w-7xl mx-auto px-4 py-8 mt-6">
       <!-- Filter Section -->

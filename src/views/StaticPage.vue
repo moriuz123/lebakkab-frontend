@@ -45,7 +45,7 @@ watch(
     <!-- Halaman Statis -->
     <div v-else-if="page">
       <!-- Header -->
-      <PageHeader :title="page.judul" />
+      <PageHeader2 :title="page.judul" />
 
       <div class="page-container">
         <!-- Konten Utama -->
