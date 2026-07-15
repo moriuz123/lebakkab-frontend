@@ -71,7 +71,7 @@ import { useBeritaStore } from '../stores/useBeritaStore'
 import { useHead } from '@vueuse/head'
 import { Calendar, Eye } from 'lucide-vue-next'
 import SidebarNews from '../components/SidebarNews.vue'
-import PageHeader from '../components/PageHeader.vue'
+import PageHeader2 from '../components/PageHeader2.vue'
 import { formatDate } from '@/utils/helpers'
 
 const route = useRoute()

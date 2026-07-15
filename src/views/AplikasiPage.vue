@@ -127,7 +127,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useAplikasiStore } from '../stores/aplikasi'
-import PageHeader from '../components/PageHeader.vue'
+import PageHeader2 from '../components/PageHeader2.vue'
 
 const aplikasiStore = useAplikasiStore()
 

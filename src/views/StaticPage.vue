@@ -3,7 +3,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import SidebarStatic from '../components/SidebarStatic.vue'
-import PageHeader from '../components/PageHeader.vue'
+import PageHeader2 from '../components/PageHeader2.vue'
 
 const route = useRoute()
 const page = ref(null)
