@@ -1,42 +1,18 @@
 <template>
   <div class="bg-[#f8fafc] min-h-screen pb-24 font-sans selection:bg-emerald-500 selection:text-white">
-    <!-- Premium Header -->
-    <div class="relative bg-emerald-900 overflow-hidden pt-28 pb-32 lg:pt-36 lg:pb-40 rounded-b-[3rem] shadow-[0_20px_60px_-15px_rgba(16,185,129,0.3)] mb-12 z-10 border-b border-emerald-800">
-      <div class="absolute inset-0 z-0">
-        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-20 mix-blend-overlay"></div>
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-emerald-500 rounded-full mix-blend-screen filter blur-[100px] opacity-20 translate-x-1/3 -translate-y-1/3 animate-pulse"></div>
-        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a2463]/50 to-emerald-950"></div>
-      </div>
-      
-      <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center flex flex-col items-center">
-        <!-- Breadcrumb Custom -->
-        <nav class="flex items-center gap-2 text-sm text-emerald-200/80 mb-8 font-medium">
-          <router-link to="/" class="hover:text-white transition-colors">Beranda</router-link>
-          <span class="w-1 h-1 rounded-full bg-emerald-500/50"></span>
-          <router-link to="/layanan" class="hover:text-white transition-colors">Layanan</router-link>
-          <span class="w-1 h-1 rounded-full bg-emerald-500/50"></span>
-          <span class="text-white">{{ layanan?.judul || 'Detail Layanan' }}</span>
-        </nav>
-        
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-6 max-w-4xl leading-tight">
-          {{ layanan?.judul || 'Memuat Layanan...' }}
-        </h1>
-        
-        <div v-if="layanan" class="flex flex-wrap justify-center gap-3">
-          <span v-if="layanan.jenis" class="inline-flex items-center gap-2 bg-emerald-800/50 backdrop-blur-md border border-emerald-400/20 text-emerald-100 px-4 py-1.5 rounded-full text-sm font-semibold shadow-inner">
-            <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-            {{ layanan.jenis }}
-          </span>
-          <span v-if="layanan.kategori_layanan" class="inline-flex items-center gap-2 bg-blue-900/40 backdrop-blur-md border border-blue-400/20 text-blue-100 px-4 py-1.5 rounded-full text-sm font-semibold shadow-inner">
-            <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
-            {{ layanan.kategori_layanan.nama }}
-          </span>
-        </div>
-      </div>
-    </div>
+    <!-- Gunakan komponen PageHeader2 -->
+    <PageHeader2
+      :title="layanan?.judul || 'Detail Layanan'"
+      :subtitle="layanan ? `${layanan.jenis || ''} ${layanan.kategori_layanan ? '- ' + layanan.kategori_layanan.nama : ''}` : ''"
+      :breadcrumbs="[
+        { label: 'Beranda', link: '/' },
+        { label: 'Layanan', link: '/layanan' },
+        { label: layanan?.judul || 'Detail Layanan', link: '#' },
+      ]"
+    />
 
     <!-- Main Content Grid -->
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 -mt-24 sm:-mt-28 relative z-20">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-20">
       
       <!-- Loading -->
       <div v-if="loading" class="flex flex-col items-center justify-center py-20 bg-white/80 backdrop-blur-xl rounded-[2.5rem] shadow-xl border border-white/50">
@@ -124,6 +100,8 @@
 <script setup>
 import { onMounted, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import axios from '@/utils/api'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarLayanan from '@/components/SidebarLayanan.vue'
 import { useLayananStore } from '@/stores/layanan'
 

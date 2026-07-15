@@ -1,7 +1,14 @@
 <template>
   <div class="bg-gray-50 min-h-screen pb-16">
     <!-- Header -->
-    <PageHeader2 title="Daftar Aplikasi" />
+    <PageHeader2 
+      title="Daftar Aplikasi" 
+      subtitle="Kumpulan aplikasi pendukung pemerintahan dan layanan publik Kabupaten Lebak."
+      :breadcrumbs="[
+        { label: 'Beranda', link: '/' },
+        { label: 'Aplikasi', link: '/aplikasi' },
+      ]"
+    />
 
     <div class="max-w-7xl mx-auto px-4 py-8 mt-6">
       <!-- Filter Section -->
