@@ -85,7 +85,7 @@
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-6 sm:gap-8">
         
         <!-- Kondisi Geografis -->
-        <div v-if="profil.kondisi_geografis" class="lg:col-span-4 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
+        <div v-if="profil.kondisi_geografis" class="lg:col-span-6 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
           <div class="absolute bottom-0 right-0 w-40 h-40 bg-blue-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 translate-y-1/3"></div>
           
           <div class="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300 relative z-10">
@@ -96,7 +96,7 @@
         </div>
 
         <!-- Demografi -->
-        <div v-if="profil.demografi" class="lg:col-span-4 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
+        <div v-if="profil.demografi" class="lg:col-span-6 bg-white rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 hover:shadow-xl transition-all duration-500 group relative overflow-hidden">
            <div class="absolute top-0 right-0 w-40 h-40 bg-purple-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 -translate-y-1/3"></div>
            
            <div class="w-12 h-12 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-colors duration-300 relative z-10">
@@ -107,7 +107,7 @@
         </div>
 
         <!-- Potensi Daerah -->
-        <div v-if="profil.potensi_daerah" class="lg:col-span-4 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-orange-100/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-500 group relative overflow-hidden">
+        <div v-if="profil.potensi_daerah" class="lg:col-span-12 bg-gradient-to-br from-yellow-50 to-orange-50 rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-orange-100/50 hover:shadow-xl hover:shadow-orange-500/10 transition-all duration-500 group relative overflow-hidden">
           <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center mb-6 group-hover:bg-orange-500 group-hover:text-white transition-colors duration-300 relative z-10">
             <TrendingUp class="w-6 h-6" />
           </div>
