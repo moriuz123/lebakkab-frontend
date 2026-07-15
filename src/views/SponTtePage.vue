@@ -171,6 +171,69 @@
           </div>
         </div>
 
+        <!-- Tab Content: Cek Status TTE -->
+        <div v-if="activeTab === 'status'" class="animate-fade-in">
+          <div class="max-w-2xl mx-auto">
+            <div class="text-center mb-8">
+              <h2 class="text-2xl font-bold text-gray-900">Cek Status Pengajuan</h2>
+              <p class="text-gray-500 mt-2">Masukkan NIK dan NIP (opsional) Anda untuk melihat status pendaftaran TTE.</p>
+            </div>
+
+            <form @submit.prevent="checkStatus" class="space-y-5 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-8">
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">NIK *</label>
+                <input type="text" v-model="formStatus.nik" required class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4" placeholder="Nomor Induk Kependudukan">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-2">NIP</label>
+                <input type="text" v-model="formStatus.nip" class="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 bg-gray-50 py-3 px-4" placeholder="Nomor Induk Pegawai (Opsional)">
+              </div>
+              
+              <div class="pt-2 flex justify-end">
+                <button type="submit" :disabled="isCheckingStatus" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg shadow-blue-500/30 transition-all disabled:opacity-70 flex items-center gap-2">
+                  <span v-if="isCheckingStatus" class="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                  Cari Data
+                </button>
+              </div>
+            </form>
+
+            <div v-if="statusError" class="bg-red-50 text-red-700 p-4 rounded-xl border border-red-200 font-medium text-center">
+              {{ statusError }}
+            </div>
+
+            <div v-if="statusResult" class="bg-white border-2 border-blue-100 rounded-2xl p-6 shadow-md animate-fade-in relative overflow-hidden">
+              <div class="absolute top-0 right-0 p-4">
+                <span v-if="statusResult.status === 'menunggu'" class="bg-yellow-100 text-yellow-800 px-4 py-1.5 rounded-full text-sm font-bold border border-yellow-200">Menunggu</span>
+                <span v-if="statusResult.status === 'diproses'" class="bg-blue-100 text-blue-800 px-4 py-1.5 rounded-full text-sm font-bold border border-blue-200">Diproses</span>
+                <span v-if="statusResult.status === 'selesai'" class="bg-green-100 text-green-800 px-4 py-1.5 rounded-full text-sm font-bold border border-green-200">Selesai</span>
+                <span v-if="statusResult.status === 'ditolak'" class="bg-red-100 text-red-800 px-4 py-1.5 rounded-full text-sm font-bold border border-red-200">Ditolak</span>
+              </div>
+              
+              <h3 class="text-lg font-bold text-gray-900 border-b border-gray-100 pb-4 mb-4">Hasil Pencarian</h3>
+              <div class="space-y-4 text-gray-700">
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="text-gray-500 font-medium">Nama</div>
+                  <div class="col-span-2 font-semibold">{{ statusResult.nama_lengkap }}</div>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="text-gray-500 font-medium">Instansi</div>
+                  <div class="col-span-2">{{ statusResult.opd || '-' }}</div>
+                </div>
+                <div class="grid grid-cols-3 gap-2">
+                  <div class="text-gray-500 font-medium">Tgl Pengajuan</div>
+                  <div class="col-span-2">{{ new Date(statusResult.created_at).toLocaleDateString('id-ID', {day: 'numeric', month: 'long', year: 'numeric'}) }}</div>
+                </div>
+              </div>
+
+              <div v-if="statusResult.catatan_admin" class="mt-6 bg-blue-50 border border-blue-200 p-4 rounded-xl">
+                <h4 class="text-sm font-bold text-blue-900 mb-1">Catatan Admin:</h4>
+                <p class="text-blue-800 text-sm">{{ statusResult.catatan_admin }}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
         <!-- Tab Content: Feedback TTE -->
         <div v-if="activeTab === 'feedback'" class="animate-fade-in">
           <div class="max-w-2xl mx-auto">
@@ -229,7 +292,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Info, Map, FileSignature, PlaySquare, MessageSquare } from 'lucide-vue-next'
+import { Info, Map, FileSignature, PlaySquare, MessageSquare, Search } from 'lucide-vue-next'
 import axios from '@/utils/api'
 import { getStorageUrl } from '@/utils/helpers'
 
@@ -237,6 +300,7 @@ const tabs = [
   { id: 'tentang', label: 'Tentang TTE', icon: Info },
   { id: 'alur', label: 'Alur & Prosedur', icon: Map },
   { id: 'daftar', label: 'Daftar TTE', icon: FileSignature },
+  { id: 'status', label: 'Cek Status', icon: Search },
   { id: 'tutorial', label: 'Video Tutorial', icon: PlaySquare },
   { id: 'feedback', label: 'Ulasan & Bantuan', icon: MessageSquare },
 ]
@@ -281,6 +345,15 @@ const formFb = ref({
 const isSubmittingFb = ref(false)
 const fbSuccess = ref(false)
 const fbError = ref('')
+
+// Form Cek Status
+const formStatus = ref({
+  nik: '',
+  nip: ''
+})
+const isCheckingStatus = ref(false)
+const statusResult = ref(null)
+const statusError = ref('')
 
 const fetchInfo = async () => {
   loadingInfo.value = true
@@ -374,6 +447,26 @@ const submitFeedback = async () => {
     fbError.value = error.response?.data?.message || 'Terjadi kesalahan saat mengirim pesan.'
   } finally {
     isSubmittingFb.value = false
+  }
+}
+
+const checkStatus = async () => {
+  isCheckingStatus.value = true
+  statusResult.value = null
+  statusError.value = ''
+
+  try {
+    const res = await axios.get('/api/spon-tte/check-status', {
+      params: {
+        nik: formStatus.value.nik,
+        nip: formStatus.value.nip
+      }
+    })
+    statusResult.value = res.data.data
+  } catch (error) {
+    statusError.value = error.response?.data?.message || 'Gagal memeriksa status. Coba lagi.'
+  } finally {
+    isCheckingStatus.value = false
   }
 }
 
