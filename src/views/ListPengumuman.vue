@@ -63,7 +63,7 @@
           :key="item.id"
           :to="`/pengumuman/${item.slug}`"
           :class="[
-            'bg-white rounded-[2rem] p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 border border-gray-100/50 flex flex-col group overflow-hidden',
+            'bg-white rounded-[2rem] p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 border border-gray-100/50 border-t-4 border-t-[#e8a020] flex flex-col group overflow-hidden',
             getBentoClass(index)
           ]"
         >

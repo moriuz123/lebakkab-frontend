@@ -35,7 +35,7 @@
             <div 
               v-for="dokument in paginatedDokument" 
               :key="dokument.id"
-              class="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
+              class="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] border border-gray-100 border-t-4 border-t-[#e8a020] hover:shadow-lg hover:border-blue-100 hover:border-t-[#1e5ca8] transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
             >
               <div class="flex items-start sm:items-center gap-4">
                 <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-blue-50 text-[#1e5ca8] flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#1e5ca8] group-hover:text-white transition-all duration-300 shadow-sm">
@@ -93,7 +93,7 @@
         <div class="lg:col-span-1 space-y-6">
           
           <!-- Widget 1: Pencarian & Filter Kategori -->
-          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-6 overflow-hidden relative group/widget">
+          <div class="bg-white rounded-2xl shadow-sm border border-gray-100 border-t-4 border-t-[#e8a020] p-5 sm:p-6 sticky top-6 overflow-hidden relative group/widget">
             <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
               <div class="p-2 bg-blue-50 rounded-lg text-blue-600 shadow-sm border border-blue-100/50">
                 <Search class="w-5 h-5" />

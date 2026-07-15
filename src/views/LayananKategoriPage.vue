@@ -96,7 +96,7 @@
               v-for="item in layanans"
               :key="item.slug"
               :to="{ name: 'LayananDetail', params: { slug: item.slug } }"
-              class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/80 hover:shadow-2xl hover:shadow-emerald-500/10 hover:border-emerald-300 hover:-translate-y-2 transition-all duration-500 flex flex-col overflow-hidden relative"
+              class="group bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/80 border-t-4 border-t-[#e8a020] hover:shadow-2xl hover:shadow-emerald-500/10 hover:border-emerald-300 hover:border-t-emerald-400 hover:-translate-y-2 transition-all duration-500 flex flex-col overflow-hidden relative"
             >
               <div class="absolute inset-0 bg-gradient-to-t from-gray-50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 pointer-events-none"></div>
               

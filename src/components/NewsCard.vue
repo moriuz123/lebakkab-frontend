@@ -1,5 +1,5 @@
 <template>
-  <div class="group bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1">
+  <div class="group bg-white border border-gray-100 border-t-4 border-t-[#e8a020] rounded-2xl overflow-hidden hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-300 flex flex-col h-full transform hover:-translate-y-1">
     <!-- Thumbnail -->
     <div class="relative w-full aspect-video overflow-hidden bg-gray-100">
       <img

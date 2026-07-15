@@ -67,7 +67,7 @@
         <div
           v-for="app in aplikasiStore.aplikasis"
           :key="app.id"
-          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 p-6 overflow-hidden transition-all duration-300 min-h-[180px]"
+          class="group relative bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-t-4 border-t-[#e8a020] p-6 overflow-hidden transition-all duration-300 min-h-[180px]"
         >
           <!-- Default State (Appears normally, fades out on hover) -->
           <div class="flex flex-col h-full transition-opacity duration-300 group-hover:opacity-0">

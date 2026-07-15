@@ -32,7 +32,7 @@
           v-for="(pejabat, index) in store.pejabats"
           :key="pejabat.id"
           :to="`/profil-pejabat/${pejabat.slug}`"
-          class="group relative bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 hover:shadow-2xl hover:shadow-[#1e5ca8]/10 hover:border-[#1e5ca8] transition-all duration-500 transform hover:-translate-y-2 flex flex-col h-full"
+          class="group relative bg-white rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100 border-t-4 border-t-[#e8a020] hover:shadow-2xl hover:shadow-[#1e5ca8]/10 hover:border-[#1e5ca8] transition-all duration-500 transform hover:-translate-y-2 flex flex-col h-full"
         >
           <!-- Dekorasi Background Belakang -->
           <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-blue-50 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
