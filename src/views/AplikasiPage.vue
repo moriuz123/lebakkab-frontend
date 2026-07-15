@@ -12,39 +12,40 @@
 
     <div class="max-w-7xl mx-auto px-4 py-8 mt-6">
       <!-- Filter Section -->
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-10 flex flex-col md:flex-row items-end md:items-center gap-4">
-        <div class="w-full md:w-1/4">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
-          <select v-model="selectedKategori" class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-emerald-900 focus:border-[#1e5ca8] transition-colors">
-            <option value="">Semua Kategori</option>
-            <option value="Aplikasi Layanan Publik">Layanan Publik</option>
-            <option value="Internal Pemerintah">Internal Pemerintah</option>
+      <div class="bg-gradient-to-r from-[#0a2463] to-[#1e5ca8] p-6 sm:p-8 rounded-[2rem] shadow-xl shadow-[#1e5ca8]/20 mb-10 flex flex-col md:flex-row items-end md:items-center gap-6 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
+        <div class="w-full md:w-1/4 relative z-10">
+          <label class="block text-sm font-semibold text-blue-100 mb-2">Kategori</label>
+          <select v-model="selectedKategori" class="w-full border-none bg-white/10 text-white placeholder-blue-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#e8a020] focus:bg-white focus:text-gray-900 transition-all shadow-inner outline-none">
+            <option value="" class="bg-white text-gray-900">Semua Kategori</option>
+            <option value="Aplikasi Layanan Publik" class="bg-white text-gray-900">Layanan Publik</option>
+            <option value="Internal Pemerintah" class="bg-white text-gray-900">Internal Pemerintah</option>
           </select>
         </div>
 
-        <div class="w-full md:w-1/4">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Jenis</label>
-          <select v-model="selectedJenis" class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-emerald-900 focus:border-[#1e5ca8] transition-colors">
-            <option value="">Semua Jenis</option>
-            <option value="Website">Website</option>
-            <option value="Mobile">Mobile</option>
+        <div class="w-full md:w-1/4 relative z-10">
+          <label class="block text-sm font-semibold text-blue-100 mb-2">Jenis</label>
+          <select v-model="selectedJenis" class="w-full border-none bg-white/10 text-white placeholder-blue-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#e8a020] focus:bg-white focus:text-gray-900 transition-all shadow-inner outline-none">
+            <option value="" class="bg-white text-gray-900">Semua Jenis</option>
+            <option value="Website" class="bg-white text-gray-900">Website</option>
+            <option value="Mobile" class="bg-white text-gray-900">Mobile</option>
           </select>
         </div>
 
-        <div class="w-full md:flex-1">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Pencarian</label>
+        <div class="w-full md:flex-1 relative z-10">
+          <label class="block text-sm font-semibold text-blue-100 mb-2">Pencarian</label>
           <input
             v-model="searchQuery"
             type="text"
             placeholder="Cari nama aplikasi..."
-            class="w-full border-gray-300 bg-gray-50 rounded-xl px-4 py-2.5 focus:ring-emerald-900 focus:border-[#1e5ca8] transition-colors"
+            class="w-full border-none bg-white/10 text-white placeholder-blue-200/60 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#e8a020] focus:bg-white focus:text-gray-900 transition-all shadow-inner outline-none"
             @keyup.enter="loadData"
           />
         </div>
 
         <button
           @click="loadData"
-          class="w-full md:w-auto bg-[#0a2463] hover:bg-[#1e5ca8] text-white font-medium px-8 py-2.5 rounded-xl transition-all shadow-md shadow-[#1e5ca8] flex items-center justify-center gap-2"
+          class="w-full md:w-auto bg-[#e8a020] hover:bg-[#f6b033] text-[#0a2463] font-black px-8 py-3 rounded-xl transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5 flex items-center justify-center gap-2 relative z-10"
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
