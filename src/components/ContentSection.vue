@@ -89,16 +89,7 @@
              KOLOM BANNER (LG: 4 Cols)
              ========================= -->
         <div class="lg:col-span-4" v-if="banners.length">
-          <div class="bg-white p-5 rounded-2xl border border-gray-100 border-t-4 border-t-[#1e5ca8] shadow-sm h-full flex flex-col relative overflow-hidden group">
-            <div class="flex items-center justify-between mb-4 shrink-0 relative z-10">
-              <h3 class="text-sm font-black text-gray-900 uppercase tracking-widest flex items-center gap-2">
-                <ImageIcon class="w-4 h-4 text-[#1e5ca8]" /> Publikasi Banner
-              </h3>
-              <button @click="nextBanner" class="w-7 h-7 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 hover:text-[#1e5ca8] hover:bg-blue-50 transition-colors" title="Ganti Banner">
-                <RefreshCw class="w-3.5 h-3.5" />
-              </button>
-            </div>
-
+          <div class="bg-white p-2 rounded-2xl border border-gray-100 border-t-4 border-t-[#1e5ca8] shadow-sm h-full flex flex-col relative overflow-hidden group">
             <div class="relative overflow-hidden rounded-xl h-full min-h-[300px] w-full shadow-inner bg-gray-50 flex-1">
               <img
                 :src="banners[previousBanner]"
@@ -119,13 +110,30 @@
                 }"
               />
               
-              <!-- Gradient Overlay for Banner -->
-              <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+              <!-- Hover Overlay with Actions -->
+              <div class="absolute inset-0 bg-black/40 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
+                 <button @click="openZoomModal" class="w-12 h-12 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#0a2463] backdrop-blur-sm flex items-center justify-center transition-all transform hover:scale-110 shadow-lg" title="Perbesar Banner">
+                    <ZoomIn class="w-5 h-5" />
+                 </button>
+                 <button @click="nextBanner" class="w-12 h-12 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#0a2463] backdrop-blur-sm flex items-center justify-center transition-all transform hover:scale-110 shadow-lg" title="Ganti Banner">
+                    <RefreshCw class="w-5 h-5" />
+                 </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Modal Zoom Banner -->
+    <transition name="fade">
+      <div v-if="showZoomModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4" @click="closeZoomModal">
+        <button class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors" @click="closeZoomModal">
+           <X class="w-8 h-8" />
+        </button>
+        <img :src="banners[currentBanner]" class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl" @click.stop />
+      </div>
+    </transition>
   </section>
 </template>
 
@@ -134,7 +142,7 @@ import { useBeritaStore } from '@/stores/useBeritaStore'
 import { onMounted, ref } from 'vue'
 import axios from '@/utils/api'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
-import { ArrowRight, Calendar, Clock, Image as ImageIcon, RefreshCw } from 'lucide-vue-next'
+import { ArrowRight, Calendar, Clock, Image as ImageIcon, RefreshCw, ZoomIn, X } from 'lucide-vue-next'
 
 export default {
   name: 'ContentSection',
@@ -143,7 +151,9 @@ export default {
     Calendar,
     Clock,
     ImageIcon,
-    RefreshCw
+    RefreshCw,
+    ZoomIn,
+    X
   },
   setup() {
     const beritaStore = useBeritaStore()
@@ -152,6 +162,7 @@ export default {
     const banners = ref([])
     const currentBanner = ref(0)
     const previousBanner = ref(0)
+    const showZoomModal = ref(false)
     let bannerInterval = null
 
     const fetchData = async () => {
@@ -184,6 +195,14 @@ export default {
       currentBanner.value = (currentBanner.value + 1) % banners.value.length
     }
 
+    const openZoomModal = () => {
+      showZoomModal.value = true
+    }
+
+    const closeZoomModal = () => {
+      showZoomModal.value = false
+    }
+
     onMounted(() => {
       fetchData()
       bannerInterval = setInterval(nextBanner, 5000)
@@ -196,6 +215,9 @@ export default {
       currentBanner,
       previousBanner,
       nextBanner,
+      showZoomModal,
+      openZoomModal,
+      closeZoomModal,
       formatDate,
     }
   },
