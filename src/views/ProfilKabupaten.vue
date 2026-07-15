@@ -57,12 +57,25 @@
             </div>
           </div>
           
-          <div class="prose prose-lg md:prose-xl prose-blue max-w-none 
-                      prose-headings:font-black prose-headings:text-gray-800 prose-headings:mt-0 
-                      prose-p:text-gray-600 prose-p:leading-relaxed
-                      prose-li:text-gray-600 prose-li:marker:text-[#e8a020] prose-ul:space-y-3 relative z-10" 
-               v-html="profil.visi_misi">
+          <div class="relative transition-all duration-1000 ease-in-out overflow-hidden"
+               :style="{ maxHeight: expanded.visi_misi ? '5000px' : '280px' }">
+            <div class="prose prose-lg md:prose-xl prose-blue max-w-none 
+                        prose-headings:font-black prose-headings:text-gray-800 prose-headings:mt-0 
+                        prose-p:text-gray-600 prose-p:leading-relaxed
+                        prose-li:text-gray-600 prose-li:marker:text-[#e8a020] prose-ul:space-y-3 relative z-10" 
+                 v-html="profil.visi_misi">
+            </div>
+            
+            <div v-if="!expanded.visi_misi" class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-20"></div>
           </div>
+          
+          <button 
+             @click="expanded.visi_misi = !expanded.visi_misi"
+             class="mt-6 flex items-center gap-2 px-6 py-2.5 rounded-xl bg-blue-50 text-blue-600 font-bold text-sm uppercase tracking-wider hover:bg-blue-600 hover:text-white transition-all duration-300 relative z-20 shadow-sm border border-blue-100 mx-auto"
+          >
+            {{ expanded.visi_misi ? 'Tutup Selengkapnya' : 'Baca Selengkapnya' }}
+            <ChevronDown class="w-4 h-4 transition-transform duration-300" :class="{ 'rotate-180': expanded.visi_misi }" />
+          </button>
         </div>
 
         <!-- Sejarah -->
@@ -80,11 +93,24 @@
             <h2 class="text-3xl font-extrabold tracking-tight">Sejarah</h2>
           </div>
 
-          <div class="prose prose-invert prose-lg max-w-none 
-                      prose-headings:font-black prose-headings:text-white
-                      prose-p:text-gray-300 prose-p:leading-relaxed relative z-10" 
-               v-html="profil.sejarah_singkat">
+          <div class="relative transition-all duration-1000 ease-in-out overflow-hidden"
+               :style="{ maxHeight: expanded.sejarah ? '5000px' : '320px' }">
+            <div class="prose prose-invert prose-lg max-w-none 
+                        prose-headings:font-black prose-headings:text-white
+                        prose-p:text-gray-300 prose-p:leading-relaxed relative z-10" 
+                 v-html="profil.sejarah_singkat">
+            </div>
+            
+            <div v-if="!expanded.sejarah" class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-gray-900 via-gray-900/80 to-transparent pointer-events-none z-20"></div>
           </div>
+
+          <button 
+             @click="expanded.sejarah = !expanded.sejarah"
+             class="mt-8 flex items-center gap-2 px-6 py-2.5 rounded-xl bg-white/10 text-white font-bold text-sm uppercase tracking-wider hover:bg-[#e8a020] hover:text-gray-900 border border-white/20 transition-all duration-300 relative z-20 mx-auto"
+          >
+            {{ expanded.sejarah ? 'Tutup Selengkapnya' : 'Baca Selengkapnya' }}
+            <ChevronDown class="w-4 h-4 transition-transform duration-300" :class="{ 'rotate-180': expanded.sejarah }" />
+          </button>
         </div>
       </div>
 
@@ -159,11 +185,24 @@
              </div>
              <h3 class="text-3xl font-black text-gray-900">Makna Lambang Daerah</h3>
           </div>
-          <div 
-            class="prose prose-lg prose-blue max-w-none prose-p:text-gray-600 prose-p:leading-loose text-justify columns-1 sm:columns-2 gap-8" 
-            style="white-space: pre-wrap;" 
-            v-html="profil.arti_lambang">
+          <div class="relative transition-all duration-1000 ease-in-out overflow-hidden"
+               :style="{ maxHeight: expanded.arti_lambang ? '5000px' : '280px' }">
+            <div 
+              class="prose prose-lg prose-blue max-w-none prose-p:text-gray-600 prose-p:leading-loose text-justify columns-1 sm:columns-2 gap-8" 
+              style="white-space: pre-wrap;" 
+              v-html="profil.arti_lambang">
+            </div>
+            
+            <div v-if="!expanded.arti_lambang" class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent pointer-events-none z-20"></div>
           </div>
+
+          <button 
+             @click="expanded.arti_lambang = !expanded.arti_lambang"
+             class="mt-8 flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gray-50 text-gray-700 font-bold text-sm uppercase tracking-wider hover:bg-gray-800 hover:text-white transition-all duration-300 relative z-20 shadow-sm border border-gray-200"
+          >
+            {{ expanded.arti_lambang ? 'Tutup Selengkapnya' : 'Baca Selengkapnya' }}
+            <ChevronDown class="w-4 h-4 transition-transform duration-300" :class="{ 'rotate-180': expanded.arti_lambang }" />
+          </button>
         </div>
 
       </div>
@@ -177,11 +216,17 @@ import { ref, onMounted } from 'vue'
 import axios from '@/utils/api'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import { getStorageUrl } from '@/utils/helpers'
-import { MapPin, Target, Users, TrendingUp, Shield, BookOpen } from 'lucide-vue-next'
+import { MapPin, Target, Users, TrendingUp, Shield, BookOpen, ChevronDown } from 'lucide-vue-next'
 
 const profil = ref(null)
 const loading = ref(true)
 const error = ref(null)
+
+const expanded = ref({
+  visi_misi: false,
+  sejarah: false,
+  arti_lambang: false
+})
 
 const fetchProfil = async () => {
   loading.value = true
