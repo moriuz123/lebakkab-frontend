@@ -38,7 +38,7 @@
               class="bg-white rounded-2xl p-4 sm:p-5 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.05)] border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300 flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
             >
               <div class="flex items-start sm:items-center gap-4">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-red-500 group-hover:text-white transition-all duration-300 shadow-sm">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-blue-50 text-[#1e5ca8] flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-[#1e5ca8] group-hover:text-white transition-all duration-300 shadow-sm">
                   <FileText class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div>
@@ -227,7 +227,7 @@
         <div class="relative w-full max-w-5xl h-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col transform transition-all">
           <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0">
             <h3 class="font-bold text-gray-900 truncate pr-4 flex items-center gap-2">
-              <FileText class="w-5 h-5 text-red-500" />
+              <FileText class="w-5 h-5 text-[#1e5ca8]" />
               Preview Dokumen
             </h3>
             <button @click="closeFlipbook" class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">

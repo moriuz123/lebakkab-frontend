@@ -153,7 +153,7 @@ const goToDot = (index) => {
 
             <!-- Icon Section -->
             <div class="p-5 pb-2 relative z-10 flex items-start justify-between">
-              <div class="w-12 h-12 bg-red-50 text-red-500 rounded-2xl flex items-center justify-center group-hover:bg-red-500 group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
+              <div class="w-12 h-12 bg-blue-50 text-[#1e5ca8] rounded-2xl flex items-center justify-center group-hover:bg-[#1e5ca8] group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
                 <FileText class="w-6 h-6" />
               </div>
               <span v-if="doc.kategori?.nama" class="bg-gray-50 text-gray-600 text-[9px] font-bold px-2.5 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[110px] truncate">
@@ -208,7 +208,7 @@ const goToDot = (index) => {
         <div class="relative w-full max-w-5xl h-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col transform transition-all">
           <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0">
             <h3 class="font-bold text-gray-900 flex items-center gap-2">
-              <FileText class="w-5 h-5 text-red-500" />
+              <FileText class="w-5 h-5 text-[#1e5ca8]" />
               Preview Dokumen
             </h3>
             <button @click="closeFlipbook" class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">
