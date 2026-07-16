@@ -29,7 +29,6 @@ import PejabatPage from '@/views/PejabatPage.vue'
 import PejabatDetail from '@/views/PejabatDetail.vue'
 import ProfilKabupaten from '@/views/ProfilKabupaten.vue'
 import SponTtePage from '@/views/SponTtePage.vue' // ✅ import SPON TTE
-import PpidPage from '@/views/PpidPage.vue' // ✅ import PPID
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -197,12 +196,6 @@ const router = createRouter({
       name: 'SearchPage',
       component: SearchPage,
       props: (route) => ({ q: route.query.q }),
-    },
-    {
-      path: '/ppid',
-      name: 'ppid',
-      component: PpidPage,
-      meta: { title: 'Layanan PPID - Kab. Lebak' }
     },
     {
       path: '/spon-tte',
