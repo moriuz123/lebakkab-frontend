@@ -305,7 +305,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, shallowRef } from 'import-vue'
+import { ref, computed, onMounted, shallowRef } from 'vue'
 import { DocumentTextIcon, PencilSquareIcon, MagnifyingGlassIcon, ScaleIcon } from '@heroicons/vue/24/outline'
 
 const activeTab = ref('informasi')
