@@ -7,6 +7,7 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
+    'X-API-KEY': import.meta.env.VITE_APP_API_KEY || 'LebakKabSuperSecret2026',
   }
 })
 
