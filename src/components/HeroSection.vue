@@ -19,7 +19,7 @@
       <!-- Corak Batik Overlay (Kawung Motif) -->
       <div 
         class="absolute inset-0 opacity-[0.25] pointer-events-none mix-blend-overlay" 
-        :style="{ backgroundImage: `url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%23ffffff' /%3E%3C/g%3E%3C/svg%3E\")`, backgroundSize: '80px 80px' }"
+        :style="batikStyle"
       ></div>
       <div
         class="absolute inset-0 bg-gradient-to-t from-emerald-900 via-transparent to-transparent opacity-90"
@@ -192,6 +192,11 @@ import * as HeroiconsSolid from '@heroicons/vue/24/solid'
 // Router
 const router = useRouter()
 const settingsStore = useSettingsStore()
+
+const batikStyle = {
+  backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='2' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%23ffffff' /%3E%3C/g%3E%3C/svg%3E")`,
+  backgroundSize: '80px 80px'
+}
 
 // Format nama untuk Lucide
 const formatIconNameLucide = (name) => {
