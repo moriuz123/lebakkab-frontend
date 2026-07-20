@@ -82,6 +82,19 @@
                         <span v-else>-</span>
                       </span>
                     </li>
+                    <!-- Social Media -->
+                    <li v-if="opdStore.opdDetail.social_media && opdStore.opdDetail.social_media.length > 0" class="flex flex-wrap gap-2 pt-2">
+                      <a 
+                        v-for="(sosmed, index) in opdStore.opdDetail.social_media" 
+                        :key="index"
+                        :href="sosmed.url" 
+                        target="_blank"
+                        class="px-3 py-1 bg-gray-100 text-primary text-sm font-semibold rounded hover:bg-primary hover:text-white transition-colors flex items-center gap-1"
+                      >
+                        <i v-if="sosmed.icon_class" :class="sosmed.icon_class"></i>
+                        <span>{{ sosmed.platform }}</span>
+                      </a>
+                    </li>
                   </ul>
                 </section>
 
@@ -92,7 +105,7 @@
 
                 <section>
                   <h2 class="text-lg font-semibold text-gray-800 mb-3">Pimpinan</h2>
-                  <p>{{ opdStore.opdDetail.pimpinan || 'Belum ada pimpinan.' }}</p>
+                  <p>{{ opdStore.opdDetail.pejabat_pimpinan?.nama || 'Belum ada pimpinan.' }}</p>
                 </section>
               </div>
 
@@ -104,6 +117,51 @@
                   v-html="opdStore.opdDetail.peta_embed"
                 ></div>
               </div>
+            </div>
+
+            <!-- 📄 PROFIL LENGKAP OPD -->
+            <div v-if="opdStore.opdDetail.profil" class="mt-8 space-y-8 pt-8 border-t">
+              
+              <!-- Visi & Misi -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div v-if="opdStore.opdDetail.profil.visi">
+                  <h2 class="text-lg font-semibold text-gray-800 mb-3">Visi</h2>
+                  <div class="text-gray-700 whitespace-pre-line">{{ opdStore.opdDetail.profil.visi }}</div>
+                </div>
+                <div v-if="opdStore.opdDetail.profil.misi">
+                  <h2 class="text-lg font-semibold text-gray-800 mb-3">Misi</h2>
+                  <div class="text-gray-700 whitespace-pre-line">{{ opdStore.opdDetail.profil.misi }}</div>
+                </div>
+              </div>
+
+              <!-- Latar Belakang & Tupoksi -->
+              <div v-if="opdStore.opdDetail.profil.latar_belakang">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">Latar Belakang</h2>
+                <div class="text-gray-700 whitespace-pre-line">{{ opdStore.opdDetail.profil.latar_belakang }}</div>
+              </div>
+
+              <div v-if="opdStore.opdDetail.profil.tugas_pokok">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">Tugas Pokok & Fungsi</h2>
+                <div class="text-gray-700 whitespace-pre-line">{{ opdStore.opdDetail.profil.tugas_pokok }}</div>
+              </div>
+
+              <!-- Struktur Organisasi -->
+              <div v-if="opdStore.opdDetail.profil.struktur_organisasi">
+                <h2 class="text-lg font-semibold text-gray-800 mb-3">Struktur Organisasi</h2>
+                <img :src="$storageUrl(opdStore.opdDetail.profil.struktur_organisasi)" alt="Struktur Organisasi" class="w-full rounded-lg shadow-sm border" />
+              </div>
+
+              <!-- Bidang Kerja -->
+              <div v-if="opdStore.opdDetail.profil.bidang_kerja && opdStore.opdDetail.profil.bidang_kerja.length > 0">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Bidang Kerja</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div v-for="(bidang, i) in opdStore.opdDetail.profil.bidang_kerja" :key="i" class="p-4 border rounded-lg bg-gray-50">
+                    <h3 class="font-bold text-primary mb-2">{{ bidang.nama_bidang }}</h3>
+                    <p class="text-sm text-gray-700 whitespace-pre-line">{{ bidang.tugas_pokok }}</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
