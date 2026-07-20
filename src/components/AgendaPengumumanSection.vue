@@ -21,35 +21,28 @@
               <span class="w-1.5 h-6 bg-blue-500 rounded-full"></span>
               Agenda Daerah
             </h2>
-            <router-link to="/agenda" class="text-sm font-semibold text-blue-600 hover:text-blue-700 hover:underline">Lihat Semua</router-link>
           </div>
 
-          <div v-if="loadingAgenda.value" class="space-y-4">
-            <div v-for="i in 4" :key="i" class="flex gap-4 animate-pulse">
-              <div class="w-12 h-14 bg-gray-100 rounded-lg"></div>
-              <div class="flex-1 space-y-2"><div class="h-3 bg-gray-100 rounded w-3/4"></div><div class="h-3 bg-gray-100 rounded w-1/2"></div></div>
-            </div>
-          </div>
-          
-          <div v-else-if="agendasLimited.length === 0" class="py-4 text-gray-500 text-sm font-medium">
-            Belum ada agenda.
-          </div>
-
-          <div v-else class="space-y-5">
-            <router-link
-              v-for="item in agendasLimited"
-              :key="item.id"
-              :to="`/agenda/${item.slug || item.id}`"
-              class="group flex items-start gap-4"
-            >
-              <div class="shrink-0 flex flex-col items-center justify-center w-14 h-[4.5rem] bg-blue-50/50 group-hover:bg-blue-100/50 text-blue-700 rounded-lg transition-colors border border-blue-100/50">
-                <span class="text-[10px] font-bold uppercase tracking-widest text-blue-500">{{ formatMonth(item.tanggal_mulai) }}</span>
-                <span class="text-xl font-black leading-none my-0.5">{{ formatDay(item.tanggal_mulai) }}</span>
-                <span class="text-[9px] font-bold opacity-70">{{ formatYear(item.tanggal_mulai) }}</span>
+          <div class="relative w-full h-full min-h-[250px] bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 overflow-hidden flex flex-col justify-between shadow-xl group">
+            <!-- Background elements for rich aesthetics -->
+            <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl transform group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-24 h-24 bg-blue-400/20 rounded-full blur-xl transform group-hover:scale-150 transition-transform duration-700"></div>
+            
+            <div class="relative z-10">
+              <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4 border border-white/20 shadow-inner">
+                <Calendar class="w-6 h-6 text-white" />
               </div>
-              <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-blue-600 transition-colors line-clamp-3">
-                {{ item.judul || item.title || '—' }}
+              <h3 class="text-2xl font-black text-white mb-2 leading-tight drop-shadow-sm">
+                Jadwal & <br/>Agenda Daerah
               </h3>
+              <p class="text-blue-50 text-sm font-medium opacity-90 leading-relaxed max-w-[90%]">
+                Pantau terus berbagai kegiatan, rapat, dan acara resmi Pemerintah Kabupaten Lebak.
+              </p>
+            </div>
+
+            <router-link to="/agenda" class="relative z-10 mt-6 inline-flex items-center justify-between w-full bg-white text-blue-700 hover:bg-blue-50 font-bold px-5 py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-white/20 active:scale-[0.98] group/btn border border-white/40">
+              <span>Jelajahi Agenda</span>
+              <ArrowRight class="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform text-blue-600" />
             </router-link>
           </div>
         </div>
@@ -151,33 +144,16 @@
 import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import dayjs from 'dayjs'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, Calendar } from 'lucide-vue-next'
 import { getStorageUrl } from '@/utils/helpers'
 
-const agendas = ref([])
 const pengumuman = ref([])
 const kategoriLayanan = ref([])
 
-const loadingAgenda = ref(true)
 const loadingPengumuman = ref(true)
 const loadingKategoriLayanan = ref(true)
-
-const agendasLimited = computed(() => agendas.value.slice(0, 4))
 const pengumumanLimited = computed(() => pengumuman.value.slice(0, 4))
 const kategoriLayananLimited = computed(() => kategoriLayanan.value.slice(0, 5))
-
-async function fetchAgendas() {
-  loadingAgenda.value = true
-  try {
-    const res = await axios.get('/api/agendas').catch(() => axios.get('/api/agenda'))
-    const payload = res?.data?.data || res?.data || []
-    agendas.value = Array.isArray(payload) ? payload : []
-  } catch (err) {
-    agendas.value = []
-  } finally {
-    loadingAgenda.value = false
-  }
-}
 
 async function fetchPengumuman() {
   loadingPengumuman.value = true
@@ -225,7 +201,6 @@ const formatYear = (date) => {
 }
 
 onMounted(() => {
-  fetchAgendas()
   fetchPengumuman()
   fetchKategoriLayanan()
 })
