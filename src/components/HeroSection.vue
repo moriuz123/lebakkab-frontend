@@ -1,12 +1,11 @@
 <template>
   <section class="relative w-full h-screen min-h-[600px] overflow-hidden bg-emerald-900">
-    <!-- Background carousel -->
     <div class="absolute inset-0 z-0">
       <transition-group name="fade">
         <img
-          v-if="heroSlides.length > 0"
-          :key="currentImage"
-          :src="$storageUrl(heroSlides[currentImage]?.gambar)"
+          v-if="backgrounds.length > 0"
+          :key="currentImage % backgrounds.length"
+          :src="backgrounds[currentImage % backgrounds.length]"
           alt="Hero background"
           class="w-full h-full object-cover absolute transition-opacity duration-1000 ease-in-out"
           :class="{ 'scale-105 transition-transform duration-[10000ms]': true }"
@@ -31,14 +30,14 @@
       class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0"
     >
       <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.15] tracking-tight drop-shadow-lg">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e8a020] to-yellow-300">Selamat Datang</span><br class="hidden lg:block" />
-        di Portal Resmi <br class="hidden sm:block" />
-        Kabupaten Lebak
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e8a020] to-yellow-300">
+          {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.judul || 'Selamat Datang') : 'Selamat Datang' }}
+        </span>
       </h1>
       <h2
-        class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-200 drop-shadow-xl mb-6 max-w-2xl"
+        class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-200 drop-shadow-xl mt-4 mb-6 max-w-2xl"
       >
-        Pemerintah Kabupaten Lebak
+        {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.deskripsi || 'Website Resmi Pemerintah Kabupaten Lebak') : 'Website Resmi Pemerintah Kabupaten Lebak' }}
       </h2>
 
       <!-- Mobile: Logo Hero & Taglines (Above Form) -->
@@ -47,8 +46,8 @@
       >
         <!-- Logo Hero -->
         <img
-          v-if="logoHero"
-          :src="logoHero"
+          v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
+          :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
           alt="Hero Logo Mobile"
           class="h-32 sm:h-40 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] opacity-95 animate-floating"
         />
@@ -140,8 +139,8 @@
     >
       <!-- Logo Hero -->
       <img
-        v-if="logoHero"
-        :src="logoHero"
+        v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
+        :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
         alt="Hero Logo"
         class="w-auto h-[35%] sm:h-[45%] lg:h-[53%] max-h-[530px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 animate-floating pointer-events-auto"
       />
@@ -286,8 +285,8 @@ const resolveUrl = (item) => {
   }
 }
 
-// === Logos ===
-const logoHero = computed(() => settingsStore.data?.logo_hero_url || null)
+// === Logos & Backgrounds ===
+const backgrounds = computed(() => settingsStore.data?.backgrounds || [])
 const logoTagline = computed(() => settingsStore.data?.logo_tagline_url || null)
 const logoTagline2 = computed(() => settingsStore.data?.logo_tagline2_url || null)
 
@@ -307,9 +306,11 @@ onMounted(() => {
   fetchHeroSlides()
   fetchMenus()
 
+  const maxSlides = computed(() => Math.max(heroSlides.value.length || 1, backgrounds.value.length || 1))
+
   setInterval(() => {
-    if (heroSlides.value.length > 0) {
-      currentImage.value = (currentImage.value + 1) % heroSlides.value.length
+    if (maxSlides.value > 0) {
+      currentImage.value = (currentImage.value + 1) % maxSlides.value
     }
   }, 5000)
 })
