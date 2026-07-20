@@ -23,10 +23,10 @@
             </h2>
           </div>
 
-          <div class="relative w-full h-full min-h-[250px] bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-6 overflow-hidden flex flex-col justify-between shadow-xl group">
+          <div class="relative w-full h-full min-h-[250px] bg-gradient-to-br from-emerald-800 to-emerald-950 rounded-2xl p-6 overflow-hidden flex flex-col justify-between shadow-xl group">
             <!-- Background elements for rich aesthetics -->
             <div class="absolute top-0 right-0 -mt-4 -mr-4 w-32 h-32 bg-white/10 rounded-full blur-2xl transform group-hover:scale-150 transition-transform duration-700"></div>
-            <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-24 h-24 bg-blue-400/20 rounded-full blur-xl transform group-hover:scale-150 transition-transform duration-700"></div>
+            <div class="absolute bottom-0 left-0 -mb-4 -ml-4 w-24 h-24 bg-emerald-400/20 rounded-full blur-xl transform group-hover:scale-150 transition-transform duration-700"></div>
             
             <div class="relative z-10">
               <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4 border border-white/20 shadow-inner">
@@ -40,9 +40,9 @@
               </p>
             </div>
 
-            <router-link to="/agenda" class="relative z-10 mt-6 inline-flex items-center justify-between w-full bg-white text-blue-700 hover:bg-blue-50 font-bold px-5 py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-white/20 active:scale-[0.98] group/btn border border-white/40">
+            <router-link to="/agenda" class="relative z-10 mt-6 inline-flex items-center justify-between w-full bg-gradient-to-r from-[#e8a020] to-[#d48f10] hover:from-[#c98918] hover:to-[#b3770d] text-[#0a2463] font-black px-5 py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#e8a020]/30 active:scale-[0.98] group/btn border border-white/10">
               <span>Jelajahi Agenda</span>
-              <ArrowRight class="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform text-blue-600" />
+              <ArrowRight class="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform text-[#0a2463]" />
             </router-link>
           </div>
         </div>
