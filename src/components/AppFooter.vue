@@ -40,53 +40,17 @@
           <p class="text-[13.6px] text-white/55 leading-[1.8] mb-6 max-w-[38ch]">
             Mewujudkan tata kelola pemerintahan yang transparan, efektif, dan efisien melalui pemanfaatan teknologi informasi dan komunikasi di Kabupaten Lebak.
           </p>
-          <div class="flex gap-3">
+          <div v-if="profil?.social_media && profil.social_media.length > 0" class="flex gap-3 flex-wrap">
             <a
-              v-if="footer.facebook"
-              :href="footer.facebook"
+              v-for="(sosmed, index) in profil.social_media"
+              :key="index"
+              :href="sosmed.url"
               target="_blank"
               class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
+              :title="sosmed.platform"
             >
-              <Facebook class="w-4 h-4" />
-            </a>
-            <a
-              v-else
-              href="#"
-              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
-            >
-              <Share2 class="w-4 h-4" />
-            </a>
-
-            <a
-              v-if="footer.twitter"
-              :href="footer.twitter"
-              target="_blank"
-              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
-            >
-              <Twitter class="w-4 h-4" />
-            </a>
-            <a
-              v-else
-              href="#"
-              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
-            >
-              <AtSign class="w-4 h-4" />
-            </a>
-
-            <a
-              v-if="footer.instagram"
-              :href="footer.instagram"
-              target="_blank"
-              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
-            >
-              <Instagram class="w-4 h-4" />
-            </a>
-            <a
-              v-else
-              href="#"
-              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
-            >
-              <Camera class="w-4 h-4" />
+              <i v-if="sosmed.icon_class" :class="sosmed.icon_class"></i>
+              <span v-else class="text-xs font-bold uppercase">{{ sosmed.platform.substring(0, 2) }}</span>
             </a>
           </div>
         </div>
@@ -143,17 +107,17 @@
           <div class="space-y-4 text-[13.6px] text-white/55">
             <p class="leading-relaxed whitespace-pre-line">
               {{
-                footer.address ||
+                profil?.alamat ||
                 'Gedung Sekretariat Daerah (SETDA) Lebak,\nJl. Abdi Negara No. 3, Rangkasbitung,\nKabupaten Lebak, Banten 42312'
               }}
             </p>
             <div class="flex items-center gap-3">
               <Mail class="w-4 h-4" />
-              <span>{{ footer.email || 'kontak@lebakkab.go.id' }}</span>
+              <span>{{ profil?.email || 'kontak@lebakkab.go.id' }}</span>
             </div>
             <div class="flex items-center gap-3">
               <Phone class="w-4 h-4" />
-              <span>{{ footer.phone || '+62 252 201 001' }}</span>
+              <span>{{ profil?.telepon || '+62 252 201 001' }}</span>
             </div>
           </div>
         </div>
@@ -199,13 +163,25 @@ export default {
       },
       footerWidget1: null,
       footerWidget2: null,
+      profil: null,
     }
   },
   mounted() {
     this.fetchFooterData()
     this.fetchFooterWidgets()
+    this.fetchProfilDaerah()
   },
   methods: {
+    async fetchProfilDaerah() {
+      try {
+        const response = await axios.get('/api/profil-daerah')
+        if (response.data.status === 'success' && response.data.data) {
+          this.profil = response.data.data
+        }
+      } catch (error) {
+        console.error('Gagal memuat profil daerah:', error)
+      }
+    },
     async fetchFooterWidgets() {
       try {
         const [res1, res2] = await Promise.all([
