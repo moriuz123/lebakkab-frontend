@@ -1,7 +1,7 @@
 <template>
   <section>
     <!-- Page Header (full width) -->
-    <PageHeader2 title="Banner Infografis" subtitle="Kumpulan informasi dalam bentuk visual" />
+    <PageHeader2 :title="pageTitle" subtitle="Kumpulan informasi dalam bentuk visual" />
 
     <!-- Konten dibatasi -->
     <div class="max-w-screen-xl mx-auto px-4 py-10">
@@ -65,15 +65,32 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useBannerStore } from '@/stores/bannerStore'
 import PageHeader2 from '@/components/PageHeader2.vue'
+import { useRoute } from 'vue-router'
 
 const bannerStore = useBannerStore()
 const previewImage = ref(null)
+const route = useRoute()
+
+const slug = computed(() => route.params.slug || 'banner')
+const pageTitle = computed(() => {
+  return 'Banner ' + slug.value.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')
+})
+
+const fetchBanners = () => {
+  if (route.params.slug) {
+    bannerStore.fetchByKategori(route.params.slug)
+  }
+}
 
 onMounted(() => {
-  bannerStore.fetchByKategori('infografis')
+  fetchBanners()
+})
+
+watch(() => route.params.slug, () => {
+  fetchBanners()
 })
 
 function openPreview(img) {

@@ -21,9 +21,8 @@ import AgendaDetail from '@/views/AgendaDetail.vue'
 import AplikasiPage from '../views/AplikasiPage.vue'
 import KategoriPage from '@/views/KategoriPage.vue' // ✅ tambah import statis
 import SearchPage from '@/views/SearchPage.vue' // ✅ import baru
-// ✅ import halaman banner
 import BannerUcapan from '@/views/BannerUcapan.vue'
-import BannerInfografis from '@/views/BannerInfografis.vue'
+import BannerCategory from '@/views/BannerCategory.vue'
 import KritikSaranPage from '@/views/KritikSaranPage.vue'
 import PejabatPage from '@/views/PejabatPage.vue'
 import PejabatDetail from '@/views/PejabatDetail.vue'
@@ -165,9 +164,9 @@ const router = createRouter({
       component: BannerUcapan,
     },
     {
-      path: '/banner/infografis',
-      name: 'BannerInfografis',
-      component: BannerInfografis,
+      path: '/banner/:slug',
+      name: 'BannerCategory',
+      component: BannerCategory,
     },
 
     {
