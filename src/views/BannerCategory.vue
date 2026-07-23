@@ -13,20 +13,24 @@
           :key="item.id"
           class="relative group bg-white rounded-lg shadow hover:shadow-xl transition overflow-hidden"
         >
-          <!-- Thumbnail -->
-          <img
-            :src="item.gambar_url"
-            :alt="item.judul"
-            class="w-full h-48 object-cover transform group-hover:scale-105 transition duration-500"
-          />
+          <!-- Thumbnail Slider -->
+          <div class="w-full h-48 flex overflow-x-auto snap-x snap-mandatory hide-scrollbar relative group-hover:opacity-90">
+            <img
+              v-for="(imgUrl, idx) in (Array.isArray(item.gambar_url) ? item.gambar_url : [item.gambar_url])"
+              :key="idx"
+              :src="imgUrl"
+              :alt="item.judul"
+              class="w-full flex-shrink-0 h-48 object-cover snap-center transition duration-500"
+            />
+          </div>
 
           <!-- Overlay + Tombol Zoom -->
           <div
-            class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition"
+            class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition pointer-events-none"
           >
             <button
-              @click="openPreview(item.gambar_url)"
-              class="bg-white text-gray-700 rounded-full p-3 shadow-lg hover:bg-gray-200 transition"
+              @click="openPreview(Array.isArray(item.gambar_url) ? item.gambar_url[0] : item.gambar_url)"
+              class="bg-white text-gray-700 rounded-full p-3 shadow-lg hover:bg-gray-200 transition pointer-events-auto"
             >
               🔍
             </button>
@@ -97,3 +101,13 @@ function openPreview(img) {
   previewImage.value = img
 }
 </script>
+
+<style scoped>
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+</style>
