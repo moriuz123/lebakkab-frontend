@@ -29,7 +29,7 @@
             class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition pointer-events-none"
           >
             <button
-              @click="openPreview(Array.isArray(item.gambar_url) ? item.gambar_url[0] : item.gambar_url)"
+              @click="openPreview(Array.isArray(item.gambar_url) ? item.gambar_url : [item.gambar_url])"
               class="bg-white text-gray-700 rounded-full p-3 shadow-lg hover:bg-gray-200 transition pointer-events-auto"
             >
               🔍
@@ -48,21 +48,47 @@
 
     <!-- Modal Preview -->
     <div
-      v-if="previewImage"
-      class="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+      v-if="previewImages.length > 0"
+      class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
+      @click="closePreview"
     >
-      <div class="relative max-w-4xl w-full px-4">
+      <div class="relative max-w-4xl w-full flex items-center justify-center" @click.stop>
         <button
-          @click="previewImage = null"
-          class="absolute -top-10 right-0 text-white text-3xl hover:text-gray-300"
+          @click="closePreview"
+          class="absolute -top-10 right-0 text-white text-3xl hover:text-gray-300 z-10"
         >
           ✖
         </button>
+
+        <button
+          v-if="previewImages.length > 1"
+          @click="prevImage"
+          class="absolute left-0 -ml-12 text-white text-4xl hover:text-gray-300 z-10"
+        >
+          &#10094;
+        </button>
+
         <img
-          :src="previewImage"
+          :src="previewImages[currentIndex]"
           alt="Preview"
-          class="w-full max-h-[80vh] object-contain rounded-lg shadow-lg"
+          class="w-full max-h-[80vh] object-contain rounded-lg shadow-lg transition-all duration-300"
         />
+
+        <button
+          v-if="previewImages.length > 1"
+          @click="nextImage"
+          class="absolute right-0 -mr-12 text-white text-4xl hover:text-gray-300 z-10"
+        >
+          &#10095;
+        </button>
+        
+        <!-- Indicators -->
+        <div v-if="previewImages.length > 1" class="absolute -bottom-8 left-0 right-0 flex justify-center gap-2">
+          <div v-for="(_, idx) in previewImages" :key="idx" 
+               class="w-3 h-3 rounded-full transition-colors duration-300"
+               :class="idx === currentIndex ? 'bg-emerald-500' : 'bg-gray-500'">
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -75,7 +101,8 @@ import PageHeader2 from '@/components/PageHeader2.vue'
 import { useRoute } from 'vue-router'
 
 const bannerStore = useBannerStore()
-const previewImage = ref(null)
+const previewImages = ref([])
+const currentIndex = ref(0)
 const route = useRoute()
 
 const slug = computed(() => route.params.slug || 'banner')
@@ -97,8 +124,30 @@ watch(() => route.params.slug, () => {
   fetchBanners()
 })
 
-function openPreview(img) {
-  previewImage.value = img
+const openPreview = (images, idx = 0) => {
+  previewImages.value = Array.isArray(images) ? images : [images]
+  currentIndex.value = idx
+}
+
+const closePreview = () => {
+  previewImages.value = []
+  currentIndex.value = 0
+}
+
+const nextImage = () => {
+  if (currentIndex.value < previewImages.value.length - 1) {
+    currentIndex.value++
+  } else {
+    currentIndex.value = 0
+  }
+}
+
+const prevImage = () => {
+  if (currentIndex.value > 0) {
+    currentIndex.value--
+  } else {
+    currentIndex.value = previewImages.value.length - 1
+  }
 }
 </script>
 
