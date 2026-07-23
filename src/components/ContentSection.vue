@@ -186,7 +186,10 @@ export default {
 
       const bannerRes = await axios.get('/api/banner?kategori=ucapan')
       if (Array.isArray(bannerRes.data)) {
-        banners.value = bannerRes.data.map((item) => getStorageUrl(item.gambar))
+        banners.value = bannerRes.data.flatMap((item) => {
+          const urls = Array.isArray(item.gambar_url) ? item.gambar_url : (item.gambar_url ? [item.gambar_url] : [item.gambar])
+          return urls.map(u => u.startsWith('http') ? u : getStorageUrl(u))
+        })
       }
     }
 
