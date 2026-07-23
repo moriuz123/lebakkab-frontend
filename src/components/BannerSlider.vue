@@ -3,8 +3,8 @@
     <!-- Gambar Banner -->
     <div class="w-full aspect-square bg-gray-50">
       <img
-        :src="$storageUrl(banners[current].gambar)"
-        :alt="banners[current].title"
+        :src="banners[current].single_gambar"
+        :alt="banners[current].judul || banners[current].title"
         class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
       />
     </div>
@@ -41,7 +41,11 @@ let intervalId = null
 onMounted(async () => {
   try {
     const res = await axios.get('/api/banner?kategori=ucapan&limit=5')
-    banners.value = res.data || []
+    const rawBanners = res.data || []
+    banners.value = rawBanners.flatMap(b => {
+      const urls = Array.isArray(b.gambar_url) ? b.gambar_url : (b.gambar_url ? [b.gambar_url] : [b.gambar])
+      return urls.map(u => ({ ...b, single_gambar: u }))
+    })
     startSlideshow()
   } catch (err) {
     console.error('Gagal ambil banner:', err)
