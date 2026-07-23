@@ -62,12 +62,12 @@
             v-for="item in banners"
             :key="item.id"
             class="snap-center w-[280px] sm:w-[320px] bg-white border border-gray-100 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-[#1e5ca8]/10 hover:border-[#1e5ca8] transition-all duration-500 flex-shrink-0 group overflow-hidden cursor-pointer flex flex-col"
-            @click="openPreview(item.gambar_url)"
+            @click="openPreview(Array.isArray(item.gambar_url) ? item.gambar_url : [item.gambar_url])"
           >
             <!-- Thumbnail & Overlay -->
             <div class="relative w-full h-[320px] overflow-hidden bg-gray-100">
               <img
-                :src="item.gambar_url"
+                :src="Array.isArray(item.gambar_url) ? item.gambar_url[0] : item.gambar_url"
                 :alt="item.judul"
                 class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
               />
@@ -107,22 +107,48 @@
     <!-- Modal Preview -->
     <Transition name="modal">
       <div
-        v-if="previewImage"
+        v-if="previewImages.length > 0"
         class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
       >
         <div class="absolute inset-0 bg-gray-900/90 backdrop-blur-sm" @click="closePreview"></div>
-        <div class="relative w-full max-w-5xl max-h-screen flex flex-col items-center justify-center pointer-events-none">
+        <div class="relative w-full max-w-5xl max-h-screen flex items-center justify-center pointer-events-none">
           <button
             @click="closePreview"
             class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white bg-black/20 hover:bg-black/50 p-3 rounded-full backdrop-blur-md transition-all duration-300 pointer-events-auto z-10"
           >
             <X class="w-6 h-6" />
           </button>
+          
+          <button
+            v-if="previewImages.length > 1"
+            @click="prevPreview"
+            class="absolute left-4 sm:-ml-12 text-white/70 hover:text-white bg-black/20 hover:bg-black/50 p-3 rounded-full backdrop-blur-md transition-all pointer-events-auto z-10"
+          >
+            <ChevronLeft class="w-8 h-8" />
+          </button>
+
           <img
-            :src="previewImage"
+            :src="previewImages[currentPreviewIndex]"
             alt="Preview"
             class="max-w-full max-h-[85vh] object-contain rounded-xl shadow-2xl pointer-events-auto transform transition-transform"
           />
+
+          <button
+            v-if="previewImages.length > 1"
+            @click="nextPreview"
+            class="absolute right-4 sm:-mr-12 text-white/70 hover:text-white bg-black/20 hover:bg-black/50 p-3 rounded-full backdrop-blur-md transition-all pointer-events-auto z-10"
+          >
+            <ChevronRight class="w-8 h-8" />
+          </button>
+
+          <!-- Indicators -->
+          <div v-if="previewImages.length > 1" class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 pointer-events-auto">
+            <div v-for="(_, idx) in previewImages" :key="idx" 
+                 class="w-2.5 h-2.5 rounded-full transition-colors duration-300 cursor-pointer"
+                 :class="idx === currentPreviewIndex ? 'bg-[#e8a020]' : 'bg-white/40 hover:bg-white/70'"
+                 @click="currentPreviewIndex = idx">
+            </div>
+          </div>
         </div>
       </div>
     </Transition>
@@ -140,7 +166,8 @@ const { banners, loading, error } = storeToRefs(bannerStore)
 
 const carouselRef = ref(null)
 const activeIndex = ref(0)
-const previewImage = ref(null)
+const previewImages = ref([])
+const currentPreviewIndex = ref(0)
 
 // ambil data
 onMounted(() => {
@@ -183,11 +210,27 @@ function goToDot(index) {
 }
 
 // preview image
-function openPreview(img) {
-  previewImage.value = img
+function openPreview(images, idx = 0) {
+  previewImages.value = Array.isArray(images) ? images : [images]
+  currentPreviewIndex.value = idx
 }
 function closePreview() {
-  previewImage.value = null
+  previewImages.value = []
+  currentPreviewIndex.value = 0
+}
+function prevPreview() {
+  if (currentPreviewIndex.value > 0) {
+    currentPreviewIndex.value--
+  } else {
+    currentPreviewIndex.value = previewImages.value.length - 1
+  }
+}
+function nextPreview() {
+  if (currentPreviewIndex.value < previewImages.value.length - 1) {
+    currentPreviewIndex.value++
+  } else {
+    currentPreviewIndex.value = 0
+  }
 }
 </script>
 
