@@ -126,6 +126,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import axios from '@/utils/api'
 
 const kontakData = ref(null)
 const loading = ref(true)
@@ -137,32 +138,23 @@ const opdId = import.meta.env.VITE_OPD_ID || ''
 const fetchKontak = async () => {
   loading.value = true
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
-    const apiKey = import.meta.env.VITE_API_KEY || ''
-    
-    // Bangun URL
-    const url = new URL(`${apiUrl}/kontak`)
+    let url = '/api/kontak'
     if (opdId) {
-      url.searchParams.append('opd_id', opdId)
+      url += `?opd_id=${opdId}`
     }
 
-    const res = await fetch(url.toString(), {
-      headers: {
-        'x-api-key': apiKey,
-        'Accept': 'application/json'
-      }
-    })
-    const json = await res.json()
-    if (json.status === 'success') {
+    const res = await axios.get(url)
+    
+    if (res.data && res.data.status === 'success') {
       // Pastikan iframe maps responsif dan ukurannya 100%
-      let mapEmbed = json.data.peta_embed
+      let mapEmbed = res.data.data.peta_embed
       if (mapEmbed) {
         mapEmbed = mapEmbed.replace(/width="[^"]+"/, 'width="100%"')
         mapEmbed = mapEmbed.replace(/height="[^"]+"/, 'height="100%"')
       }
-      json.data.peta_embed = mapEmbed
+      res.data.data.peta_embed = mapEmbed
       
-      kontakData.value = json.data
+      kontakData.value = res.data.data
     }
   } catch (error) {
     console.error('Gagal mengambil data kontak:', error)
