@@ -190,6 +190,14 @@ const batikStyle = {
 const formatIconName = (name) => {
   if (!name) return 'lucide:help-circle'
 
+  // Jika nama sudah berformat Iconify (ada titik dua)
+  if (name.includes(':')) {
+    // Handle typo di database (misal lucide:licide-landmark)
+    if (name.includes('licide-')) return name.replace('licide-', '')
+    // Hilangkan spasi berlebih
+    return name.trim()
+  }
+
   // Jika nama menggunakan heroicon-o- / heroicon-s-
   if (name.startsWith('heroicon-o-')) {
     return `heroicons:${name.replace('heroicon-o-', '')}-outline`
@@ -197,11 +205,8 @@ const formatIconName = (name) => {
   if (name.startsWith('heroicon-s-')) {
     return `heroicons:${name.replace('heroicon-s-', '')}-solid`
   }
-  if (name.startsWith('heroicons:')) {
-    return name
-  }
 
-  // Jika nama menggunakan lucide
+  // Jika nama menggunakan lucide-
   if (name.startsWith('lucide-')) {
     return `lucide:${name.replace('lucide-', '')}`
   }
