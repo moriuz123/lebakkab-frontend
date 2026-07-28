@@ -48,7 +48,7 @@
               class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-in-out"
             />
             <div v-else class="w-full h-full flex flex-col items-center justify-center bg-gray-200 text-gray-400 group-hover:scale-105 transition-transform duration-700">
-              <User class="w-20 h-20 mb-2 opacity-50" />
+              <Icon name="lucide:user" class="w-20 h-20 mb-2 opacity-50" />
               <span class="text-sm font-medium">Belum ada foto</span>
             </div>
 
@@ -72,11 +72,11 @@
             
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
               <div class="flex items-center gap-1.5 text-xs font-bold text-gray-400">
-                <Calendar class="w-4 h-4 text-[#e8a020]" />
+                <Icon name="lucide:calendar" class="w-4 h-4 text-[#e8a020]" />
                 Periode {{ pejabat.periode }}
               </div>
               <div class="w-8 h-8 rounded-full bg-[#f8f9fc] text-[#e8a020] flex items-center justify-center group-hover:bg-[#0a2463] group-hover:text-white transition-colors duration-300">
-                <ArrowRight class="w-4 h-4" />
+                <Icon name="lucide:arrow-right" class="w-4 h-4" />
               </div>
             </div>
           </div>
@@ -93,7 +93,6 @@ import { onMounted } from 'vue'
 import { usePejabatStore } from '@/stores/pejabat'
 import { getStorageUrl } from '@/utils/helpers'
 import PageHeader2 from '@/components/PageHeader2.vue'
-import { User, Calendar, ArrowRight } from 'lucide-vue-next'
 
 const store = usePejabatStore()
 

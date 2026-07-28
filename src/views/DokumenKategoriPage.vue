@@ -10,7 +10,7 @@
           
           <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex items-center gap-4">
             <div class="p-3 bg-blue-50 text-blue-600 rounded-xl border border-blue-100">
-              <FolderOpen class="w-6 h-6" />
+              <Icon name="lucide:folder-open" class="w-6 h-6" />
             </div>
             <div>
               <h2 class="text-xl font-bold text-gray-900 leading-tight">Kategori: {{ dokumentStore.kategori?.nama || 'Memuat...' }}</h2>
@@ -23,13 +23,13 @@
           </div>
 
           <div v-else-if="dokumentStore.error" class="bg-red-50 text-red-600 p-8 rounded-2xl text-center border border-red-100 shadow-sm flex flex-col items-center justify-center">
-            <AlertCircle class="w-12 h-12 mb-3 opacity-50" />
+            <Icon name="lucide:alert-circle" class="w-12 h-12 mb-3 opacity-50" />
             <span class="font-bold text-lg">{{ dokumentStore.error }}</span>
           </div>
 
           <div v-else class="space-y-4">
             <div v-if="dokumentStore.dokuments.length === 0" class="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
-              <FileSearch class="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <Icon name="lucide:file-search" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
               <h3 class="text-xl font-bold text-gray-800">Kategori Ini Kosong</h3>
               <p class="text-gray-500 mt-2">Belum ada dokumen yang diunggah untuk kategori ini.</p>
               <router-link to="/dokumen" class="mt-6 inline-block text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-xl transition-colors">
@@ -45,15 +45,15 @@
             >
               <div class="flex items-start sm:items-center gap-4">
                 <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-red-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                  <FileText class="w-6 h-6 sm:w-7 sm:h-7" />
+                  <Icon name="lucide:file-text" class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div>
                   <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors leading-tight mb-1.5">{{ doc.judul }}</h3>
                   <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-medium">
                     <span v-if="doc.sumber" class="bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 border border-gray-200/60 flex items-center gap-1.5 font-bold">
-                      <Building2 class="w-3.5 h-3.5"/> {{ doc.sumber }}
+                      <Icon name="lucide:building2" class="w-3.5 h-3.5"/> {{ doc.sumber }}
                     </span>
-                    <span class="flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(doc.created_at) }}</span>
+                    <span class="flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(doc.created_at) }}</span>
                   </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@
                   @click="openFlipbook(doc)"
                   class="flex items-center gap-2 text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white px-4 py-2 sm:p-2.5 sm:px-4 rounded-xl transition-colors w-full sm:w-auto justify-center"
                 >
-                  <Eye class="w-4 h-4" />
+                  <Icon name="lucide:eye" class="w-4 h-4" />
                   <span class="sm:hidden lg:block">Lihat</span>
                 </button>
                 <a 
@@ -72,7 +72,7 @@
                   :download="doc.judul + '.pdf'"
                   class="flex items-center gap-2 text-sm font-bold text-[#e8a020] bg-[#f8f9fc] hover:bg-[#0a2463] hover:text-white px-4 py-2 sm:p-2.5 sm:px-4 rounded-xl transition-colors w-full sm:w-auto justify-center"
                 >
-                  <Download class="w-4 h-4" />
+                  <Icon name="lucide:download" class="w-4 h-4" />
                   <span class="sm:hidden lg:block">Unduh</span>
                 </a>
               </div>
@@ -94,13 +94,13 @@
           <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-5 sm:p-6 sticky top-6 overflow-hidden relative group/widget">
             <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
               <div class="p-2 bg-blue-50 rounded-lg text-blue-600 shadow-sm border border-blue-100/50">
-                <Folder class="w-5 h-5" />
+                <Icon name="lucide:folder" class="w-5 h-5" />
               </div>
               Menu Dokumen
             </h3>
             <div class="relative z-10 space-y-3">
               <router-link to="/dokumen" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-gray-700 bg-gray-50 hover:bg-blue-50 hover:text-blue-600 border border-transparent hover:border-blue-100 transition-all group/link">
-                <ArrowRight class="w-4 h-4 text-gray-400 group-hover/link:text-blue-500 group-hover/link:translate-x-1 transition-all" />
+                <Icon name="lucide:arrow-right" class="w-4 h-4 text-gray-400 group-hover/link:text-blue-500 group-hover/link:translate-x-1 transition-all" />
                 Kembali ke Semua Dokumen
               </router-link>
             </div>
@@ -112,7 +112,7 @@
 
             <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
               <div class="p-2 bg-blue-50 rounded-lg text-blue-600 shadow-sm border border-blue-100/50">
-                <Megaphone class="w-5 h-5" />
+                <Icon name="lucide:megaphone" class="w-5 h-5" />
               </div>
               Info & Pengumuman
             </h3>
@@ -129,7 +129,7 @@
                 class="group flex gap-3 items-start border-b border-gray-50 pb-4 last:border-0 last:pb-0"
               >
                 <div class="mt-0.5 text-gray-300 group-hover:text-blue-500 transition-colors">
-                  <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
                 <div>
                   <h4 class="text-sm font-semibold text-gray-800 group-hover:text-blue-600 line-clamp-2 mb-2 leading-relaxed transition-colors">{{ item.judul }}</h4>
@@ -146,7 +146,7 @@
             
             <router-link to="/pengumuman" class="relative z-10 flex items-center justify-center gap-2 w-full text-center text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white py-3 rounded-xl mt-5 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-blue-500/20">
               Lihat Semua
-              <ArrowRight class="w-4 h-4" />
+              <Icon name="lucide:arrow-right" class="w-4 h-4" />
             </router-link>
           </div>
 
@@ -155,14 +155,14 @@
             <div class="absolute inset-0 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 group-hover:scale-105 transition-transform duration-500"></div>
             
             <div class="absolute -right-4 -bottom-4 opacity-20 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700">
-              <Info class="w-40 h-40" />
+              <Icon name="lucide:info" class="w-40 h-40" />
             </div>
             <div class="absolute top-0 right-0 w-24 h-24 bg-white opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity"></div>
             
             <div class="relative z-10 flex flex-col h-full justify-between">
               <div>
                 <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/30">
-                  <Info class="w-6 h-6 text-white" />
+                  <Icon name="lucide:info" class="w-6 h-6 text-white" />
                 </div>
                 <h3 class="text-xl font-black mb-2 tracking-tight">Butuh Bantuan?</h3>
                 <p class="text-white/90 text-sm mb-6 leading-relaxed font-medium">
@@ -187,11 +187,11 @@
         <div class="relative w-full max-w-5xl h-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col transform transition-all">
           <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0">
             <h3 class="font-bold text-gray-900 truncate pr-4 flex items-center gap-2">
-              <FileText class="w-5 h-5 text-red-500" />
+              <Icon name="lucide:file-text" class="w-5 h-5 text-red-500" />
               Preview Dokumen
             </h3>
             <button @click="closeFlipbook" class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">
-              <X class="w-5 h-5" />
+              <Icon name="lucide:x" class="w-5 h-5" />
             </button>
           </div>
           <div class="flex-1 w-full bg-gray-100 relative">
@@ -213,7 +213,6 @@ import PaginationNav from '@/components/PaginationNav.vue'
 import VuePdfApp from 'vue3-pdf-app'
 import 'vue3-pdf-app/dist/icons/main.css'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
-import { FileText, Calendar, Eye, Download, FileSearch, X, Building2, AlertCircle, FolderOpen, Megaphone, ArrowRight, Info, Folder } from 'lucide-vue-next'
 
 const route = useRoute()
 const dokumentStore = useDokumentStore()

@@ -28,11 +28,11 @@
             
             <div class="flex flex-wrap items-center gap-6 text-sm text-gray-500 font-medium">
               <div class="flex items-center gap-2">
-                <Calendar class="w-4 h-4 text-[#e8a020]" />
+                <Icon name="lucide:calendar" class="w-4 h-4 text-[#e8a020]" />
                 {{ formatDate(store.beritaDetail.tanggal_publish, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
               </div>
               <div class="flex items-center gap-2">
-                <Eye class="w-4 h-4 text-[#e8a020]" />
+                <Icon name="lucide:eye" class="w-4 h-4 text-[#e8a020]" />
                 Dilihat {{ store.beritaDetail.views ?? 0 }} kali
               </div>
             </div>
@@ -69,7 +69,6 @@ import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBeritaStore } from '../stores/useBeritaStore'
 import { useHead } from '@vueuse/head'
-import { Calendar, Eye } from 'lucide-vue-next'
 import SidebarNews from '../components/SidebarNews.vue'
 import PageHeader2 from '../components/PageHeader2.vue'
 import { formatDate } from '@/utils/helpers'

@@ -72,7 +72,7 @@
           <!-- Mini info card below tabs -->
           <div class="bg-gradient-to-br from-[#1e5ca8] to-[#0a2463] rounded-3xl p-6 text-white shadow-xl mt-4 relative overflow-hidden">
              <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-             <Shield class="w-10 h-10 text-[#e8a020] mb-4 relative z-10" />
+             <Icon name="lucide:shield" class="w-10 h-10 text-[#e8a020] mb-4 relative z-10" />
              <h4 class="font-black text-lg mb-1 relative z-10">Lebak Unique</h4>
              <p class="text-blue-100 text-sm leading-relaxed relative z-10">Satu tekad mewujudkan Lebak yang sejahtera dan berdaya saing.</p>
           </div>
@@ -179,7 +179,6 @@ import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import { getStorageUrl } from '@/utils/helpers'
-import { Target, BookOpen, MapPin, Users, TrendingUp, Shield, Map } from 'lucide-vue-next'
 
 const profil = ref(null)
 const loading = ref(true)

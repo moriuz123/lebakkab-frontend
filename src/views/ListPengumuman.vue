@@ -8,7 +8,7 @@
       <!-- Modern Search Bar -->
       <div v-if="!store.loading && !store.error" class="mb-12 max-w-2xl mx-auto">
         <div class="relative bg-white rounded-full shadow-md shadow-gray-200/50 flex items-center px-6 py-2.5 hover:shadow-xl hover:shadow-[#1e5ca8]/10 focus-within:shadow-xl focus-within:shadow-[#1e5ca8]/20 focus-within:ring-2 focus-within:ring-emerald-900 transition-all duration-500">
-          <Search class="w-6 h-6 text-[#e8a020]/70" />
+          <Icon name="lucide:search" class="w-6 h-6 text-[#e8a020]/70" />
           <input
             v-model="store.searchQuery"
             @input="store.currentPage = 1"
@@ -21,7 +21,7 @@
             @click="store.searchQuery = ''; store.currentPage = 1"
             class="p-2.5 text-gray-400 hover:text-white bg-gray-50 hover:bg-red-500 rounded-full transition-all duration-300"
           >
-            <X class="w-5 h-5" />
+            <Icon name="lucide:x" class="w-5 h-5" />
           </button>
         </div>
       </div>
@@ -36,7 +36,7 @@
 
       <!-- Error State -->
       <div v-else-if="store.error" class="bg-red-50 text-red-600 p-8 rounded-3xl border border-red-100 text-center max-w-2xl mx-auto shadow-sm">
-        <AlertCircle class="w-16 h-16 mx-auto mb-4 opacity-50" />
+        <Icon name="lucide:alert-circle" class="w-16 h-16 mx-auto mb-4 opacity-50" />
         <p class="font-bold text-xl mb-2">Terjadi Kesalahan</p>
         <p class="font-medium text-red-500/80 mb-6">{{ store.error }}</p>
         <button @click="store.fetchPengumuman()" class="bg-white px-8 py-3 rounded-xl text-red-600 font-bold hover:bg-red-600 hover:text-white border border-red-200 hover:border-red-600 transition-all shadow-sm hover:shadow-md">
@@ -47,7 +47,7 @@
       <!-- Empty State -->
       <div v-else-if="store.filteredPengumuman.length === 0" class="bg-white py-16 px-4 rounded-3xl border border-gray-100 border-dashed text-center max-w-2xl mx-auto shadow-sm">
         <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-5">
-          <SearchX class="w-10 h-10 text-gray-400" />
+          <Icon name="lucide:search-x" class="w-10 h-10 text-gray-400" />
         </div>
         <h3 class="text-xl font-bold text-gray-900 mb-2">Tidak Ditemukan</h3>
         <p class="text-gray-500 max-w-md mx-auto">Kami tidak dapat menemukan pengumuman yang sesuai dengan pencarian Anda.</p>
@@ -71,21 +71,21 @@
            <template v-if="getBentoType(index) === 'large'">
              <div class="w-full h-48 md:h-[55%] rounded-2xl overflow-hidden mb-4 md:mb-5 relative shrink-0 bg-gray-50">
                <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Megaphone class="w-16 h-16"/></div>
+               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Icon name="lucide:megaphone" class="w-16 h-16"/></div>
                
                <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-gray-900 shadow-sm flex items-center gap-1.5">
                  <div class="w-2 h-2 rounded-full bg-[#1e5ca8] animate-pulse"></div> Terbaru
                </div>
-               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-4 right-4 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><ZoomIn class="w-4 h-4" /></button>
+               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-4 right-4 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><Icon name="lucide:zoom-in" class="w-4 h-4" /></button>
              </div>
              
              <div class="flex-1 flex flex-col justify-between">
                <div>
-                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
                  <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 leading-snug line-clamp-3 group-hover:text-[#e8a020] transition-colors">{{ item.judul }}</h2>
                </div>
                <div class="mt-4 flex items-center gap-2 text-sm font-bold text-[#e8a020] bg-[#f8f9fc] w-fit px-4 py-2 rounded-xl">
-                  Baca Selengkapnya <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  Baca Selengkapnya <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                </div>
              </div>
            </template>
@@ -95,14 +95,14 @@
              <div class="flex flex-col md:flex-row gap-5 h-full w-full">
                <div class="w-full md:w-2/5 h-40 md:h-full rounded-2xl overflow-hidden shrink-0 bg-gray-50 relative">
                   <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-                  <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Megaphone class="w-10 h-10"/></div>
-                  <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><ZoomIn class="w-4 h-4" /></button>
+                  <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Icon name="lucide:megaphone" class="w-10 h-10"/></div>
+                  <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><Icon name="lucide:zoom-in" class="w-4 h-4" /></button>
                </div>
                <div class="flex-1 flex flex-col justify-center py-2">
-                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
                  <h2 class="text-lg md:text-xl font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-[#e8a020] transition-colors">{{ item.judul }}</h2>
                  <div class="mt-auto pt-4 flex items-center gap-2 text-sm font-bold text-gray-500 group-hover:text-[#e8a020] transition-colors">
-                    Detail Pengumuman <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    Detail Pengumuman <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                  </div>
                </div>
              </div>
@@ -112,16 +112,16 @@
            <template v-else-if="getBentoType(index) === 'tall'">
              <div class="w-full h-48 md:h-[50%] rounded-2xl overflow-hidden mb-4 shrink-0 bg-gray-50 relative">
                <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Megaphone class="w-12 h-12"/></div>
-               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><ZoomIn class="w-4 h-4" /></button>
+               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Icon name="lucide:megaphone" class="w-12 h-12"/></div>
+               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><Icon name="lucide:zoom-in" class="w-4 h-4" /></button>
              </div>
              <div class="flex-1 flex flex-col justify-between">
                <div>
-                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short', year: 'numeric' }) }}</div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short', year: 'numeric' }) }}</div>
                  <h2 class="text-lg font-bold text-gray-900 leading-snug line-clamp-5 group-hover:text-[#e8a020] transition-colors">{{ item.judul }}</h2>
                </div>
                <div class="mt-4 bg-gray-50 group-hover:bg-[#f8f9fc] p-3 rounded-xl flex items-center justify-center transition-colors">
-                  <ArrowRight class="w-5 h-5 text-gray-400 group-hover:text-[#e8a020]" />
+                  <Icon name="lucide:arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-[#e8a020]" />
                </div>
              </div>
            </template>
@@ -129,12 +129,12 @@
            <!-- === SMALL BENTO CARD (1x1) === -->
            <template v-else>
              <div class="flex-1 flex flex-col h-full relative">
-               <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Calendar class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short' }) }}</div>
+               <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short' }) }}</div>
                <h2 class="text-base font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-[#e8a020] transition-colors z-10">{{ item.judul }}</h2>
                
                <div class="mt-auto pt-4 flex justify-between items-end">
                   <div class="bg-gray-50 group-hover:bg-[#f8f9fc] p-2.5 rounded-full transition-colors shrink-0">
-                     <ArrowRight class="w-4 h-4 text-gray-400 group-hover:text-[#e8a020]" />
+                     <Icon name="lucide:arrow-right" class="w-4 h-4 text-gray-400 group-hover:text-[#e8a020]" />
                   </div>
                   <div v-if="item.gambar" class="w-16 h-16 rounded-xl overflow-hidden shadow-sm shrink-0 relative">
                      <img :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-110 transition-transform" />
@@ -164,7 +164,7 @@
         @click="closeImage"
       >
         <button @click.stop="closeImage" class="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 hover:bg-white/30 p-3 rounded-full transition-all backdrop-blur-md hover:scale-110 hover:rotate-90 duration-300">
-          <X class="w-6 h-6" />
+          <Icon name="lucide:x" class="w-6 h-6" />
         </button>
         <img :src="selectedImage" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl ring-1 ring-white/10 transform transition-transform" @click.stop />
       </div>
@@ -178,7 +178,6 @@ import { usePengumumanStore } from '@/stores/pengumuman'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import PaginationNav from '@/components/PaginationNav.vue'
 import { formatDate } from '@/utils/helpers'
-import { Search, SearchX, X, AlertCircle, ZoomIn, Calendar, ArrowRight, Megaphone } from 'lucide-vue-next'
 
 const store = usePengumumanStore()
 const selectedImage = ref(null)

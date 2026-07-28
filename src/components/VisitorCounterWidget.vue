@@ -11,7 +11,7 @@
       
       <div class="flex items-center gap-3 mb-6 mt-1">
         <div class="bg-emerald-900 p-2.5 rounded-xl text-[#e8a020] shadow-inner">
-          <BarChart2 class="w-5 h-5" />
+          <Icon name="lucide:bar-chart2" class="w-5 h-5" />
         </div>
         <h3 class="text-gray-800 font-bold text-lg leading-tight">Statistik<br/><span class="text-[#e8a020]">Pengunjung</span></h3>
       </div>
@@ -36,7 +36,7 @@
       </div>
       
       <!-- Background subtle logo/icon -->
-      <Users class="absolute -bottom-4 -right-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
+      <Icon name="lucide:users" class="absolute -bottom-4 -right-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
     </div>
 
     <!-- Toggle Button -->
@@ -45,10 +45,10 @@
       @mouseenter="isOpen = true"
       class="bg-gradient-to-b from-[#0a2463] to-emerald-600 hover:from-[#0a2463] hover:to-emerald-500 text-white py-5 px-2.5 rounded-r-2xl shadow-[4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-r border-b border-white/20 cursor-pointer mt-4 group"
     >
-      <Users class="w-5 h-5 group-hover:scale-110 transition-transform" />
+      <Icon name="lucide:users" class="w-5 h-5 group-hover:scale-110 transition-transform" />
       <span class="vertical-text text-[13px] font-bold tracking-[0.2em] uppercase">Statistik</span>
       <div class="bg-white/20 rounded-full p-1 mt-1">
-        <ChevronRight class="w-4 h-4 transition-transform duration-500" :class="isOpen ? 'rotate-180' : ''" />
+        <Icon name="lucide:chevron-right" class="w-4 h-4 transition-transform duration-500" :class="isOpen ? 'rotate-180' : ''" />
       </div>
     </button>
   </div>
@@ -56,7 +56,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Users, ChevronRight, BarChart2 } from 'lucide-vue-next'
 
 const isOpen = ref(false)
 

@@ -6,7 +6,6 @@ import { storeToRefs } from 'pinia'
 import VuePdfApp from 'vue3-pdf-app'
 import 'vue3-pdf-app/dist/icons/main.css'
 import { getStorageUrl } from '@/utils/helpers'
-import { FileText, Eye, Download, ArrowRight, ChevronLeft, ChevronRight, X } from 'lucide-vue-next'
 
 const dokumentStore = useDokumentStore()
 const { dokuments, loading, error } = storeToRefs(dokumentStore)
@@ -106,7 +105,7 @@ const goToDot = (index) => {
         <router-link to="/dokumen" class="group flex items-center gap-2 text-sm font-bold text-white/70 hover:text-[#e8a020] transition-colors">
           Lihat Semua Dokumen
           <div class="w-8 h-8 rounded-full bg-white/10 shadow-sm border border-white/20 flex items-center justify-center group-hover:border-[#e8a020] group-hover:bg-[#e8a020] group-hover:text-[#071840] text-white transition-all">
-             <ArrowRight class="w-4 h-4" />
+             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </div>
         </router-link>
       </div>
@@ -126,14 +125,14 @@ const goToDot = (index) => {
           class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
           aria-label="Previous"
         >
-          <ChevronLeft class="w-6 h-6" />
+          <Icon name="lucide:chevron-left" class="w-6 h-6" />
         </button>
         <button
           @click="scrollRight"
           class="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
           aria-label="Next"
         >
-          <ChevronRight class="w-6 h-6" />
+          <Icon name="lucide:chevron-right" class="w-6 h-6" />
         </button>
 
         <!-- Carousel -->
@@ -154,7 +153,7 @@ const goToDot = (index) => {
             <!-- Icon Section -->
             <div class="p-5 pb-2 relative z-10 flex items-start justify-between">
               <div class="w-12 h-12 bg-blue-50 text-[#1e5ca8] rounded-2xl flex items-center justify-center group-hover:bg-[#1e5ca8] group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
-                <FileText class="w-6 h-6" />
+                <Icon name="lucide:file-text" class="w-6 h-6" />
               </div>
               <span v-if="doc.kategori?.nama" class="bg-gray-50 text-gray-600 text-[9px] font-bold px-2.5 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[110px] truncate">
                 {{ doc.kategori.nama }}
@@ -172,13 +171,13 @@ const goToDot = (index) => {
                   @click="openFlipbook(doc)"
                   class="flex items-center justify-center gap-1.5 text-xs font-bold text-blue-600 bg-blue-50/80 border border-transparent hover:bg-blue-600 hover:text-white py-2 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  <Eye class="w-3.5 h-3.5" /> Lihat
+                  <Icon name="lucide:eye" class="w-3.5 h-3.5" /> Lihat
                 </button>
                 <button
                   @click="unduh(doc)"
                   class="flex items-center justify-center gap-1.5 text-xs font-bold text-[#e8a020] bg-[#f8f9fc]/80 border border-transparent hover:bg-[#0a2463] hover:text-white py-2 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  <Download class="w-3.5 h-3.5" /> Unduh
+                  <Icon name="lucide:download" class="w-3.5 h-3.5" /> Unduh
                 </button>
               </div>
             </div>
@@ -208,11 +207,11 @@ const goToDot = (index) => {
         <div class="relative w-full max-w-5xl h-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col transform transition-all">
           <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0">
             <h3 class="font-bold text-gray-900 flex items-center gap-2">
-              <FileText class="w-5 h-5 text-[#1e5ca8]" />
+              <Icon name="lucide:file-text" class="w-5 h-5 text-[#1e5ca8]" />
               Preview Dokumen
             </h3>
             <button @click="closeFlipbook" class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">
-              <X class="w-5 h-5" />
+              <Icon name="lucide:x" class="w-5 h-5" />
             </button>
           </div>
           <div class="flex-1 w-full bg-gray-100 relative">

@@ -30,7 +30,7 @@
             
             <div class="relative z-10">
               <div class="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center mb-4 border border-white/20 shadow-inner">
-                <Calendar class="w-6 h-6 text-white" />
+                <Icon name="lucide:calendar" class="w-6 h-6 text-white" />
               </div>
               <h3 class="text-2xl font-black text-white mb-2 leading-tight drop-shadow-sm">
                 Jadwal & <br/>Agenda Daerah
@@ -42,7 +42,7 @@
 
             <router-link to="/agenda" class="relative z-10 mt-6 inline-flex items-center justify-between w-full bg-gradient-to-r from-[#e8a020] to-[#d48f10] hover:from-[#c98918] hover:to-[#b3770d] text-[#0a2463] font-black px-5 py-3.5 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-[#e8a020]/30 active:scale-[0.98] group/btn border border-white/10">
               <span>Jelajahi Agenda</span>
-              <ArrowRight class="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform text-[#0a2463]" />
+              <Icon name="lucide:arrow-right" class="w-5 h-5 transform group-hover/btn:translate-x-1 transition-transform text-[#0a2463]" />
             </router-link>
           </div>
         </div>
@@ -122,7 +122,7 @@
               <div class="flex items-center gap-3">
                 <div class="shrink-0 w-10 h-10 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors overflow-hidden border border-emerald-100">
                    <img v-if="kategori.thumbnail" :src="getStorageUrl(kategori.thumbnail)" class="w-6 h-6 object-contain group-hover:brightness-0 group-hover:invert" />
-                   <ArrowRight v-else class="w-4 h-4" />
+                   <Icon name="lucide:arrow-right" v-else class="w-4 h-4" />
                 </div>
                 <h3 class="font-semibold text-sm text-gray-800 leading-snug group-hover:text-emerald-600 transition-colors">
                   {{ kategori.nama }}
@@ -144,7 +144,6 @@
 import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import dayjs from 'dayjs'
-import { ArrowRight, Calendar } from 'lucide-vue-next'
 import { getStorageUrl } from '@/utils/helpers'
 
 const pengumuman = ref([])

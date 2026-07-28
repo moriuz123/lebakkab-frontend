@@ -31,12 +31,12 @@
             
             <div class="flex flex-wrap items-center gap-6 text-sm text-gray-500 font-medium">
               <div class="flex items-center gap-2">
-                <Calendar class="w-4 h-4 text-[#e8a020]" />
+                <Icon name="lucide:calendar" class="w-4 h-4 text-[#e8a020]" />
                 <span class="text-gray-400">Diterbitkan:</span>
                 {{ formatDate(pengumuman.created_at, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
               </div>
               <div v-if="pengumuman.tgl_pelaksanaan" class="flex items-center gap-2 bg-blue-50 text-[#1e5ca8] px-3 py-1 rounded-md border border-blue-100">
-                <CalendarDays class="w-4 h-4 text-[#1e5ca8]" />
+                <Icon name="lucide:calendar-days" class="w-4 h-4 text-[#1e5ca8]" />
                 <span class="font-bold">Pelaksanaan:</span>
                 {{ formatDate(pengumuman.tgl_pelaksanaan, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) }}
               </div>
@@ -79,7 +79,6 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
-import { Calendar, CalendarDays } from 'lucide-vue-next'
 
 import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarPengumuman from '@/components/SidebarPengumuman.vue'

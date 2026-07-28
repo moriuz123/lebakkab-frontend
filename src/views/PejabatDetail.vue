@@ -38,7 +38,7 @@
               class="relative z-10 w-full max-w-[220px] h-auto object-cover object-bottom drop-shadow-[0_20px_20px_rgba(0,0,0,0.3)] filter contrast-105 group-hover:scale-105 transition-transform duration-700"
             />
             <div v-else class="relative z-10 w-full h-[300px] flex flex-col items-center justify-center text-white/50 pb-8">
-              <User class="w-24 h-24 mb-4" />
+              <Icon name="lucide:user" class="w-24 h-24 mb-4" />
               <span class="font-medium text-sm">Foto Resmi</span>
             </div>
           </div>
@@ -57,7 +57,7 @@
             <div class="space-y-4 text-left">
               <div v-if="store.pejabatDetail.periode" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#1e5ca8]/30 transition-colors">
                 <div class="w-10 h-10 rounded-xl bg-orange-50 text-[#e8a020] flex items-center justify-center shrink-0">
-                   <Calendar class="w-5 h-5" />
+                   <Icon name="lucide:calendar" class="w-5 h-5" />
                 </div>
                 <div>
                   <p class="text-xs font-bold text-gray-400 uppercase mb-0.5">Periode Jabatan</p>
@@ -67,7 +67,7 @@
 
               <div v-if="store.pejabatDetail.nip" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#1e5ca8]/30 transition-colors">
                 <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
-                   <BadgeCheck class="w-5 h-5" />
+                   <Icon name="lucide:badge-check" class="w-5 h-5" />
                 </div>
                 <div>
                   <p class="text-xs font-bold text-gray-400 uppercase mb-0.5">NIP</p>
@@ -77,7 +77,7 @@
 
               <div v-if="store.pejabatDetail.pangkat_golongan" class="flex items-start gap-4 p-4 rounded-2xl bg-gray-50 border border-gray-100 hover:border-[#1e5ca8]/30 transition-colors">
                 <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-500 flex items-center justify-center shrink-0">
-                   <Star class="w-5 h-5" />
+                   <Icon name="lucide:star" class="w-5 h-5" />
                 </div>
                 <div>
                   <p class="text-xs font-bold text-gray-400 uppercase mb-0.5">Pangkat / Golongan</p>
@@ -97,7 +97,7 @@
             
             <div class="flex items-center gap-4 mb-8 relative z-10">
               <div class="w-14 h-14 rounded-2xl bg-gray-50 text-gray-700 flex items-center justify-center border border-gray-100 shadow-sm group-hover:bg-[#1e5ca8] group-hover:text-white transition-colors duration-500">
-                <Info class="w-7 h-7" />
+                <Icon name="lucide:info" class="w-7 h-7" />
               </div>
               <h3 class="text-2xl font-black text-gray-900">Tentang Pejabat</h3>
             </div>
@@ -114,7 +114,7 @@
               
               <div class="flex items-center gap-4 mb-8 relative z-10">
                 <div class="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors duration-500">
-                  <GraduationCap class="w-7 h-7" />
+                  <Icon name="lucide:graduation-cap" class="w-7 h-7" />
                 </div>
                 <h3 class="text-2xl font-black text-gray-900">Riwayat Pendidikan</h3>
               </div>
@@ -129,7 +129,7 @@
               
               <div class="flex items-center gap-4 mb-8 relative z-10">
                 <div class="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center border border-orange-100 shadow-sm group-hover:bg-orange-600 group-hover:text-white transition-colors duration-500">
-                  <Briefcase class="w-7 h-7" />
+                  <Icon name="lucide:briefcase" class="w-7 h-7" />
                 </div>
                 <h3 class="text-2xl font-black text-gray-900">Riwayat Karir & Jabatan</h3>
               </div>
@@ -144,20 +144,20 @@
             <span class="text-sm font-bold text-gray-500">Kanal Resmi:</span>
             <div class="flex gap-3">
               <a v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).instagram" :href="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).instagram" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
-                <Instagram class="w-5 h-5" />
+                <Icon name="lucide:instagram" class="w-5 h-5" />
               </a>
               <a v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).twitter" :href="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).twitter" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-400 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
-                <Twitter class="w-5 h-5" />
+                <Icon name="lucide:twitter" class="w-5 h-5" />
               </a>
               <a v-if="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).facebook" :href="(store.pejabatDetail.social_media || store.pejabatDetail.sosmed).facebook" target="_blank" class="w-10 h-10 rounded-full bg-gray-50 border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white hover:border-transparent transition-all shadow-sm transform hover:scale-110">
-                <Facebook class="w-5 h-5" />
+                <Icon name="lucide:facebook" class="w-5 h-5" />
               </a>
             </div>
           </div>
           
           <div class="mt-12 flex justify-start">
              <router-link to="/profil-pejabat" class="inline-flex items-center gap-2 px-5 py-2.5 text-sm font-bold text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-xl transition-colors">
-               <ArrowLeft class="w-4 h-4" /> Kembali ke Daftar
+               <Icon name="lucide:arrow-left" class="w-4 h-4" /> Kembali ke Daftar
              </router-link>
           </div>
 
@@ -175,7 +175,6 @@ import { useRoute } from 'vue-router'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import { usePejabatStore } from '@/stores/pejabat'
 import { getStorageUrl } from '@/utils/helpers'
-import { User, Calendar, Info, GraduationCap, Briefcase, Instagram, Twitter, Facebook, ArrowLeft, BadgeCheck, Star } from 'lucide-vue-next'
 
 const store = usePejabatStore()
 const route = useRoute()

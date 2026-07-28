@@ -112,11 +112,11 @@
               }}
             </p>
             <div class="flex items-center gap-3">
-              <Mail class="w-4 h-4" />
+              <Icon name="lucide:mail" class="w-4 h-4" />
               <span>{{ profil?.email || 'kontak@lebakkab.go.id' }}</span>
             </div>
             <div class="flex items-center gap-3">
-              <Phone class="w-4 h-4" />
+              <Icon name="lucide:phone" class="w-4 h-4" />
               <span>{{ profil?.telepon || '+62 252 201 001' }}</span>
             </div>
           </div>
@@ -140,11 +140,10 @@
 
 <script>
 import axios from '@/utils/api'
-import { Facebook, Instagram, Twitter, Mail, Phone, Share2, AtSign, Camera } from 'lucide-vue-next'
 
 export default {
   name: 'AppFooter',
-  components: { Facebook, Instagram, Twitter, Mail, Phone, Share2, AtSign, Camera },
+  components: {  },
   data() {
     return {
       footer: {

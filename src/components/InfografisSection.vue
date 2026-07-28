@@ -21,7 +21,7 @@
         >
           Semua Infografis
           <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-[#1e5ca8] group-hover:bg-[#f8f9fc] transition-all">
-             <ArrowRight class="w-4 h-4" />
+             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </div>
         </router-link>
       </div>
@@ -41,14 +41,14 @@
           class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
           aria-label="Previous"
         >
-          <ChevronLeft class="w-6 h-6" />
+          <Icon name="lucide:chevron-left" class="w-6 h-6" />
         </button>
         <button
           @click="scrollRight"
           class="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
           aria-label="Next"
         >
-          <ChevronRight class="w-6 h-6" />
+          <Icon name="lucide:chevron-right" class="w-6 h-6" />
         </button>
 
         <!-- carousel scrollable -->
@@ -73,7 +73,7 @@
               />
               <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <div class="bg-white/20 backdrop-blur-md p-4 rounded-full text-white transform scale-50 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-500 delay-100 border border-white/30 shadow-2xl">
-                  <ZoomIn class="w-8 h-8" />
+                  <Icon name="lucide:zoom-in" class="w-8 h-8" />
                 </div>
               </div>
             </div>
@@ -116,7 +116,7 @@
             @click="closePreview"
             class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white/70 hover:text-white bg-black/20 hover:bg-black/50 p-3 rounded-full backdrop-blur-md transition-all duration-300 pointer-events-auto z-10"
           >
-            <X class="w-6 h-6" />
+            <Icon name="lucide:x" class="w-6 h-6" />
           </button>
           
           <button
@@ -124,7 +124,7 @@
             @click="prevPreview"
             class="absolute left-4 sm:-ml-12 text-white/70 hover:text-white bg-black/20 hover:bg-black/50 p-3 rounded-full backdrop-blur-md transition-all pointer-events-auto z-10"
           >
-            <ChevronLeft class="w-8 h-8" />
+            <Icon name="lucide:chevron-left" class="w-8 h-8" />
           </button>
 
           <img
@@ -138,7 +138,7 @@
             @click="nextPreview"
             class="absolute right-4 sm:-mr-12 text-white/70 hover:text-white bg-black/20 hover:bg-black/50 p-3 rounded-full backdrop-blur-md transition-all pointer-events-auto z-10"
           >
-            <ChevronRight class="w-8 h-8" />
+            <Icon name="lucide:chevron-right" class="w-8 h-8" />
           </button>
 
           <!-- Indicators -->
@@ -159,7 +159,6 @@
 import { ref, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useBannerStore } from '@/stores/bannerStore'
-import { ArrowRight, ChevronLeft, ChevronRight, ZoomIn, X } from 'lucide-vue-next'
 
 const bannerStore = useBannerStore()
 const { banners, loading, error } = storeToRefs(bannerStore)

@@ -46,7 +46,7 @@
             {{ item.judul }}
           </RouterLink>
           <div class="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
-            <Calendar class="w-3.5 h-3.5 text-gray-400" />
+            <Icon name="lucide:calendar" class="w-3.5 h-3.5 text-gray-400" />
             {{ formatDate(item.tanggal_publish) }}
           </div>
         </div>
@@ -59,7 +59,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { useBeritaStore } from '@/stores/useBeritaStore'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
-import { Calendar } from 'lucide-vue-next'
 
 const store = useBeritaStore()
 const activeTab = ref('latest')

@@ -14,7 +14,7 @@
         <router-link to="/aplikasi" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-[#e8a020] transition-colors">
           Lihat Semua Aplikasi
           <div class="w-8 h-8 rounded-full bg-gray-50 shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-[#1e5ca8] group-hover:bg-[#f8f9fc] transition-all">
-             <ArrowRight class="w-4 h-4" />
+             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </div>
         </router-link>
       </div>
@@ -79,13 +79,10 @@
 
 <script>
 import axios from '@/utils/api'
-import { ArrowRight } from 'lucide-vue-next'
 
 export default {
   name: 'DataAplikasiCards',
-  components: {
-    ArrowRight
-  },
+  components: {  },
   data() {
     return {
       aplikasiItems: [],

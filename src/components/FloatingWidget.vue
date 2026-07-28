@@ -13,10 +13,10 @@
         class="bg-[#e8a020] hover:bg-[#d48f10] text-[#0a2463] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#c98918] cursor-pointer mt-4 group"
       >
         <div class="bg-white/30 rounded-full p-1 mb-1">
-          <ChevronLeft class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
+          <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
         </div>
         <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">Interaksi</span>
-        <MenuIcon class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
+        <Icon name="lucide:menu" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
       </button>
 
       <!-- Drawer Content -->
@@ -27,7 +27,7 @@
         <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
           <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">Interaksi</h3>
           <div class="bg-[#0a2463] p-2.5 rounded-xl text-[#e8a020] shadow-inner">
-            <Settings class="w-5 h-5" />
+            <Icon name="lucide:settings" class="w-5 h-5" />
           </div>
         </div>
         
@@ -57,7 +57,7 @@
         </div>
         
         <!-- Background subtle icon -->
-        <Settings class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
+        <Icon name="lucide:settings" class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
       </div>
     </div>
 
@@ -98,12 +98,12 @@
             @click="showAduan = false"
             class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-full p-1.5 transition-colors"
           >
-            <X class="w-5 h-5" />
+            <Icon name="lucide:x" class="w-5 h-5" />
           </button>
           
           <div class="flex items-center gap-3 mb-6">
             <div class="bg-blue-100 p-2.5 rounded-xl text-blue-600">
-              <MessageCircle class="w-6 h-6" />
+              <Icon name="lucide:message-circle" class="w-6 h-6" />
             </div>
             <h2 class="text-xl font-bold text-gray-800">Kanal Aduan</h2>
           </div>
@@ -115,7 +115,7 @@
               class="flex items-center justify-between bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-4 rounded-xl text-gray-700 hover:text-blue-700 font-semibold transition-all group"
             >
               <span>SP4N Lapor</span>
-              <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+              <Icon name="lucide:external-link" class="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
             </a>
             <a 
               href="https://wbs.lebakkab.go.id/" 
@@ -123,7 +123,7 @@
               class="flex items-center justify-between bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-4 rounded-xl text-gray-700 hover:text-blue-700 font-semibold transition-all group"
             >
               <span>WBS Inspektorat</span>
-              <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
+              <Icon name="lucide:external-link" class="w-4 h-4 text-gray-400 group-hover:text-blue-500" />
             </a>
             <a 
               href="https://wa.me/6281944114581" 
@@ -133,7 +133,7 @@
               <div class="flex items-center gap-2">
                 <span class="text-[#e8a020] font-bold">Bot WhatsApp</span>
               </div>
-              <ExternalLink class="w-4 h-4 text-gray-400 group-hover:text-[#e8a020]" />
+              <Icon name="lucide:external-link" class="w-4 h-4 text-gray-400 group-hover:text-[#e8a020]" />
             </a>
           </div>
         </div>
@@ -152,12 +152,12 @@
             @click="showPolling = false"
             class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-full p-1.5 transition-colors"
           >
-            <X class="w-5 h-5" />
+            <Icon name="lucide:x" class="w-5 h-5" />
           </button>
           
           <div class="flex items-center gap-3 mb-6">
             <div class="bg-orange-100 p-2.5 rounded-xl text-orange-600">
-              <BarChart class="w-6 h-6" />
+              <Icon name="lucide:bar-chart" class="w-6 h-6" />
             </div>
             <h2 class="text-xl font-bold text-gray-800">Jajak Pendapat</h2>
           </div>
@@ -186,12 +186,12 @@
               class="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-3.5 rounded-xl hover:from-orange-600 hover:to-amber-600 transition-all shadow-md hover:shadow-lg flex justify-center items-center gap-2 mt-2"
             >
               <span>Kirim Suara</span>
-              <Send class="w-4 h-4" />
+              <Icon name="lucide:send" class="w-4 h-4" />
             </button>
           </div>
           <div v-else class="flex flex-col items-center justify-center py-10 text-center">
             <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-              <BarChart class="w-8 h-8 text-gray-400" />
+              <Icon name="lucide:bar-chart" class="w-8 h-8 text-gray-400" />
             </div>
             <h3 class="text-lg font-bold text-gray-800 mb-1">Belum Ada Polling</h3>
             <p class="text-gray-500 text-sm">Saat ini tidak ada jajak pendapat yang aktif.</p>
@@ -208,7 +208,7 @@
           <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-pink-500"></div>
           <div class="flex items-center gap-3">
             <div class="bg-purple-100 p-2.5 rounded-xl text-purple-600">
-              <Accessibility class="w-6 h-6" />
+              <Icon name="lucide:accessibility" class="w-6 h-6" />
             </div>
             <h2 class="text-lg font-bold text-gray-800">Aksesibilitas</h2>
           </div>
@@ -216,7 +216,7 @@
             @click="showDisabilitas = false"
             class="text-gray-400 hover:text-gray-700 bg-white shadow-sm border border-gray-100 hover:bg-gray-50 rounded-full p-2 transition-colors"
           >
-            <X class="w-4 h-4" />
+            <Icon name="lucide:x" class="w-4 h-4" />
           </button>
         </div>
 
@@ -232,7 +232,7 @@
               :class="isVoiceActive ? 'bg-purple-50 border-purple-200 text-purple-700 shadow-purple-100' : 'bg-white border-gray-200 hover:border-purple-300 hover:bg-purple-50 text-gray-700'"
             >
               <div class="flex items-center gap-3">
-                <Volume2 class="w-5 h-5" :class="isVoiceActive ? 'text-purple-600' : 'text-gray-400'" />
+                <Icon name="lucide:volume2" class="w-5 h-5" :class="isVoiceActive ? 'text-purple-600' : 'text-gray-400'" />
                 <span class="font-semibold text-sm">{{ isVoiceActive ? 'Mode Suara Aktif' : 'Aktifkan Pembaca' }}</span>
               </div>
               <div class="w-10 h-6 rounded-full relative transition-colors" :class="isVoiceActive ? 'bg-purple-500' : 'bg-gray-200'">
@@ -247,7 +247,7 @@
             
             <div class="bg-gray-50 p-4 rounded-xl space-y-4 border border-gray-100 shadow-sm">
               <div class="flex items-center justify-between">
-                <span class="text-sm font-semibold text-gray-700 flex items-center gap-2"><Type class="w-4 h-4 text-gray-400"/> Ukuran Teks</span>
+                <span class="text-sm font-semibold text-gray-700 flex items-center gap-2"><Icon name="lucide:type" class="w-4 h-4 text-gray-400"/> Ukuran Teks</span>
                 <div class="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                   <button @click="decreaseFont" class="px-3 py-1.5 hover:bg-gray-100 text-gray-600 border-r border-gray-200 hover:text-purple-600">-</button>
                   <span class="px-3 py-1.5 text-sm font-bold text-gray-800 min-w-[3.5rem] text-center">{{ fontSize }}%</span>
@@ -256,7 +256,7 @@
               </div>
               
               <div class="flex items-center justify-between">
-                <span class="text-sm font-semibold text-gray-700 flex items-center gap-2"><ArrowUpDown class="w-4 h-4 text-gray-400"/> Tinggi Baris</span>
+                <span class="text-sm font-semibold text-gray-700 flex items-center gap-2"><Icon name="lucide:arrow-up-down" class="w-4 h-4 text-gray-400"/> Tinggi Baris</span>
                 <div class="flex items-center bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
                   <button @click="decreaseLineHeight" class="px-3 py-1.5 hover:bg-gray-100 text-gray-600 border-r border-gray-200 hover:text-purple-600">-</button>
                   <span class="px-3 py-1.5 text-sm font-bold text-gray-800 min-w-[3.5rem] text-center">{{ lineHeight.toFixed(1) }}</span>
@@ -281,27 +281,27 @@
             
             <div class="grid grid-cols-2 gap-3">
               <button @click="toggleBold" class="flex flex-col items-center justify-center gap-2 p-4 bg-white border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-colors shadow-sm group">
-                <Bold class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
+                <Icon name="lucide:bold" class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
                 <span class="text-xs font-semibold text-gray-700">Tebalkan Teks</span>
               </button>
               <button @click="toggleHighlightLinks" class="flex flex-col items-center justify-center gap-2 p-4 bg-white border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-colors shadow-sm group">
-                <LinkIcon class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
+                <Icon name="lucide:link" class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
                 <span class="text-xs font-semibold text-gray-700">Sorot Tautan</span>
               </button>
               <button @click="toggleMonochrome" class="flex flex-col items-center justify-center gap-2 p-4 bg-white border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-colors shadow-sm group">
-                <MonitorPlay class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
+                <Icon name="lucide:monitor-play" class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
                 <span class="text-xs font-semibold text-gray-700">Monokrom</span>
               </button>
               <button @click="toggleHighContrast" class="flex flex-col items-center justify-center gap-2 p-4 bg-white border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-colors shadow-sm group">
-                <Sun class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
+                <Icon name="lucide:sun" class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
                 <span class="text-xs font-semibold text-gray-700">Kontras Tinggi</span>
               </button>
               <button @click="toggleBigCursor" class="flex flex-col items-center justify-center gap-2 p-4 bg-white border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-colors shadow-sm group">
-                <MousePointer2 class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
+                <Icon name="lucide:mouse-pointer2" class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
                 <span class="text-xs font-semibold text-gray-700 text-center">Kursor Besar</span>
               </button>
               <button @click="toggleReduceMotion" class="flex flex-col items-center justify-center gap-2 p-4 bg-white border border-gray-200 rounded-xl hover:border-purple-300 hover:bg-purple-50 transition-colors shadow-sm group">
-                <VideoOff class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
+                <Icon name="lucide:video-off" class="w-6 h-6 text-gray-400 group-hover:text-purple-500 transition-colors" />
                 <span class="text-xs font-semibold text-gray-700 text-center">Hentikan Animasi</span>
               </button>
             </div>
@@ -317,16 +317,16 @@
     >
       <div v-if="customAlert.show" class="bg-white shadow-2xl rounded-xl p-4 flex items-center gap-4 min-w-[320px] max-w-md pointer-events-auto border-l-4" :class="customAlert.type === 'success' ? 'border-[#1e5ca8]' : (customAlert.type === 'error' ? 'border-red-500' : 'border-orange-500')">
         <div class="rounded-full p-2 flex-shrink-0" :class="customAlert.type === 'success' ? 'bg-emerald-900 text-[#e8a020]' : (customAlert.type === 'error' ? 'bg-red-100 text-red-600' : 'bg-orange-100 text-orange-600')">
-          <CheckCircle2 v-if="customAlert.type === 'success'" class="w-6 h-6" />
-          <XCircle v-if="customAlert.type === 'error'" class="w-6 h-6" />
-          <AlertCircle v-if="customAlert.type === 'warning'" class="w-6 h-6" />
+          <Icon name="lucide:check-circle2" v-if="customAlert.type === 'success'" class="w-6 h-6" />
+          <Icon name="lucide:xcircle" v-if="customAlert.type === 'error'" class="w-6 h-6" />
+          <Icon name="lucide:alert-circle" v-if="customAlert.type === 'warning'" class="w-6 h-6" />
         </div>
         <div class="flex-1">
           <h4 class="font-bold text-gray-800 text-sm">{{ customAlert.title }}</h4>
           <p class="text-gray-600 text-xs mt-0.5">{{ customAlert.message }}</p>
         </div>
         <button @click="customAlert.show = false" class="text-gray-400 hover:text-gray-700 transition-colors p-1">
-          <X class="w-4 h-4" />
+          <Icon name="lucide:x" class="w-4 h-4" />
         </button>
       </div>
     </div>
@@ -335,7 +335,6 @@
 
 <script setup>
 import { ref, onBeforeUnmount } from 'vue'
-import { BarChart, MessageCircle, Accessibility, Pencil, Home, ChevronLeft, Settings, Menu as MenuIcon, X, ExternalLink, Send, Volume2, Type, ArrowUpDown, Bold, Link as LinkIcon, MonitorPlay, Sun, MousePointer2, VideoOff, CheckCircle2, XCircle, AlertCircle } from 'lucide-vue-next'
 import axios from '@/utils/api'
 
 // state dan logic tetap sama dengan versi kamu

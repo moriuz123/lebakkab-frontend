@@ -48,15 +48,15 @@
                   <h2 class="text-lg font-semibold text-gray-800 mb-3">Informasi Kontak</h2>
                   <ul class="space-y-2 text-gray-700">
                     <li class="flex items-start space-x-3">
-                      <MapPin class="w-5 h-5 text-primary mt-1" />
+                      <Icon name="lucide:map-pin" class="w-5 h-5 text-primary mt-1" />
                       <span>{{ opdStore.opdDetail.alamat || '-' }}</span>
                     </li>
                     <li class="flex items-start space-x-3">
-                      <Phone class="w-5 h-5 text-primary mt-1" />
+                      <Icon name="lucide:phone" class="w-5 h-5 text-primary mt-1" />
                       <span>{{ opdStore.opdDetail.telepon || '-' }}</span>
                     </li>
                     <li class="flex items-start space-x-3">
-                      <Mail class="w-5 h-5 text-primary mt-1" />
+                      <Icon name="lucide:mail" class="w-5 h-5 text-primary mt-1" />
                       <span>
                         <a
                           v-if="opdStore.opdDetail.email"
@@ -69,7 +69,7 @@
                       </span>
                     </li>
                     <li class="flex items-start space-x-3">
-                      <Globe class="w-5 h-5 text-primary mt-1" />
+                      <Icon name="lucide:globe" class="w-5 h-5 text-primary mt-1" />
                       <span>
                         <a
                           v-if="opdStore.opdDetail.website"
@@ -191,7 +191,6 @@ import { useRoute } from 'vue-router'
 import { useOpdStore } from '@/stores/opd'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarOpdDetil from '@/components/SidebarOpdDetil.vue'
-import { MapPin, Phone, Mail, Globe } from 'lucide-vue-next'
 
 const route = useRoute()
 const opdStore = useOpdStore()

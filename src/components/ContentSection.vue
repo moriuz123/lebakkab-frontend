@@ -14,7 +14,7 @@
         <router-link to="/berita" class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-[#e8a020] transition-colors">
           Lihat Semua Berita
           <div class="w-8 h-8 rounded-full bg-white shadow-sm border border-gray-200 flex items-center justify-center group-hover:border-[#1e5ca8] group-hover:bg-[#f8f9fc] transition-all">
-             <ArrowRight class="w-4 h-4" />
+             <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </div>
         </router-link>
       </div>
@@ -48,7 +48,7 @@
                   {{ featured.title }}
                 </h2>
                 <div class="flex items-center gap-2 text-sm text-gray-300 font-medium">
-                  <Calendar class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'long', year: 'numeric' }) }}
+                  <Icon name="lucide:calendar" class="w-4 h-4"/> {{ formatDate(featured.date, { month: 'long', year: 'numeric' }) }}
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@
                            {{ news.title }}
                         </h4>
                         <div class="text-[11px] text-gray-500 font-medium mt-auto flex items-center gap-1.5">
-                           <Calendar class="w-3 h-3"/> {{ formatDate(news.date) }}
+                           <Icon name="lucide:calendar" class="w-3 h-3"/> {{ formatDate(news.date) }}
                         </div>
                      </div>
                   </div>
@@ -113,10 +113,10 @@
               <!-- Hover Overlay with Actions -->
               <div class="absolute inset-0 bg-black/40 z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4">
                  <button @click="openZoomModal" class="w-12 h-12 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#0a2463] backdrop-blur-sm flex items-center justify-center transition-all transform hover:scale-110 shadow-lg" title="Perbesar Banner">
-                    <ZoomIn class="w-5 h-5" />
+                    <Icon name="lucide:zoom-in" class="w-5 h-5" />
                  </button>
                  <button @click="nextBanner" class="w-12 h-12 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#0a2463] backdrop-blur-sm flex items-center justify-center transition-all transform hover:scale-110 shadow-lg" title="Ganti Banner">
-                    <RefreshCw class="w-5 h-5" />
+                    <Icon name="lucide:refresh-cw" class="w-5 h-5" />
                  </button>
               </div>
             </div>
@@ -129,7 +129,7 @@
     <transition name="fade">
       <div v-if="showZoomModal" class="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4" @click="closeZoomModal">
         <button class="absolute top-6 right-6 text-white/50 hover:text-white transition-colors" @click="closeZoomModal">
-           <X class="w-8 h-8" />
+           <Icon name="lucide:x" class="w-8 h-8" />
         </button>
         <img :src="banners[currentBanner]" class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl" @click.stop />
       </div>
@@ -142,19 +142,10 @@ import { useBeritaStore } from '@/stores/useBeritaStore'
 import { onMounted, ref } from 'vue'
 import axios from '@/utils/api'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
-import { ArrowRight, Calendar, Clock, Image as ImageIcon, RefreshCw, ZoomIn, X } from 'lucide-vue-next'
 
 export default {
   name: 'ContentSection',
-  components: {
-    ArrowRight,
-    Calendar,
-    Clock,
-    ImageIcon,
-    RefreshCw,
-    ZoomIn,
-    X
-  },
+  components: {  },
   setup() {
     const beritaStore = useBeritaStore()
     const featured = ref(null)

@@ -116,11 +116,9 @@
             <div
               class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-[#0a2463] group-hover:to-[#071840] group-hover:border-[#1e5ca8]/50 group-hover:shadow-[#1e5ca8]/50 flex items-center justify-center"
             >
-              <component
-                :is="getIcon(item.icon)"
+              <Icon
+                :name="formatIconName(item.icon)"
                 class="h-6 w-6 sm:h-8 sm:w-8"
-                stroke="currentColor"
-                stroke-width="1.5"
               />
             </div>
             <span
@@ -179,15 +177,6 @@ import { useRouter } from 'vue-router'
 import axios from '@/utils/api'
 import { useSettingsStore } from '@/stores/settings'
 
-// === Import Lucide ===
-import * as LucideIcons from 'lucide-vue-next'
-const DefaultIcon = LucideIcons.HelpCircle
-const { Search, ChevronDown } = LucideIcons
-
-// === Import Heroicons ===
-import * as HeroiconsOutline from '@heroicons/vue/24/outline'
-import * as HeroiconsSolid from '@heroicons/vue/24/solid'
-
 // Router
 const router = useRouter()
 const settingsStore = useSettingsStore()
@@ -197,47 +186,28 @@ const batikStyle = {
   backgroundSize: '80px 80px'
 }
 
-// Format nama untuk Lucide
-const formatIconNameLucide = (name) => {
-  if (!name) return ''
-  return name
-    .replace(/[-_]/g, ' ')
-    .toLowerCase()
-    .replace(/\b\w/g, (l) => l.toUpperCase())
-    .replace(/\s+/g, '')
-}
+// Format nama icon untuk Iconify
+const formatIconName = (name) => {
+  if (!name) return 'lucide:help-circle'
 
-// Ambil icon sesuai nama (Heroicon atau Lucide)
-const getIcon = (name) => {
-  if (!name) return DefaultIcon
-
-  // Cek Heroicons
-  if (name.startsWith('heroicon-o-') || name.startsWith('heroicon-s-')) {
-    const parts = name.split('-')
-    const style = parts[1] // o atau s
-    const iconName =
-      parts
-        .slice(2)
-        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-        .join('') + 'Icon'
-
-    if (style === 'o' && HeroiconsOutline[iconName]) {
-      return HeroiconsOutline[iconName]
-    } else if (style === 's' && HeroiconsSolid[iconName]) {
-      return HeroiconsSolid[iconName]
-    }
-    console.warn(`Heroicon "${name}" tidak ditemukan, fallback ke DefaultIcon.`)
-    return DefaultIcon
+  // Jika nama menggunakan heroicon-o- / heroicon-s-
+  if (name.startsWith('heroicon-o-')) {
+    return `heroicons:${name.replace('heroicon-o-', '')}-outline`
+  }
+  if (name.startsWith('heroicon-s-')) {
+    return `heroicons:${name.replace('heroicon-s-', '')}-solid`
+  }
+  if (name.startsWith('heroicons:')) {
+    return name
   }
 
-  // Cek Lucide
-  const formatted = formatIconNameLucide(name)
-  if (formatted && LucideIcons[formatted]) {
-    return LucideIcons[formatted]
+  // Jika nama menggunakan lucide
+  if (name.startsWith('lucide-')) {
+    return `lucide:${name.replace('lucide-', '')}`
   }
 
-  console.warn(`Icon "${name}" tidak ditemukan di Heroicons/Lucide, fallback ke DefaultIcon.`)
-  return DefaultIcon
+  // Fallback (anggap lucide default)
+  return `lucide:${name}`
 }
 
 // === Hero Slider ===

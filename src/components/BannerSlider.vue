@@ -17,13 +17,13 @@
       class="absolute left-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-[#1e5ca8] p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 pointer-events-auto"
       @click="prevSlide"
     >
-      <ChevronLeft class="w-5 h-5" />
+      <Icon name="lucide:chevron-left" class="w-5 h-5" />
     </button>
     <button
       class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-[#1e5ca8] p-2 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 pointer-events-auto"
       @click="nextSlide"
     >
-      <ChevronRight class="w-5 h-5" />
+      <Icon name="lucide:chevron-right" class="w-5 h-5" />
     </button>
   </div>
 
@@ -32,7 +32,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 import axios from '@/utils/api'
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next'
 
 const banners = ref([])
 const current = ref(0)

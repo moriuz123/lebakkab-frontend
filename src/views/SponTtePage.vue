@@ -363,7 +363,6 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { Info, Map, FileSignature, PlaySquare, MessageSquare, Search, HelpCircle } from 'lucide-vue-next'
 import axios from '@/utils/api'
 import { getStorageUrl } from '@/utils/helpers'
 

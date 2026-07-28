@@ -9,7 +9,7 @@
         <div class="bg-white p-5 sm:p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div class="flex items-center gap-4">
             <div class="p-3 bg-[#f8f9fc] text-[#e8a020] rounded-xl border border-[#1e5ca8]">
-              <CalendarDays class="w-6 h-6" />
+              <Icon name="lucide:calendar-days" class="w-6 h-6" />
             </div>
             <div>
               <h2 class="text-xl font-bold text-gray-900 leading-tight">Daftar Agenda</h2>
@@ -23,7 +23,7 @@
               <input type="date" v-model="startDate" class="w-full border border-gray-200 focus:border-[#1e5ca8] focus:ring-1 focus:ring-emerald-900 rounded-xl px-4 py-2.5 text-sm text-gray-700 bg-gray-50/50 hover:bg-white transition-all outline-none shadow-inner" />
             </div>
             <div class="hidden md:block text-gray-300">
-              <ArrowRight class="w-4 h-4" />
+              <Icon name="lucide:arrow-right" class="w-4 h-4" />
             </div>
             <div class="relative flex-1 md:w-40">
               <label class="absolute -top-2 left-3 bg-white px-1.5 text-[10px] font-bold text-gray-500 uppercase tracking-wider rounded-sm transition-colors duration-200">Sampai Tanggal</label>
@@ -31,7 +31,7 @@
             </div>
             
             <button v-if="startDate || endDate" @click="startDate = ''; endDate = ''" class="p-2.5 text-red-500 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors border border-transparent hover:border-red-100" title="Reset Filter">
-              <X class="w-5 h-5" />
+              <Icon name="lucide:x" class="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -78,7 +78,7 @@
                 
                 <div class="flex flex-col sm:flex-row flex-wrap sm:items-center gap-x-5 gap-y-2 text-sm text-gray-600">
                   <div class="flex items-center gap-1.5 font-medium bg-gray-50 px-2.5 py-1 rounded-md border border-gray-100">
-                    <Clock class="w-4 h-4 text-[#e8a020]" />
+                    <Icon name="lucide:clock" class="w-4 h-4 text-[#e8a020]" />
                     <span v-if="agenda.opsi_waktu_selesai === 'selesai'">
                       {{ agenda.waktu_mulai ? agenda.waktu_mulai.slice(0, 5) : '-' }} WIB - Selesai
                     </span>
@@ -91,14 +91,14 @@
                   </div>
                   
                   <div class="flex items-center gap-1.5">
-                    <MapPin class="w-4 h-4 text-gray-400 flex-shrink-0" />
+                    <Icon name="lucide:map-pin" class="w-4 h-4 text-gray-400 flex-shrink-0" />
                     <span class="truncate max-w-full sm:max-w-[250px] text-gray-500">{{ agenda.lokasi }}</span>
                   </div>
                 </div>
               </div>
               
               <div class="hidden sm:flex flex-shrink-0 items-center justify-center w-10 h-10 rounded-full bg-gray-50 text-gray-400 border border-gray-100 group-hover:bg-[#1e5ca8] group-hover:text-white group-hover:border-[#1e5ca8] transition-all duration-300">
-                <ArrowRight class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+                <Icon name="lucide:arrow-right" class="w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
               </div>
             </div>
           </router-link>
@@ -106,7 +106,7 @@
           <!-- Empty State -->
           <div v-if="filteredAgendas.length === 0" class="flex flex-col items-center justify-center py-16 px-4 bg-white rounded-2xl border border-gray-100 border-dashed text-center">
             <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center text-gray-400 mb-4">
-              <CalendarX2 class="w-8 h-8" />
+              <Icon name="lucide:calendar-x2" class="w-8 h-8" />
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-1">Tidak Ada Agenda</h3>
             <p class="text-gray-500 max-w-sm">Maaf, kami tidak menemukan agenda pemerintahan pada rentang tanggal yang Anda pilih.</p>
@@ -127,7 +127,7 @@
           
           <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
             <div class="p-2 bg-[#f8f9fc] rounded-lg text-[#e8a020] shadow-sm border border-[#1e5ca8]/50">
-              <CalendarDays class="w-5 h-5" />
+              <Icon name="lucide:calendar-days" class="w-5 h-5" />
             </div>
             Agenda Terdekat
           </h3>
@@ -150,7 +150,7 @@
               <div class="flex-1">
                 <h4 class="text-sm font-bold text-gray-800 group-hover:text-[#e8a020] line-clamp-2 mb-1.5 leading-snug group-hover:translate-x-1 transition-transform duration-300">{{ agenda.judul }}</h4>
                 <div class="text-[11px] text-gray-500 flex items-center gap-1.5 font-medium">
-                  <Clock class="w-3.5 h-3.5 text-[#e8a020] group-hover:animate-pulse" />
+                  <Icon name="lucide:clock" class="w-3.5 h-3.5 text-[#e8a020] group-hover:animate-pulse" />
                   {{ agenda.waktu_mulai ? agenda.waktu_mulai.slice(0, 5) : '-' }} WIB
                 </div>
               </div>
@@ -169,7 +169,7 @@
 
           <h3 class="text-lg font-extrabold text-gray-900 mb-5 flex items-center gap-2 relative z-10">
             <div class="p-2 bg-blue-50 rounded-lg text-blue-600 shadow-sm border border-blue-100/50">
-              <Megaphone class="w-5 h-5" />
+              <Icon name="lucide:megaphone" class="w-5 h-5" />
             </div>
             Info & Pengumuman
           </h3>
@@ -186,7 +186,7 @@
               class="group flex gap-3 items-start border-b border-gray-50 pb-4 last:border-0 last:pb-0"
             >
               <div class="mt-0.5 text-gray-300 group-hover:text-blue-500 transition-colors">
-                <ArrowRight class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </div>
               <div>
                 <h4 class="text-sm font-semibold text-gray-800 group-hover:text-blue-600 line-clamp-2 mb-2 leading-relaxed transition-colors">{{ item.judul }}</h4>
@@ -203,7 +203,7 @@
           
           <router-link to="/pengumuman" class="relative z-10 flex items-center justify-center gap-2 w-full text-center text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white py-3 rounded-xl mt-5 transition-all duration-300 shadow-sm hover:shadow-md hover:shadow-blue-500/20">
             Lihat Semua
-            <ArrowRight class="w-4 h-4" />
+            <Icon name="lucide:arrow-right" class="w-4 h-4" />
           </router-link>
         </div>
 
@@ -214,14 +214,14 @@
           
           <!-- Ornamen Dekoratif -->
           <div class="absolute -right-4 -bottom-4 opacity-20 group-hover:scale-125 group-hover:-rotate-12 transition-all duration-700">
-            <Info class="w-40 h-40" />
+            <Icon name="lucide:info" class="w-40 h-40" />
           </div>
           <div class="absolute top-0 right-0 w-24 h-24 bg-white opacity-10 rounded-full blur-2xl group-hover:opacity-20 transition-opacity"></div>
           
           <div class="relative z-10 flex flex-col h-full justify-between">
             <div>
               <div class="w-10 h-10 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center mb-4 border border-white/30">
-                <Info class="w-6 h-6 text-white" />
+                <Icon name="lucide:info" class="w-6 h-6 text-white" />
               </div>
               <h3 class="text-xl font-black mb-2 tracking-tight">Pusat Informasi</h3>
               <p class="text-white/90 text-sm mb-6 leading-relaxed font-medium">
@@ -247,7 +247,6 @@ import { useAgendaStore } from '@/stores/agenda'
 import { usePengumumanStore } from '@/stores/pengumuman'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import { formatDate } from '@/utils/helpers'
-import { CalendarDays, Clock, MapPin, ArrowRight, X, CalendarX2, Megaphone, Info } from 'lucide-vue-next'
 
 const agendaStore = useAgendaStore()
 const pengumumanStore = usePengumumanStore()

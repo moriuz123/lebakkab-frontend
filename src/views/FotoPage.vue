@@ -43,7 +43,7 @@
             <div
               class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"
             >
-              <ZoomIn class="w-10 h-10 text-white" />
+              <Icon name="lucide:zoom-in" class="w-10 h-10 text-white" />
             </div>
           </div>
 
@@ -76,7 +76,7 @@
           class="absolute top-3 right-3 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 focus:outline-none"
           @click="closePreview"
         >
-          <X class="w-5 h-5" />
+          <Icon name="lucide:x" class="w-5 h-5" />
         </button>
 
         <img
@@ -99,7 +99,6 @@ import { storeToRefs } from 'pinia'
 import { useFotoStore } from '@/stores/foto'
 import PageHeader2 from '@/components/PageHeader2.vue'
 
-import { ZoomIn, X } from 'lucide-vue-next'
 
 const fotoStore = useFotoStore()
 const { fotos, loading, error } = storeToRefs(fotoStore)
