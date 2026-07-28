@@ -1,15 +1,21 @@
 <template>
-  <section class="relative bg-gray-900 py-16 sm:py-20 lg:py-24 overflow-hidden flex flex-col justify-center items-center text-center min-h-[250px] sm:min-h-[300px]">
+  <section class="relative bg-gray-900 py-10 sm:py-14 lg:py-16 overflow-hidden flex flex-col justify-center items-center text-center min-h-[180px] sm:min-h-[220px]">
     <!-- Background Gradient / Image Overlay -->
     <div class="absolute inset-0 z-0">
-      <img :src="'/storage/images/header-bg.jpg'" alt="Header Background" class="w-full h-full object-cover opacity-30" @error="(e) => e.target.style.display = 'none'" />
+      <div class="absolute top-0 right-0 w-[70%] sm:w-[60%] h-full">
+        <img :src="'/storage/images/header-bg.jpg'" alt="Header Background" class="w-full h-full object-cover opacity-60" style="-webkit-mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%); mask-image: linear-gradient(to left, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);" @error="(e) => e.target.style.display = 'none'" />
+      </div>
       <div class="absolute inset-0 bg-gradient-to-r from-[#0a2463]/90 via-[#0a2463]/80 to-[#071840]/90 mix-blend-multiply"></div>
+      
+      <!-- Subtle Pattern Texture -->
+      <div class="absolute inset-0 opacity-20" style="background-image: radial-gradient(circle, #ffffff 1.5px, transparent 1.5px); background-size: 16px 16px;"></div>
+      
       <div class="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-transparent to-transparent"></div>
     </div>
 
     <!-- Judul -->
     <h1
-      class="relative z-10 text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 sm:mb-6 leading-tight drop-shadow-xl px-4"
+      class="relative z-10 text-2xl sm:text-3xl lg:text-4xl font-black text-white mb-4 sm:mb-6 leading-tight drop-shadow-xl px-4"
       v-html="formattedTitle"
     ></h1>
 

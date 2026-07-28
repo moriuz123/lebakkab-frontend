@@ -40,6 +40,11 @@ const router = createRouter({
   },
   routes: [
     {
+      path: '/kontak',
+      name: 'KontakPage',
+      component: KontakPage,
+    },
+    {
       path: '/',
       name: 'home',
       component: HomeView,
