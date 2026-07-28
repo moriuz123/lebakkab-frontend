@@ -28,6 +28,7 @@ import PejabatPage from '@/views/PejabatPage.vue'
 import PejabatDetail from '@/views/PejabatDetail.vue'
 import ProfilKabupaten from '@/views/ProfilKabupaten.vue'
 import SponTtePage from '@/views/SponTtePage.vue' // ✅ import SPON TTE
+import KontakPage from '@/views/KontakPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
