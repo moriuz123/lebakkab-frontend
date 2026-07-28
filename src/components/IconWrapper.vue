@@ -1,9 +1,9 @@
 <template>
-  <Icon :icon="name" />
+  <IconifyIcon :icon="name" />
 </template>
 
 <script setup>
-import { Icon } from '@iconify/vue'
+import { Icon as IconifyIcon } from '@iconify/vue'
 
 defineProps({
   name: {
