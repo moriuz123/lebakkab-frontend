@@ -77,7 +77,7 @@
           @submit.prevent="doSearch"
           class="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-1.5 sm:p-2 shadow-2xl overflow-hidden transition-all duration-300 focus-within:bg-white/20 focus-within:border-white/40"
         >
-          <Search class="w-5 h-5 sm:w-6 sm:h-6 text-white/70 ml-3 sm:ml-4 flex-shrink-0" />
+          <Icon name="lucide:search" class="w-5 h-5 sm:w-6 sm:h-6 text-white/70 ml-3 sm:ml-4 flex-shrink-0" />
           <input
             v-model="searchQuery"
             type="text"
@@ -166,7 +166,7 @@
       class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden sm:flex flex-col items-center text-white/50"
     >
       <span class="text-xs font-bold tracking-widest uppercase mb-2">Jelajahi</span>
-      <ChevronDown class="w-6 h-6" />
+      <Icon name="lucide:chevron-down" class="w-6 h-6" />
     </div>
   </section>
 </template>

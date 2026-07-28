@@ -39,7 +39,7 @@
               class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
             >
               <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
-                <component :is="item.icon" class="w-5 h-5" />
+                <Icon :name="item.icon" class="w-5 h-5" />
               </div>
               <span class="text-sm font-semibold">{{ item.label }}</span>
             </button>
@@ -49,7 +49,7 @@
               class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
             >
               <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
-                <component :is="item.icon" class="w-5 h-5" />
+                <Icon :name="item.icon" class="w-5 h-5" />
               </div>
               <span class="text-sm font-semibold">{{ item.label }}</span>
             </a>
@@ -75,12 +75,12 @@
           @click="handleAction(item.type)"
           class="flex flex-col items-center focus:outline-none"
         >
-          <component :is="item.icon" class="w-6 h-6 mb-1" />
+          <Icon :name="item.icon" class="w-6 h-6 mb-1" />
           <span>{{ item.label }}</span>
         </button>
 
         <a v-else :href="item.link" class="flex flex-col items-center focus:outline-none">
-          <component :is="item.icon" class="w-6 h-6 mb-1" />
+          <Icon :name="item.icon" class="w-6 h-6 mb-1" />
           <span>{{ item.label }}</span>
         </a>
       </div>
@@ -364,18 +364,18 @@ const fontSize = ref(100)
 const lineHeight = ref(1)
 
 const items = [
-  { icon: BarChart, label: 'Polling', type: 'polling' },
-  { icon: MessageCircle, label: 'Aduan', type: 'aduan' },
-  { icon: Accessibility, label: 'Aksesibilitas', type: 'disabilitas' },
-  { icon: Pencil, label: 'Kritik & Saran', type: 'link', link: '/kritik-saran' },
+  { icon: 'lucide:bar-chart', label: 'Polling', type: 'polling' },
+  { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
+  { icon: 'lucide:accessibility', label: 'Aksesibilitas', type: 'disabilitas' },
+  { icon: 'lucide:pencil', label: 'Kritik & Saran', type: 'link', link: '/kritik-saran' },
 ]
 
 const mobileItems = [
-  { icon: BarChart, label: 'Polling', type: 'polling' },
-  { icon: MessageCircle, label: 'Aduan', type: 'aduan' },
-  { icon: Home, label: 'Beranda', type: 'link', link: '/' },
-  { icon: Accessibility, label: 'Akses', type: 'disabilitas' },
-  { icon: Pencil, label: 'Kritik', type: 'link', link: '/kritik-saran' },
+  { icon: 'lucide:bar-chart', label: 'Polling', type: 'polling' },
+  { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
+  { icon: 'lucide:home', label: 'Beranda', type: 'link', link: '/' },
+  { icon: 'lucide:accessibility', label: 'Akses', type: 'disabilitas' },
+  { icon: 'lucide:pencil', label: 'Kritik', type: 'link', link: '/kritik-saran' },
 ]
 
 const handleAction = async (type) => {
