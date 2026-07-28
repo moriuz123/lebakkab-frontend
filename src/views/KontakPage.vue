@@ -1,21 +1,17 @@
 <template>
-  <div class="kontak-page pb-16 font-sans bg-gray-50 min-h-screen">
+  <div class="kontak-page bg-gray-50 min-h-screen pb-16 font-sans">
     <!-- Header -->
-    <div class="bg-blue-900 text-white pt-24 pb-12 px-6 sm:px-12 rounded-b-[3rem] shadow-xl relative overflow-hidden">
-      <!-- Ornamen Latar -->
-      <div class="absolute -right-20 -top-20 w-72 h-72 bg-blue-600/30 rounded-full blur-3xl"></div>
-      <div class="absolute -left-20 -bottom-20 w-64 h-64 bg-yellow-500/20 rounded-full blur-3xl"></div>
-      
-      <div class="relative z-10 max-w-7xl mx-auto flex flex-col items-center text-center">
-        <h1 class="text-3xl md:text-5xl font-black mb-4 drop-shadow-md">Kontak Kami</h1>
-        <p class="text-blue-100 text-sm md:text-base max-w-2xl">
-          Hubungi kami melalui kanal resmi di bawah ini untuk layanan informasi, pengaduan, maupun bantuan terkait {{ kontakData?.nama_instansi || 'Pemerintah Daerah' }}.
-        </p>
-      </div>
-    </div>
+    <PageHeader2 
+      title="Kontak Kami" 
+      :subtitle="'Hubungi kami melalui kanal resmi di bawah ini untuk layanan informasi, pengaduan, maupun bantuan terkait ' + (kontakData?.nama_instansi || 'Pemerintah Daerah') + '.'"
+      :breadcrumbs="[
+        { label: 'Beranda', link: '/' },
+        { label: 'Kontak', link: '/kontak' },
+      ]"
+    />
 
     <!-- Konten Utama -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 relative z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-6">
       <div v-if="loading" class="flex justify-center py-20 bg-white rounded-3xl shadow-lg border border-gray-100">
         <div class="w-12 h-12 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
       </div>
@@ -23,7 +19,7 @@
       <div v-else-if="kontakData" class="grid grid-cols-1 lg:grid-cols-12 gap-8">
         <!-- Informasi Kontak (Kiri) -->
         <div class="lg:col-span-5 flex flex-col gap-6">
-          <div class="bg-white rounded-3xl shadow-lg p-8 border border-gray-100 h-full flex flex-col">
+          <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-t-4 border-t-[#e8a020] p-8 h-full flex flex-col transition-all duration-300">
             <div class="flex items-center gap-4 mb-8 pb-6 border-b border-gray-100">
                <img v-if="kontakData.logo_url" :src="kontakData.logo_url" alt="Logo" class="w-16 h-16 object-contain drop-shadow-sm" />
                <div v-else class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
@@ -99,7 +95,7 @@
 
         <!-- Peta Interaktif (Kanan) -->
         <div class="lg:col-span-7">
-          <div class="bg-white rounded-3xl shadow-lg p-2 border border-gray-100 h-full min-h-[400px] flex flex-col relative overflow-hidden group">
+          <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-t-4 border-t-[#e8a020] p-2 h-full min-h-[400px] flex flex-col relative overflow-hidden group transition-all duration-300">
             <div v-if="kontakData.peta_embed" class="w-full h-full rounded-2xl overflow-hidden relative z-10" v-html="kontakData.peta_embed"></div>
             <div v-else class="w-full h-full rounded-2xl bg-gray-100 flex flex-col items-center justify-center text-gray-400 p-8 text-center relative z-10">
               <span class="material-symbols-outlined text-6xl mb-4 text-gray-300">map</span>
@@ -127,6 +123,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import axios from '@/utils/api'
+import PageHeader2 from '@/components/PageHeader2.vue'
 
 const kontakData = ref(null)
 const loading = ref(true)
