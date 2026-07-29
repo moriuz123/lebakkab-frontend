@@ -29,3 +29,6 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Personal docs
+dokumen_proyek/
