@@ -29,11 +29,25 @@
         </div>
       </a>
 
-      <!-- Menu Dinamis Desktop -->
+      <!-- Menu Dinamis Desktop + CTA -->
       <nav class="hidden md:flex items-center space-x-6 relative z-10">
         <template v-for="item in menu" :key="item.id">
           <MenuItem :item="item" :is-scrolled="isScrolled || isHovered" />
         </template>
+
+        <!-- CTA Button dari Backend -->
+        <a
+          v-if="cta"
+          :href="cta.url"
+          :target="cta.target"
+          :rel="cta.target === '_blank' ? 'noopener noreferrer' : undefined"
+          class="cta-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 whitespace-nowrap"
+          :class="isScrolled || isHovered ? 'cta-solid' : 'cta-ghost'"
+          :style="ctaStyle(isScrolled || isHovered)"
+        >
+          <Icon v-if="cta.icon" :name="cta.icon" class="w-4 h-4" />
+          {{ cta.label }}
+        </a>
       </nav>
 
       <!-- Tombol Hamburger Mobile -->
@@ -85,6 +99,20 @@
         <template v-for="item in menu" :key="item.id">
           <MenuItem :item="item" :is-scrolled="true" />
         </template>
+
+        <!-- CTA Button Mobile -->
+        <a
+          v-if="cta"
+          :href="cta.url"
+          :target="cta.target"
+          :rel="cta.target === '_blank' ? 'noopener noreferrer' : undefined"
+          class="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200"
+          :style="`background-color: ${cta.color}; color: #fff;`"
+          @click="isMobileOpen = false"
+        >
+          <Icon v-if="cta.icon" :name="cta.icon" class="w-4 h-4" />
+          {{ cta.label }}
+        </a>
       </div>
     </transition>
   </header>
@@ -102,11 +130,27 @@ const isHovered = ref(false)
 const isMobileOpen = ref(false)
 
 const menu = ref([])
+
 const header = computed(() => settingsStore.data || {
   site_name: '',
   satuan_kerja: '',
   logo_url: null,
 })
+
+// CTA dari settings store
+const cta = computed(() => settingsStore.cta)
+
+// Style CTA dinamis berdasarkan state scroll/hover
+const ctaStyle = (isActive) => {
+  const color = cta.value?.color || '#e8a020'
+  if (isActive) {
+    // Solid saat scroll/hover header putih
+    return `background-color: ${color}; color: #fff; border: 2px solid ${color};`
+  } else {
+    // Ghost/outline saat header transparan di atas hero
+    return `background-color: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.7);`
+  }
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 10

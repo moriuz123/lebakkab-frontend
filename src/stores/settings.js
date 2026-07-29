@@ -5,6 +5,7 @@ export const useSettingsStore = defineStore('settings', {
   state: () => ({
     data: null,
     loaded: false,
+    cta: null,   // { label, url, target, color, icon }
   }),
 
   actions: {
@@ -17,6 +18,17 @@ export const useSettingsStore = defineStore('settings', {
         if (res.data.status === 'success') {
           this.data = res.data.data
           this.loaded = true
+
+          // CTA Button dari backend
+          if (this.data.cta_label && this.data.cta_url) {
+            this.cta = {
+              label: this.data.cta_label,
+              url: this.data.cta_url,
+              target: this.data.cta_target || '_self',
+              color: this.data.cta_color || '#e8a020',
+              icon: this.data.cta_icon || null,
+            }
+          }
 
           // title
           if (this.data.site_name) {
