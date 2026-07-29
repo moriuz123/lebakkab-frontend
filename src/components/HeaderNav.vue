@@ -137,8 +137,32 @@ const header = computed(() => settingsStore.data || {
   logo_url: null,
 })
 
-// CTA dari settings store
-const cta = computed(() => settingsStore.cta)
+// CTA dari settings store, dengan fallback jika backend belum return field CTA
+const cta = computed(() => {
+  // Prioritas: data dari backend
+  if (settingsStore.cta) return settingsStore.cta
+
+  // Fallback: cek apakah ada field cta_* langsung di data header
+  const d = settingsStore.data
+  if (d?.cta_label && d?.cta_url) {
+    return {
+      label: d.cta_label,
+      url: d.cta_url,
+      target: d.cta_target || '_blank',
+      color: d.cta_color || '#e8a020',
+      icon: d.cta_icon || 'lucide:external-link',
+    }
+  }
+
+  // Fallback default jika backend tidak return CTA sama sekali
+  return {
+    label: import.meta.env.VITE_CTA_LABEL || 'Layanan Online',
+    url: import.meta.env.VITE_CTA_URL || '/layanan',
+    target: import.meta.env.VITE_CTA_TARGET || '_self',
+    color: '#e8a020',
+    icon: 'lucide:layout-grid',
+  }
+})
 
 // Style CTA dinamis berdasarkan state scroll/hover
 const ctaStyle = (isActive) => {
