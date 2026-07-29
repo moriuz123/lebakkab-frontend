@@ -20,11 +20,11 @@ export const useSettingsStore = defineStore('settings', {
           this.loaded = true
 
           // CTA Button dari backend
-          if (this.data.cta_label && this.data.cta_url) {
+          if (this.data.cta_text && this.data.cta_url) {
             this.cta = {
-              label: this.data.cta_label,
+              label: this.data.cta_text,
               url: this.data.cta_url,
-              target: this.data.cta_target || '_self',
+              target: this.data.cta_target || '_blank',
               color: this.data.cta_color || '#e8a020',
               icon: this.data.cta_icon || null,
             }
