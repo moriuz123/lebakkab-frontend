@@ -23,7 +23,7 @@
             <div class="flex items-center gap-4 mb-8 pb-6 border-b border-gray-100">
                <img v-if="kontakData.logo_url" :src="kontakData.logo_url" alt="Logo" class="w-16 h-16 object-contain drop-shadow-sm" />
                <div v-else class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center">
-                  <span class="material-symbols-outlined text-3xl">apartment</span>
+                  <Icon name="lucide:building-2" class="w-8 h-8" />
                </div>
                <div>
                  <h2 class="text-xl font-bold text-gray-900 leading-tight">{{ kontakData.nama_instansi }}</h2>
@@ -35,7 +35,7 @@
               <!-- Alamat -->
               <div v-if="kontakData.alamat" class="flex items-start gap-4 group">
                 <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                  <span class="material-symbols-outlined text-2xl">location_on</span>
+                  <Icon name="lucide:map-pin" class="w-6 h-6" />
                 </div>
                 <div>
                   <h3 class="text-sm font-bold text-gray-900 mb-1">Alamat Kantor</h3>
@@ -46,7 +46,7 @@
               <!-- Telepon -->
               <div v-if="kontakData.telepon" class="flex items-start gap-4 group">
                 <div class="w-12 h-12 rounded-xl bg-green-50 text-green-600 flex items-center justify-center shrink-0 group-hover:bg-green-600 group-hover:text-white transition-colors">
-                  <span class="material-symbols-outlined text-2xl">call</span>
+                  <Icon name="lucide:phone" class="w-6 h-6" />
                 </div>
                 <div>
                   <h3 class="text-sm font-bold text-gray-900 mb-1">Nomor Telepon</h3>
@@ -57,7 +57,7 @@
               <!-- Email -->
               <div v-if="kontakData.email" class="flex items-start gap-4 group">
                 <div class="w-12 h-12 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center shrink-0 group-hover:bg-orange-600 group-hover:text-white transition-colors">
-                  <span class="material-symbols-outlined text-2xl">mail</span>
+                  <Icon name="lucide:mail" class="w-6 h-6" />
                 </div>
                 <div>
                   <h3 class="text-sm font-bold text-gray-900 mb-1">Alamat Email</h3>
@@ -71,22 +71,22 @@
               <h3 class="text-sm font-bold text-gray-900 mb-4 text-center uppercase tracking-wider">Kanal Digital Kami</h3>
               <div class="flex flex-wrap justify-center gap-3">
                 <a v-if="kontakData.whatsapp" :href="kontakData.whatsapp" target="_blank" class="w-10 h-10 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg hover:shadow-[#25D366]/40 transition-all" title="WhatsApp">
-                  <i class="fab fa-whatsapp text-lg"></i>
+                  <Icon name="lucide:message-circle" class="w-5 h-5" />
                 </a>
                 <a v-if="kontakData.facebook" :href="kontakData.facebook" target="_blank" class="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg hover:shadow-[#1877F2]/40 transition-all" title="Facebook">
-                  <i class="fab fa-facebook-f text-lg"></i>
+                  <Icon name="lucide:facebook" class="w-5 h-5" />
                 </a>
                 <a v-if="kontakData.instagram" :href="kontakData.instagram" target="_blank" class="w-10 h-10 rounded-full bg-gradient-to-tr from-[#fd5949] to-[#d6249f] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg transition-all" title="Instagram">
-                  <i class="fab fa-instagram text-lg"></i>
+                  <Icon name="lucide:instagram" class="w-5 h-5" />
                 </a>
                 <a v-if="kontakData.twitter" :href="kontakData.twitter" target="_blank" class="w-10 h-10 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg transition-all" title="Twitter / X">
-                  <i class="fab fa-twitter text-lg"></i>
+                  <Icon name="lucide:twitter" class="w-5 h-5" />
                 </a>
                 <a v-if="kontakData.youtube" :href="kontakData.youtube" target="_blank" class="w-10 h-10 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg hover:shadow-[#FF0000]/40 transition-all" title="YouTube">
-                  <i class="fab fa-youtube text-lg"></i>
+                  <Icon name="lucide:youtube" class="w-5 h-5" />
                 </a>
                 <a v-if="kontakData.website" :href="kontakData.website" target="_blank" class="w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:scale-110 hover:shadow-lg transition-all" title="Website Utama">
-                  <span class="material-symbols-outlined text-[20px]">language</span>
+                  <Icon name="lucide:globe" class="w-5 h-5" />
                 </a>
               </div>
             </div>
@@ -98,13 +98,13 @@
           <div class="bg-white rounded-2xl shadow-sm hover:shadow-xl border border-gray-100 border-t-4 border-t-[#e8a020] p-2 h-full min-h-[400px] flex flex-col relative overflow-hidden group transition-all duration-300">
             <div v-if="kontakData.peta_embed" class="w-full h-full rounded-2xl overflow-hidden relative z-10" v-html="kontakData.peta_embed"></div>
             <div v-else class="w-full h-full rounded-2xl bg-gray-100 flex flex-col items-center justify-center text-gray-400 p-8 text-center relative z-10">
-              <span class="material-symbols-outlined text-6xl mb-4 text-gray-300">map</span>
+              <Icon name="lucide:map" class="w-16 h-16 mb-4 text-gray-300" />
               <p class="font-medium text-sm">Peta lokasi belum tersedia untuk instansi ini.</p>
             </div>
 
             <!-- Overlay Petunjuk (Opsional jika ada link maps murni) -->
             <a v-if="kontakData.maps_link" :href="kontakData.maps_link" target="_blank" class="absolute bottom-6 right-6 z-20 bg-white text-blue-700 font-bold px-5 py-3 rounded-xl shadow-xl flex items-center gap-2 hover:bg-blue-50 transition-colors border border-blue-100">
-              <span class="material-symbols-outlined text-xl">directions</span> Petunjuk Arah
+              <Icon name="lucide:navigation" class="w-5 h-5" /> Petunjuk Arah
             </a>
           </div>
         </div>
@@ -112,7 +112,7 @@
 
       <!-- State Kosong / Error -->
       <div v-else class="text-center py-20 bg-white rounded-3xl shadow-sm border border-gray-100">
-        <span class="material-symbols-outlined text-6xl text-gray-300 mb-4 block">error_outline</span>
+        <Icon name="lucide:alert-circle" class="w-16 h-16 text-gray-300 mb-4 mx-auto" />
         <h3 class="text-xl font-bold text-gray-800">Data Kontak Tidak Ditemukan</h3>
         <p class="text-gray-500 mt-2">Maaf, kami tidak dapat memuat informasi kontak saat ini.</p>
       </div>
