@@ -70,11 +70,22 @@
           </div>
 
           <!-- Mini info card below tabs -->
-          <div class="bg-gradient-to-br from-[#1e5ca8] to-[#0a2463] rounded-3xl p-6 text-white shadow-xl mt-4 relative overflow-hidden">
+          <div class="bg-gradient-to-br from-[#1e5ca8] to-[#0a2463] rounded-3xl p-6 text-white shadow-xl mt-4 relative overflow-hidden flex flex-col items-start">
              <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-             <Icon name="lucide:shield" class="w-10 h-10 text-[#e8a020] mb-4 relative z-10" />
-             <h4 class="font-black text-lg mb-1 relative z-10">Lebak Unique</h4>
-             <p class="text-blue-100 text-sm leading-relaxed relative z-10">Satu tekad mewujudkan Lebak yang sejahtera dan berdaya saing.</p>
+             <h4 class="font-black text-lg mb-1 relative z-10">Lebak Ruhay</h4>
+             <p class="text-blue-100 text-sm leading-relaxed relative z-10">(Rukun, Unggul, Hegar, Aman, dan Yakin)</p>
+             
+             <!-- CTA Button -->
+             <a
+               v-if="cta"
+               :href="cta.url"
+               :target="cta.target"
+               class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 relative z-10"
+               :style="`background-color: ${cta.color || '#e8a020'}; color: #fff;`"
+             >
+               <Icon v-if="cta.icon" :name="cta.icon" class="w-4 h-4" />
+               {{ cta.label }}
+             </a>
           </div>
         </div>
 
@@ -179,6 +190,24 @@ import { ref, computed, onMounted } from 'vue'
 import axios from '@/utils/api'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import { getStorageUrl } from '@/utils/helpers'
+import { useSettingsStore } from '@/stores/settings'
+
+const settingsStore = useSettingsStore()
+
+const cta = computed(() => {
+  if (settingsStore.cta) return settingsStore.cta
+  const d = settingsStore.data
+  if (d?.cta_text && d?.cta_url) {
+    return {
+      label: d.cta_text,
+      url: d.cta_url,
+      target: d.cta_target || '_blank',
+      color: d.cta_color || '#e8a020',
+      icon: d.cta_icon || null,
+    }
+  }
+  return null
+})
 
 const profil = ref(null)
 const loading = ref(true)
