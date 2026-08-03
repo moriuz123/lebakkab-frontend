@@ -61,7 +61,7 @@
                 class="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-colors"
                 :class="activeTab === tab.id ? 'bg-white/20 text-[#e8a020]' : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200 group-hover:text-[#1e5ca8]'"
               >
-                <component :is="tab.icon" class="w-5 h-5" />
+                <Icon :name="tab.icon" class="w-5 h-5" />
               </div>
               <span class="font-bold tracking-wide text-sm">{{ tab.label }}</span>
               
@@ -187,13 +187,13 @@ const error = ref(null)
 const activeTab = ref('visi_misi')
 
 const tabs = [
-  { id: 'visi_misi', label: 'Visi & Misi', icon: Target },
-  { id: 'sejarah', label: 'Sejarah Daerah', icon: BookOpen },
-  { id: 'geografis', label: 'Kondisi Geografis', icon: MapPin },
-  { id: 'demografi', label: 'Demografi', icon: Users },
-  { id: 'potensi', label: 'Potensi Daerah', icon: TrendingUp },
-  { id: 'lambang', label: 'Makna Lambang', icon: Shield },
-  { id: 'peta', label: 'Peta Wilayah', icon: Map }
+  { id: 'visi_misi', label: 'Visi & Misi', icon: 'lucide:target' },
+  { id: 'sejarah', label: 'Sejarah Daerah', icon: 'lucide:book-open' },
+  { id: 'geografis', label: 'Kondisi Geografis', icon: 'lucide:map-pin' },
+  { id: 'demografi', label: 'Demografi', icon: 'lucide:users' },
+  { id: 'potensi', label: 'Potensi Daerah', icon: 'lucide:trending-up' },
+  { id: 'lambang', label: 'Makna Lambang', icon: 'lucide:shield' },
+  { id: 'peta', label: 'Peta Wilayah', icon: 'lucide:map' }
 ]
 
 const fetchProfil = async () => {
