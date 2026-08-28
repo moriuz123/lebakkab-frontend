@@ -4,12 +4,15 @@
     <template v-if="hasChildren">
       <button
         type="button"
-        class="flex items-center space-x-1 px-2 py-1 focus:outline-none"
-        :class="[isScrolled ? 'text-white' : 'text-white']"
+        class="group/btn flex items-center space-x-1.5 py-2 focus:outline-none transition-colors duration-200 font-medium text-[15px]"
+        :class="[isScrolled ? 'text-gray-700 hover:text-[#0a2463]' : 'text-white/90 hover:text-white']"
         @click.prevent="toggle"
         :aria-expanded="isOpen.toString()"
       >
-        <span>{{ item.title }}</span>
+        <span class="relative">
+          {{ item.title }}
+          <span class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#e8a020] transition-all duration-300 group-hover/btn:w-full"></span>
+        </span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-4 w-4"
@@ -29,11 +32,12 @@
       <!-- Dropdown anak -->
       <div
         v-show="isOpen"
-        class="absolute left-0 top-full mt-0 bg-green-600 shadow-lg rounded-md min-w-[200px] z-50"
+        class="absolute left-0 top-full mt-4 bg-white shadow-xl rounded-lg border border-gray-100 min-w-[240px] z-50 overflow-hidden transform origin-top-left transition-all"
       >
-        <ul class="py-1">
-          <li v-for="child in item.children" :key="child.id" class="px-3 py-2 hover:bg-green-700">
-            <MenuItem :item="child" :is-scrolled="isScrolled" />
+        <div class="absolute top-0 left-0 w-full h-1 bg-[#0a2463]"></div>
+        <ul class="py-2">
+          <li v-for="child in item.children" :key="child.id">
+            <MenuItem :item="child" :is-scrolled="true" :is-child="true" />
           </li>
         </ul>
       </div>
@@ -47,12 +51,16 @@
           :href="resolveUrl(item)"
           target="_blank"
           rel="noopener noreferrer"
-          class="px-2 py-1 block whitespace-nowrap"
+          class="group/link py-2 block whitespace-nowrap transition-colors duration-200 font-medium text-[15px]"
           :class="[
-            isScrolled ? 'text-white hover:text-gray-100' : 'text-white hover:text-gray-100',
+            isScrolled ? 'text-gray-700 hover:text-[#0a2463]' : 'text-white/90 hover:text-white',
+            isChild ? 'px-4 hover:bg-gray-50 hover:text-[#0a2463] w-full text-left font-normal text-[14px]' : ''
           ]"
         >
-          {{ item.title }}
+          <span :class="{'relative': !isChild}">
+            {{ item.title }}
+            <span v-if="!isChild" class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#e8a020] transition-all duration-300 group-hover/link:w-full"></span>
+          </span>
         </a>
       </template>
 
@@ -60,20 +68,27 @@
       <template v-else-if="item.link_type && item.link_type !== 'parent'">
         <a
           :href="resolveUrl(item)"
-          class="px-2 py-1 block whitespace-nowrap"
+          class="group/link py-2 block whitespace-nowrap transition-colors duration-200 font-medium text-[15px]"
           :class="[
-            isScrolled ? 'text-white hover:text-gray-100' : 'text-white hover:text-gray-100',
+            isScrolled ? 'text-gray-700 hover:text-[#0a2463]' : 'text-white/90 hover:text-white',
+            isChild ? 'px-4 hover:bg-gray-50 hover:text-[#0a2463] w-full text-left font-normal text-[14px]' : ''
           ]"
         >
-          {{ item.title }}
+          <span :class="{'relative': !isChild}">
+            {{ item.title }}
+            <span v-if="!isChild" class="absolute left-0 -bottom-1 w-0 h-[2px] bg-[#e8a020] transition-all duration-300 group-hover/link:w-full"></span>
+          </span>
         </a>
       </template>
 
       <!-- Induk tanpa link -->
       <template v-else>
         <span
-          class="px-2 py-1 block cursor-default"
-          :class="[isScrolled ? 'text-white' : 'text-white']"
+          class="py-2 block cursor-default transition-colors duration-200 font-medium text-[15px]"
+          :class="[
+            isScrolled ? 'text-gray-700' : 'text-white',
+            isChild ? 'px-4 text-gray-400 font-normal text-[14px]' : ''
+          ]"
         >
           {{ item.title }}
         </span>
@@ -89,6 +104,7 @@ import MenuItem from './MenuItem.vue'
 const props = defineProps({
   item: { type: Object, required: true },
   isScrolled: { type: Boolean, default: false },
+  isChild: { type: Boolean, default: false }, // Prop to know if this is rendered inside a dropdown
 })
 
 const isOpen = ref(false)
@@ -115,6 +131,12 @@ const toggle = () => {
 }
 
 const resolveUrl = (item) => {
+  // Selalu gunakan URL dari backend jika tersedia (backend sudah meng-handle prefix yang tepat)
+  if (item.url) {
+    return item.url
+  }
+
+  // Fallback jika item.url kosong
   switch (item.link_type) {
     case 'home':
       return '/'
@@ -124,7 +146,11 @@ const resolveUrl = (item) => {
       return `/berita/kategori/${item.slug || item.link_ref}`
     case 'kategori_dokumen':
       return `/dokumen/kategori/${item.slug || item.link_ref}`
+    case 'pejabat':
+      return `/profil-pejabat/${item.link_ref}`
     case 'modul':
+      if (item.link_ref === 'profil-daerah') return '/profil-kabupaten'
+      if (item.link_ref === 'pejabat') return '/profil-pejabat'
       return `/${item.link_ref}`
     case 'eksternal':
       return item.url || '#'

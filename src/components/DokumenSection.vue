@@ -23,11 +23,11 @@ onMounted(() => {
 
 // Tombol scroll
 const scrollLeft = () => {
-  carouselRef.value.scrollBy({ left: -300, behavior: 'smooth' })
+  carouselRef.value.scrollBy({ left: -320, behavior: 'smooth' })
   updateActiveDot()
 }
 const scrollRight = () => {
-  carouselRef.value.scrollBy({ left: 300, behavior: 'smooth' })
+  carouselRef.value.scrollBy({ left: 320, behavior: 'smooth' })
   updateActiveDot()
 }
 
@@ -61,13 +61,16 @@ const visibleDots = computed(() => {
 
 // Hitung dot aktif berdasarkan posisi scroll
 const updateActiveDot = () => {
+  if (!carouselRef.value) return
   const maxScroll = carouselRef.value.scrollWidth - carouselRef.value.clientWidth
+  if (maxScroll <= 0) return
   const ratio = carouselRef.value.scrollLeft / maxScroll
   activeIndex.value = Math.round(ratio * (DOT_COUNT - 1))
 }
 
 // Klik dot → scroll ke posisi tertentu
 const goToDot = (index) => {
+  if (!carouselRef.value) return
   const maxScroll = carouselRef.value.scrollWidth - carouselRef.value.clientWidth
   const scrollPos = (maxScroll / (DOT_COUNT - 1)) * index
   carouselRef.value.scrollTo({ left: scrollPos, behavior: 'smooth' })
@@ -76,75 +79,105 @@ const goToDot = (index) => {
 </script>
 
 <template>
-  <section class="bg-gray-50 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section class="relative overflow-hidden py-10">
+    <!-- Gradient Background Transparent -->
+    <div
+      class="absolute inset-0 bg-gradient-to-br from-[#071840] from-60% to-[#2a6cbd] z-0 pointer-events-none"
+    ></div>
+    
+    <!-- Corak Batik Overlay (Kawung Motif) for Light Theme -->
+    <div 
+      class="absolute inset-0 pointer-events-none mix-blend-overlay z-0" 
+      style="opacity: 0.12; -webkit-mask-image: linear-gradient(to left, black 0%, transparent 50%); mask-image: linear-gradient(to left, black 0%, transparent 50%); background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23ffffff' stroke-width='3' opacity='1'%3E%3Cpath d='M0 40 Q20 20 40 40 T80 40' /%3E%3Cpath d='M0 40 Q20 60 40 40 T80 40' /%3E%3Cpath d='M40 0 Q20 20 40 40 T40 80' /%3E%3Cpath d='M40 0 Q60 20 40 40 T40 80' /%3E%3Cpath d='M40 30 L50 40 L40 50 L30 40 Z' /%3E%3Ccircle cx='40' cy='40' r='4' fill='%23ffffff' /%3E%3C/g%3E%3C/svg%3E&quot;); background-size: 80px 80px;"
+    ></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+
       <!-- Header -->
-      <div class="flex justify-between items-center mb-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4 relative z-10">
         <div>
-          <h2 class="text-2xl font-bold text-gray-800">Transparansi Anggaran</h2>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="w-8 h-1 bg-[#1e5ca8] rounded-full"></span>
+            <span class="text-[#e8a020] font-bold uppercase tracking-wider text-sm">Transparansi</span>
+          </div>
+          <h2 class="text-3xl font-black text-white tracking-tight">Dokumen Publik</h2>
         </div>
-        <a
-          href="/dokumen"
-          class="border border-green-600 text-green-600 px-4 py-2 rounded-lg hover:bg-green-50 transition"
-        >
-          Lihat Semua Laporan
-        </a>
+        <router-link to="/dokumen" class="group flex items-center gap-2 text-sm font-bold text-white/70 hover:text-[#e8a020] transition-colors">
+          Lihat Semua Dokumen
+          <div class="w-8 h-8 rounded-full bg-white/10 shadow-sm border border-white/20 flex items-center justify-center group-hover:border-[#e8a020] group-hover:bg-[#e8a020] group-hover:text-[#071840] text-white transition-all">
+             <Icon name="lucide:arrow-right" class="w-4 h-4" />
+          </div>
+        </router-link>
       </div>
 
       <!-- Content Carousel -->
-      <div v-if="loading" class="text-center text-gray-500">Loading...</div>
-      <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
+      <div v-if="loading" class="flex gap-6 overflow-hidden py-4">
+        <div v-for="i in 4" :key="i" class="w-[300px] h-64 bg-gray-200 rounded-3xl animate-pulse flex-shrink-0"></div>
+      </div>
+      <div v-else-if="error" class="bg-red-50 text-red-600 p-8 rounded-2xl text-center border border-red-100 font-bold shadow-sm">
+        {{ error }}
+      </div>
 
-      <div v-else class="relative">
+      <div v-else class="relative group/carousel">
         <!-- Tombol navigasi -->
         <button
           @click="scrollLeft"
-          class="absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:bg-gray-100"
+          class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
+          aria-label="Previous"
         >
-          ◀
+          <Icon name="lucide:chevron-left" class="w-6 h-6" />
         </button>
         <button
           @click="scrollRight"
-          class="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white p-2 rounded-full shadow hover:bg-gray-100"
+          class="absolute -right-4 sm:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg border border-gray-100 text-gray-600 hover:text-[#e8a020] hover:bg-[#f8f9fc] hover:scale-110 transition-all duration-300 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
+          aria-label="Next"
         >
-          ▶
+          <Icon name="lucide:chevron-right" class="w-6 h-6" />
         </button>
 
         <!-- Carousel -->
         <div
           ref="carouselRef"
           @scroll="updateActiveDot"
-          class="flex space-x-4 overflow-x-auto scrollbar-hide scroll-smooth py-4"
+          class="flex space-x-6 overflow-x-auto scrollbar-hide scroll-smooth py-6 px-2 -mx-2 snap-x snap-mandatory"
+          style="scrollbar-width: none; -ms-overflow-style: none;"
         >
           <div
             v-for="doc in dokuments"
             :key="doc.id"
-            class="w-[250px] sm:w-[280px] md:w-[300px] bg-white border rounded-lg shadow-sm flex-shrink-0 hover:shadow-lg transition overflow-hidden"
+            class="snap-center w-[220px] sm:w-[240px] bg-white/95 backdrop-blur-md border border-white/30 rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] hover:shadow-xl hover:shadow-[#1e5ca8]/20 hover:border-[#1e5ca8]/50 transition-all duration-500 flex-shrink-0 group overflow-hidden flex flex-col relative"
           >
-            <!-- Ikon PDF -->
-            <div class="p-4 flex justify-center bg-gray-100">
-              <img src="/images/pdf-icon.png" alt="PDF" class="h-16 w-auto" />
+            <!-- Decorative Background Shape -->
+            <div class="absolute -right-12 -top-12 w-32 h-32 bg-[#f8f9fc] rounded-full blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+
+            <!-- Icon Section -->
+            <div class="p-5 pb-2 relative z-10 flex items-start justify-between">
+              <div class="w-12 h-12 bg-blue-50 text-[#1e5ca8] rounded-2xl flex items-center justify-center group-hover:bg-[#1e5ca8] group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
+                <Icon name="lucide:file-text" class="w-6 h-6" />
+              </div>
+              <span v-if="doc.kategori?.nama" class="bg-gray-50 text-gray-600 text-[9px] font-bold px-2.5 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[110px] truncate">
+                {{ doc.kategori.nama }}
+              </span>
             </div>
 
-            <!-- Info dokumen -->
-            <div class="px-4 pb-4">
-              <p class="text-xs text-gray-500 uppercase">{{ doc.kategori?.nama }}</p>
-              <h3 class="font-semibold text-gray-800 truncate mt-1" :title="doc.judul">
+            <!-- Info -->
+            <div class="p-5 pt-3 relative z-10 flex-1 flex flex-col">
+              <h3 class="font-bold text-gray-900 text-sm leading-snug mb-5 group-hover:text-[#e8a020] transition-colors line-clamp-3" :title="doc.judul">
                 {{ doc.judul }}
               </h3>
-              <p class="text-sm text-gray-600 mt-1 line-clamp-2">{{ doc.deskripsi }}</p>
-              <div class="flex justify-between items-center mt-4">
+              
+              <div class="mt-auto grid grid-cols-2 gap-2">
                 <button
                   @click="openFlipbook(doc)"
-                  class="flex items-center text-blue-600 border border-blue-600 px-3 py-1 rounded hover:bg-blue-50 transition"
+                  class="flex items-center justify-center gap-1.5 text-xs font-bold text-blue-600 bg-blue-50/80 border border-transparent hover:bg-blue-600 hover:text-white py-2 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  👁 Lihat
+                  <Icon name="lucide:eye" class="w-3.5 h-3.5" /> Lihat
                 </button>
                 <button
                   @click="unduh(doc)"
-                  class="flex items-center bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition"
+                  class="flex items-center justify-center gap-1.5 text-xs font-bold text-[#e8a020] bg-[#f8f9fc]/80 border border-transparent hover:bg-[#0a2463] hover:text-white py-2 rounded-xl transition-all duration-300 shadow-sm hover:shadow-md"
                 >
-                  ⬇ Unduh
+                  <Icon name="lucide:download" class="w-3.5 h-3.5" /> Unduh
                 </button>
               </div>
             </div>
@@ -152,34 +185,62 @@ const goToDot = (index) => {
         </div>
 
         <!-- Dot indicators -->
-        <div class="flex justify-center mt-4 space-x-2">
-          <span
+        <div class="flex justify-center mt-6 space-x-2.5 relative z-10">
+          <button
             v-for="(dot, index) in visibleDots"
             :key="index"
             @click="goToDot(index)"
             :class="[
-              'dot-small rounded-full cursor-pointer transition',
-              activeIndex === index ? 'bg-green-600' : 'bg-gray-300',
+              'rounded-full cursor-pointer transition-all duration-300',
+              activeIndex === index ? 'bg-[#0a2463] w-8 h-2' : 'bg-gray-300 w-2 h-2 hover:bg-[#1e5ca8]',
             ]"
-          ></span>
+            :aria-label="`Go to slide ${index + 1}`"
+          ></button>
         </div>
       </div>
     </div>
 
     <!-- ✅ Modal Flipbook -->
-    <div
-      v-if="showFlipbook"
-      class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
-    >
-      <div class="bg-white w-11/12 h-5/6 rounded shadow-lg relative">
-        <button
-          @click="closeFlipbook"
-          class="absolute top-2 right-2 bg-red-500 text-white px-3 py-1 rounded"
-        >
-          ✕
-        </button>
-        <VuePdfApp :pdf="selectedFileUrl" class="w-full h-full" />
+    <Transition name="modal">
+      <div v-if="showFlipbook" class="fixed inset-0 z-[100] flex items-center justify-center px-4 py-6 sm:p-6">
+        <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" @click="closeFlipbook"></div>
+        <div class="relative w-full max-w-5xl h-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col transform transition-all">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0">
+            <h3 class="font-bold text-gray-900 flex items-center gap-2">
+              <Icon name="lucide:file-text" class="w-5 h-5 text-[#1e5ca8]" />
+              Preview Dokumen
+            </h3>
+            <button @click="closeFlipbook" class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">
+              <Icon name="lucide:x" class="w-5 h-5" />
+            </button>
+          </div>
+          <div class="flex-1 w-full bg-gray-100 relative">
+            <VuePdfApp :pdf="selectedFileUrl" class="w-full h-full absolute inset-0" theme="light" />
+          </div>
+        </div>
       </div>
-    </div>
+    </Transition>
   </section>
 </template>
+
+<style scoped>
+/* Sembunyikan scrollbar bawaan browser untuk efek carousel mulus */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.95) translateY(10px);
+}
+</style>

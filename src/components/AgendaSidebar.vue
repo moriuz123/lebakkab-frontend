@@ -4,8 +4,8 @@
     <BannerSlider />
 
     <!-- Agenda Terbaru -->
-    <section class="sidebar-section bg-white shadow-md rounded-lg p-4">
-      <h3 class="text-lg font-semibold text-gray-800 border-b pb-2 mb-4">Agenda Terbaru</h3>
+    <section class="sidebar-widget">
+      <h3 class="sidebar-title">Agenda Terbaru</h3>
 
       <div v-if="items.length === 0" class="text-gray-500 text-sm">Tidak ada agenda.</div>
 

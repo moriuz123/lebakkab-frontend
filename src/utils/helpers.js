@@ -57,11 +57,22 @@ export function formatDay(date) {
  */
 export function getStorageUrl(path) {
   if (!path) return ''
-  // If it's already an absolute URL or includes the storage path correctly, return it
-  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('/storage/')) {
+  
+  if (path.startsWith('http://') || path.startsWith('https://')) {
     return path
   }
-  // Trim leading slash if present to avoid double slash
-  const cleanPath = path.startsWith('/') ? path.slice(1) : path
-  return `/storage/${cleanPath}`
+
+  // Trim leading slash
+  let cleanPath = path.startsWith('/') ? path.slice(1) : path
+
+  // Hilangkan prefix 'storage/' jika data dari DB kebetulan menyertakannya
+  if (cleanPath.startsWith('storage/')) {
+    cleanPath = cleanPath.slice(8)
+  }
+
+  // Gunakan VITE_STORAGE_BASE_URL jika ada, default fallback '/storage/'
+  const baseUrl = import.meta.env.VITE_STORAGE_BASE_URL || '/storage'
+  const separator = baseUrl.endsWith('/') ? '' : '/'
+  
+  return `${baseUrl}${separator}${cleanPath}`
 }

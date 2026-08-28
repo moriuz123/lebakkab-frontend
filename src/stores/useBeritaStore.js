@@ -12,7 +12,8 @@ const ensureImage = (item) => {
       if (item.thumbnail.startsWith('http') || item.thumbnail.startsWith('/storage')) {
         return item.thumbnail
       }
-      return `/storage/${item.thumbnail}`
+      const baseStorage = import.meta.env.VITE_STORAGE_BASE_URL || '/storage'
+      return `${baseStorage}/${item.thumbnail}`
     }
   }
   // fallback default
@@ -39,10 +40,10 @@ export const useBeritaStore = defineStore('berita', {
       this.loading = true
       this.error = null
       try {
-        const res = await axios.get(`/api/berita?page=${page}`)
+        const res = await axios.get(`/api/berita?page=${page}&per_page=8&limit=8`)
         const raw = res.data.data || res.data || []
         const list = Array.isArray(raw) ? raw : []
-        this.beritas = list.map((it) => ({ ...it, image: ensureImage(it) }))
+        this.beritas = list.slice(0, 8).map((it) => ({ ...it, image: ensureImage(it) }))
         this.pagination = {
           current_page: res.data.current_page || 1,
           last_page: res.data.last_page || 1,
@@ -73,10 +74,10 @@ export const useBeritaStore = defineStore('berita', {
     async fetchLatest() {
       this.error = null
       try {
-        const res = await axios.get('/api/berita-latest')
+        const res = await axios.get('/api/berita-latest?per_page=8&limit=8')
         const raw = res.data.data || res.data || []
         const list = Array.isArray(raw) ? raw : []
-        this.latest = list.map((it) => ({ ...it, image: ensureImage(it) }))
+        this.latest = list.slice(0, 8).map((it) => ({ ...it, image: ensureImage(it) }))
       } catch (err) {
         this.error = err.response?.data?.message || 'Gagal memuat berita terbaru'
       }
@@ -85,10 +86,10 @@ export const useBeritaStore = defineStore('berita', {
     async fetchPopular() {
       this.error = null
       try {
-        const res = await axios.get('/api/berita-popular')
+        const res = await axios.get('/api/berita-popular?per_page=8&limit=8')
         const raw = res.data.data || res.data || []
         const list = Array.isArray(raw) ? raw : []
-        this.popular = list.map((it) => ({ ...it, image: ensureImage(it) }))
+        this.popular = list.slice(0, 8).map((it) => ({ ...it, image: ensureImage(it) }))
       } catch (err) {
         this.error = err.response?.data?.message || 'Gagal memuat berita populer'
       }

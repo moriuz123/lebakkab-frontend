@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ✅ Page Header -->
-    <PageHeader
+    <PageHeader2
       :title="`Berita Kategori: ${kategoriSlug}`"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -30,14 +30,27 @@
             :judul="berita.judul"
             :slug="berita.slug"
             :thumbnail="
-              berita.image?.includes('/storage') ? berita.image : `/storage/${berita.image}`
+              berita.image?.includes('/storage') ? berita.image : $storageUrl(berita.image)
             "
             :konten="berita.konten"
             :tanggal="berita.tanggal_publish"
             :kategori="berita.kategori?.nama || kategoriSlug"
-            :excerpt="berita.excerpt || berita.konten.slice(0, 120) + '...'"
+            :excerpt="
+              berita.excerpt ||
+              (berita.konten
+                ? stripHtml(berita.konten).slice(0, 120) + '...'
+                : 'Tidak ada ringkasan')
+            "
           />
         </div>
+
+        <!-- ✅ Pagination Navigasi -->
+        <PaginationNav
+          v-if="pagination.last_page > 1"
+          :current-page="pagination.current_page"
+          :total-pages="pagination.last_page"
+          @update:page="changePage"
+        />
       </main>
 
       <!-- ✅ Sidebar -->
@@ -49,24 +62,46 @@
 </template>
 
 <script setup>
-import { onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import { useBeritaStore } from '@/stores/useBeritaStore'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import NewsCard from '@/components/NewsCard.vue'
 import SidebarNews from '@/components/SidebarNews.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 
 const route = useRoute()
 const store = useBeritaStore()
-const kategoriSlug = route.params.slug
+const kategoriSlug = ref(route.params.slug)
+const pagination = ref({ current_page: 1, last_page: 1 })
+
+// 🔹 Fungsi bersihkan HTML
+const stripHtml = (html) => {
+  if (!html) return ''
+  const tmp = document.createElement('DIV')
+  tmp.innerHTML = html
+  return tmp.textContent || tmp.innerText || ''
+}
 
 // Ambil berita berdasarkan kategori
-const fetchKategoriBerita = async (slug) => {
+const fetchKategoriBerita = async (slug, page = 1) => {
   store.loading = true
   try {
-    const res = await axios.get(`/api/berita/kategori/${slug}`)
-    store.beritas = res.data.data || res.data || []
+    const res = await axios.get(`/api/berita/kategori/${slug}?page=${page}&limit=8&per_page=8`)
+    const raw = res.data.data || res.data || []
+    store.beritas = (Array.isArray(raw) ? raw : []).slice(0, 8)
+    
+    // Set status pagination
+    pagination.value = {
+      current_page: res.data.current_page || 1,
+      last_page: res.data.last_page || 1
+    }
+    
+    // Scroll ke atas dengan halus jika pindah halaman
+    if (page > 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   } catch (err) {
     console.error('Gagal memuat berita kategori:', err)
     store.error = err.response?.data?.message || 'Gagal memuat berita kategori'
@@ -75,16 +110,26 @@ const fetchKategoriBerita = async (slug) => {
   }
 }
 
+// 🔹 Ganti Halaman
+const changePage = (newPage) => {
+  if (newPage >= 1 && newPage <= pagination.value.last_page) {
+    fetchKategoriBerita(kategoriSlug.value, newPage)
+  }
+}
+
 // Fetch pertama kali
 onMounted(() => {
-  fetchKategoriBerita(kategoriSlug)
+  fetchKategoriBerita(kategoriSlug.value, 1)
 })
 
-// Watch saat slug berubah
+// Watch saat slug berubah (misal pindah kategori)
 watch(
   () => route.params.slug,
   (newSlug) => {
-    if (newSlug) fetchKategoriBerita(newSlug)
+    if (newSlug) {
+      kategoriSlug.value = newSlug
+      fetchKategoriBerita(newSlug, 1) // reset ke halaman 1
+    }
   },
 )
 </script>

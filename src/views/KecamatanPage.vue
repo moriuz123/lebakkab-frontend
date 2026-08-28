@@ -1,9 +1,9 @@
 <template>
   <div>
-    <PageHeader title="Data Kecamatan" />
+    <PageHeader2 title="Data Kecamatan" />
 
     <div class="max-w-7xl mx-auto px-4 py-10">
-      <div v-if="loading" class="text-center py-10 text-gray-500">Memuat data kecamatan...</div>
+      <div v-if="loading" class="page-loading-placeholder">Memuat data kecamatan...</div>
 
       <div v-if="error" class="text-center py-10 text-red-500">{{ error }}</div>
 
@@ -13,7 +13,7 @@
           v-model="searchQuery"
           type="text"
           placeholder="Masukkan nama kecamatan..."
-          class="w-full sm:w-1/2 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+          class="w-full sm:w-1/2 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-emerald-900"
         />
       </div>
 
@@ -26,18 +26,18 @@
           <div
             v-for="(kecamatan, index) in paginatedKecamatan"
             :key="kecamatan.slug || index"
-            class="relative bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-lg hover:border-green-500 transition-all duration-300 p-4 flex flex-col"
+            class="relative bg-white border border-gray-100 rounded-xl shadow-sm hover:shadow-lg hover:border-[#1e5ca8] transition-all duration-300 p-4 flex flex-col"
           >
             <div class="absolute -top-6 left-1/2 transform -translate-x-1/2">
               <img
                 v-if="kecamatan.logo"
-                :src="`/storage/${kecamatan.logo}`"
+                :src="$storageUrl(kecamatan.logo)"
                 alt="Logo Kecamatan"
-                class="h-12 w-12 rounded-full object-cover ring-2 ring-green-500 shadow-sm bg-white"
+                class="h-12 w-12 rounded-full object-cover ring-2 ring-emerald-900 shadow-sm bg-white"
               />
               <div
                 v-else
-                class="h-12 w-12 flex items-center justify-center bg-gray-100 text-gray-500 rounded-full ring-2 ring-green-400 text-[10px]"
+                class="h-12 w-12 flex items-center justify-center bg-gray-100 text-gray-500 rounded-full ring-2 ring-emerald-900 text-[10px]"
               >
                 No Logo
               </div>
@@ -56,7 +56,7 @@
                     v-if="kecamatan.website"
                     :href="kecamatan.website"
                     target="_blank"
-                    class="text-green-700 hover:underline break-all"
+                    class="text-[#e8a020] hover:underline break-all"
                   >
                     {{ kecamatan.website }}
                   </a>
@@ -71,7 +71,7 @@
             <div class="mt-auto pt-4">
               <router-link
                 :to="{ name: 'KecamatanDetail', params: { slug: kecamatan.slug || 'unknown' } }"
-                class="block text-center text-white bg-green-600 hover:bg-green-700 text-sm py-2 rounded-lg transition"
+                class="block text-center text-white bg-[#0a2463] hover:bg-[#1e5ca8] text-sm py-2 rounded-lg transition"
               >
                 Lihat Detail
               </router-link>
@@ -79,25 +79,12 @@
           </div>
         </div>
 
-        <div v-if="paginatedKecamatan.length > 0" class="flex justify-center items-center mt-10 space-x-3">
-          <button
-            @click="prevPage"
-            :disabled="currentPage === 1"
-            class="px-3 py-1 border rounded disabled:opacity-50 hover:bg-gray-100 transition"
-          >
-            Prev
-          </button>
-          <span class="text-sm font-medium text-gray-700">
-            Halaman {{ currentPage }} dari {{ totalPages }}
-          </span>
-          <button
-            @click="nextPage"
-            :disabled="currentPage === totalPages"
-            class="px-3 py-1 border rounded disabled:opacity-50 hover:bg-gray-100 transition"
-          >
-            Next
-          </button>
-        </div>
+        <PaginationNav
+          v-if="totalPages > 1"
+          :current-page="currentPage"
+          :total-pages="totalPages"
+          @update:page="(page) => currentPage = page"
+        />
       </div>
     </div>
   </div>
@@ -106,7 +93,8 @@
 <script setup>
 import { useKecamatanStore } from '@/stores/kecamatan'
 import { onMounted, computed, ref, watch } from 'vue'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 
 const kecamatanStore = useKecamatanStore()
 const currentPage = ref(1)
@@ -146,10 +134,5 @@ watch(searchQuery, () => {
   currentPage.value = 1
 })
 
-function nextPage() {
-  if (currentPage.value < totalPages.value) currentPage.value++
-}
-function prevPage() {
-  if (currentPage.value > 1) currentPage.value--
-}
+// Functions previously used for old pagination removed
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Header -->
-    <PageHeader
+    <PageHeader2
       :title="agenda?.judul || 'Detail Agenda'"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -59,7 +59,7 @@
     </div>
 
     <!-- Not Found -->
-    <div v-if="!loading && !agenda" class="text-center py-10 text-gray-500">
+    <div v-if="!loading && !agenda" class="page-loading-placeholder">
       Data agenda tidak ditemukan.
     </div>
   </div>
@@ -68,7 +68,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import AgendaSidebar from '@/components/AgendaSidebar.vue'
 import { useAgendaStore } from '@/stores/agenda'
 

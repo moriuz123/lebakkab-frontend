@@ -23,9 +23,10 @@ export default defineConfig({
         // rewrite: (path) => path.replace(/^\/api/, ''), // aktifkan jika perlu hapus prefix /api
       },
       '/storage': {
-        target: 'http://172.18.0.1:8000', // URL backend untuk storage
+        target: 'http://172.18.0.1:9000/lebakkab-media', // Proxy ke MinIO
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/storage/, ''), // Hapus tulisan /storage karena di minio tidak ada foldernya
       },
     },
   },

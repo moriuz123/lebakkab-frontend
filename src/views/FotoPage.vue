@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- Page Header -->
-    <PageHeader title="Galeri Foto" />
+    <PageHeader2 title="Galeri Foto" />
 
     <div class="max-w-6xl mx-auto px-4 py-10">
       <!-- Filter Kategori -->
@@ -20,7 +20,7 @@
       </div>
 
       <!-- Loading -->
-      <div v-if="loading" class="text-center text-gray-500">Memuat data...</div>
+      <div v-if="loading" class="page-loading-placeholder">Memuat data...</div>
 
       <!-- Error -->
       <div v-else-if="error" class="text-center text-red-500">{{ error }}</div>
@@ -35,7 +35,7 @@
           <!-- Foto dengan overlay icon -->
           <div class="relative group cursor-pointer" @click="openPreview(foto)">
             <img
-              :src="`/storage/${foto.gambar}`"
+              :src="$storageUrl(foto.gambar)"
               :alt="foto.judul"
               class="w-full h-56 object-cover"
             />
@@ -43,7 +43,7 @@
             <div
               class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition"
             >
-              <ZoomIn class="w-10 h-10 text-white" />
+              <Icon name="lucide:zoom-in" class="w-10 h-10 text-white" />
             </div>
           </div>
 
@@ -59,7 +59,7 @@
       </div>
 
       <!-- Kosong -->
-      <div v-if="!loading && filteredFotos.length === 0" class="text-center text-gray-500 mt-6">
+      <div v-if="!loading && filteredFotos.length === 0" class="page-loading-placeholder">
         Tidak ada foto tersedia.
       </div>
     </div>
@@ -76,11 +76,11 @@
           class="absolute top-3 right-3 bg-gray-800 text-white p-2 rounded-full hover:bg-gray-700 focus:outline-none"
           @click="closePreview"
         >
-          <X class="w-5 h-5" />
+          <Icon name="lucide:x" class="w-5 h-5" />
         </button>
 
         <img
-          :src="`/storage/${previewFoto.gambar}`"
+          :src="$storageUrl(previewFoto.gambar)"
           :alt="previewFoto.judul"
           class="w-full max-h-[80vh] object-contain"
         />
@@ -97,9 +97,8 @@
 import { onMounted, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useFotoStore } from '@/stores/foto'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 
-import { ZoomIn, X } from 'lucide-vue-next'
 
 const fotoStore = useFotoStore()
 const { fotos, loading, error } = storeToRefs(fotoStore)

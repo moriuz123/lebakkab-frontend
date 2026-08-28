@@ -1,170 +1,227 @@
 <template>
-  <div>
-    <PageHeader title="Daftar Pengumuman" subtitle="Informasi terbaru untuk masyarakat" />
+  <div class="bg-[#F5F5F7] min-h-screen pb-24">
+    <!-- RESTORE ORIGINAL PAGE HEADER -->
+    <PageHeader2 title="Daftar Pengumuman" subtitle="Informasi terbaru untuk masyarakat" />
 
-    <div class="max-w-7xl mx-auto px-4 py-6">
-      <!-- 🔍 Form Pencarian -->
-      <div v-if="!store.loading && !store.error" class="mb-8 flex flex-col items-center">
-        <label class="text-gray-700 font-medium mb-2 text-center"> Cari Pengumuman </label>
-
-        <input
-          v-model="store.searchQuery"
-          @input="store.currentPage = 1"
-          type="text"
-          placeholder="Masukkan kata kunci..."
-          class="w-full sm:w-1/2 border border-gray-300 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-green-500"
-        />
-      </div>
-
-      <!-- Loading -->
-      <div v-if="store.loading" class="text-center py-10 text-gray-600">
-        Memuat data pengumuman...
-      </div>
-
-      <!-- Error -->
-      <div v-else-if="store.error" class="text-center py-10 text-red-600">
-        {{ store.error }}
-      </div>
-
-      <!-- Tidak ada hasil -->
-      <div
-        v-else-if="store.filteredPengumuman.length === 0"
-        class="text-center py-10 text-gray-500 italic"
-      >
-        Tidak ada pengumuman ditemukan.
-      </div>
-
-      <!-- GRID CARD -->
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div
-          v-for="item in store.paginatedPengumuman"
-          :key="item.id"
-          class="bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden group"
-        >
-          <!-- GAMBAR + ICON ZOOM -->
-          <div
-            class="relative h-40 w-full overflow-hidden cursor-pointer"
-            @click="openImage(`/storage/${item.gambar}`)"
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      
+      <!-- Modern Search Bar -->
+      <div v-if="!store.loading && !store.error" class="mb-12 max-w-2xl mx-auto">
+        <div class="relative bg-white rounded-full shadow-md shadow-gray-200/50 flex items-center px-6 py-2.5 hover:shadow-xl hover:shadow-[#1e5ca8]/10 focus-within:shadow-xl focus-within:shadow-[#1e5ca8]/20 focus-within:ring-2 focus-within:ring-emerald-900 transition-all duration-500">
+          <Icon name="lucide:search" class="w-6 h-6 text-[#e8a020]/70" />
+          <input
+            v-model="store.searchQuery"
+            @input="store.currentPage = 1"
+            type="text"
+            placeholder="Cari pengumuman..."
+            class="w-full bg-transparent border-none focus:ring-0 text-gray-800 text-lg py-3 px-4 placeholder-gray-400 font-semibold outline-none"
+          />
+          <button 
+            v-if="store.searchQuery"
+            @click="store.searchQuery = ''; store.currentPage = 1"
+            class="p-2.5 text-gray-400 hover:text-white bg-gray-50 hover:bg-red-500 rounded-full transition-all duration-300"
           >
-            <img
-              v-if="item.gambar"
-              :src="`/storage/${item.gambar}`"
-              alt="Gambar Pengumuman"
-              class="h-full w-full object-cover group-hover:scale-105 transition duration-500"
-            />
-
-            <!-- Gradiasi overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-
-            <!-- ICON KACA PEMBESAR -->
-            <div
-              class="absolute inset-0 flex items-center justify-center opacity-70 group-hover:opacity-100 transition"
-            >
-              <div class="bg-white/80 p-3 rounded-full shadow-md">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-6 w-6 text-gray-700"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1110.5 3a7.5 7.5 0 016.15 13.65z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <!-- KONTEN CARD -->
-          <div class="p-4 flex flex-col text-center">
-            <!-- Judul -->
-            <h2 class="text-gray-800 font-semibold text-sm mb-4 leading-tight">
-              {{ item.judul }}
-            </h2>
-
-            <router-link
-              :to="`/pengumuman/${item.slug}`"
-              class="mt-auto inline-block bg-green-600 text-white text-xs py-2 px-4 rounded-full shadow-sm hover:bg-green-700 transition"
-            >
-              Selengkapnya
-            </router-link>
-          </div>
+            <Icon name="lucide:x" class="w-5 h-5" />
+          </button>
         </div>
       </div>
 
-      <!-- Pagination -->
-      <div class="flex justify-center mt-8 space-x-2" v-if="store.totalPages > 1">
-        <button
-          @click="store.prevPage"
-          :disabled="store.currentPage === 1"
-          class="px-3 py-1 rounded-lg bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
-        >
-          Prev
-        </button>
+      <!-- Loading State -->
+      <div v-if="store.loading" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 md:auto-rows-[240px] grid-flow-row-dense">
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] md:col-span-2 md:row-span-2 min-h-[300px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[200px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] min-h-[200px]"></div>
+        <div class="animate-pulse bg-gray-200 rounded-[2rem] md:col-span-2 min-h-[200px]"></div>
+      </div>
 
-        <button
-          v-for="page in store.totalPages"
-          :key="page"
-          @click="store.goToPage(page)"
-          :class="[
-            'px-3 py-1 rounded-lg',
-            store.currentPage === page
-              ? 'bg-green-500 text-white'
-              : 'bg-gray-200 hover:bg-gray-300',
-          ]"
-        >
-          {{ page }}
-        </button>
-
-        <button
-          @click="store.nextPage"
-          :disabled="store.currentPage === store.totalPages"
-          class="px-3 py-1 rounded-lg bg-gray-200 hover:bg-gray-300 disabled:opacity-50"
-        >
-          Next
+      <!-- Error State -->
+      <div v-else-if="store.error" class="bg-red-50 text-red-600 p-8 rounded-3xl border border-red-100 text-center max-w-2xl mx-auto shadow-sm">
+        <Icon name="lucide:alert-circle" class="w-16 h-16 mx-auto mb-4 opacity-50" />
+        <p class="font-bold text-xl mb-2">Terjadi Kesalahan</p>
+        <p class="font-medium text-red-500/80 mb-6">{{ store.error }}</p>
+        <button @click="store.fetchPengumuman()" class="bg-white px-8 py-3 rounded-xl text-red-600 font-bold hover:bg-red-600 hover:text-white border border-red-200 hover:border-red-600 transition-all shadow-sm hover:shadow-md">
+          Muat Ulang
         </button>
       </div>
+
+      <!-- Empty State -->
+      <div v-else-if="store.filteredPengumuman.length === 0" class="bg-white py-16 px-4 rounded-3xl border border-gray-100 border-dashed text-center max-w-2xl mx-auto shadow-sm">
+        <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-5">
+          <Icon name="lucide:search-x" class="w-10 h-10 text-gray-400" />
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">Tidak Ditemukan</h3>
+        <p class="text-gray-500 max-w-md mx-auto">Kami tidak dapat menemukan pengumuman yang sesuai dengan pencarian Anda.</p>
+        <button v-if="store.searchQuery" @click="store.searchQuery = ''; store.currentPage = 1" class="mt-6 text-[#e8a020] font-bold hover:text-[#e8a020] bg-[#f8f9fc] px-6 py-3 rounded-xl hover:bg-[#1e5ca8] transition-colors">
+          Hapus Pencarian
+        </button>
+      </div>
+
+      <!-- TRUE STRUCTURAL BENTO GRID -->
+      <div v-else class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 md:auto-rows-[240px] grid-flow-row-dense">
+        <router-link
+          v-for="(item, index) in store.paginatedPengumuman"
+          :key="item.id"
+          :to="`/pengumuman/${item.slug}`"
+          :class="[
+            'bg-white rounded-[2rem] p-5 md:p-6 shadow-[0_2px_10px_-3px_rgba(6,81,237,0.1)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-500 border border-gray-100/50 border-t-4 border-t-[#e8a020] flex flex-col group overflow-hidden',
+            getBentoClass(index)
+          ]"
+        >
+           <!-- === LARGE BENTO CARD (2x2) === -->
+           <template v-if="getBentoType(index) === 'large'">
+             <div class="w-full h-48 md:h-[55%] rounded-2xl overflow-hidden mb-4 md:mb-5 relative shrink-0 bg-gray-50">
+               <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Icon name="lucide:megaphone" class="w-16 h-16"/></div>
+               
+               <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-full text-xs font-bold text-gray-900 shadow-sm flex items-center gap-1.5">
+                 <div class="w-2 h-2 rounded-full bg-[#1e5ca8] animate-pulse"></div> Terbaru
+               </div>
+               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-4 right-4 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><Icon name="lucide:zoom-in" class="w-4 h-4" /></button>
+             </div>
+             
+             <div class="flex-1 flex flex-col justify-between">
+               <div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
+                 <h2 class="text-xl md:text-2xl font-extrabold text-gray-900 leading-snug line-clamp-3 group-hover:text-[#e8a020] transition-colors">{{ item.judul }}</h2>
+               </div>
+               <div class="mt-4 flex items-center gap-2 text-sm font-bold text-[#e8a020] bg-[#f8f9fc] w-fit px-4 py-2 rounded-xl">
+                  Baca Selengkapnya <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+               </div>
+             </div>
+           </template>
+
+           <!-- === WIDE BENTO CARD (2x1) === -->
+           <template v-else-if="getBentoType(index) === 'wide'">
+             <div class="flex flex-col md:flex-row gap-5 h-full w-full">
+               <div class="w-full md:w-2/5 h-40 md:h-full rounded-2xl overflow-hidden shrink-0 bg-gray-50 relative">
+                  <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Icon name="lucide:megaphone" class="w-10 h-10"/></div>
+                  <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><Icon name="lucide:zoom-in" class="w-4 h-4" /></button>
+               </div>
+               <div class="flex-1 flex flex-col justify-center py-2">
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'long', year: 'numeric' }) }}</div>
+                 <h2 class="text-lg md:text-xl font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-[#e8a020] transition-colors">{{ item.judul }}</h2>
+                 <div class="mt-auto pt-4 flex items-center gap-2 text-sm font-bold text-gray-500 group-hover:text-[#e8a020] transition-colors">
+                    Detail Pengumuman <Icon name="lucide:arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                 </div>
+               </div>
+             </div>
+           </template>
+
+           <!-- === TALL BENTO CARD (1x2) === -->
+           <template v-else-if="getBentoType(index) === 'tall'">
+             <div class="w-full h-48 md:h-[50%] rounded-2xl overflow-hidden mb-4 shrink-0 bg-gray-50 relative">
+               <img v-if="item.gambar" :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+               <div v-else class="w-full h-full flex items-center justify-center text-gray-300"><Icon name="lucide:megaphone" class="w-12 h-12"/></div>
+               <button v-if="item.gambar" @click.prevent="openImage($storageUrl(item.gambar))" class="absolute top-3 right-3 bg-white/20 hover:bg-white text-white hover:text-gray-900 backdrop-blur-md p-2 rounded-full opacity-0 group-hover:opacity-100 transition-all z-10"><Icon name="lucide:zoom-in" class="w-4 h-4" /></button>
+             </div>
+             <div class="flex-1 flex flex-col justify-between">
+               <div>
+                 <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short', year: 'numeric' }) }}</div>
+                 <h2 class="text-lg font-bold text-gray-900 leading-snug line-clamp-5 group-hover:text-[#e8a020] transition-colors">{{ item.judul }}</h2>
+               </div>
+               <div class="mt-4 bg-gray-50 group-hover:bg-[#f8f9fc] p-3 rounded-xl flex items-center justify-center transition-colors">
+                  <Icon name="lucide:arrow-right" class="w-5 h-5 text-gray-400 group-hover:text-[#e8a020]" />
+               </div>
+             </div>
+           </template>
+
+           <!-- === SMALL BENTO CARD (1x1) === -->
+           <template v-else>
+             <div class="flex-1 flex flex-col h-full relative">
+               <div class="text-xs font-semibold text-gray-400 mb-2 flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(item.created_at, { day: 'numeric', month: 'short' }) }}</div>
+               <h2 class="text-base font-bold text-gray-900 leading-snug line-clamp-3 group-hover:text-[#e8a020] transition-colors z-10">{{ item.judul }}</h2>
+               
+               <div class="mt-auto pt-4 flex justify-between items-end">
+                  <div class="bg-gray-50 group-hover:bg-[#f8f9fc] p-2.5 rounded-full transition-colors shrink-0">
+                     <Icon name="lucide:arrow-right" class="w-4 h-4 text-gray-400 group-hover:text-[#e8a020]" />
+                  </div>
+                  <div v-if="item.gambar" class="w-16 h-16 rounded-xl overflow-hidden shadow-sm shrink-0 relative">
+                     <img :src="$storageUrl(item.gambar)" class="w-full h-full object-cover group-hover:scale-110 transition-transform" />
+                  </div>
+               </div>
+             </div>
+           </template>
+
+        </router-link>
+      </div>
+
+      <!-- Pagination -->
+      <!-- PaginationNav -->
+      <PaginationNav
+        v-if="store.totalPages > 1"
+        :current-page="store.currentPage"
+        :total-pages="store.totalPages"
+        @update:page="store.goToPage"
+      />
     </div>
 
-    <!-- 🔍 FULLSCREEN IMAGE MODAL -->
-    <div
-      v-if="selectedImage"
-      class="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4"
-      @click="closeImage"
-    >
-      <img :src="selectedImage" class="max-w-full max-h-full rounded-lg shadow-xl" />
-    </div>
+    <!-- Image Modal -->
+    <Transition name="fade">
+      <div
+        v-if="selectedImage"
+        class="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-[100] p-4 sm:p-10"
+        @click="closeImage"
+      >
+        <button @click.stop="closeImage" class="absolute top-6 right-6 text-white/50 hover:text-white bg-white/10 hover:bg-white/30 p-3 rounded-full transition-all backdrop-blur-md hover:scale-110 hover:rotate-90 duration-300">
+          <Icon name="lucide:x" class="w-6 h-6" />
+        </button>
+        <img :src="selectedImage" class="max-w-full max-h-[90vh] object-contain rounded-2xl shadow-2xl ring-1 ring-white/10 transform transition-transform" @click.stop />
+      </div>
+    </Transition>
   </div>
 </template>
 
-<script>
-import PageHeader from '@/components/PageHeader.vue'
-import { ref } from 'vue'
+<script setup>
+import { ref, onMounted } from 'vue'
 import { usePengumumanStore } from '@/stores/pengumuman'
+import PageHeader2 from '@/components/PageHeader2.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
+import { formatDate } from '@/utils/helpers'
 
-export default {
-  name: 'ListPengumuman',
-  components: { PageHeader },
+const store = usePengumumanStore()
+const selectedImage = ref(null)
 
-  setup() {
-    const store = usePengumumanStore()
-    store.fetchPengumuman()
-
-    const selectedImage = ref(null)
-
-    const openImage = (url) => {
-      selectedImage.value = url
-    }
-
-    const closeImage = () => {
-      selectedImage.value = null
-    }
-
-    return { store, selectedImage, openImage, closeImage }
-  },
+const openImage = (url) => {
+  selectedImage.value = url
 }
+
+const closeImage = () => {
+  selectedImage.value = null
+}
+
+// ==== BENTO GRID LOGIC ====
+// Pattern ensures a perfect dense packing in a 3 or 4 column grid
+const bentoPatterns = [
+  { class: 'md:col-span-2 md:row-span-2', type: 'large' }, // Index 0
+  { class: 'md:col-span-1 md:row-span-1', type: 'small' }, // Index 1
+  { class: 'md:col-span-1 md:row-span-1', type: 'small' }, // Index 2
+  { class: 'md:col-span-2 md:row-span-1', type: 'wide' },  // Index 3
+  { class: 'md:col-span-1 md:row-span-2', type: 'tall' },  // Index 4
+  { class: 'md:col-span-1 md:row-span-1', type: 'small' }  // Index 5
+]
+
+const getBentoClass = (index) => {
+  return bentoPatterns[index % bentoPatterns.length].class
+}
+
+const getBentoType = (index) => {
+  return bentoPatterns[index % bentoPatterns.length].type
+}
+
+onMounted(() => {
+  store.fetchPengumuman()
+})
 </script>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

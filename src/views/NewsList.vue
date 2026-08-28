@@ -1,7 +1,7 @@
 <template>
   <div>
     <!-- ✅ Page Header -->
-    <PageHeader
+    <PageHeader2
       title="Berita"
       :breadcrumbs="[
         { label: 'Home', link: '/' },
@@ -10,11 +10,36 @@
     />
 
     <!-- ✅ Layout konten & sidebar -->
-    <div class="max-w-screen-xl mx-auto px-4 py-8 lg:flex lg:space-x-8">
+    <div class="page-container">
       <!-- Konten utama -->
-      <div class="lg:w-3/4">
+      <div class="page-main">
+        <!-- ✅ Filter Kategori Berita -->
+        <div class="mb-6 overflow-x-auto whitespace-nowrap pb-2 scrollbar-hide">
+          <div class="flex space-x-2">
+            <router-link
+              to="/berita"
+              class="inline-block px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm"
+              :class="{
+                'bg-gradient-to-r from-blue-600 to-blue-500 text-white shadow-blue-500/30': $route.path === '/berita',
+                'bg-white text-gray-700 border border-transparent hover:border-gray-200 hover:bg-gray-50': $route.path !== '/berita'
+              }"
+            >
+              Semua
+            </router-link>
+            
+            <router-link
+              v-for="cat in kategoriList"
+              :key="cat.id"
+              :to="`/berita/kategori/${cat.slug}`"
+              class="inline-block px-5 py-2.5 rounded-full text-sm font-semibold border border-transparent shadow-sm bg-white text-gray-700 hover:bg-gray-50 hover:border-gray-200 transition-all duration-300"
+            >
+              {{ cat.nama }}
+            </router-link>
+          </div>
+        </div>
+
         <!-- Loading state -->
-        <div v-if="store.loading" class="text-gray-500 text-center py-8">Memuat berita...</div>
+        <div v-if="store.loading" class="page-loading-placeholder">Memuat berita...</div>
 
         <!-- Jika kosong -->
         <div v-else-if="store.beritas.length === 0" class="text-gray-500 text-center py-8">
@@ -39,10 +64,18 @@
             "
           />
         </div>
+
+        <!-- ✅ Pagination Navigasi -->
+        <PaginationNav
+          v-if="pagination.last_page > 1"
+          :current-page="pagination.current_page"
+          :total-pages="pagination.last_page"
+          @update:page="changePage"
+        />
       </div>
 
       <!-- ✅ Sidebar -->
-      <aside class="lg:w-1/4 mt-8 lg:mt-0">
+      <aside class="page-sidebar">
         <SidebarNews />
       </aside>
     </div>
@@ -50,14 +83,17 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from '@/utils/api'
 import { useBeritaStore } from '@/stores/useBeritaStore'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import NewsCard from '@/components/NewsCard.vue'
 import SidebarNews from '@/components/SidebarNews.vue'
+import PaginationNav from '@/components/PaginationNav.vue'
 
 const store = useBeritaStore()
+const pagination = ref({ current_page: 1, last_page: 1 })
+const kategoriList = ref([])
 
 // 🔹 Fungsi bersihkan HTML
 const stripHtml = (html) => {
@@ -67,12 +103,34 @@ const stripHtml = (html) => {
   return tmp.textContent || tmp.innerText || ''
 }
 
-// 🔹 Ambil semua berita
-const fetchBerita = async () => {
+// 🔹 Ambil Kategori Berita
+const fetchKategori = async () => {
+  try {
+    const res = await axios.get('/api/kategori-berita')
+    kategoriList.value = (res.data || []).slice(0, 8)
+  } catch (err) {
+    console.error('Gagal memuat kategori:', err)
+  }
+}
+
+// 🔹 Ambil semua berita (dengan pagination)
+const fetchBerita = async (page = 1) => {
   store.loading = true
   try {
-    const res = await axios.get('/api/berita')
-    store.beritas = res.data.data || res.data || []
+    const res = await axios.get(`/api/berita?page=${page}&per_page=8&limit=8`)
+    const raw = res.data.data || res.data || []
+    store.beritas = (Array.isArray(raw) ? raw : []).slice(0, 8)
+    
+    // Set status pagination
+    pagination.value = {
+      current_page: res.data.current_page || 1,
+      last_page: res.data.last_page || 1
+    }
+    
+    // Scroll ke atas dengan halus jika pindah halaman
+    if (page > 1) {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   } catch (err) {
     console.error('Gagal memuat berita:', err)
     store.error = err.response?.data?.message || 'Gagal memuat berita'
@@ -81,7 +139,15 @@ const fetchBerita = async () => {
   }
 }
 
+// 🔹 Ganti Halaman
+const changePage = (newPage) => {
+  if (newPage >= 1 && newPage <= pagination.value.last_page) {
+    fetchBerita(newPage)
+  }
+}
+
 onMounted(() => {
-  fetchBerita()
+  fetchKategori()
+  fetchBerita(1)
 })
 </script>

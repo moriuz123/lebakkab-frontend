@@ -3,45 +3,58 @@
     @mouseenter="isHovered = true"
     @mouseleave="isHovered = false"
     :class="[
-      'fixed top-0 w-full z-50 transition-all duration-300 backdrop-blur-sm',
+      'fixed top-0 w-full z-50 transition-all duration-300',
       isScrolled || isHovered
-        ? 'bg-gradient-to-r from-green-700 via-green-600 to-green-500 shadow-md'
-        : 'bg-transparent',
+        ? 'bg-white shadow-md border-b border-gray-200'
+        : 'bg-gradient-to-b from-gray-900/60 to-transparent',
     ]"
   >
-    <div class="max-w-screen-xl mx-auto flex items-center justify-between px-4 py-3">
+    <div :class="['max-w-7xl mx-auto flex items-center justify-between px-6 transition-all duration-300', isScrolled || isHovered ? 'py-3' : 'py-5']">
       <!-- Logo + Identitas -->
-      <a href="/" class="flex items-center space-x-3 group">
+      <a href="/" class="flex items-center space-x-4 group">
         <img
           v-if="header.logo_url"
           :src="header.logo_url"
           alt="Logo"
-          class="h-12 w-auto transition-transform group-hover:scale-105"
+          :class="['w-auto transition-all duration-300', isScrolled || isHovered ? 'h-10' : 'h-12']"
         />
 
-        <!-- TITLE FIX — jarak lebih rapat -->
-        <div class="header-title font-poppins">
-          <p class="header-parent text-xs text-white">
+        <div class="header-title flex flex-col justify-center border-l pl-4" :class="isScrolled || isHovered ? 'border-gray-200' : 'border-white/30'">
+          <p class="header-parent text-xs font-semibold tracking-wide uppercase transition-colors duration-300" :class="isScrolled || isHovered ? 'text-gray-500' : 'text-gray-200'">
             {{ header.satuan_kerja }}
           </p>
-          <p class="header-name text-lg text-white font-semibold">
+          <p class="header-name text-lg font-bold tracking-tight transition-colors duration-300" :class="isScrolled || isHovered ? 'text-[#0a2463]' : 'text-white'">
             {{ header.site_name }}
           </p>
         </div>
       </a>
 
-      <!-- Menu Dinamis Desktop -->
-      <nav class="hidden md:flex space-x-6 text-sm font-medium font-poppins relative">
+      <!-- Menu Dinamis Desktop + CTA -->
+      <nav class="hidden md:flex items-center space-x-6 relative z-10">
         <template v-for="item in menu" :key="item.id">
           <MenuItem :item="item" :is-scrolled="isScrolled || isHovered" />
         </template>
+
+        <!-- CTA Button dari Backend -->
+        <a
+          v-if="cta"
+          :href="cta.url"
+          :target="cta.target"
+          :rel="cta.target === '_blank' ? 'noopener noreferrer' : undefined"
+          class="cta-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5 whitespace-nowrap"
+          :class="isScrolled || isHovered ? 'cta-solid' : 'cta-ghost'"
+          :style="ctaStyle(isScrolled || isHovered)"
+        >
+          <Icon v-if="cta.icon" :name="cta.icon" class="w-4 h-4" />
+          {{ cta.label }}
+        </a>
       </nav>
 
       <!-- Tombol Hamburger Mobile -->
       <button
         @click="isMobileOpen = !isMobileOpen"
         class="md:hidden inline-flex items-center justify-center p-2 rounded-md focus:outline-none transition-colors"
-        :class="isScrolled || isHovered ? 'text-black' : 'text-white'"
+        :class="isScrolled || isHovered ? 'text-gray-900' : 'text-white'"
         aria-label="Toggle menu"
       >
         <svg
@@ -81,11 +94,25 @@
     <transition name="slide-ffade">
       <div
         v-if="isMobileOpen"
-        class="md:hidden bg-gradient-to-b from-green-900 via-emerald-800 to-green-900 shadow-lg px-4 py-4 space-y-2 font-poppins"
+        class="md:hidden bg-white shadow-xl px-6 py-6 space-y-4 border-t border-gray-200 max-h-[80vh] overflow-y-auto"
       >
         <template v-for="item in menu" :key="item.id">
           <MenuItem :item="item" :is-scrolled="true" />
         </template>
+
+        <!-- CTA Button Mobile -->
+        <a
+          v-if="cta"
+          :href="cta.url"
+          :target="cta.target"
+          :rel="cta.target === '_blank' ? 'noopener noreferrer' : undefined"
+          class="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-sm font-bold transition-all duration-200"
+          :style="`background-color: ${cta.color}; color: #fff;`"
+          @click="isMobileOpen = false"
+        >
+          <Icon v-if="cta.icon" :name="cta.icon" class="w-4 h-4" />
+          {{ cta.label }}
+        </a>
       </div>
     </transition>
   </header>
@@ -103,11 +130,44 @@ const isHovered = ref(false)
 const isMobileOpen = ref(false)
 
 const menu = ref([])
+
 const header = computed(() => settingsStore.data || {
   site_name: '',
   satuan_kerja: '',
   logo_url: null,
 })
+
+// CTA dari settings store, dengan fallback jika backend belum return field CTA
+const cta = computed(() => {
+  // Prioritas: data dari settingsStore.cta (sudah di-parse di store)
+  if (settingsStore.cta) return settingsStore.cta
+
+  // Fallback: cek langsung field cta_text + cta_url di data header
+  const d = settingsStore.data
+  if (d?.cta_text && d?.cta_url) {
+    return {
+      label: d.cta_text,
+      url: d.cta_url,
+      target: d.cta_target || '_blank',
+      color: d.cta_color || '#e8a020',
+      icon: d.cta_icon || null,
+    }
+  }
+
+  return null
+})
+
+// Style CTA dinamis berdasarkan state scroll/hover
+const ctaStyle = (isActive) => {
+  const color = cta.value?.color || '#e8a020'
+  if (isActive) {
+    // Solid saat scroll/hover header putih
+    return `background-color: ${color}; color: #fff; border: 2px solid ${color};`
+  } else {
+    // Ghost/outline saat header transparan di atas hero
+    return `background-color: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.7);`
+  }
+}
 
 const handleScroll = () => {
   isScrolled.value = window.scrollY > 10

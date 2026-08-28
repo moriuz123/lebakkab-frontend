@@ -17,6 +17,7 @@ Aplikasi Portal ini adalah platform berbasis web (Single Page Application) yang 
   - Menampilkan cuplikan (snippet) Berita terbaru.
   - Menampilkan daftar Pengumuman penting.
   - Tautan cepat (Quick Links) ke Layanan Publik dan Aplikasi Kedinasan.
+  - Tombol Call-to-Action (CTA) dinamis pada Header yang dikelola langsung dari backend (API).
 
 ### 3.2. Pusat Informasi & Publikasi
 - **Berita (`/berita`)**
@@ -30,15 +31,15 @@ Aplikasi Portal ini adalah platform berbasis web (Single Page Application) yang 
 ### 3.3. Transparansi & Dokumen
 - **Dokumen Publik (`/dokumen`)**
   - Daftar dokumen resmi (peraturan daerah, SOP, laporan kinerja) yang diorganisir berdasarkan kategori.
-  - Fitur Pratinjau (Preview) dokumen langsung di browser (PDF Viewer).
+  - Fitur Pratinjau (Preview) dokumen langsung di browser (PDF Viewer menggunakan `vue3-pdf-app`).
   - Fitur Unduh (Download) dokumen.
 
 ### 3.4. Direktori Pemerintahan
 - **Profil Organisasi Perangkat Daerah (OPD) (`/opd`)**
   - Daftar seluruh dinas, badan, atau bagian pemerintah daerah.
-  - Halaman detail OPD yang berisi deskripsi, visi, misi, dan struktur kontak organisasi.
+  - Halaman detail OPD yang berisi profil, peta lokasi, kontak, dan struktur kepemimpinan, dengan antarmuka (layout) yang terstandarisasi.
 - **Kecamatan (`/kecamatan`)**
-  - Daftar wilayah kecamatan dan halaman spesifik tiap kecamatan beserta informasi profilnya.
+  - Daftar wilayah kecamatan dan halaman spesifik tiap kecamatan beserta informasi profilnya, dirancang seragam (konsisten) dengan profil OPD.
 
 ### 3.5. Layanan & Aplikasi
 - **Layanan Publik (`/layanan`)**
@@ -53,6 +54,9 @@ Aplikasi Portal ini adalah platform berbasis web (Single Page Application) yang 
 ### 3.7. Interaksi & Dukungan
 - **Kritik dan Saran (`/kritik-saran`)**
   - Formulir bagi pengguna untuk mengirimkan keluhan, masukan, atau saran terkait pelayanan instansi, yang dikirimkan langsung ke sistem backend.
+  - Terproteksi oleh keamanan berlapis (Cloudflare Turnstile, Honeypot, Rate Limiting, dan validasi input ketat).
+- **Kontak Kami (`/kontak`)**
+  - Menampilkan informasi kontak instansi secara menyeluruh menggunakan ikon standar (Lucide) yang konsisten.
 - **Pencarian Global (`/pencarian?q=...`)**
   - Kotak pencarian (Search Bar) untuk mencari konten (Berita, Dokumen, Layanan, OPD) secara global dari satu tempat.
 - **Halaman Statis (`/page/:slug`)**
@@ -67,16 +71,17 @@ Aplikasi Portal ini adalah platform berbasis web (Single Page Application) yang 
 3. **Alur Mencari Layanan**:
    - Pengguna mengetikkan nama layanan di kotak pencarian global -> Menekan Enter -> Melihat hasil pencarian (Kategori Layanan) -> Klik hasil yang relevan untuk membaca rincian syarat pengurusan.
 4. **Alur Pengiriman Kritik/Saran**:
-   - Pengguna klik menu "Kritik & Saran" -> Mengisi form (Nama, Email, Pesan) -> Klik "Kirim" -> Menerima notifikasi bahwa saran telah berhasil terkirim.
+   - Pengguna klik menu "Kritik & Saran" -> Mengisi form (Nama, Email, Pesan) dan memvalidasi reCAPTCHA/Turnstile -> Klik "Kirim" -> Menerima notifikasi bahwa saran telah berhasil terkirim.
 
 ## 5. Kebutuhan Non-Fungsional (Non-Functional Requirements)
 
-1. **Kinerja (Performance)**: Aplikasi harus memuat halaman interaktif utama dengan cepat. Hal ini dicapai melalui rendering SPA modern berbasis Vue 3 dan Vite.
+1. **Kinerja (Performance)**: Aplikasi harus memuat halaman interaktif utama dengan cepat. Hal ini dicapai melalui rendering SPA modern berbasis Vue 3 dan Vite 7.
 2. **Responsivitas (Mobile-Friendly)**: Antarmuka harus beradaptasi di berbagai resolusi layar (Mobile, Tablet, Desktop) menggunakan *Grid* dan *Flexbox* dari Tailwind CSS.
 3. **Keandalan & Graceful Degradation**: 
    - Terdapat halaman penanganan *Not Found* (404) kustom.
    - Penanganan ralat/error saat API backend sedang *down* atau *timeout* (menampilkan pesan error yang ramah).
-4. **Keamanan (Security)**: Semua interaksi pertukaran formulir dan request HTTP tidak boleh memuat token rahasia (credential) pengguna langsung, serta bergantung pada proteksi API pihak Backend (CORS, CSRF token jika diperlukan).
+   - *Fallback mechanism* (seperti untuk CTA Button jika API belum merespons data yang dibutuhkan).
+4. **Keamanan (Security)**: Semua interaksi pertukaran formulir dan request HTTP tidak boleh memuat token rahasia (credential) pengguna langsung, serta bergantung pada proteksi API pihak Backend (CORS). Terdapat juga proteksi form via CAPTCHA (Turnstile) dan *Honeypot*. Komunikasi API di-*auth* dengan token statis `X-API-KEY`.
 5. **SEO & Keteraksesan (Accessibility)**: Meskipun SPA, arsitektur URL harus statis (memiliki slug SEO-friendly seperti `/berita/judul-berita`) untuk diindeks dengan lebih baik.
 
 ## 6. Rencana Pengembangan ke Depan (Future Enhancements)

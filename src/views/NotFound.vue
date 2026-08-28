@@ -1,5 +1,5 @@
 <template>
-  <PageHeader title="Halaman Tidak ada" />
+  <PageHeader2 title="Halaman Tidak ada" />
   <div class="flex flex-col items-center justify-center h-screen bg-gray-100 text-center">
     <h1 class="text-9xl font-bold text-gray-800">404</h1>
     <p class="mt-4 text-2xl font-semibold text-gray-600">Halaman Tidak Ditemukan</p>
@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 
 // Tidak perlu script khusus, cukup router-link untuk navigasi
 </script>

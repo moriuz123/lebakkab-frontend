@@ -18,16 +18,10 @@
   --color-light: #ffffff;
   --color-text: #374151;
   --color-bg-light: #f9fafb;
+  color-scheme: light;
 }
 
-/* 🌙 Dark Mode */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-bg-light: #1e293b;
-    --color-text: #f1f5f9;
-    --color-dark: #0f172a;
-  }
-}
+/* Dark mode dinonaktifkan sementara karena bentrok dengan komponen prose */
 
 /* ===================================================== */
 /* 3️⃣ BASE LAYER — Reset & Elemen Umum */
@@ -105,7 +99,7 @@
 
   /* Form Input Field (moved from KritikSaranPage.vue) */
   .input-field {
-    @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500;
+    @apply w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-900;
   }
 
   /* Sidebar umum */
@@ -183,20 +177,20 @@
 
   /* Layout halaman (utama + sidebar) */
   .page-container {
-    @apply max-w-screen-xl mx-auto px-4 py-8 lg:flex lg:space-x-8;
+    @apply max-w-7xl mx-auto px-4 py-8 sm:py-12 grid grid-cols-1 lg:grid-cols-3 gap-8;
     min-height: 500px;
   }
 
   .page-content {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply bg-white rounded-2xl shadow-[0_2px_15px_-3px_rgba(6,81,237,0.05)] border border-gray-100 p-6 sm:p-8;
   }
 
   .page-main {
-    @apply lg:w-3/4;
+    @apply lg:col-span-2 space-y-8;
   }
 
   .page-sidebar {
-    @apply lg:w-1/4 mt-8 lg:mt-0;
+    @apply lg:col-span-1 space-y-6 mt-0;
   }
 
   /* Elemen konten berita / artikel */
@@ -244,10 +238,10 @@
   }
 
   .aduan-btn {
-    @apply block text-center bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition;
+    @apply block text-center bg-emerald-900 text-white px-4 py-2 rounded hover:bg-emerald-900 transition;
   }
   dis-btn {
-    @apply bg-green-50 text-green-800 px-3 py-2 rounded hover:bg-green-100 transition text-sm w-full text-left;
+    @apply bg-gray-50 text-teal-500 px-3 py-2 rounded hover:bg-emerald-900 transition text-sm w-full text-left;
   }
 }
 
@@ -384,7 +378,15 @@
 
   /* Placeholder untuk loading page */
   .page-loading-placeholder {
-    @apply flex items-center justify-center text-gray-500 text-center py-20;
+    @apply flex flex-col items-center justify-center text-gray-500 text-center py-20 font-medium tracking-wide animate-pulse;
+  }
+  .page-loading-placeholder::before {
+    content: '';
+    @apply block w-[72px] h-[72px] mb-4 animate-spin;
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path id="circle" d="M 50, 50 m -40, 0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0" fill="none" /><text fill="%2316a34a" font-family="sans-serif" font-weight="bold" font-size="15"><textPath href="%23circle">lebak ruhay • lebak ruhay • </textPath></text></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
   }
 
   /* ===================================================== */
@@ -396,7 +398,7 @@
   }
 
   .footer-top {
-    @apply bg-gradient-to-r from-green-800 via-emerald-700 to-green-600;
+    @apply bg-gradient-to-r from-emerald-900 via-emerald-700 to-emerald-900;
     color: #ffffff !important;
   }
 
@@ -417,7 +419,7 @@
   }
 
   .footer-bottom {
-    @apply bg-green-900 py-2 border-t border-emerald-800 text-center;
+    @apply bg-emerald-900 py-2 border-t border-emerald-800 text-center;
   }
 
   .footer-bottom p {

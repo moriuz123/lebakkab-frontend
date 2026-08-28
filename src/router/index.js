@@ -21,14 +21,30 @@ import AgendaDetail from '@/views/AgendaDetail.vue'
 import AplikasiPage from '../views/AplikasiPage.vue'
 import KategoriPage from '@/views/KategoriPage.vue' // ✅ tambah import statis
 import SearchPage from '@/views/SearchPage.vue' // ✅ import baru
-// ✅ import halaman banner
 import BannerUcapan from '@/views/BannerUcapan.vue'
-import BannerInfografis from '@/views/BannerInfografis.vue'
+import BannerCategory from '@/views/BannerCategory.vue'
 import KritikSaranPage from '@/views/KritikSaranPage.vue'
+import PejabatPage from '@/views/PejabatPage.vue'
+import PejabatDetail from '@/views/PejabatDetail.vue'
+import ProfilKabupaten from '@/views/ProfilKabupaten.vue'
+import SponTtePage from '@/views/SponTtePage.vue' // ✅ import SPON TTE
+import KontakPage from '@/views/KontakPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0, behavior: 'smooth' }
+    }
+  },
   routes: [
+    {
+      path: '/kontak',
+      name: 'KontakPage',
+      component: KontakPage,
+    },
     {
       path: '/',
       name: 'home',
@@ -119,6 +135,12 @@ const router = createRouter({
       component: LayananPage,
     },
     {
+      path: '/layanan/kategori/:slug',
+      name: 'LayananKategoriPage',
+      component: () => import('@/views/LayananKategoriPage.vue'),
+      props: true,
+    },
+    {
       path: '/layanan/:slug',
       name: 'LayananDetail',
       component: LayananDetail,
@@ -148,9 +170,9 @@ const router = createRouter({
       component: BannerUcapan,
     },
     {
-      path: '/banner/infografis',
-      name: 'BannerInfografis',
-      component: BannerInfografis,
+      path: '/banner/:slug',
+      name: 'BannerCategory',
+      component: BannerCategory,
     },
 
     {
@@ -159,10 +181,31 @@ const router = createRouter({
       component: KritikSaranPage,
     },
     {
+      path: '/profil-kabupaten',
+      name: 'ProfilKabupaten',
+      component: ProfilKabupaten,
+    },
+    {
+      path: '/profil-pejabat',
+      name: 'Pejabat',
+      component: PejabatPage,
+    },
+    {
+      path: '/profil-pejabat/:slug',
+      name: 'PejabatDetail',
+      component: PejabatDetail,
+      props: true,
+    },
+    {
       path: '/pencarian',
       name: 'SearchPage',
       component: SearchPage,
       props: (route) => ({ q: route.query.q }),
+    },
+    {
+      path: '/spon-tte',
+      name: 'SponTte',
+      component: SponTtePage,
     },
     {
       path: '/:pathMatch(.*)*',

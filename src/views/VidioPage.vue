@@ -1,6 +1,6 @@
 <template>
   <div>
-    <PageHeader title="Daftar Video" />
+    <PageHeader2 title="Daftar Video" />
 
     <div class="max-w-6xl mx-auto px-4 py-10">
       <!-- Filter Dropdown -->
@@ -22,7 +22,7 @@
       </div>
 
       <!-- Loading -->
-      <div v-if="loading" class="text-center text-gray-500 text-lg">Loading...</div>
+      <div v-if="loading" class="page-loading-placeholder">Loading...</div>
 
       <!-- List Video -->
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -53,13 +53,13 @@
 </template>
 
 <script>
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import { useVidioStore } from '@/stores/vidio'
 import { onMounted, ref, computed } from 'vue'
 import { storeToRefs } from 'pinia'
 
 export default {
-  components: { PageHeader },
+  components: { PageHeader2 },
   setup() {
     const vidioStore = useVidioStore()
     const { vidios, loading } = storeToRefs(vidioStore)

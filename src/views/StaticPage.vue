@@ -3,7 +3,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import SidebarStatic from '../components/SidebarStatic.vue'
-import PageHeader from '../components/PageHeader.vue'
+import PageHeader2 from '../components/PageHeader2.vue'
 
 const route = useRoute()
 const page = ref(null)
@@ -40,23 +40,23 @@ watch(
 <template>
   <div>
     <!-- Loading State -->
-    <div v-if="loading" class="text-center py-20 text-gray-500">Memuat konten...</div>
+    <div v-if="loading" class="page-loading-placeholder">Memuat konten...</div>
 
     <!-- Halaman Statis -->
     <div v-else-if="page">
       <!-- Header -->
-      <PageHeader :title="page.judul" />
+      <PageHeader2 :title="page.judul" />
 
-      <div class="max-w-screen-xl mx-auto px-4 lg:px-0 lg:flex lg:space-x-8 mt-8">
+      <div class="page-container">
         <!-- Konten Utama -->
-        <article
-          class="lg:w-3/4 bg-white rounded-xl shadow-lg border border-gray-100 p-6 prose prose-green max-w-none"
-        >
-          <div v-html="page.isi" class="text-gray-800 leading-relaxed"></div>
-        </article>
+        <div class="page-main">
+          <article class="page-content prose prose-lg prose-blue max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-800">
+            <div v-html="page.isi" class="text-gray-800 leading-relaxed"></div>
+          </article>
+        </div>
 
         <!-- Sidebar -->
-        <aside class="hidden lg:block lg:w-1/4">
+        <aside class="page-sidebar">
           <SidebarStatic />
         </aside>
       </div>

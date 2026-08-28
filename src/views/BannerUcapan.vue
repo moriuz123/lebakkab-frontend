@@ -1,11 +1,11 @@
 <template>
   <section>
     <!-- Page Header -->
-    <PageHeader title="Banner Ucapan" subtitle="Kumpulan ucapan resmi dalam bentuk visual" />
+    <PageHeader2 title="Banner Ucapan" subtitle="Kumpulan ucapan resmi dalam bentuk visual" />
 
     <!-- Konten -->
     <div class="max-w-screen-xl mx-auto px-4 py-10">
-      <div v-if="bannerStore.loading" class="text-center py-10 text-gray-500">Loading...</div>
+      <div v-if="bannerStore.loading" class="page-loading-placeholder">Loading...</div>
 
       <div v-else class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         <div
@@ -67,7 +67,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useBannerStore } from '@/stores/bannerStore'
-import PageHeader from '@/components/PageHeader.vue'
+import PageHeader2 from '@/components/PageHeader2.vue'
 
 const bannerStore = useBannerStore()
 const previewImage = ref(null)
