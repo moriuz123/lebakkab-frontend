@@ -21,8 +21,8 @@ FROM nginx:alpine
 # Menyalin hasil build dari STAGE 1 ke direktori Nginx
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Menyalin konfigurasi nginx kustom jika diperlukan (opsional, bisa ditambahkan nanti)
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Menyalin konfigurasi nginx kustom untuk mendukung Vue Router
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
 
