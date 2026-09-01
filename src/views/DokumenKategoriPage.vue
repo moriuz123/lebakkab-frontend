@@ -18,6 +18,28 @@
             </div>
           </div>
 
+          <!-- Tambahan Kolom Pencarian -->
+          <div class="mb-6">
+            <div class="relative">
+              <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                <Icon name="lucide:search" class="w-5 h-5 text-gray-400" />
+              </div>
+              <input 
+                type="text" 
+                v-model="searchQuery" 
+                placeholder="Cari dokumen dalam kategori ini..." 
+                class="w-full pl-11 pr-4 py-3.5 bg-white border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow shadow-sm"
+              >
+              <button 
+                v-if="searchQuery" 
+                @click="searchQuery = ''"
+                class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-gray-600 transition-colors"
+              >
+                <Icon name="lucide:x" class="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
           <div v-if="dokumentStore.loading" class="space-y-4">
             <div v-for="i in 4" :key="i" class="h-24 bg-gray-200 rounded-2xl animate-pulse"></div>
           </div>
@@ -35,6 +57,15 @@
               <router-link to="/dokumen" class="mt-6 inline-block text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-xl transition-colors">
                 Kembali ke Semua Dokumen
               </router-link>
+            </div>
+
+            <div v-else-if="filteredDokuments.length === 0" class="text-center py-16 bg-white rounded-2xl border border-dashed border-gray-200">
+              <Icon name="lucide:search-x" class="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <h3 class="text-xl font-bold text-gray-800">Dokumen Tidak Ditemukan</h3>
+              <p class="text-gray-500 mt-2">Pencarian untuk "<span class="font-bold">{{ searchQuery }}</span>" tidak membuahkan hasil.</p>
+              <button @click="searchQuery = ''" class="mt-6 inline-block text-sm font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 px-5 py-2.5 rounded-xl transition-colors">
+                Hapus Pencarian
+              </button>
             </div>
 
             <div 
@@ -220,6 +251,7 @@ const pengumumanStore = usePengumumanStore()
 
 const showFlipbook = ref(false)
 const selectedFileUrl = ref(null)
+const searchQuery = ref('')
 
 onMounted(() => {
   dokumentStore.fetchDokumentsByKategori(route.params.slug)
@@ -229,17 +261,31 @@ onMounted(() => {
 const currentPage = ref(1)
 const itemsPerPage = 8
 
+const filteredDokuments = computed(() => {
+  let docs = dokumentStore.dokuments || []
+  if (searchQuery.value) {
+    const q = searchQuery.value.toLowerCase()
+    docs = docs.filter(doc => doc.judul.toLowerCase().includes(q))
+  }
+  return docs
+})
+
 const totalPages = computed(() => {
-  return Math.ceil(dokumentStore.dokuments.length / itemsPerPage) || 1
+  return Math.ceil(filteredDokuments.value.length / itemsPerPage) || 1
 })
 
 const paginatedDokument = computed(() => {
   const start = (currentPage.value - 1) * itemsPerPage
   const end = start + itemsPerPage
-  return dokumentStore.dokuments.slice(start, end)
+  return filteredDokuments.value.slice(start, end)
 })
 
 watch(() => route.params.slug, () => {
+  currentPage.value = 1
+  searchQuery.value = ''
+})
+
+watch(searchQuery, () => {
   currentPage.value = 1
 })
 
