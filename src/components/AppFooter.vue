@@ -40,17 +40,22 @@
           <p class="text-[13.6px] text-white/55 leading-[1.8] mb-6 max-w-[38ch]">
             Mewujudkan tata kelola pemerintahan yang transparan, efektif, dan efisien melalui pemanfaatan teknologi informasi dan komunikasi di Kabupaten Lebak.
           </p>
-          <div v-if="profil?.social_media && profil.social_media.length > 0" class="flex gap-3 flex-wrap">
-            <a
-              v-for="(sosmed, index) in profil.social_media"
-              :key="index"
-              :href="sosmed.url"
-              target="_blank"
-              class="w-[34px] h-[34px] rounded-full bg-white/10 flex items-center justify-center hover:bg-teal-500 hover:text-[#071840] text-white/70 transition-all duration-200"
-              :title="sosmed.platform"
-            >
-              <i v-if="sosmed.icon_class" :class="sosmed.icon_class"></i>
-              <span v-else class="text-xs font-bold uppercase">{{ sosmed.platform.substring(0, 2) }}</span>
+          <!-- Sosial Media (Seperti halaman Kontak) -->
+          <div class="flex flex-wrap gap-3 mt-2">
+            <a v-if="footer.whatsapp" :href="footer.whatsapp" target="_blank" class="w-9 h-9 rounded-full bg-[#25D366] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg hover:shadow-[#25D366]/40 transition-all" title="WhatsApp">
+              <Icon name="lucide:message-circle" class="w-[18px] h-[18px]" />
+            </a>
+            <a v-if="footer.facebook" :href="footer.facebook" target="_blank" class="w-9 h-9 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg hover:shadow-[#1877F2]/40 transition-all" title="Facebook">
+              <Icon name="lucide:facebook" class="w-[18px] h-[18px]" />
+            </a>
+            <a v-if="footer.instagram" :href="footer.instagram" target="_blank" class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#fd5949] to-[#d6249f] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg transition-all" title="Instagram">
+              <Icon name="lucide:instagram" class="w-[18px] h-[18px]" />
+            </a>
+            <a v-if="footer.twitter" :href="footer.twitter" target="_blank" class="w-9 h-9 rounded-full bg-[#1DA1F2] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg transition-all" title="Twitter / X">
+              <Icon name="lucide:twitter" class="w-[18px] h-[18px]" />
+            </a>
+            <a v-if="footer.youtube" :href="footer.youtube" target="_blank" class="w-9 h-9 rounded-full bg-[#FF0000] text-white flex items-center justify-center hover:scale-110 hover:shadow-lg hover:shadow-[#FF0000]/40 transition-all" title="YouTube">
+              <Icon name="lucide:youtube" class="w-[18px] h-[18px]" />
             </a>
           </div>
         </div>
