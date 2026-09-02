@@ -1,8 +1,6 @@
 <template>
   <div>
     <HeroSection />
-    <VisitorCounterWidget />
-    <FloatingWidget />
     <ContentSection />
     <AplikasiSection />
 
@@ -14,7 +12,6 @@
 
 <script setup>
 import HeroSection from '@/components/HeroSection.vue'
-import VisitorCounterWidget from '@/components/VisitorCounterWidget.vue'
 import ContentSection from '@/components/ContentSection.vue'
 import AplikasiSection from '@/components/AplikasiSection.vue'
 import AgendaPengumumanSection from '@/components/AgendaPengumumanSection.vue'

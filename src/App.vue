@@ -10,6 +10,7 @@
       <router-view />
     </main>
     <FloatingWidget />
+    <VisitorCounterWidget />
     <!-- Footer tetap -->
     <FooterSection />
   </div>
@@ -21,6 +22,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useHead } from '@vueuse/head'
 import { computed } from 'vue'
 import FloatingWidget from '@/components/FloatingWidget.vue'
+import VisitorCounterWidget from '@/components/VisitorCounterWidget.vue'
 import HeaderNav from './components/HeaderNav.vue'
 import FooterSection from './components/AppFooter.vue'
 
