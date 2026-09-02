@@ -44,8 +44,8 @@
                 <div>
                   <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors leading-tight mb-1.5">{{ dokument.judul }}</h3>
                   <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-medium">
-                    <span class="bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 border border-gray-200/60 flex items-center gap-1.5 font-bold cursor-pointer hover:bg-gray-200 transition-colors" @click="selectedCategory = dokument.kategori.nama">
-                      <Icon name="lucide:folder-open" class="w-3.5 h-3.5"/> {{ dokument.kategori.nama }}
+                    <span v-for="kat in dokument.kategoris" :key="kat.id" class="bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 border border-gray-200/60 flex items-center gap-1.5 font-bold cursor-pointer hover:bg-gray-200 transition-colors" @click="selectedCategory = kat.nama">
+                      <Icon name="lucide:folder-open" class="w-3.5 h-3.5"/> {{ kat.nama }}
                     </span>
                     <span class="flex items-center gap-1.5"><Icon name="lucide:calendar" class="w-3.5 h-3.5"/> {{ formatDate(dokument.created_at) }}</span>
                   </div>
@@ -268,7 +268,7 @@ onMounted(() => {
 const filteredDokument = computed(() => {
   return dokumentStore.dokuments.filter((item) => {
     const matchCategory = selectedCategory.value
-      ? item.kategori.nama === selectedCategory.value
+      ? item.kategoris && item.kategoris.some((k) => k.nama === selectedCategory.value)
       : true
     const matchSearch = item.judul.toLowerCase().includes(searchQuery.value.toLowerCase())
     return matchCategory && matchSearch
@@ -293,7 +293,13 @@ watch([searchQuery, selectedCategory], () => {
 })
 
 const kategoriList = computed(() => {
-  return [...new Set(dokumentStore.dokuments.map((item) => item.kategori.nama))]
+  const categories = []
+  dokumentStore.dokuments.forEach((item) => {
+    if (item.kategoris) {
+      item.kategoris.forEach((k) => categories.push(k.nama))
+    }
+  })
+  return [...new Set(categories)]
 })
 
 const recentPengumuman = computed(() => {

@@ -155,8 +155,8 @@ const goToDot = (index) => {
               <div class="w-12 h-12 bg-blue-50 text-[#1e5ca8] rounded-2xl flex items-center justify-center group-hover:bg-[#1e5ca8] group-hover:text-white transition-all duration-500 shadow-sm group-hover:scale-110">
                 <Icon name="lucide:file-text" class="w-6 h-6" />
               </div>
-              <span v-if="doc.kategori?.nama" class="bg-gray-50 text-gray-600 text-[9px] font-bold px-2.5 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[110px] truncate">
-                {{ doc.kategori.nama }}
+              <span v-if="doc.kategoris?.length" class="bg-gray-50 text-gray-600 text-[9px] font-bold px-2.5 py-1.5 rounded-full uppercase tracking-wider border border-gray-200/60 max-w-[110px] truncate">
+                {{ doc.kategoris[0].nama }}
               </span>
             </div>
 
