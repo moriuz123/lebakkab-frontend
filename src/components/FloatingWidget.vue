@@ -110,6 +110,55 @@
       </div>
     </div>
 
+    <!-- === DESKTOP LEFT FLOATING (LIVE STREAMING) === -->
+    <div class="hidden md:flex fixed left-0 top-[40%] z-40 flex-col gap-0 items-start">
+      <div 
+        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="isLiveOpen ? 'translate-x-[260px]' : 'translate-x-0'"
+        @mouseleave="isLiveOpen = false"
+      >
+        <!-- Drawer Content (Absolute to the Left of the button, pushing it OFF SCREEN!) -->
+        <div class="absolute left-[-260px] top-0 bg-white/95 backdrop-blur-md border-y border-r border-gray-100 p-6 w-[260px] rounded-br-3xl overflow-hidden shadow-[5px_0_25px_rgba(0,0,0,0.08)] min-h-[120px]">
+          <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#cc0000] to-[#ff0000]"></div>
+          
+          <div class="flex items-center justify-start gap-3 mb-6 mt-1 text-left">
+            <div class="bg-[#cc0000] p-2.5 rounded-xl text-white shadow-inner">
+              <Icon name="lucide:youtube" class="w-5 h-5" />
+            </div>
+            <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">Live Stream</h3>
+          </div>
+          
+          <div class="space-y-3 relative z-10">
+            <button
+              @click="showLiveModal = true; isLiveOpen = false"
+              class="w-full flex items-center gap-3 bg-red-50/80 p-3 rounded-xl hover:bg-red-100 hover:text-red-700 transition-colors border border-red-100 group text-red-600"
+            >
+              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-red-600">
+                <Icon name="lucide:play" class="w-5 h-5" />
+              </div>
+              <span class="text-sm font-bold">Tonton Live Sekarang</span>
+            </button>
+          </div>
+          
+          <!-- Background subtle icon -->
+          <Icon name="lucide:youtube" class="absolute -bottom-4 -right-4 w-32 h-32 text-red-50 opacity-40 pointer-events-none" />
+        </div>
+
+        <!-- Toggle Button -->
+        <button 
+          @click="isLiveOpen = !isLiveOpen"
+          @mouseenter="isLiveOpen = true"
+          class="relative z-10 bg-[#cc0000] hover:bg-[#ff0000] text-white py-5 px-2.5 rounded-r-2xl shadow-[4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-r border-b border-[#aa0000] cursor-pointer group"
+        >
+          <div class="bg-white/20 rounded-full p-1 mb-1 group-hover:bg-white/30 transition-colors">
+            <Icon name="lucide:chevron-right" class="w-4 h-4 transition-transform duration-500" :class="isLiveOpen ? 'rotate-180' : ''" />
+          </div>
+          <span class="vertical-text-left text-[13px] font-black tracking-[0.2em] uppercase">Youtube Live</span>
+          <Icon name="lucide:youtube" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
+        </button>
+      </div>
+    </div>
+
     <!-- === MOBILE BOTTOM MENU === -->
     <div
       class="fixed bottom-0 left-0 right-0 bg-[#0a2463] flex justify-around items-center py-2 z-50 md:hidden shadow-[0_-2px_8px_rgba(0,0,0,0.2)]"
@@ -132,6 +181,36 @@
           <Icon :name="item.icon" class="w-6 h-6 mb-1" />
           <span>{{ item.label }}</span>
         </a>
+      </div>
+    </div>
+
+    <!-- === MODAL LIVE STREAMING === -->
+    <div
+      v-if="showLiveModal"
+      class="fixed inset-0 bg-gray-900/80 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity"
+    >
+      <div class="bg-black rounded-2xl shadow-2xl w-[90%] md:w-[800px] max-h-[90vh] relative overflow-hidden transform transition-all scale-100 border border-gray-700 flex flex-col">
+        <!-- Header -->
+        <div class="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
+          <div class="flex items-center gap-3">
+            <Icon name="lucide:youtube" class="w-6 h-6 text-red-500" />
+            <h2 class="text-lg font-bold text-white">Live Streaming Lebak</h2>
+          </div>
+          <button @click="showLiveModal = false" class="text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 p-2 rounded-full transition-colors">
+            <Icon name="lucide:x" class="w-5 h-5" />
+          </button>
+        </div>
+        
+        <!-- Video Container -->
+        <div class="relative w-full aspect-video bg-black flex items-center justify-center">
+          <iframe 
+            class="absolute top-0 left-0 w-full h-full"
+            src="https://www.youtube.com/embed/live_stream?channel=UCrJ5mO9Gg_W1t6N-pI84p7g&autoplay=1" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen
+          ></iframe>
+        </div>
       </div>
     </div>
 
@@ -393,6 +472,8 @@ const showDisabilitas = ref(false)
 const isVoiceActive = ref(false)
 const isMenuOpen = ref(false)
 const isCCTVMenuOpen = ref(false)
+const isLiveOpen = ref(false)
+const showLiveModal = ref(false)
 
 const customAlert = ref({
   show: false,
@@ -499,6 +580,11 @@ const toggleReduceMotion = () => document.body.classList.toggle('access-reduce-m
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
+}
+
+.vertical-text-left {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
