@@ -61,6 +61,52 @@
       </div>
     </div>
 
+    <!-- === DESKTOP CCTV DRAWER === -->
+    <div 
+      class="hidden md:flex fixed right-0 top-[60%] z-40 items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+      :class="isCCTVMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
+      @mouseleave="isCCTVMenuOpen = false"
+    >
+      <button 
+        @click="isCCTVMenuOpen = !isCCTVMenuOpen"
+        @mouseenter="isCCTVMenuOpen = true"
+        class="bg-[#0a2463] hover:bg-[#15347a] text-[#e8a020] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#15347a] cursor-pointer mt-4 group"
+      >
+        <div class="bg-white/10 rounded-full p-1 mb-1 group-hover:bg-white/20 transition-colors">
+          <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isCCTVMenuOpen ? 'rotate-180' : ''" />
+        </div>
+        <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">CCTV</span>
+        <Icon name="lucide:cctv" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
+      </button>
+
+      <!-- Drawer Content -->
+      <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)] min-h-[120px]">
+        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#e8a020] to-[#0a2463]"></div>
+        
+        <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
+          <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">CCTV Lebak</h3>
+          <div class="bg-[#0a2463] p-2.5 rounded-xl text-white shadow-inner">
+            <Icon name="lucide:video" class="w-5 h-5" />
+          </div>
+        </div>
+        
+        <div class="space-y-3 relative z-10">
+          <router-link
+            to="/cctv"
+            class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
+          >
+            <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
+              <Icon name="lucide:external-link" class="w-5 h-5" />
+            </div>
+            <span class="text-sm font-semibold">Buka CCTV</span>
+          </router-link>
+        </div>
+        
+        <!-- Background subtle icon -->
+        <Icon name="lucide:cctv" class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
+      </div>
+    </div>
+
     <!-- === MOBILE BOTTOM MENU === -->
     <div
       class="fixed bottom-0 left-0 right-0 bg-[#0a2463] flex justify-around items-center py-2 z-50 md:hidden shadow-[0_-2px_8px_rgba(0,0,0,0.2)]"
@@ -343,6 +389,7 @@ const showPolling = ref(false)
 const showDisabilitas = ref(false)
 const isVoiceActive = ref(false)
 const isMenuOpen = ref(false)
+const isCCTVMenuOpen = ref(false)
 
 const customAlert = ref({
   show: false,
@@ -368,7 +415,6 @@ const items = [
   { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
   { icon: 'lucide:accessibility', label: 'Aksesibilitas', type: 'disabilitas' },
   { icon: 'lucide:pencil', label: 'Kritik & Saran', type: 'link', link: '/kritik-saran' },
-  { icon: 'lucide:cctv', label: 'CCTV Lebak', type: 'link', link: '/cctv' },
 ]
 
 const mobileItems = [
