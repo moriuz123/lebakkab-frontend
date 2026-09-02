@@ -111,7 +111,7 @@
     </div>
 
     <!-- === DESKTOP LEFT FLOATING (LIVE STREAMING) === -->
-    <div class="hidden md:flex fixed left-0 top-[40%] z-40 flex-col gap-0 items-start">
+    <div class="hidden md:flex fixed left-0 top-[60%] z-40 flex-col gap-0 items-start">
       <div 
         class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
         :class="isLiveOpen ? 'translate-x-[260px]' : 'translate-x-0'"
