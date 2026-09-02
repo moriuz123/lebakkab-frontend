@@ -1,109 +1,112 @@
 <template>
   <!-- Floating menu -->
   <div>
-    <!-- === DESKTOP FLOATING MENU === -->
-    <div 
-      class="hidden md:flex fixed right-0 top-1/4 md:top-1/3 z-40 items-start transition-transform duration-500 ease-out drop-shadow-2xl"
-      :class="isMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
-      @mouseleave="isMenuOpen = false"
-    >
-      <button 
-        @click="isMenuOpen = !isMenuOpen"
-        @mouseenter="isMenuOpen = true"
-        class="bg-[#e8a020] hover:bg-[#d48f10] text-[#0a2463] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#c98918] cursor-pointer mt-4 group"
+    <!-- === DESKTOP FLOATING MENUS (STACKED TABS) === -->
+    <div class="hidden md:flex fixed right-0 top-1/4 md:top-1/3 z-40 flex-col gap-2 items-end">
+      
+      <!-- INTERAKSI DRAWER -->
+      <div 
+        class="flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="isMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
+        @mouseleave="isMenuOpen = false"
       >
-        <div class="bg-white/30 rounded-full p-1 mb-1">
-          <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
-        </div>
-        <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">Interaksi</span>
-        <Icon name="lucide:menu" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
-      </button>
-
-      <!-- Drawer Content -->
-      <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)]">
-        <!-- Decorative top accent -->
-        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#0a2463] to-emerald-400"></div>
-        
-        <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
-          <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">Interaksi</h3>
-          <div class="bg-[#0a2463] p-2.5 rounded-xl text-[#e8a020] shadow-inner">
-            <Icon name="lucide:settings" class="w-5 h-5" />
+        <button 
+          @click="isMenuOpen = !isMenuOpen"
+          @mouseenter="isMenuOpen = true"
+          class="bg-[#e8a020] hover:bg-[#d48f10] text-[#0a2463] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#c98918] cursor-pointer group"
+        >
+          <div class="bg-white/30 rounded-full p-1 mb-1">
+            <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
           </div>
-        </div>
-        
-        <div class="space-y-3 relative z-10">
-          <div v-for="(item, index) in items" :key="index">
-            <button
-              v-if="item.type !== 'link'"
-              @click="handleAction(item.type)"
-              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
-            >
-              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
-                <Icon :name="item.icon" class="w-5 h-5" />
-              </div>
-              <span class="text-sm font-semibold">{{ item.label }}</span>
-            </button>
-            <a
-              v-else
-              :href="item.link"
-              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
-            >
-              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
-                <Icon :name="item.icon" class="w-5 h-5" />
-              </div>
-              <span class="text-sm font-semibold">{{ item.label }}</span>
-            </a>
-          </div>
-        </div>
-        
-        <!-- Background subtle icon -->
-        <Icon name="lucide:settings" class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
-      </div>
-    </div>
+          <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">Interaksi</span>
+          <Icon name="lucide:menu" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
+        </button>
 
-    <!-- === DESKTOP CCTV DRAWER === -->
-    <div 
-      class="hidden md:flex fixed right-0 top-[60%] z-40 items-start transition-transform duration-500 ease-out drop-shadow-2xl"
-      :class="isCCTVMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
-      @mouseleave="isCCTVMenuOpen = false"
-    >
-      <button 
-        @click="isCCTVMenuOpen = !isCCTVMenuOpen"
-        @mouseenter="isCCTVMenuOpen = true"
-        class="bg-[#0a2463] hover:bg-[#15347a] text-[#e8a020] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#15347a] cursor-pointer mt-4 group"
-      >
-        <div class="bg-white/10 rounded-full p-1 mb-1 group-hover:bg-white/20 transition-colors">
-          <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isCCTVMenuOpen ? 'rotate-180' : ''" />
-        </div>
-        <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">CCTV</span>
-        <Icon name="lucide:cctv" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
-      </button>
-
-      <!-- Drawer Content -->
-      <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)] min-h-[120px]">
-        <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#e8a020] to-[#0a2463]"></div>
-        
-        <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
-          <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">CCTV Lebak</h3>
-          <div class="bg-[#0a2463] p-2.5 rounded-xl text-white shadow-inner">
-            <Icon name="lucide:video" class="w-5 h-5" />
-          </div>
-        </div>
-        
-        <div class="space-y-3 relative z-10">
-          <router-link
-            to="/cctv"
-            class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
-          >
-            <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
-              <Icon name="lucide:external-link" class="w-5 h-5" />
+        <!-- Drawer Content -->
+        <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)]">
+          <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#0a2463] to-emerald-400"></div>
+          
+          <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
+            <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">Interaksi</h3>
+            <div class="bg-[#0a2463] p-2.5 rounded-xl text-[#e8a020] shadow-inner">
+              <Icon name="lucide:settings" class="w-5 h-5" />
             </div>
-            <span class="text-sm font-semibold">Buka CCTV</span>
-          </router-link>
+          </div>
+          
+          <div class="space-y-3 relative z-10">
+            <div v-for="(item, index) in items" :key="index">
+              <button
+                v-if="item.type !== 'link'"
+                @click="handleAction(item.type)"
+                class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
+              >
+                <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
+                  <Icon :name="item.icon" class="w-5 h-5" />
+                </div>
+                <span class="text-sm font-semibold">{{ item.label }}</span>
+              </button>
+              <a
+                v-else
+                :href="item.link"
+                class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
+              >
+                <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
+                  <Icon :name="item.icon" class="w-5 h-5" />
+                </div>
+                <span class="text-sm font-semibold">{{ item.label }}</span>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Background subtle icon -->
+          <Icon name="lucide:settings" class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
         </div>
-        
-        <!-- Background subtle icon -->
-        <Icon name="lucide:cctv" class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
+      </div>
+
+      <!-- CCTV DRAWER -->
+      <div 
+        class="flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="isCCTVMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
+        @mouseleave="isCCTVMenuOpen = false"
+      >
+        <button 
+          @click="isCCTVMenuOpen = !isCCTVMenuOpen"
+          @mouseenter="isCCTVMenuOpen = true"
+          class="bg-[#0a2463] hover:bg-[#15347a] text-[#e8a020] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#15347a] cursor-pointer group"
+        >
+          <div class="bg-white/10 rounded-full p-1 mb-1 group-hover:bg-white/20 transition-colors">
+            <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isCCTVMenuOpen ? 'rotate-180' : ''" />
+          </div>
+          <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">CCTV</span>
+          <Icon name="lucide:cctv" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
+        </button>
+
+        <!-- Drawer Content -->
+        <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)] min-h-[120px]">
+          <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#e8a020] to-[#0a2463]"></div>
+          
+          <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
+            <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">CCTV Lebak</h3>
+            <div class="bg-[#0a2463] p-2.5 rounded-xl text-white shadow-inner">
+              <Icon name="lucide:video" class="w-5 h-5" />
+            </div>
+          </div>
+          
+          <div class="space-y-3 relative z-10">
+            <router-link
+              to="/cctv"
+              class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
+            >
+              <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
+                <Icon name="lucide:external-link" class="w-5 h-5" />
+              </div>
+              <span class="text-sm font-semibold">Buka CCTV</span>
+            </router-link>
+          </div>
+          
+          <!-- Background subtle icon -->
+          <Icon name="lucide:cctv" class="absolute -bottom-4 -left-4 w-32 h-32 text-gray-50 opacity-40 pointer-events-none" />
+        </div>
       </div>
     </div>
 
