@@ -6,14 +6,14 @@
       
       <!-- INTERAKSI DRAWER -->
       <div 
-        class="flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
-        :class="isMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
+        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="isMenuOpen ? '-translate-x-[260px]' : 'translate-x-0'"
         @mouseleave="isMenuOpen = false"
       >
         <button 
           @click="isMenuOpen = !isMenuOpen"
           @mouseenter="isMenuOpen = true"
-          class="bg-[#e8a020] hover:bg-[#d48f10] text-[#0a2463] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#c98918] cursor-pointer group"
+          class="relative z-10 bg-[#e8a020] hover:bg-[#d48f10] text-[#0a2463] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#c98918] cursor-pointer group"
         >
           <div class="bg-white/30 rounded-full p-1 mb-1">
             <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isMenuOpen ? 'rotate-180' : ''" />
@@ -23,7 +23,7 @@
         </button>
 
         <!-- Drawer Content -->
-        <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)]">
+        <div class="absolute right-[-260px] top-0 bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)]">
           <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#0a2463] to-emerald-400"></div>
           
           <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
@@ -65,14 +65,14 @@
 
       <!-- CCTV DRAWER -->
       <div 
-        class="flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
-        :class="isCCTVMenuOpen ? 'translate-x-0' : 'translate-x-[260px]'"
+        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="isCCTVMenuOpen ? '-translate-x-[260px]' : 'translate-x-0'"
         @mouseleave="isCCTVMenuOpen = false"
       >
         <button 
           @click="isCCTVMenuOpen = !isCCTVMenuOpen"
           @mouseenter="isCCTVMenuOpen = true"
-          class="bg-[#0a2463] hover:bg-[#15347a] text-[#e8a020] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#15347a] cursor-pointer group"
+          class="relative z-10 bg-[#0a2463] hover:bg-[#15347a] text-[#e8a020] py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#15347a] cursor-pointer group"
         >
           <div class="bg-white/10 rounded-full p-1 mb-1 group-hover:bg-white/20 transition-colors">
             <Icon name="lucide:chevron-left" class="w-4 h-4 transition-transform duration-500" :class="isCCTVMenuOpen ? 'rotate-180' : ''" />
@@ -82,7 +82,7 @@
         </button>
 
         <!-- Drawer Content -->
-        <div class="bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] relative rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)] min-h-[120px]">
+        <div class="absolute right-[-260px] top-0 bg-white/95 backdrop-blur-md border-y border-l border-gray-100 p-6 w-[260px] rounded-bl-3xl overflow-hidden shadow-[-5px_0_25px_rgba(0,0,0,0.08)] min-h-[120px]">
           <div class="absolute top-0 right-0 w-full h-1 bg-gradient-to-l from-[#e8a020] to-[#0a2463]"></div>
           
           <div class="flex items-center justify-end gap-3 mb-6 mt-1 text-right">
