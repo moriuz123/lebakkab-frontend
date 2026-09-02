@@ -24,11 +24,12 @@ import SearchPage from '@/views/SearchPage.vue' // ✅ import baru
 import BannerUcapan from '@/views/BannerUcapan.vue'
 import BannerCategory from '@/views/BannerCategory.vue'
 import KritikSaranPage from '@/views/KritikSaranPage.vue'
-import PejabatPage from '@/views/PejabatPage.vue'
-import PejabatDetail from '@/views/PejabatDetail.vue'
-import ProfilKabupaten from '@/views/ProfilKabupaten.vue'
+import PejabatPage from '../views/PejabatPage.vue'
+import PejabatDetail from '../views/PejabatDetail.vue'
+import ProfilKabupaten from '../views/ProfilKabupaten.vue'
 import SponTtePage from '@/views/SponTtePage.vue' // ✅ import SPON TTE
-import KontakPage from '@/views/KontakPage.vue'
+import KontakPage from '../views/KontakPage.vue'
+import ComingSoonPage from '../views/ComingSoonPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
     }
   },
   routes: [
+    {
+      path: '/cctv',
+      name: 'ComingSoonCCTV',
+      component: ComingSoonPage,
+    },
     {
       path: '/kontak',
       name: 'KontakPage',

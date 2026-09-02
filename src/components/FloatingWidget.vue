@@ -1,6 +1,14 @@
 <template>
   <!-- Floating menu -->
   <div>
+    <!-- === DESKTOP CCTV BUTTON === -->
+    <router-link to="/cctv" class="hidden md:flex fixed right-0 top-[45%] md:top-[50%] z-40 transition-transform duration-500 hover:-translate-x-2 drop-shadow-2xl">
+      <div class="bg-[#0a2463] hover:bg-[#15347a] text-white py-5 px-2.5 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-l border-b border-[#15347a] cursor-pointer">
+        <Icon name="lucide:cctv" class="w-5 h-5" />
+        <span class="vertical-text-right text-[13px] font-black tracking-[0.2em] uppercase">CCTV</span>
+      </div>
+    </router-link>
+
     <!-- === DESKTOP FLOATING MENU === -->
     <div 
       class="hidden md:flex fixed right-0 top-1/4 md:top-1/3 z-40 items-start transition-transform duration-500 ease-out drop-shadow-2xl"
