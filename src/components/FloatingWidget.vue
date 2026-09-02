@@ -2,7 +2,7 @@
   <!-- Floating menu -->
   <div>
     <!-- === DESKTOP FLOATING MENUS (STACKED TABS) === -->
-    <div class="hidden md:flex fixed right-0 top-1/4 md:top-1/3 z-40 flex-col gap-2 items-end">
+    <div class="hidden md:flex fixed right-0 top-1/4 md:top-1/3 z-40 flex-col gap-0 items-end">
       
       <!-- INTERAKSI DRAWER -->
       <div 
