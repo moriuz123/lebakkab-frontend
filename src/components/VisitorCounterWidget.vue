@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- === DESKTOP LEFT FLOATING MENUS (STACKED TABS) === -->
-    <div class="hidden md:flex fixed left-0 top-1/4 md:top-1/3 z-40 flex-col gap-0 items-start">
+    <!-- === LEFT FLOATING MENUS (STACKED TABS) === -->
+    <div class="fixed left-0 top-1/4 md:top-1/3 z-40 flex flex-col gap-0 items-start">
       
       <!-- STATISTIK DRAWER -->
       <div 
@@ -98,7 +98,7 @@
           <div class="bg-white/20 rounded-full p-1 mb-1 group-hover:bg-white/30 transition-colors">
             <Icon name="lucide:chevron-right" class="w-4 h-4 transition-transform duration-500" :class="isLiveOpen ? 'rotate-180' : ''" />
           </div>
-          <span class="vertical-text-left text-[13px] font-black tracking-[0.2em] uppercase">Youtube Live</span>
+          <span class="vertical-text-left text-[13px] font-black tracking-[0.2em] uppercase">LIVE</span>
           <Icon name="lucide:youtube" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
         </button>
       </div>
