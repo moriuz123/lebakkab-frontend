@@ -382,7 +382,7 @@ const kirimData = async () => {
       no_hpusr: form.value.no_hpusr ? sanitize(form.value.no_hpusr) : '',
       judul: sanitize(form.value.judul),
       isi_kritik: sanitize(form.value.isi_kritik),
-      cf_turnstile_token: turnstileToken.value,
+      'cf-turnstile-response': turnstileToken.value,
     }
 
     const res = await axios.post('/api/kritik-saran', payload)
