@@ -160,14 +160,8 @@
           </div>
 
           <!-- Cloudflare Turnstile Widget -->
-          <div>
-            <div
-              ref="turnstileContainer"
-              class="cf-turnstile"
-              :data-sitekey="turnstileSiteKey"
-              data-callback="onTurnstileSuccess"
-              data-expired-callback="onTurnstileExpired"
-            ></div>
+          <div class="mb-6 flex flex-col items-center">
+            <div ref="turnstileContainer"></div>
             <p v-if="errors.turnstile" class="mt-1 text-xs text-red-500 flex items-center gap-1">
               <Icon name="lucide:shield-off" class="w-3.5 h-3.5" /> {{ errors.turnstile }}
             </p>
@@ -236,12 +230,13 @@ const rateLimitActive = ref(false)
 const rateLimitCountdown = ref(0)
 let rateLimitTimer = null
 
-// ─── Turnstile Callbacks (global untuk Cloudflare) ─────
-window.onTurnstileSuccess = (token) => {
+// ─── Turnstile Callbacks ─────
+const handleTurnstileSuccess = (token) => {
   turnstileToken.value = token
   clearError('turnstile')
 }
-window.onTurnstileExpired = () => {
+
+const handleTurnstileExpired = () => {
   turnstileToken.value = ''
 }
 
@@ -266,8 +261,8 @@ const renderTurnstile = () => {
     if (window.turnstile) {
       turnstileWidgetId = window.turnstile.render(turnstileContainer.value, {
         sitekey: turnstileSiteKey,
-        callback: 'onTurnstileSuccess',
-        'expired-callback': 'onTurnstileExpired',
+        callback: handleTurnstileSuccess,
+        'expired-callback': handleTurnstileExpired,
         theme: 'light',
       })
     } else {
