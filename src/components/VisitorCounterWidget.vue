@@ -68,11 +68,11 @@
           <div class="absolute top-0 left-0 w-full h-1" :class="ytData.is_live ? 'bg-gradient-to-r from-[#cc0000] to-[#ff0000]' : 'bg-gradient-to-r from-gray-500 to-gray-700'"></div>
           
           <div class="flex items-center justify-start gap-3 mb-6 mt-1 text-left">
-            <div class="p-2.5 rounded-xl text-white shadow-inner" :class="ytData.is_live ? 'bg-[#cc0000]' : 'bg-gray-600'">
+            <div class="p-2.5 rounded-xl text-white shadow-inner" :class="ytData.is_live ? 'bg-[#cc0000] animate-pulse' : 'bg-gray-600'">
               <Icon name="lucide:youtube" class="w-5 h-5" />
             </div>
             <h3 class="text-gray-800 font-bold text-xl leading-tight uppercase tracking-wider">
-              {{ ytData.is_live ? 'Live Stream' : 'Video' }}
+              Live Stream
             </h3>
           </div>
           
@@ -85,7 +85,7 @@
               <div class="bg-white p-2 rounded-lg shadow-sm" :class="ytData.is_live ? 'group-hover:text-red-600' : 'group-hover:text-gray-800'">
                 <Icon name="lucide:play" class="w-5 h-5" />
               </div>
-              <span class="text-sm font-bold">{{ ytData.is_live ? 'Tonton Live Sekarang' : 'Tonton Video' }}</span>
+              <span class="text-sm font-bold">{{ ytData.is_live ? 'Tonton Live Sekarang' : 'Tonton Siaran Ulang' }}</span>
             </button>
           </div>
           
@@ -97,15 +97,18 @@
           @click="isLiveOpen = !isLiveOpen"
           @mouseenter="isLiveOpen = true"
           class="relative z-10 text-white py-5 px-2.5 rounded-r-2xl shadow-[4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-3 transition-all border-t border-r border-b cursor-pointer group"
-          :class="ytData.is_live ? 'bg-[#cc0000] hover:bg-[#ff0000] border-[#aa0000]' : 'bg-gray-700 hover:bg-gray-800 border-gray-900'"
+          :class="ytData.is_live ? 'bg-[#cc0000] hover:bg-[#ff0000] border-[#aa0000]' : 'bg-[#990000] hover:bg-[#cc0000] border-[#770000] opacity-90'"
         >
           <div class="bg-white/20 rounded-full p-1 mb-1 group-hover:bg-white/30 transition-colors">
             <Icon name="lucide:chevron-right" class="w-4 h-4 transition-transform duration-500" :class="isLiveOpen ? 'rotate-180' : ''" />
           </div>
           <span class="vertical-text-left text-[13px] font-black tracking-[0.2em] uppercase">
-            {{ ytData.is_live ? 'LIVE' : 'VIDEO' }}
+            LIVE
           </span>
-          <Icon name="lucide:youtube" class="w-5 h-5 group-hover:scale-110 transition-transform mt-1" />
+          <div class="relative mt-1">
+            <Icon name="lucide:youtube" class="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <span v-if="ytData.is_live" class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-green-400 border border-white rounded-full animate-pulse"></span>
+          </div>
         </button>
       </div>
     </div>
@@ -119,9 +122,9 @@
         <!-- Header -->
         <div class="flex items-center justify-between p-4 border-b border-gray-800 bg-gray-900">
           <div class="flex items-center gap-3">
-            <Icon name="lucide:youtube" class="w-6 h-6" :class="ytData.is_live ? 'text-red-500' : 'text-gray-400'" />
+            <Icon name="lucide:youtube" class="w-6 h-6" :class="ytData.is_live ? 'text-red-500 animate-pulse' : 'text-red-400'" />
             <h2 class="text-lg font-bold text-white">
-              {{ ytData.is_live ? 'Live Streaming Diskominfosp' : 'Video Diskominfosp Lebak' }}
+              Live Streaming Diskominfosp
             </h2>
           </div>
           <button @click="showLiveModal = false" class="text-gray-400 hover:text-white bg-gray-800 hover:bg-gray-700 p-2 rounded-full transition-colors">
