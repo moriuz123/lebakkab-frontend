@@ -81,6 +81,7 @@
           <input
             v-model="searchQuery"
             type="text"
+            maxlength="50"
             placeholder="Cari informasi, layanan, atau dokumen..."
             class="flex-grow px-3 sm:px-4 py-2 sm:py-3 bg-transparent text-white placeholder-white/60 focus:outline-none text-sm sm:text-base md:text-lg font-medium w-full"
           />
@@ -272,8 +273,16 @@ const cacheBuster = `?v=${Date.now()}`
 const searchQuery = ref('')
 
 const doSearch = () => {
-  if (searchQuery.value.trim()) {
-    router.push({ name: 'SearchPage', query: { q: searchQuery.value } })
+  // 1. Batasi maksimal 50 karakter (jaga-jaga jika di-bypass dari html)
+  let query = searchQuery.value.substring(0, 50)
+  
+  // 2. Sanitasi: Hapus semua karakter aneh (terutama tag HTML < > { } [ ])
+  // Hanya membolehkan huruf, angka, spasi, titik, dan koma.
+  query = query.replace(/[<>={}\[\]();"']/g, '')
+
+  if (query.trim()) {
+    searchQuery.value = query // Update tampilan di kotak input jika ada yang dihapus
+    router.push({ name: 'SearchPage', query: { q: query.trim() } })
   }
 }
 
