@@ -1,16 +1,18 @@
 <template>
   <div class="min-h-screen bg-gray-50/50">
-    <section class="py-12 sm:py-16">
+    
+    <PageHeader2 
+      title="Detail Dokumen" 
+      subtitle="Pratinjau dan informasi lengkap dokumen"
+      :breadcrumbs="[
+        { label: 'Beranda', link: '/' },
+        { label: 'Dokumen', link: '/dokumen' },
+        { label: dokumen?.judul || 'Detail', link: '' }
+      ]"
+    />
+
+    <section class="py-8 sm:py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <!-- Breadcrumb -->
-        <div class="flex items-center gap-2 text-sm font-medium text-gray-500 mb-6">
-          <router-link to="/" class="hover:text-blue-600 transition-colors">Beranda</router-link>
-          <Icon name="lucide:chevron-right" class="w-4 h-4" />
-          <router-link to="/dokumen" class="hover:text-blue-600 transition-colors">Dokumen</router-link>
-          <Icon name="lucide:chevron-right" class="w-4 h-4" />
-          <span class="text-gray-900 line-clamp-1">{{ dokumen?.judul || 'Memuat...' }}</span>
-        </div>
 
         <div v-if="dokumentStore.loading" class="animate-pulse space-y-8">
           <div class="h-8 bg-gray-200 rounded w-1/3"></div>
@@ -161,6 +163,7 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { useDokumentStore } from '@/stores/dokument'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
+import PageHeader2 from '@/components/PageHeader2.vue'
 import VuePdfApp from 'vue3-pdf-app'
 import 'vue3-pdf-app/dist/icons/main.css'
 
