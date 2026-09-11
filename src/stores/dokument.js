@@ -35,5 +35,18 @@ export const useDokumentStore = defineStore('dokument', {
         this.loading = false
       }
     },
+    async fetchDokumenBySlug(slug) {
+      this.loading = true
+      this.error = null
+      try {
+        const response = await axios.get(`/api/dokumen/${slug}`)
+        return response.data
+      } catch (err) {
+        this.error = err.message || 'Gagal mengambil detail dokumen'
+        return null
+      } finally {
+        this.loading = false
+      }
+    },
   },
 })

@@ -42,7 +42,9 @@
                   <Icon name="lucide:file-text" class="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
                 <div>
-                  <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors leading-tight mb-1.5">{{ dokument.judul }}</h3>
+                  <router-link :to="`/dokumen/${dokument.slug}`">
+                    <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors leading-tight mb-1.5 cursor-pointer">{{ dokument.judul }}</h3>
+                  </router-link>
                   <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-medium">
                     <span v-for="kat in dokument.kategoris" :key="kat.id" class="bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 border border-gray-200/60 flex items-center gap-1.5 font-bold cursor-pointer hover:bg-gray-200 transition-colors" @click="selectedCategory = kat.nama">
                       <Icon name="lucide:folder-open" class="w-3.5 h-3.5"/> {{ kat.nama }}
@@ -53,13 +55,13 @@
               </div>
               
               <div class="flex items-center gap-2 pl-16 sm:pl-0 shrink-0">
-                <button 
-                  @click="openFlipbook(dokument)"
+                <router-link 
+                  :to="`/dokumen/${dokument.slug}`"
                   class="flex items-center gap-2 text-sm font-bold text-blue-600 bg-blue-50 hover:bg-blue-600 hover:text-white px-4 py-2 sm:p-2.5 sm:px-4 rounded-xl transition-colors w-full sm:w-auto justify-center"
                 >
                   <Icon name="lucide:eye" class="w-4 h-4" />
-                  <span class="sm:hidden lg:block">Lihat</span>
-                </button>
+                  <span class="sm:hidden lg:block">Lihat Detail</span>
+                </router-link>
                 <a 
                   :href="getFileUrl(dokument.file_path)"
                   :download="dokument.judul + '.pdf'"
@@ -219,27 +221,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Modal Flipbook -->
-    <Transition name="modal">
-      <div v-if="showFlipbook" class="fixed inset-0 z-[100] flex items-center justify-center px-4 py-6 sm:p-6">
-        <div class="absolute inset-0 bg-gray-900/80 backdrop-blur-sm" @click="closeFlipbook"></div>
-        <div class="relative w-full max-w-5xl h-full bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col transform transition-all">
-          <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 bg-gray-50 shrink-0">
-            <h3 class="font-bold text-gray-900 truncate pr-4 flex items-center gap-2">
-              <Icon name="lucide:file-text" class="w-5 h-5 text-[#1e5ca8]" />
-              Preview Dokumen
-            </h3>
-            <button @click="closeFlipbook" class="text-gray-400 hover:text-red-500 hover:bg-red-50 p-2 rounded-xl transition-colors">
-              <Icon name="lucide:x" class="w-5 h-5" />
-            </button>
-          </div>
-          <div class="flex-1 w-full bg-gray-100 relative">
-            <VuePdfApp :pdf="selectedFileUrl" class="w-full h-full absolute inset-0" theme="light" />
-          </div>
-        </div>
-      </div>
-    </Transition>
   </div>
 </template>
 
@@ -250,15 +231,11 @@ import PaginationNav from '@/components/PaginationNav.vue'
 import { useDokumentStore } from '@/stores/dokument'
 import { usePengumumanStore } from '@/stores/pengumuman'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
-import VuePdfApp from 'vue3-pdf-app'
-import 'vue3-pdf-app/dist/icons/main.css'
 
 const dokumentStore = useDokumentStore()
 const pengumumanStore = usePengumumanStore()
 const searchQuery = ref('')
 const selectedCategory = ref('')
-const showFlipbook = ref(false)
-const selectedFileUrl = ref(null)
 
 onMounted(() => {
   dokumentStore.fetchDokuments()
@@ -309,30 +286,9 @@ const recentPengumuman = computed(() => {
 function getFileUrl(filePath) {
   return getStorageUrl(filePath)
 }
-
-function openFlipbook(doc) {
-  selectedFileUrl.value = getFileUrl(doc.file_path)
-  showFlipbook.value = true
-}
-
-function closeFlipbook() {
-  showFlipbook.value = false
-  selectedFileUrl.value = null
-}
 </script>
 
 <style scoped>
-.modal-enter-active,
-.modal-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-  transform: scale(0.95) translateY(10px);
-}
-
 .custom-scrollbar::-webkit-scrollbar {
   width: 4px;
 }

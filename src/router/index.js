@@ -8,6 +8,7 @@ import ListPengumuman from '../views/ListPengumuman.vue'
 import PengumumanDetail from '../views/PengumumanDetail.vue'
 import DokumentPage from '../views/DokumentPage.vue'
 import DokumenKategoriPage from '@/views/DokumenKategoriPage.vue' // ✅ import baru
+import DokumenDetailPage from '@/views/DokumenDetailPage.vue' // ✅ import baru
 import OpdPage from '../views/OpdPage.vue'
 import OpdDetail from '../views/OpdDetail.vue'
 import FotoPage from '../views/FotoPage.vue'
@@ -95,7 +96,12 @@ const router = createRouter({
       name: 'DokumentPage',
       component: DokumentPage,
     },
-
+    {
+      path: '/dokumen/:slug',
+      name: 'DokumenDetailPage',
+      component: DokumenDetailPage,
+      props: true,
+    },
     {
       path: '/dokumen/kategori/:slug',
       name: 'DokumenKategoriPage',
