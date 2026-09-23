@@ -82,10 +82,10 @@
             <div class="flex items-start gap-4 mb-4">
               <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl p-2 border border-gray-100 flex items-center justify-center">
                 <img
-                  :src="$storageUrl(app.icon)"
+                  :src="app.icon ? $storageUrl(app.icon) : 'https://media.lebakkab.go.id/lebakkab-media/settings/c6FknsB1zB1bIsIrn4y9uNGzvTnzUU-metaMTY0ODQ1MjQ5MF9hNmJlMTlkMTIwMjk0YjE5NjBkNy5wbmc=-.png'"
                   alt="icon"
                   class="w-full h-full object-contain"
-                  @error="$event.target.src = '/images/default-layanan.jpg'"
+                  @error="$event.target.src = 'https://media.lebakkab.go.id/lebakkab-media/settings/c6FknsB1zB1bIsIrn4y9uNGzvTnzUU-metaMTY0ODQ1MjQ5MF9hNmJlMTlkMTIwMjk0YjE5NjBkNy5wbmc=-.png'"
                 />
               </div>
               <div class="flex-1 min-w-0">

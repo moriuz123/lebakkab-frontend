@@ -34,7 +34,7 @@
                   :src="getIconUrl(item.icon)"
                   alt="icon"
                   class="w-full h-full object-contain"
-                  @error="$event.target.src = '/images/default-layanan.jpg'"
+                  @error="$event.target.src = 'https://media.lebakkab.go.id/lebakkab-media/settings/c6FknsB1zB1bIsIrn4y9uNGzvTnzUU-metaMTY0ODQ1MjQ5MF9hNmJlMTlkMTIwMjk0YjE5NjBkNy5wbmc=-.png'"
                 />
               </div>
               <div class="flex-1 min-w-0">
@@ -134,7 +134,7 @@ export default {
 
     getIconUrl(iconPath) {
       if (!iconPath) {
-        return '/images/icons/default-app-icon.webp'
+        return 'https://media.lebakkab.go.id/lebakkab-media/settings/c6FknsB1zB1bIsIrn4y9uNGzvTnzUU-metaMTY0ODQ1MjQ5MF9hNmJlMTlkMTIwMjk0YjE5NjBkNy5wbmc=-.png'
       }
       const cleanPath = iconPath.startsWith('/') ? iconPath.substring(1) : iconPath
       return this.$storageUrl(cleanPath)
