@@ -26,10 +26,10 @@
         </div>
       </div>
 
-      <div v-if="!loading && app" class="flex flex-col lg:flex-row gap-8 lg:gap-12 justify-center">
+      <div v-if="!loading && app" class="flex flex-col lg:flex-row gap-8 lg:gap-12">
         
         <!-- Main Content -->
-        <main class="w-full lg:w-2/3 max-w-4xl mx-auto">
+        <main class="w-full lg:w-2/3">
           <div class="bg-white rounded-[2rem] p-8 sm:p-10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 relative overflow-hidden group">
             
             <div class="absolute top-0 right-0 w-64 h-64 bg-blue-50 rounded-full filter blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
@@ -94,6 +94,7 @@
               <a v-if="app.link" :href="app.link" target="_blank" rel="noopener noreferrer" 
                  class="group relative inline-flex items-center justify-center gap-3 bg-gradient-to-r from-[#0a2463] to-[#1e5ca8] text-white px-8 py-4 rounded-full font-bold shadow-lg shadow-[#1e5ca8]/30 hover:shadow-xl hover:shadow-[#1e5ca8]/40 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
                 <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+                <Icon name="lucide:globe" class="w-5 h-5 relative z-10" />
                 <span class="relative z-10">Kunjungi Website</span>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 relative z-10 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -102,17 +103,26 @@
               
               <a v-if="app.url_playstore" :href="app.url_playstore" target="_blank" rel="noopener noreferrer" 
                  class="group relative inline-flex items-center justify-center gap-3 bg-white text-gray-800 border-2 border-gray-200 px-8 py-4 rounded-full font-bold shadow-sm hover:shadow-md hover:border-gray-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                <Icon name="logos:google-play-icon" class="w-5 h-5 relative z-10" />
                 <span class="relative z-10">Google Play</span>
               </a>
 
               <a v-if="app.url_appstore" :href="app.url_appstore" target="_blank" rel="noopener noreferrer" 
                  class="group relative inline-flex items-center justify-center gap-3 bg-black text-white border-2 border-black px-8 py-4 rounded-full font-bold shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden">
+                <Icon name="logos:apple" class="w-5 h-5 relative z-10" />
                 <span class="relative z-10">App Store</span>
               </a>
             </div>
 
           </div>
         </main>
+        
+        <!-- Sidebar Kolom Kanan -->
+        <aside class="w-full lg:w-1/3">
+          <div class="sticky top-28">
+            <SidebarAplikasi />
+          </div>
+        </aside>
 
       </div>
     </div>
@@ -124,6 +134,8 @@ import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import PageHeader2 from '@/components/PageHeader2.vue'
+import SidebarAplikasi from '@/components/SidebarAplikasi.vue'
+import { Icon } from '@iconify/vue'
 
 const route = useRoute()
 const app = ref(null)
