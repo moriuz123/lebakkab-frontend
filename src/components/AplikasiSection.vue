@@ -28,7 +28,7 @@
         >
           <!-- Default State (Appears normally, fades out on hover) -->
           <div class="flex flex-col h-full transition-opacity duration-300 group-hover:opacity-0">
-            <div class="flex items-start gap-4 mb-4">
+            <div class="flex items-center gap-4 mb-4">
               <div class="w-16 h-16 shrink-0 bg-gray-50 rounded-2xl p-2 border border-gray-100 flex items-center justify-center">
                 <img
                   :src="getIconUrl(item.icon)"
@@ -38,17 +38,21 @@
                 />
               </div>
               <div class="flex-1 min-w-0">
-                <h3 class="font-bold text-gray-800 text-lg leading-tight line-clamp-2" :title="item.nama">{{ item.nama }}</h3>
-                <p class="text-xs text-gray-500 mt-1 line-clamp-2" :title="item.kategori_aplikasi?.nama">
-                  {{ item.kategori_aplikasi?.nama || 'Tanpa Kategori' }}
-                </p>
+                <div class="flex flex-wrap gap-1">
+                  <span v-for="kat in item.kategori_aplikasi" :key="kat.id" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-[#1e5ca8]/10 text-[#1e5ca8] border border-[#1e5ca8]/20 uppercase tracking-wide truncate max-w-full">
+                    {{ kat.nama }}
+                  </span>
+                  <span v-if="!item.kategori_aplikasi || item.kategori_aplikasi.length === 0" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-gray-100 text-gray-500 border border-gray-200 uppercase tracking-wide truncate max-w-full">Tanpa Kategori</span>
+                </div>
               </div>
             </div>
 
+            <h3 class="font-bold text-gray-800 text-lg leading-tight line-clamp-2 mb-3" :title="item.nama">{{ item.nama }}</h3>
+
             <!-- Badges -->
             <div class="flex flex-wrap gap-2 mt-auto">
-              <span v-if="item.sumber" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wide">
-                {{ item.sumber }}
+              <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-gray-100 text-gray-600 border border-gray-200 uppercase tracking-wide">
+                {{ item.sumber || 'Kementerian / Pusat' }}
               </span>
               <span v-for="subkat in item.subkategori_aplikasi" :key="subkat.id" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100 uppercase tracking-wide truncate max-w-full">
                 {{ subkat.nama }}
