@@ -144,7 +144,7 @@ const error = ref(null)
 
 const fetchApp = async () => {
   try {
-    const response = await axios.get(`/api/data-aplikasi/${route.params.id}`)
+    const response = await axios.get(`/api/data-aplikasi/${route.params.slug}`)
     if (response.data?.status === 'success') {
       app.value = response.data.data
     } else {

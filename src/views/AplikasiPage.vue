@@ -114,7 +114,7 @@
             <p class="text-white/90 text-sm line-clamp-3 mb-4 text-center flex-1 flex items-center justify-center leading-relaxed">
               {{ app.deskripsi || 'Tidak ada deskripsi tersedia.' }}
             </p>
-            <router-link :to="`/aplikasi/${app.id}`" class="mt-auto w-full text-center bg-[#e8a020] hover:bg-white text-[#071840] font-bold px-4 py-2.5 rounded-xl transition-all border-2 border-transparent hover:border-[#e8a020] flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">Detail Aplikasi <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></router-link>
+            <router-link :to="`/aplikasi/${app.slug}`" class="mt-auto w-full text-center bg-[#e8a020] hover:bg-white text-[#071840] font-bold px-4 py-2.5 rounded-xl transition-all border-2 border-transparent hover:border-[#e8a020] flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">Detail Aplikasi <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></router-link>
           </div>
         </div>
       </div>

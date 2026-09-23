@@ -165,7 +165,7 @@ const router = createRouter({
       component: AplikasiPage,
     },
     {
-      path: '/aplikasi/:id',
+      path: "/aplikasi/:slug",
       name: 'AplikasiDetail',
       component: AplikasiDetail,
       props: true,
