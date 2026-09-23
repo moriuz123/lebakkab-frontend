@@ -101,8 +101,8 @@
               <span v-if="app.sumber" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-100 uppercase tracking-wide">
                 {{ app.sumber }}
               </span>
-              <span v-if="app.subkategori_aplikasi" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100 uppercase tracking-wide truncate max-w-full">
-                {{ app.subkategori_aplikasi.nama }}
+              <span v-for="subkat in app.subkategori_aplikasi" :key="subkat.id" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100 uppercase tracking-wide truncate max-w-full">
+                {{ subkat.nama }}
               </span>
             </div>
           </div>
@@ -112,35 +112,7 @@
             <p class="text-white/90 text-sm line-clamp-3 mb-4 text-center flex-1 flex items-center justify-center leading-relaxed">
               {{ app.deskripsi || 'Tidak ada deskripsi tersedia.' }}
             </p>
-            <div class="mt-auto flex flex-col gap-2">
-              <a
-                v-if="app.link"
-                :href="app.link"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block w-full text-center bg-[#e8a020] hover:bg-white text-[#071840] font-bold px-4 py-2 rounded-xl transition-all border-2 border-transparent hover:border-[#e8a020] flex items-center justify-center gap-2 shadow-sm text-sm"
-              >
-                Website
-              </a>
-              <a
-                v-if="app.url_playstore"
-                :href="app.url_playstore"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block w-full text-center bg-white hover:bg-gray-100 text-[#071840] font-bold px-4 py-2 rounded-xl transition-all border-2 border-transparent flex items-center justify-center gap-2 shadow-sm text-sm"
-              >
-                Play Store
-              </a>
-              <a
-                v-if="app.url_appstore"
-                :href="app.url_appstore"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="block w-full text-center bg-black hover:bg-gray-800 text-white font-bold px-4 py-2 rounded-xl transition-all border-2 border-transparent flex items-center justify-center gap-2 shadow-sm text-sm"
-              >
-                App Store
-              </a>
-            </div>
+            <router-link :to="`/aplikasi/`" class="mt-auto w-full text-center bg-[#e8a020] hover:bg-white text-[#071840] font-bold px-4 py-2.5 rounded-xl transition-all border-2 border-transparent hover:border-[#e8a020] flex items-center justify-center gap-2 shadow-lg hover:shadow-xl">Detail Aplikasi <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg></router-link>
           </div>
         </div>
       </div>

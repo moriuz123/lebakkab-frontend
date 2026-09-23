@@ -20,6 +20,7 @@ import LayananDetail from '@/views/LayananDetail.vue'
 import AgendaPage from '@/views/AgendaPage.vue'
 import AgendaDetail from '@/views/AgendaDetail.vue'
 import AplikasiPage from '../views/AplikasiPage.vue'
+import AplikasiDetail from "../views/AplikasiDetail.vue"
 import KategoriPage from '@/views/KategoriPage.vue' // ✅ tambah import statis
 import SearchPage from '@/views/SearchPage.vue' // ✅ import baru
 import BannerUcapan from '@/views/BannerUcapan.vue'
@@ -162,6 +163,12 @@ const router = createRouter({
       path: '/aplikasi',
       name: 'Aplikasi',
       component: AplikasiPage,
+    },
+    {
+      path: '/aplikasi/:id',
+      name: 'AplikasiDetail',
+      component: AplikasiDetail,
+      props: true,
     },
     {
       path: '/agenda',
