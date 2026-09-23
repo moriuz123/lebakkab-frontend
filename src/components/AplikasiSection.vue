@@ -54,9 +54,7 @@
               <span class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-gray-100 text-gray-600 border border-gray-200 uppercase tracking-wide">
                 {{ item.sumber || 'Kementerian / Pusat' }}
               </span>
-              <span v-for="subkat in item.subkategori_aplikasi" :key="subkat.id" class="inline-flex items-center px-2 py-1 rounded-md text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-100 uppercase tracking-wide truncate max-w-full">
-                {{ subkat.nama }}
-              </span>
+              
             </div>
           </div>
 
