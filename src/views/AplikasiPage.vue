@@ -157,14 +157,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useAplikasiStore } from '../stores/aplikasi'
 import PageHeader2 from '../components/PageHeader2.vue'
 
 const aplikasiStore = useAplikasiStore()
+const route = useRoute()
 
 const selectedSumber = ref('')
-const selectedKategori = ref('')
+const selectedKategori = ref(route.query.kategori ? Number(route.query.kategori) : '')
 const selectedSubkategori = ref('')
 const searchQuery = ref('')
 
@@ -192,4 +194,15 @@ onMounted(async () => {
   await aplikasiStore.fetchKategori()
   loadData(1)
 })
+
+watch(
+  () => route.query.kategori,
+  (newKategori) => {
+    if (newKategori !== undefined) {
+      selectedKategori.value = newKategori ? Number(newKategori) : ''
+      selectedSubkategori.value = ''
+      loadData(1)
+    }
+  }
+)
 </script>
