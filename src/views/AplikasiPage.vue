@@ -20,6 +20,7 @@
           <select v-model="selectedSumber" @change="loadData(1)" class="w-full border-none bg-white/10 text-white placeholder-blue-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-[#e8a020] focus:bg-white focus:text-gray-900 transition-all shadow-inner outline-none">
             <option value="" class="bg-white text-gray-900">Semua Sumber</option>
             <option value="Kabupaten Lebak" class="bg-white text-gray-900">Kabupaten Lebak</option>
+            <option value="Provinsi" class="bg-white text-gray-900">Provinsi</option>
             <option value="Kementerian / Pusat" class="bg-white text-gray-900">Kementerian / Pusat</option>
           </select>
         </div>
