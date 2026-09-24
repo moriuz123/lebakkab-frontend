@@ -111,6 +111,20 @@
     </div>
 
 
+    <!-- MOBILE EMERGENCY 112 FAB -->
+    <a 
+      href="tel:112"
+      class="md:hidden fixed bottom-20 right-4 z-50 bg-red-600 text-white rounded-full shadow-[0_4px_20px_rgba(220,38,38,0.6)] flex items-center gap-2 px-4 py-3 hover:bg-red-700 active:scale-95 transition-all group"
+    >
+      <div class="bg-white/20 p-1.5 rounded-full relative flex items-center justify-center">
+        <Icon name="lucide:phone" class="w-5 h-5" />
+      </div>
+      <div class="flex flex-col items-start leading-none">
+        <span class="text-[10px] font-semibold text-red-100 uppercase tracking-widest">Darurat</span>
+        <span class="text-lg font-black tracking-widest">112</span>
+      </div>
+    </a>
+
     <!-- === MOBILE BOTTOM MENU === -->
     <div
       class="fixed bottom-0 left-0 right-0 bg-[#0a2463] flex justify-around items-center py-2 z-50 md:hidden shadow-[0_-2px_8px_rgba(0,0,0,0.2)]"
