@@ -141,10 +141,6 @@ useHead({
 const directEmbedUrl = 'https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjg3MiwiaG9zdCI6Imh0dHBzOi8vbGViYWtrYWIuZ28uaWQiLCJrZXkiOiJraW1MZTlodyJ9/embed/view/?jenis_layanan=lebakkab'
 
 const embedSurveyUrl = computed(() => {
-  // Jika di local development, gunakan proxy backend /api/survey/embed agar lolos validasi referer host
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    return '/api/survey/embed?jenis_layanan=lebakkab'
-  }
-  return directEmbedUrl
+  return '/api/survey/embed?jenis_layanan=lebakkab'
 })
 </script>

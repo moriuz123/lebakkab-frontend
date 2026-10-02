@@ -230,6 +230,84 @@
       </div>
     </div>
 
+    <!-- === MODAL POPUP SURVEI KEPUASAN (SPBE) === -->
+    <div
+      v-if="showSurvey"
+      class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity p-2 sm:p-4"
+      @click.self="showSurvey = false"
+    >
+      <div class="bg-white rounded-2xl sm:rounded-3xl shadow-2xl w-full max-w-[650px] relative overflow-hidden flex flex-col max-h-[92vh] border border-gray-100 animate-in fade-in zoom-in-95 duration-200">
+        <!-- Colored Accent Top Bar -->
+        <div class="h-1.5 w-full bg-gradient-to-r from-[#0a2463] via-[#1e5ca8] to-[#e8a020]"></div>
+
+        <!-- Header -->
+        <div class="p-4 sm:p-5 border-b border-gray-100 flex items-center justify-between bg-white relative">
+          <div class="flex items-center gap-3">
+            <div class="bg-amber-50 text-amber-600 p-2.5 rounded-xl border border-amber-200/60 shadow-xs flex-shrink-0">
+              <Icon name="lucide:star" class="w-5 h-5 fill-amber-500 text-amber-500" />
+            </div>
+            <div>
+              <div class="flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#1e5ca8]">
+                  PAN RB · Survei Pemerintah Digital (SPBE)
+                </span>
+              </div>
+              <h2 class="text-base sm:text-lg font-bold text-gray-800 leading-tight">
+                Survei Kepuasan Layanan Digital
+              </h2>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-1 sm:gap-2">
+            <router-link
+              to="/survei-kepuasan"
+              @click="showSurvey = false"
+              class="hidden sm:inline-flex items-center gap-1 text-xs text-[#1e5ca8] font-semibold hover:bg-blue-50 px-2.5 py-1.5 rounded-lg transition-colors"
+              title="Buka di Halaman Penuh"
+            >
+              <span>Halaman Penuh</span>
+              <Icon name="lucide:external-link" class="w-3.5 h-3.5" />
+            </router-link>
+            <button
+              @click="showSurvey = false"
+              class="text-gray-400 hover:text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-full p-2 transition-colors cursor-pointer"
+              aria-label="Tutup Survei"
+            >
+              <Icon name="lucide:x" class="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+        <!-- Iframe Body -->
+        <div class="flex-1 w-full bg-white overflow-y-auto relative min-h-[580px] sm:min-h-[640px]">
+          <iframe
+            :src="embedSurveyUrl"
+            class="w-full h-full min-h-[580px] sm:min-h-[640px] border-0"
+            title="Survei Kepuasan Pengguna Layanan Digital SPBE"
+            loading="eager"
+            referrerpolicy="no-referrer-when-downgrade"
+            allow="fullscreen"
+          ></iframe>
+        </div>
+
+        <!-- Footer -->
+        <div class="p-3 px-5 bg-gray-50 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-500">
+          <span class="flex items-center gap-1.5 text-gray-600">
+            <Icon name="lucide:shield-check" class="w-3.5 h-3.5 text-emerald-600" />
+            <span>Terintegrasi resmi <strong>Kementerian PAN RB / SPBE</strong></span>
+          </span>
+          <router-link
+            to="/survei-kepuasan"
+            @click="showSurvey = false"
+            class="text-[#1e5ca8] font-bold hover:underline"
+          >
+            Lihat Info Lengkap &rarr;
+          </router-link>
+        </div>
+      </div>
+    </div>
+
     <!-- === MODAL POLLING === -->
     <div
       v-if="showPolling"
@@ -424,16 +502,29 @@
 </template>
 
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import axios from '@/utils/api'
 
-// state dan logic tetap sama dengan versi kamu
+// state dan logic
 const showAduan = ref(false)
 const showPolling = ref(false)
+const showSurvey = ref(false)
 const showDisabilitas = ref(false)
 const isVoiceActive = ref(false)
 const isMenuOpen = ref(false)
 const isCCTVMenuOpen = ref(false)
+
+const embedSurveyUrl = computed(() => {
+  return '/api/survey/embed?jenis_layanan=lebakkab'
+})
+
+const onOpenSpbeSurvey = () => {
+  showSurvey.value = true
+}
+
+onMounted(() => {
+  window.addEventListener('open-spbe-survey', onOpenSpbeSurvey)
+})
 
 const customAlert = ref({
   show: false,
@@ -455,7 +546,7 @@ const fontSize = ref(100)
 const lineHeight = ref(1)
 
 const items = [
-  { icon: 'lucide:clipboard-check', label: 'Survei Kepuasan', type: 'link', link: '/survei-kepuasan' },
+  { icon: 'lucide:clipboard-check', label: 'Survei Kepuasan', type: 'survey' },
   { icon: 'lucide:bar-chart', label: 'Polling', type: 'polling' },
   { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
   { icon: 'lucide:accessibility', label: 'Aksesibilitas', type: 'disabilitas' },
@@ -463,7 +554,7 @@ const items = [
 ]
 
 const mobileItems = [
-  { icon: 'lucide:clipboard-check', label: 'Survei', type: 'link', link: '/survei-kepuasan' },
+  { icon: 'lucide:clipboard-check', label: 'Survei', type: 'survey' },
   { icon: 'lucide:bar-chart', label: 'Polling', type: 'polling' },
   { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
   { icon: 'lucide:home', label: 'Beranda', type: 'link', link: '/' },
@@ -473,7 +564,9 @@ const mobileItems = [
 ]
 
 const handleAction = async (type) => {
-  if (type === 'polling') {
+  if (type === 'survey') {
+    showSurvey.value = true
+  } else if (type === 'polling') {
     showPolling.value = true
     try {
       const res = await axios.get('/api/polling')
@@ -516,7 +609,10 @@ const toggleVoiceMode = () => {
     window.speechSynthesis.speak(utterance)
   }
 }
-onBeforeUnmount(() => window.speechSynthesis.cancel())
+onBeforeUnmount(() => {
+  window.speechSynthesis.cancel()
+  window.removeEventListener('open-spbe-survey', onOpenSpbeSurvey)
+})
 
 // === Aksesibilitas ===
 const increaseFont = () => (document.body.style.fontSize = `${(fontSize.value += 10)}%`)
