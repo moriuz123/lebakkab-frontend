@@ -45,9 +45,21 @@
                 </div>
                 <span class="text-sm font-semibold">{{ item.label }}</span>
               </button>
+              <router-link
+                v-else-if="item.link.startsWith('/')"
+                :to="item.link"
+                class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
+              >
+                <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
+                  <Icon :name="item.icon" class="w-5 h-5" />
+                </div>
+                <span class="text-sm font-semibold">{{ item.label }}</span>
+              </router-link>
               <a
                 v-else
                 :href="item.link"
+                target="_blank"
+                rel="noopener noreferrer"
                 class="w-full flex items-center gap-3 bg-gray-50/80 p-3 rounded-xl hover:bg-[#f8f9fc] hover:text-[#e8a020] transition-colors border border-gray-100 group text-gray-700"
               >
                 <div class="bg-white p-2 rounded-lg shadow-sm group-hover:text-[#e8a020]">
@@ -143,7 +155,21 @@
           <span>{{ item.label }}</span>
         </button>
 
-        <a v-else :href="item.link" class="flex flex-col items-center focus:outline-none">
+        <router-link
+          v-else-if="item.link.startsWith('/')"
+          :to="item.link"
+          class="flex flex-col items-center focus:outline-none"
+        >
+          <Icon :name="item.icon" class="w-6 h-6 mb-1" />
+          <span>{{ item.label }}</span>
+        </router-link>
+        <a
+          v-else
+          :href="item.link"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="flex flex-col items-center focus:outline-none"
+        >
           <Icon :name="item.icon" class="w-6 h-6 mb-1" />
           <span>{{ item.label }}</span>
         </a>
@@ -260,239 +286,6 @@
             <h3 class="text-lg font-bold text-gray-800 mb-1">Belum Ada Polling</h3>
             <p class="text-gray-500 text-sm">Saat ini tidak ada jajak pendapat yang aktif.</p>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- === MODAL SURVEI SPBE === -->
-    <div
-      v-if="showSurvey"
-      class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 transition-opacity"
-      @click.self="showSurvey = false"
-    >
-      <div class="bg-white rounded-3xl shadow-2xl max-w-2xl sm:max-w-3xl w-full max-h-[92vh] flex flex-col relative overflow-hidden transform transition-all">
-        <!-- Top Gradient Accent -->
-        <div class="h-1.5 w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-[#1e5ca8] flex-shrink-0"></div>
-
-        <!-- Header -->
-        <div class="p-4 sm:p-5 pb-3 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
-          <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-sm border border-emerald-100/60">
-              <Icon name="lucide:clipboard-check" class="w-5 h-5" />
-            </div>
-            <div>
-              <div class="flex items-center gap-1.5">
-                <span class="text-[10px] font-extrabold uppercase tracking-widest text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-100">
-                  SPBE Digital
-                </span>
-                <span class="text-[10px] text-gray-400 font-medium hidden sm:inline">Pemerintah Kab. Lebak</span>
-              </div>
-              <h2 class="text-base sm:text-lg font-black text-gray-900 leading-tight mt-0.5">
-                Survei Kepuasan Layanan Digital
-              </h2>
-            </div>
-          </div>
-
-          <button
-            @click="showSurvey = false"
-            class="text-gray-400 hover:text-gray-700 bg-gray-50 hover:bg-gray-100 rounded-full p-2 transition-colors focus:outline-none"
-            title="Tutup Modal"
-          >
-            <Icon name="lucide:x" class="w-4 h-4" />
-          </button>
-        </div>
-
-        <!-- Tabs Navigation Bar -->
-        <div class="px-4 sm:px-6 pt-2 pb-0 bg-gray-50/70 border-b border-gray-100 flex items-center gap-2 flex-shrink-0">
-          <button
-            @click="activeSurveyTab = 'form'"
-            class="px-3.5 py-2.5 text-xs font-bold border-b-2 flex items-center gap-2 transition-all focus:outline-none"
-            :class="activeSurveyTab === 'form' 
-              ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-xl shadow-xs' 
-              : 'border-transparent text-gray-500 hover:text-gray-800'"
-          >
-            <Icon name="lucide:file-edit" class="w-3.5 h-3.5" />
-            <span>Isi Kuesioner</span>
-          </button>
-
-          <button
-            @click="activeSurveyTab = 'stats'; if (!surveyData.length) fetchSurveyData()"
-            class="px-3.5 py-2.5 text-xs font-bold border-b-2 flex items-center gap-2 transition-all focus:outline-none"
-            :class="activeSurveyTab === 'stats' 
-              ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-xl shadow-xs' 
-              : 'border-transparent text-gray-500 hover:text-gray-800'"
-          >
-            <Icon name="lucide:bar-chart-2" class="w-3.5 h-3.5" />
-            <span>Hasil & Ulasan</span>
-            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-extrabold">
-              {{ surveyMeta?.average_rating ? Number(surveyMeta.average_rating).toFixed(2) : '4.99' }} ★
-            </span>
-          </button>
-        </div>
-
-        <!-- Tab 1: Embed Iframe Form -->
-        <div v-show="activeSurveyTab === 'form'" class="p-3 sm:p-5 flex-1 flex flex-col overflow-y-auto custom-scrollbar">
-          <div class="relative w-full flex-1 min-h-[500px] sm:min-h-[540px] rounded-2xl overflow-hidden bg-gray-50 border border-gray-200/80 shadow-inner">
-            <iframe
-              :src="embedSurveyUrl"
-              class="w-full h-full min-h-[500px] sm:min-h-[540px] border-0"
-              title="Survei Kepuasan Pengguna Layanan Digital"
-              loading="eager"
-              referrerpolicy="no-referrer-when-downgrade"
-              allow="fullscreen"
-            ></iframe>
-          </div>
-
-          <!-- Bottom Utility Info -->
-          <div class="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-500 px-1">
-            <div class="flex items-center gap-2">
-              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-              <span>Layanan: <strong class="text-gray-700">Portal Lebakkab (SPBE)</strong></span>
-            </div>
-            <a
-              :href="directEmbedUrl"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-[#1e5ca8] hover:text-[#164a88] hover:underline inline-flex items-center gap-1 font-bold text-xs"
-            >
-              <span>Buka di Jendela Baru</span>
-              <Icon name="lucide:external-link" class="w-3.5 h-3.5" />
-            </a>
-          </div>
-        </div>
-
-        <!-- Tab 2: Stats & Recent Reviews -->
-        <div v-show="activeSurveyTab === 'stats'" class="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1 space-y-5">
-          <!-- Summary Hero Banner -->
-          <div class="bg-gradient-to-br from-emerald-50 via-teal-50/50 to-blue-50/40 rounded-2xl p-4 sm:p-5 border border-emerald-100/80 shadow-xs">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <!-- Left: Rating Score -->
-              <div class="flex items-center gap-3.5">
-                <div class="text-3xl sm:text-4xl font-black text-gray-900 tracking-tight">
-                  {{ surveyMeta?.average_rating ? Number(surveyMeta.average_rating).toFixed(2) : '4.99' }}
-                </div>
-                <div>
-                  <!-- Star Rating Visual -->
-                  <div class="flex items-center gap-1 text-amber-400 text-sm">
-                    <Icon v-for="i in 5" :key="'star-' + i" name="lucide:star" class="w-4 h-4 fill-amber-400 text-amber-400" />
-                  </div>
-                  <div class="text-xs font-bold text-emerald-700 mt-0.5 flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                    Indeks Kepuasan Sangat Baik (A)
-                  </div>
-                </div>
-              </div>
-
-              <!-- Right: Responden Counter & Status -->
-              <div class="flex sm:flex-col sm:items-end justify-between items-center border-t sm:border-t-0 pt-3 sm:pt-0 border-emerald-200/50">
-                <div class="text-right">
-                  <span class="text-xs text-gray-500 font-medium">Total Responden</span>
-                  <div class="text-base sm:text-lg font-black text-gray-900">
-                    {{ Number(surveyMeta?.total_respondents || surveyTotal || 1378).toLocaleString('id-ID') }}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Action Link: Switch to Form -->
-            <div class="mt-4 pt-3.5 border-t border-emerald-200/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-              <span class="text-[11px] text-gray-600 leading-snug">
-                Bantu tingkatkan mutu pelayanan publik portal resmi Kabupaten Lebak.
-              </span>
-              <button
-                @click="activeSurveyTab = 'form'"
-                class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#1e5ca8] hover:bg-[#164a88] text-white shadow-sm hover:shadow transition-all whitespace-nowrap"
-              >
-                <span>Beri Penilaian Sekarang</span>
-                <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
-              </button>
-            </div>
-          </div>
-
-          <!-- Loading Indicator -->
-          <div v-if="surveyLoading" class="py-10 flex flex-col items-center justify-center text-center">
-            <div class="w-8 h-8 border-3 border-emerald-200 border-t-emerald-600 rounded-full animate-spin mb-3"></div>
-            <p class="text-xs text-gray-500 font-medium">Memuat data responden survei digital...</p>
-          </div>
-
-          <!-- Error State -->
-          <div v-else-if="surveyError && surveyData.length === 0" class="py-8 text-center bg-gray-50 rounded-2xl border border-gray-100">
-            <Icon name="lucide:alert-circle" class="w-8 h-8 text-amber-500 mx-auto mb-2" />
-            <p class="text-xs text-gray-600 font-medium">{{ surveyError }}</p>
-            <button
-              @click="fetchSurveyData"
-              class="mt-3 px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-gray-200 text-gray-700 hover:bg-gray-100 inline-flex items-center gap-1.5 shadow-xs"
-            >
-              <Icon name="lucide:refresh-cw" class="w-3 h-3" />
-              <span>Coba Lagi</span>
-            </button>
-          </div>
-
-          <!-- Reviews Feed List -->
-          <div v-else class="space-y-3">
-            <div class="flex items-center justify-between">
-              <h4 class="text-xs font-bold uppercase tracking-wider text-gray-500">
-                Ulasan Responden Terkini
-              </h4>
-              <span class="text-[11px] text-gray-400 font-medium">
-                {{ filteredSurveyData.length }} Responden Ditampilkan
-              </span>
-            </div>
-
-            <!-- List of Respondent Reviews -->
-            <div class="space-y-2.5">
-              <div
-                v-for="item in filteredSurveyData"
-                :key="item.id"
-                class="bg-gray-50/70 hover:bg-white rounded-xl p-3.5 border border-gray-100 hover:border-gray-200 transition-all shadow-xs"
-              >
-                <!-- Top Row: Rating & Date -->
-                <div class="flex items-center justify-between mb-1.5">
-                  <div class="flex items-center gap-1 text-amber-400">
-                    <Icon
-                      v-for="s in (item.questions_rating || 5)"
-                      :key="'card-star-' + item.id + '-' + s"
-                      name="lucide:star"
-                      class="w-3.5 h-3.5 fill-amber-400 text-amber-400"
-                    />
-                  </div>
-                  <span class="text-[10px] text-gray-400 font-medium">
-                    {{ formatDate(item.answer_at) }}
-                  </span>
-                </div>
-
-                <!-- Comment / Review Text -->
-                <p class="text-xs text-gray-800 leading-relaxed font-medium">
-                  "{{ item.questions_common ? item.questions_common : 'Layanan portal responsif, mudah diakses, dan informatif.' }}"
-                </p>
-
-                <!-- Aspects Tags -->
-                <div v-if="item.questions_aspek && item.questions_aspek.length" class="mt-2.5 flex flex-wrap gap-1">
-                  <span
-                    v-for="(aspek, idx) in item.questions_aspek.slice(0, 3)"
-                    :key="'aspek-' + idx"
-                    class="text-[9px] font-semibold px-2 py-0.5 rounded bg-white text-gray-600 border border-gray-200/70"
-                  >
-                    {{ aspek }}
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="p-3.5 px-6 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400 flex-shrink-0">
-          <span class="flex items-center gap-1.5">
-            <Icon name="lucide:shield-check" class="w-3.5 h-3.5 text-emerald-600" />
-            Terhubung ke API & Widget Resmi Survei Digital SPBE
-          </span>
-          <button
-            @click="showSurvey = false"
-            class="text-xs font-semibold text-gray-600 hover:text-gray-900"
-          >
-            Tutup
-          </button>
         </div>
       </div>
     </div>
@@ -631,80 +424,16 @@
 </template>
 
 <script setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import axios from '@/utils/api'
-import { formatDate } from '@/utils/helpers'
 
 // state dan logic tetap sama dengan versi kamu
 const showAduan = ref(false)
 const showPolling = ref(false)
-const showSurvey = ref(false)
 const showDisabilitas = ref(false)
 const isVoiceActive = ref(false)
 const isMenuOpen = ref(false)
 const isCCTVMenuOpen = ref(false)
-
-const activeSurveyTab = ref('form')
-const surveyLoading = ref(false)
-const surveyError = ref(null)
-const surveyMeta = ref(null)
-const surveyData = ref([])
-const surveyTotal = ref(0)
-
-const directEmbedUrl = 'https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjg3MiwiaG9zdCI6Imh0dHBzOi8vbGViYWtrYWIuZ28uaWQiLCJrZXkiOiJraW1MZTlodyJ9/embed/view/?jenis_layanan=lebakkab'
-
-const embedSurveyUrl = computed(() => {
-  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
-    return '/api/survey/embed?jenis_layanan=lebakkab'
-  }
-  return directEmbedUrl
-})
-
-const SPBE_SURVEY_TOKEN = 'B008xpNa2tcurlcvVGQ2KdwbN1Wu7lL7TTY2Iu6VOwlGbHQ3nxxWsLvSeL4eXzEjq66Vpot1p2aTUgyczWVyVYWiUEpcHnmCwWT6dBrg2OVzcCNOl8RRpDOag70mszQBaVIqf9GeWzg6h6KZYcXlOjLkFuBUqihUvGhluV8YlcofqwucGNCmLbH79N5UkwBatAw9reWI3sxIUDMQazyFm98PirIralbHOw2PeaAdWMQdXz9YrPcN4wDRHSIoZPpO'
-
-const fetchSurveyData = async () => {
-  surveyLoading.value = true
-  surveyError.value = null
-  try {
-    // 1. Coba ambil dari proxy backend /api/survey
-    let res = await axios.get('/api/survey').catch(() => null)
-    
-    // 2. Fallback jika /api/survey belum aktif (misal testing langsung)
-    if (!res || !res.data || res.data.status !== 200) {
-      try {
-        const directRes = await fetch('https://surveidigital.spbe.go.id/api/ext/surveys/respondents?page=1&size=50&service_id=872', {
-          headers: {
-            'Authorization': SPBE_SURVEY_TOKEN,
-            'Accept': 'application/json'
-          }
-        })
-        if (directRes.ok) {
-          const directJson = await directRes.json()
-          res = { data: directJson }
-        }
-      } catch (corsErr) {
-        console.warn('Direct SPBE fetch blocked:', corsErr)
-      }
-    }
-
-    if (res?.data?.data) {
-      surveyMeta.value = res.data.meta || { average_rating: 4.99, total_respondents: res.data.paging?.total_item || 1378 }
-      surveyData.value = res.data.data || []
-      surveyTotal.value = res.data.paging?.total_item || surveyData.value.length
-    } else {
-      throw new Error('Data survei tidak tersedia')
-    }
-  } catch (err) {
-    console.error('Gagal memuat data survei:', err)
-    surveyError.value = 'Gagal memuat data survei digital saat ini.'
-  } finally {
-    surveyLoading.value = false
-  }
-}
-
-const filteredSurveyData = computed(() => {
-  return surveyData.value.slice(0, 30)
-})
 
 const customAlert = ref({
   show: false,
@@ -726,7 +455,7 @@ const fontSize = ref(100)
 const lineHeight = ref(1)
 
 const items = [
-  { icon: 'lucide:clipboard-check', label: 'Survei Layanan', type: 'survey' },
+  { icon: 'lucide:clipboard-check', label: 'Survei Kepuasan', type: 'link', link: '/survei-kepuasan' },
   { icon: 'lucide:bar-chart', label: 'Polling', type: 'polling' },
   { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
   { icon: 'lucide:accessibility', label: 'Aksesibilitas', type: 'disabilitas' },
@@ -734,7 +463,7 @@ const items = [
 ]
 
 const mobileItems = [
-  { icon: 'lucide:clipboard-check', label: 'Survei', type: 'survey' },
+  { icon: 'lucide:clipboard-check', label: 'Survei', type: 'link', link: '/survei-kepuasan' },
   { icon: 'lucide:bar-chart', label: 'Polling', type: 'polling' },
   { icon: 'lucide:message-circle', label: 'Aduan', type: 'aduan' },
   { icon: 'lucide:home', label: 'Beranda', type: 'link', link: '/' },
@@ -744,12 +473,7 @@ const mobileItems = [
 ]
 
 const handleAction = async (type) => {
-  if (type === 'survey') {
-    showSurvey.value = true
-    if (!surveyData.value.length) {
-      fetchSurveyData()
-    }
-  } else if (type === 'polling') {
+  if (type === 'polling') {
     showPolling.value = true
     try {
       const res = await axios.get('/api/polling')

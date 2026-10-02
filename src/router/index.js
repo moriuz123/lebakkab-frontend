@@ -199,6 +199,11 @@ const router = createRouter({
       component: KritikSaranPage,
     },
     {
+      path: '/survei-kepuasan',
+      name: 'SurveiKepuasan',
+      component: () => import('@/views/SurveiKepuasanPage.vue'),
+    },
+    {
       path: '/profil-kabupaten',
       name: 'ProfilKabupaten',
       component: ProfilKabupaten,
