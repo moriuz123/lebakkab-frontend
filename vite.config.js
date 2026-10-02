@@ -4,7 +4,15 @@ import { fileURLToPath, URL } from 'node:url' // ⬅ untuk bikin alias
 
 // Konfigurasi Vite
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag === 'cap-widget'
+        }
+      }
+    })
+  ],
 
   // Setting alias supaya @ menunjuk ke folder src
   resolve: {

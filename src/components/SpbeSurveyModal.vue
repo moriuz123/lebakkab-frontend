@@ -83,7 +83,7 @@
             <!-- Star Rating Section -->
             <div class="rating-container flex flex-col items-center gap-2 pt-1 text-center">
               <p class="text-sm sm:text-base font-semibold text-gray-800">
-                Berapa nilai kepuasan Anda terhadap layanan ini?
+                Berapa nilai kepuasan Anda terhadap layanan ini? <span class="text-red-500">*</span>
               </p>
 
               <div class="star-wrapper flex items-center justify-center gap-1.5 py-1">
@@ -91,7 +91,7 @@
                   v-for="s in 5"
                   :key="'star-' + s"
                   type="button"
-                  @click="rating = s"
+                  @click="setRating(s)"
                   @mouseenter="hoverRating = s"
                   @mouseleave="hoverRating = 0"
                   class="star p-1 text-3xl sm:text-4xl transition-all duration-150 cursor-pointer focus:outline-none"
@@ -158,25 +158,38 @@
             <!-- Form Actions: Cap Widget & Submit -->
             <div class="form-actions flex flex-col items-center justify-center gap-3 pt-4 border-t border-gray-100">
               <!-- Captcha Widget Container -->
-              <div class="w-full flex justify-center py-1">
+              <div class="w-full flex flex-col items-center justify-center py-1" @click="checkWidgetToken">
                 <cap-widget
+                  ref="capWidgetRef"
                   id="modal-cap-widget"
                   data-cap-api-endpoint="https://surveidigital.spbe.go.id/cap/d628fde2ce"
                   required
+                  @solve="onCaptchaSolved"
+                  @reset="onCaptchaReset"
                 ></cap-widget>
               </div>
 
+              <!-- Requirement Guide / Hint -->
+              <div class="text-center">
+                <p v-if="!canSubmit && validationHint" class="text-xs text-amber-700 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-lg font-medium inline-block">
+                  {{ validationHint }}
+                </p>
+                <p v-else-if="canSubmit" class="text-xs text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-lg font-medium inline-block">
+                  ✓ Survei siap dikirimkan
+                </p>
+              </div>
+
               <!-- Error Feedback if any -->
-              <p v-if="errorMessage" class="text-xs text-red-600 font-medium text-center">
+              <p v-if="errorMessage" class="text-xs text-red-600 font-semibold text-center bg-red-50 border border-red-200 p-2 rounded-lg w-full">
                 {{ errorMessage }}
               </p>
 
               <!-- Submit Button -->
               <button
                 type="submit"
-                :disabled="!canSubmit"
+                :disabled="isSubmitting"
                 class="w-full max-w-[280px] py-3 px-6 rounded-xl font-bold text-sm text-white shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer disabled:cursor-not-allowed"
-                :class="canSubmit ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/25 active:scale-[0.98]' : 'bg-gray-400 opacity-60'"
+                :class="canSubmit ? 'bg-blue-600 hover:bg-blue-700 shadow-blue-500/25 active:scale-[0.98]' : 'bg-gray-400 hover:bg-gray-500 opacity-90'"
               >
                 <span v-if="isSubmitting" class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
                 <span>{{ isSubmitting ? 'Mengirim...' : 'Kirim Survei' }}</span>
@@ -190,7 +203,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, nextTick } from 'vue'
+import { ref, computed, watch, nextTick, onMounted, onBeforeUnmount } from 'vue'
 import axios from '@/utils/api'
 
 const props = defineProps({
@@ -218,6 +231,9 @@ const aspekSelected = ref([])
 const saran = ref('')
 const captchaToken = ref('')
 const fingerprint = ref('')
+const capWidgetRef = ref(null)
+
+let checkTokenTimer = null
 
 const ratingLabels = {
   1: 'Sangat Tidak Puas (1/5)',
@@ -235,6 +251,14 @@ const aspekOptions = [
   { id: 8, text: 'Kualitas Respon & Dukungan Layanan' }
 ]
 
+const setRating = (s) => {
+  rating.value = s
+  errorMessage.value = ''
+  if (s === 5) {
+    aspekSelected.value = []
+  }
+}
+
 const canSubmit = computed(() => {
   if (isSubmitting.value) return false
   const hasRating = rating.value > 0
@@ -243,6 +267,19 @@ const canSubmit = computed(() => {
   const hasCaptcha = !!captchaToken.value
 
   return hasRating && hasRequiredAspeks && hasCaptcha
+})
+
+const validationHint = computed(() => {
+  if (rating.value === 0) {
+    return '1. Pilih rating bintang kepuasan di atas'
+  }
+  if (rating.value < 5 && aspekSelected.value.length === 0) {
+    return '2. Pilih minimal 1 aspek yang perlu ditingkatkan'
+  }
+  if (!captchaToken.value) {
+    return '3. Centang verifikasi "I am human" / Captcha di atas'
+  }
+  return ''
 })
 
 // Robust Browser Fingerprinting (matching SPBE algorithm)
@@ -314,13 +351,38 @@ async function generateRobustFingerprint() {
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
-const attachCapWidgetListener = () => {
+const onCaptchaSolved = (e) => {
+  const token = e?.detail?.token || e?.target?.token || e?.target?.tokenValue || 'solved'
+  captchaToken.value = token
+  errorMessage.value = ''
+}
+
+const onCaptchaReset = () => {
+  captchaToken.value = ''
+}
+
+const checkWidgetToken = () => {
+  const el = document.getElementById('modal-cap-widget') || capWidgetRef.value
+  if (el) {
+    if (el.token || el.tokenValue) {
+      captchaToken.value = el.token || el.tokenValue
+      errorMessage.value = ''
+    }
+  }
+}
+
+const setupCapWidget = () => {
   nextTick(() => {
-    const widget = document.getElementById('modal-cap-widget')
-    if (widget) {
-      widget.addEventListener('solve', (e) => {
-        captchaToken.value = e.detail?.token || ''
-      })
+    const el = document.getElementById('modal-cap-widget') || capWidgetRef.value
+    if (el) {
+      el.removeEventListener('solve', onCaptchaSolved)
+      el.addEventListener('solve', onCaptchaSolved)
+      el.removeEventListener('reset', onCaptchaReset)
+      el.addEventListener('reset', onCaptchaReset)
+
+      if (el.token || el.tokenValue) {
+        captchaToken.value = el.token || el.tokenValue
+      }
     }
   })
 }
@@ -344,14 +406,16 @@ const validateOnOpen = async () => {
       alreadyExists.value = true
     } else {
       alreadyExists.value = false
-      attachCapWidgetListener()
     }
   } catch (err) {
-    console.warn('SPBE survey validation failed:', err)
-    // Fallback: allow filling
-    attachCapWidgetListener()
+    console.warn('SPBE survey validation fallback:', err)
+    alreadyExists.value = false
   } finally {
     isValidating.value = false
+    // Attach widget listener now that form is rendered in DOM!
+    if (!alreadyExists.value) {
+      setupCapWidget()
+    }
   }
 }
 
@@ -360,15 +424,55 @@ watch(
   (newVal) => {
     if (newVal) {
       validateOnOpen()
+      // Periodic check for widget token
+      clearInterval(checkTokenTimer)
+      checkTokenTimer = setInterval(() => {
+        if (!captchaToken.value) {
+          checkWidgetToken()
+        }
+      }, 800)
+    } else {
+      clearInterval(checkTokenTimer)
     }
   }
 )
 
+watch(isValidating, (newVal) => {
+  if (!newVal && !alreadyExists.value && !submitted.value) {
+    setupCapWidget()
+  }
+})
+
+onMounted(() => {
+  if (props.modelValue) {
+    validateOnOpen()
+  }
+})
+
+onBeforeUnmount(() => {
+  clearInterval(checkTokenTimer)
+})
+
 const handleSubmit = async () => {
-  if (!canSubmit.value) return
+  errorMessage.value = ''
+  checkWidgetToken()
+
+  if (rating.value === 0) {
+    errorMessage.value = 'Silakan pilih nilai rating bintang kepuasan (1–5) terlebih dahulu.'
+    return
+  }
+
+  if (rating.value < 5 && aspekSelected.value.length === 0) {
+    errorMessage.value = 'Silakan pilih minimal 1 aspek perbaikan yang perlu ditingkatkan.'
+    return
+  }
+
+  if (!captchaToken.value) {
+    errorMessage.value = 'Silakan klik dan selesaikan verifikasi Captcha "I am human" di atas.'
+    return
+  }
 
   isSubmitting.value = true
-  errorMessage.value = ''
 
   try {
     let finalAnswers = { question_3: String(rating.value) }
