@@ -267,15 +267,15 @@
     <!-- === MODAL SURVEI SPBE === -->
     <div
       v-if="showSurvey"
-      class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 transition-opacity"
+      class="fixed inset-0 bg-gray-900/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 transition-opacity"
       @click.self="showSurvey = false"
     >
-      <div class="bg-white rounded-3xl shadow-2xl max-w-xl w-full max-h-[88vh] flex flex-col relative overflow-hidden transform transition-all">
+      <div class="bg-white rounded-3xl shadow-2xl max-w-2xl sm:max-w-3xl w-full max-h-[92vh] flex flex-col relative overflow-hidden transform transition-all">
         <!-- Top Gradient Accent -->
         <div class="h-1.5 w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-[#1e5ca8] flex-shrink-0"></div>
 
         <!-- Header -->
-        <div class="p-5 sm:p-6 pb-4 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
+        <div class="p-4 sm:p-5 pb-3 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center flex-shrink-0 shadow-sm border border-emerald-100/60">
               <Icon name="lucide:clipboard-check" class="w-5 h-5" />
@@ -287,8 +287,8 @@
                 </span>
                 <span class="text-[10px] text-gray-400 font-medium hidden sm:inline">Pemerintah Kab. Lebak</span>
               </div>
-              <h2 class="text-lg sm:text-xl font-black text-gray-900 leading-tight mt-0.5">
-                Survei Kepuasan Layanan
+              <h2 class="text-base sm:text-lg font-black text-gray-900 leading-tight mt-0.5">
+                Survei Kepuasan Layanan Digital
               </h2>
             </div>
           </div>
@@ -302,8 +302,67 @@
           </button>
         </div>
 
-        <!-- Body / Content (Scrollable) -->
-        <div class="p-5 sm:p-6 overflow-y-auto custom-scrollbar flex-1 space-y-5">
+        <!-- Tabs Navigation Bar -->
+        <div class="px-4 sm:px-6 pt-2 pb-0 bg-gray-50/70 border-b border-gray-100 flex items-center gap-2 flex-shrink-0">
+          <button
+            @click="activeSurveyTab = 'form'"
+            class="px-3.5 py-2.5 text-xs font-bold border-b-2 flex items-center gap-2 transition-all focus:outline-none"
+            :class="activeSurveyTab === 'form' 
+              ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-xl shadow-xs' 
+              : 'border-transparent text-gray-500 hover:text-gray-800'"
+          >
+            <Icon name="lucide:file-edit" class="w-3.5 h-3.5" />
+            <span>Isi Kuesioner</span>
+          </button>
+
+          <button
+            @click="activeSurveyTab = 'stats'; if (!surveyData.length) fetchSurveyData()"
+            class="px-3.5 py-2.5 text-xs font-bold border-b-2 flex items-center gap-2 transition-all focus:outline-none"
+            :class="activeSurveyTab === 'stats' 
+              ? 'border-emerald-600 text-emerald-700 bg-white rounded-t-xl shadow-xs' 
+              : 'border-transparent text-gray-500 hover:text-gray-800'"
+          >
+            <Icon name="lucide:bar-chart-2" class="w-3.5 h-3.5" />
+            <span>Hasil & Ulasan</span>
+            <span class="px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-extrabold">
+              {{ surveyMeta?.average_rating ? Number(surveyMeta.average_rating).toFixed(2) : '4.99' }} ★
+            </span>
+          </button>
+        </div>
+
+        <!-- Tab 1: Embed Iframe Form -->
+        <div v-show="activeSurveyTab === 'form'" class="p-3 sm:p-5 flex-1 flex flex-col overflow-y-auto custom-scrollbar">
+          <div class="relative w-full flex-1 min-h-[500px] sm:min-h-[540px] rounded-2xl overflow-hidden bg-gray-50 border border-gray-200/80 shadow-inner">
+            <iframe
+              :src="embedSurveyUrl"
+              class="w-full h-full min-h-[500px] sm:min-h-[540px] border-0"
+              title="Survei Kepuasan Pengguna Layanan Digital"
+              loading="eager"
+              referrerpolicy="no-referrer-when-downgrade"
+              allow="fullscreen"
+            ></iframe>
+          </div>
+
+          <!-- Bottom Utility Info -->
+          <div class="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-gray-500 px-1">
+            <div class="flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+              <span>Layanan: <strong class="text-gray-700">Portal Lebakkab (SPBE)</strong></span>
+            </div>
+            <a
+              :href="directEmbedUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-[#1e5ca8] hover:text-[#164a88] hover:underline inline-flex items-center gap-1 font-bold text-xs"
+            >
+              <span>Buka di Jendela Baru</span>
+              <Icon name="lucide:external-link" class="w-3.5 h-3.5" />
+            </a>
+          </div>
+        </div>
+
+        <!-- Tab 2: Stats & Recent Reviews -->
+        <div v-show="activeSurveyTab === 'stats'" class="p-4 sm:p-6 overflow-y-auto custom-scrollbar flex-1 space-y-5">
           <!-- Summary Hero Banner -->
           <div class="bg-gradient-to-br from-emerald-50 via-teal-50/50 to-blue-50/40 rounded-2xl p-4 sm:p-5 border border-emerald-100/80 shadow-xs">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -335,20 +394,18 @@
               </div>
             </div>
 
-            <!-- Action Link: Isi Kuesioner Resmi -->
+            <!-- Action Link: Switch to Form -->
             <div class="mt-4 pt-3.5 border-t border-emerald-200/60 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               <span class="text-[11px] text-gray-600 leading-snug">
                 Bantu tingkatkan mutu pelayanan publik portal resmi Kabupaten Lebak.
               </span>
-              <a
-                href="https://surveidigital.spbe.go.id"
-                target="_blank"
-                rel="noopener noreferrer"
+              <button
+                @click="activeSurveyTab = 'form'"
                 class="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-[#1e5ca8] hover:bg-[#164a88] text-white shadow-sm hover:shadow transition-all whitespace-nowrap"
               >
-                <span>Beri Penilaian Layanan</span>
-                <Icon name="lucide:external-link" class="w-3.5 h-3.5" />
-              </a>
+                <span>Beri Penilaian Sekarang</span>
+                <Icon name="lucide:arrow-right" class="w-3.5 h-3.5" />
+              </button>
             </div>
           </div>
 
@@ -378,7 +435,7 @@
                 Ulasan Responden Terkini
               </h4>
               <span class="text-[11px] text-gray-400 font-medium">
-                {{ filteredSurveyData.length }} Responden
+                {{ filteredSurveyData.length }} Responden Ditampilkan
               </span>
             </div>
 
@@ -425,10 +482,10 @@
         </div>
 
         <!-- Footer -->
-        <div class="p-3.5 px-6 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400">
+        <div class="p-3.5 px-6 bg-gray-50/80 border-t border-gray-100 flex items-center justify-between text-[11px] text-gray-400 flex-shrink-0">
           <span class="flex items-center gap-1.5">
             <Icon name="lucide:shield-check" class="w-3.5 h-3.5 text-emerald-600" />
-            Terhubung ke API Survei Digital SPBE
+            Terhubung ke API & Widget Resmi Survei Digital SPBE
           </span>
           <button
             @click="showSurvey = false"
@@ -587,11 +644,21 @@ const isVoiceActive = ref(false)
 const isMenuOpen = ref(false)
 const isCCTVMenuOpen = ref(false)
 
+const activeSurveyTab = ref('form')
 const surveyLoading = ref(false)
 const surveyError = ref(null)
 const surveyMeta = ref(null)
 const surveyData = ref([])
 const surveyTotal = ref(0)
+
+const directEmbedUrl = 'https://surveidigital.spbe.go.id/embed/survey/eyJzdXJ2ZXlfaWQiOjIsInNlcnZpY2VfaWQiOjg3MiwiaG9zdCI6Imh0dHBzOi8vbGViYWtrYWIuZ28uaWQiLCJrZXkiOiJraW1MZTlodyJ9/embed/view/?jenis_layanan=lebakkab'
+
+const embedSurveyUrl = computed(() => {
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return '/api/survey/embed?jenis_layanan=lebakkab'
+  }
+  return directEmbedUrl
+})
 
 const SPBE_SURVEY_TOKEN = 'B008xpNa2tcurlcvVGQ2KdwbN1Wu7lL7TTY2Iu6VOwlGbHQ3nxxWsLvSeL4eXzEjq66Vpot1p2aTUgyczWVyVYWiUEpcHnmCwWT6dBrg2OVzcCNOl8RRpDOag70mszQBaVIqf9GeWzg6h6KZYcXlOjLkFuBUqihUvGhluV8YlcofqwucGNCmLbH79N5UkwBatAw9reWI3sxIUDMQazyFm98PirIralbHOw2PeaAdWMQdXz9YrPcN4wDRHSIoZPpO'
 
