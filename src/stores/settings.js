@@ -6,6 +6,7 @@ export const useSettingsStore = defineStore('settings', {
     data: null,
     loaded: false,
     cta: null,   // { label, url, target, color, icon }
+    maintenanceMode: false,
   }),
 
   actions: {
@@ -17,6 +18,7 @@ export const useSettingsStore = defineStore('settings', {
 
         if (res.data.status === 'success') {
           this.data = res.data.data
+          this.maintenanceMode = Boolean(this.data.maintenance_mode)
           this.loaded = true
 
           // CTA Button dari backend

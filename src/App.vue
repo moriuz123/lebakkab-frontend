@@ -1,6 +1,12 @@
 <!-- batas normal-->
 <template>
   <div class="min-h-screen bg-gray-50">
+    <!-- Maintenance Mode Overlay -->
+    <MaintenanceOverlay 
+      v-if="settingsStore.maintenanceMode" 
+      :logo-url="settingsStore.data?.logo_url"
+    />
+
     <!-- Header -->
     <HeaderNav />
 
@@ -23,6 +29,7 @@ import { useHead } from '@vueuse/head'
 import { computed } from 'vue'
 import FloatingWidget from '@/components/FloatingWidget.vue'
 import VisitorCounterWidget from '@/components/VisitorCounterWidget.vue'
+import MaintenanceOverlay from '@/components/MaintenanceOverlay.vue'
 import HeaderNav from './components/HeaderNav.vue'
 import FooterSection from './components/AppFooter.vue'
 

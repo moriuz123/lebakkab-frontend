@@ -149,7 +149,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import axios from '@/utils/api'
 
 const isOpen = ref(false)
 const isLiveOpen = ref(false)
@@ -162,14 +162,33 @@ const ytData = ref({
 })
 
 const stats = ref({
-  today: 142,
-  thisMonth: 4521,
-  thisYear: 52140,
-  total: 128450
+  today: 0,
+  thisMonth: 0,
+  thisYear: 0,
+  total: 0
 })
+
+const fetchVisitorStats = async () => {
+  try {
+    const res = await axios.get('/api/visitor-stats')
+    if (res.data?.status === 'success' && res.data?.data) {
+      stats.value = {
+        today: res.data.data.today || 0,
+        thisMonth: res.data.data.thisMonth || 0,
+        thisYear: res.data.data.thisYear || 0,
+        total: res.data.data.total || 0
+      }
+    }
+  } catch (error) {
+    console.error('Failed to fetch visitor stats', error)
+  }
+}
 
 const toggleDrawer = () => {
   isOpen.value = !isOpen.value
+  if (isOpen.value) {
+    fetchVisitorStats()
+  }
 }
 
 const fetchYoutubeStatus = async () => {
@@ -183,14 +202,7 @@ const fetchYoutubeStatus = async () => {
 
 onMounted(() => {
   fetchYoutubeStatus()
-  
-  // Simulate randomizing the last digit slightly to look 'live'
-  setInterval(() => {
-    stats.value.today += Math.floor(Math.random() * 2);
-    stats.value.thisMonth += Math.floor(Math.random() * 2);
-    stats.value.thisYear += Math.floor(Math.random() * 2);
-    stats.value.total += Math.floor(Math.random() * 2);
-  }, 10000)
+  fetchVisitorStats()
 })
 </script>
 
