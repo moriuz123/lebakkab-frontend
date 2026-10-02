@@ -63,11 +63,40 @@ export const useBeritaStore = defineStore('berita', {
         const res = await axios.get(`/api/berita/${slug}`)
         const item = res.data || {}
         item.image = ensureImage(item)
+        if (Array.isArray(item.related) && item.related.length > 0) {
+          item.related = item.related.map((it) => ({ ...it, image: ensureImage(it) }))
+        } else {
+          item.related = []
+        }
         this.beritaDetail = item
+
+        // Fallback jika response backend belum menyertakan related (misal di production)
+        if (!item.related || item.related.length === 0) {
+          await this.fetchRelatedFallback(item)
+        }
       } catch (err) {
         this.error = err.response?.data?.message || 'Gagal memuat detail berita'
       } finally {
         this.loading = false
+      }
+    },
+
+    async fetchRelatedFallback(item) {
+      try {
+        let res
+        if (item.kategori?.slug) {
+          res = await axios.get(`/api/berita/kategori/${item.kategori.slug}?limit=6`)
+        } else {
+          res = await axios.get('/api/berita?limit=6')
+        }
+        const raw = res.data?.data || res.data || []
+        const list = Array.isArray(raw) ? raw : []
+        const filtered = list.filter((b) => b.id !== item.id && b.slug !== item.slug).slice(0, 6)
+        if (this.beritaDetail) {
+          this.beritaDetail.related = filtered.map((it) => ({ ...it, image: ensureImage(it) }))
+        }
+      } catch (e) {
+        console.warn('Fallback fetch related news error:', e)
       }
     },
 

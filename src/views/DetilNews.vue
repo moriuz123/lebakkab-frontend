@@ -50,6 +50,17 @@
 
           <!-- Isi Konten -->
           <div v-html="store.beritaDetail.konten" class="prose prose-lg max-w-none text-gray-700 prose-headings:text-gray-900 prose-headings:font-bold prose-a:text-[#1e5ca8] prose-a:no-underline hover:prose-a:underline prose-img:rounded-xl"></div>
+
+          <!-- Fitur Share Standar Enterprise -->
+          <EnterpriseShare
+            :title="store.beritaDetail.judul"
+            :excerpt="excerptText"
+          />
+
+          <!-- Fitur Berita Terkait dengan Navigasi dan Thumbnail -->
+          <RelatedNewsSlider
+            :items="store.beritaDetail.related || []"
+          />
         </article>
       </div>
 
@@ -71,10 +82,17 @@ import { useBeritaStore } from '../stores/useBeritaStore'
 import { useHead } from '@vueuse/head'
 import SidebarNews from '../components/SidebarNews.vue'
 import PageHeader2 from '../components/PageHeader2.vue'
+import EnterpriseShare from '../components/EnterpriseShare.vue'
+import RelatedNewsSlider from '../components/RelatedNewsSlider.vue'
 import { formatDate } from '@/utils/helpers'
 
 const route = useRoute()
 const store = useBeritaStore()
+
+const excerptText = computed(() => {
+  if (!store.beritaDetail?.konten) return ''
+  return store.beritaDetail.konten.replace(/<[^>]*>?/gm, '').substring(0, 160) + '...'
+})
 
 // Fungsi untuk load berita berdasarkan slug
 const loadBerita = (slug) => {
