@@ -17,7 +17,9 @@ Allow: /aplikasi/
 Allow: /agenda/
 Allow: /kontak
 
-# Disallow Private & Admin Areas
+# Disallow Private & Admin Areas (Allow Public Sitemaps first)
+Allow: /api/sitemap.xml
+Allow: /api/rss.xml
 Disallow: /admin
 Disallow: /api/
 Disallow: /temp/
@@ -39,5 +41,6 @@ Allow: /
 Crawl-delay: 1
 
 # Sitemaps Declaration
+Sitemap: https://lebakkab.go.id/api/sitemap.xml
 Sitemap: https://lebakkab.go.id/sitemap.xml
-Sitemap: https://lebakkab.go.id/rss.xml
+Sitemap: https://lebakkab.go.id/api/rss.xml
