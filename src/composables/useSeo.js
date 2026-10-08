@@ -101,7 +101,8 @@ export function useSeo(options = {}) {
 
       // Twitter Cards
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:site', content: '@protokollebak' },
+      { name: 'twitter:site', content: settingsStore?.twitterHandle || '@protokollebak' },
+      { name: 'twitter:creator', content: settingsStore?.twitterHandle || '@protokollebak' },
       { name: 'twitter:title', content: finalTitle.value },
       { name: 'twitter:description', content: finalDescription.value },
       { name: 'twitter:image', content: finalImage.value },

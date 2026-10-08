@@ -18,6 +18,51 @@ export const useSettingsStore = defineStore('settings', {
     logoUrl: (state) => state.data?.logo_url || '/images/logo.png',
     faviconUrl: (state) => state.data?.favicon_url || '/favicon.ico',
     headerSettings: (state) => state.data || {},
+    socialMedia: (state) => ({
+      facebook: state.data?.facebook || '',
+      instagram: state.data?.instagram || '',
+      twitter: state.data?.twitter || '',
+      youtube: state.data?.youtube || '',
+      whatsapp: state.data?.whatsapp || '',
+    }),
+    sameAs: (state) => {
+      if (!state.data) {
+        return [
+          'https://www.facebook.com/PemerintahKabupatenLebak',
+          'https://www.instagram.com/protokollebak',
+          'https://www.youtube.com/@diskominfolebak2375'
+        ]
+      }
+      const links = []
+      if (state.data.facebook) links.push(state.data.facebook)
+      if (state.data.instagram) links.push(state.data.instagram)
+      if (state.data.twitter) {
+        const tw = state.data.twitter
+        links.push(tw.startsWith('http') ? tw : `https://x.com/${tw.replace('@', '')}`)
+      }
+      if (state.data.youtube) links.push(state.data.youtube)
+      return links.length > 0 ? links : [
+        'https://www.facebook.com/PemerintahKabupatenLebak',
+        'https://www.instagram.com/protokollebak',
+        'https://www.youtube.com/@diskominfolebak2375'
+      ]
+    },
+    twitterHandle: (state) => {
+      const tw = state.data?.twitter
+      if (!tw) return '@protokollebak'
+      if (tw.startsWith('@')) return tw
+      if (tw.includes('twitter.com/') || tw.includes('x.com/')) {
+        const parts = tw.split('/').filter(Boolean)
+        const last = parts[parts.length - 1]
+        return last ? `@${last}` : '@protokollebak'
+      }
+      return `@${tw}`
+    },
+    contact: (state) => ({
+      phone: state.data?.phone || '(0252) 201001',
+      email: state.data?.email || 'admin@lebakkab.go.id',
+      address: state.data?.address || 'Jl. Abdi Negara No. 3 Rangkasbitung, Kabupaten Lebak, Banten',
+    }),
   },
 
   actions: {

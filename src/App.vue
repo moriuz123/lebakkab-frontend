@@ -61,12 +61,84 @@ useHead({
     {
       property: 'og:image',
       content: computed(() => settingsStore.logoUrl)
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image'
+    },
+    {
+      name: 'twitter:site',
+      content: computed(() => settingsStore.twitterHandle)
+    },
+    {
+      name: 'twitter:creator',
+      content: computed(() => settingsStore.twitterHandle)
     }
   ],
   link: [
     {
       rel: 'icon',
       href: computed(() => settingsStore.faviconUrl)
+    }
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: computed(() => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'GovernmentOrganization',
+            '@id': 'https://lebakkab.go.id/#organization',
+            'name': settingsStore.siteName,
+            'alternateName': 'Pemerintah Daerah Kabupaten Lebak',
+            'url': 'https://lebakkab.go.id',
+            'logo': {
+              '@type': 'ImageObject',
+              'url': settingsStore.logoUrl,
+              'caption': `Logo ${settingsStore.siteName}`
+            },
+            'address': {
+              '@type': 'PostalAddress',
+              'streetAddress': settingsStore.contact.address,
+              'addressLocality': 'Lebak',
+              'addressRegion': 'Banten',
+              'postalCode': '42312',
+              'addressCountry': 'ID'
+            },
+            'contactPoint': [
+              {
+                '@type': 'ContactPoint',
+                'telephone': settingsStore.contact.phone,
+                'email': settingsStore.contact.email,
+                'contactType': 'customer service',
+                'areaServed': 'ID',
+                'availableLanguage': ['id', 'en']
+              }
+            ],
+            'sameAs': settingsStore.sameAs
+          },
+          {
+            '@type': 'WebSite',
+            '@id': 'https://lebakkab.go.id/#website',
+            'url': 'https://lebakkab.go.id',
+            'name': settingsStore.siteName,
+            'description': settingsStore.metaDescription,
+            'publisher': {
+              '@id': 'https://lebakkab.go.id/#organization'
+            },
+            'inLanguage': 'id-ID',
+            'potentialAction': {
+              '@type': 'SearchAction',
+              'target': {
+                '@type': 'EntryPoint',
+                'urlTemplate': 'https://lebakkab.go.id/pencarian?q={search_term_string}'
+              },
+              'query-input': 'required name=search_term_string'
+            }
+          }
+        ]
+      }))
     }
   ]
 })
