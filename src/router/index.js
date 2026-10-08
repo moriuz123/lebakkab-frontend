@@ -367,7 +367,27 @@ const router = createRouter({
 
 // Enterprise SEO Navigation Guard
 router.afterEach((to) => {
-  const siteSuffix = 'Portal Resmi Kabupaten Lebak'
+  let siteSuffix = 'Portal Resmi Kabupaten Lebak'
+  let defaultDesc = null
+  try {
+    const { useSettingsStore } = require ? {} : {} // safe guard
+  } catch (e) {}
+
+  // Check if settingsStore is loaded in window / pinia
+  try {
+    const appElement = document.querySelector('#app')
+    if (appElement && window.__PINIA__) {
+      const pinia = window.__PINIA__
+      const settings = pinia.state.value?.settings
+      if (settings?.data?.site_name) {
+        siteSuffix = settings.data.site_name
+      }
+      if (settings?.data?.meta_description) {
+        defaultDesc = settings.data.meta_description
+      }
+    }
+  } catch (e) {}
+
   if (to.meta?.title && !to.meta?.title.includes(siteSuffix)) {
     document.title = `${to.meta.title} | ${siteSuffix}`
   }
@@ -383,14 +403,15 @@ router.afterEach((to) => {
   canonical.setAttribute('href', `${baseUrl}${to.path}`)
 
   // Synchronize Meta Description
-  if (to.meta?.description) {
+  const finalDesc = to.meta?.description || defaultDesc
+  if (finalDesc) {
     let metaDesc = document.querySelector('meta[name="description"]')
     if (metaDesc) {
-      metaDesc.setAttribute('content', to.meta.description)
+      metaDesc.setAttribute('content', finalDesc)
     }
     let ogDesc = document.querySelector('meta[property="og:description"]')
     if (ogDesc) {
-      ogDesc.setAttribute('content', to.meta.description)
+      ogDesc.setAttribute('content', finalDesc)
     }
   }
 

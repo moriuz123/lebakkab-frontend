@@ -1,5 +1,6 @@
 import { computed, unref } from 'vue'
 import { useHead } from '@vueuse/head'
+import { useSettingsStore } from '@/stores/settings'
 
 const DEFAULT_SITE_NAME = 'Portal Resmi Kabupaten Lebak'
 const DEFAULT_BASE_URL = 'https://lebakkab.go.id'
@@ -21,7 +22,7 @@ function toAbsoluteUrl(url) {
  * Strips HTML tags and truncates text for safe meta description
  */
 export function sanitizeMetaDescription(text, maxLen = 160) {
-  if (!text) return DEFAULT_DESCRIPTION
+  if (!text) return ''
   const stripped = String(text)
     .replace(/<[^>]*>?/gm, ' ')
     .replace(/\s+/g, ' ')
@@ -32,43 +33,44 @@ export function sanitizeMetaDescription(text, maxLen = 160) {
 
 /**
  * Enterprise SEO Composable for Vue 3 + VueUse Head
- *
- * @param {Object} options
- * @param {string|Ref<string>} options.title - Page title
- * @param {string|Ref<string>} options.description - Meta description (max 160 chars)
- * @param {string|Ref<string>} options.keywords - Meta keywords
- * @param {string|Ref<string>} options.image - OG/Twitter image URL
- * @param {string|Ref<string>} options.url - Canonical URL path or full URL
- * @param {string} [options.type='website'] - OpenGraph type (website, article, etc.)
- * @param {string} [options.publishedTime] - ISO string for articles
- * @param {string} [options.author] - Author/OPD name
- * @param {Object|Array} [options.schema] - Custom Schema.org JSON-LD object(s)
- * @param {boolean} [options.rawTitle=false] - Do not append site suffix
+ * Integrated with dynamic backend settings from Filament CMS
  */
 export function useSeo(options = {}) {
+  let settingsStore = null
+  try {
+    settingsStore = useSettingsStore()
+  } catch (e) {
+    // Pinia not active yet in SSR / test
+  }
+
+  const dynamicSiteName = computed(() => settingsStore?.siteName || DEFAULT_SITE_NAME)
+  const dynamicDefaultDesc = computed(() => settingsStore?.metaDescription || DEFAULT_DESCRIPTION)
+  const dynamicDefaultKeywords = computed(() => settingsStore?.metaKeywords || 'Kabupaten Lebak, Portal Lebak, Pemkab Lebak, Berita Lebak, Rangkasbitung, Layanan Lebak, Diskominfo')
+  const dynamicDefaultLogo = computed(() => settingsStore?.logoUrl || DEFAULT_IMAGE)
+
   const finalTitle = computed(() => {
     const raw = unref(options.title)
-    if (!raw) return DEFAULT_SITE_NAME
-    if (options.rawTitle || raw.includes(DEFAULT_SITE_NAME)) return raw
-    return `${raw} | ${DEFAULT_SITE_NAME}`
+    const site = dynamicSiteName.value
+    if (!raw) return site
+    if (options.rawTitle || raw.includes(site)) return raw
+    return `${raw} | ${site}`
   })
 
   const finalDescription = computed(() => {
     const raw = unref(options.description)
-    return sanitizeMetaDescription(raw)
+    if (!raw) return dynamicDefaultDesc.value
+    return sanitizeMetaDescription(raw) || dynamicDefaultDesc.value
   })
 
   const finalKeywords = computed(() => {
     const raw = unref(options.keywords)
     if (Array.isArray(raw)) return raw.join(', ')
-    return (
-      raw ||
-      'Kabupaten Lebak, Portal Lebak, Pemkab Lebak, Berita Lebak, Rangkasbitung, Layanan Lebak, Diskominfo'
-    )
+    return raw || dynamicDefaultKeywords.value
   })
 
   const finalImage = computed(() => {
     const raw = unref(options.image)
+    if (!raw) return toAbsoluteUrl(dynamicDefaultLogo.value)
     return toAbsoluteUrl(raw)
   })
 
@@ -89,7 +91,7 @@ export function useSeo(options = {}) {
       { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
       
       // Open Graph
-      { property: 'og:site_name', content: DEFAULT_SITE_NAME },
+      { property: 'og:site_name', content: dynamicSiteName.value },
       { property: 'og:locale', content: 'id_ID' },
       { property: 'og:type', content: type },
       { property: 'og:title', content: finalTitle.value },

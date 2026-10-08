@@ -36,17 +36,37 @@ import FooterSection from './components/AppFooter.vue'
 const settingsStore = useSettingsStore()
 
 useHead({
-  title: computed(() => settingsStore.headerSettings?.site_name || 'LebakKab Portal'),
+  title: computed(() => settingsStore.siteName),
   meta: [
     {
       name: 'description',
-      content: computed(() => settingsStore.headerSettings?.tagline || 'Portal Web Resmi Pemerintah Kabupaten Lebak')
+      content: computed(() => settingsStore.metaDescription)
+    },
+    {
+      name: 'keywords',
+      content: computed(() => settingsStore.metaKeywords)
+    },
+    {
+      property: 'og:site_name',
+      content: computed(() => settingsStore.siteName)
+    },
+    {
+      property: 'og:title',
+      content: computed(() => settingsStore.siteName)
+    },
+    {
+      property: 'og:description',
+      content: computed(() => settingsStore.metaDescription)
+    },
+    {
+      property: 'og:image',
+      content: computed(() => settingsStore.logoUrl)
     }
   ],
   link: [
     {
       rel: 'icon',
-      href: computed(() => settingsStore.headerSettings?.favicon_url || '/favicon.ico')
+      href: computed(() => settingsStore.faviconUrl)
     }
   ]
 })

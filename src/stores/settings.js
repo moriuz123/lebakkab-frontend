@@ -9,6 +9,17 @@ export const useSettingsStore = defineStore('settings', {
     maintenanceMode: false,
   }),
 
+  getters: {
+    siteName: (state) => state.data?.site_name || 'Portal Resmi Kabupaten Lebak',
+    siteDescription: (state) => state.data?.site_description || 'Portal resmi layanan dan informasi pemerintah daerah.',
+    metaDescription: (state) => state.data?.meta_description || state.data?.site_description || 'Portal resmi layanan dan informasi Pemerintah Kabupaten Lebak.',
+    metaKeywords: (state) => state.data?.meta_keywords || 'pemerintah kabupaten lebak, lebak, portal lebak, rangkasbitung, spbe lebak, layanan publik lebak',
+    googleAnalyticsId: (state) => state.data?.google_analytics_id || null,
+    logoUrl: (state) => state.data?.logo_url || '/images/logo.png',
+    faviconUrl: (state) => state.data?.favicon_url || '/favicon.ico',
+    headerSettings: (state) => state.data || {},
+  },
+
   actions: {
     async fetchSettings() {
       if (this.loaded) return
@@ -32,12 +43,7 @@ export const useSettingsStore = defineStore('settings', {
             }
           }
 
-          // title
-          if (this.data.site_name) {
-            document.title = this.data.site_name
-          }
-
-          // favicon
+          // Sinkronisasi Favicon
           const faviconUrl = this.data.favicon_url || '/favicon.ico'
           let icons = document.querySelectorAll("link[rel*='icon']")
 
@@ -50,6 +56,41 @@ export const useSettingsStore = defineStore('settings', {
             icons.forEach(icon => {
               icon.href = faviconUrl + '?v=' + Date.now()
             })
+          }
+
+          // Sinkronisasi Meta Description & Keywords Default jika ada
+          if (this.data.meta_description) {
+            const metaDesc = document.querySelector('meta[name="description"]')
+            if (metaDesc) metaDesc.setAttribute('content', this.data.meta_description)
+            const ogDesc = document.querySelector('meta[property="og:description"]')
+            if (ogDesc) ogDesc.setAttribute('content', this.data.meta_description)
+          }
+
+          if (this.data.meta_keywords) {
+            const metaKeywords = document.querySelector('meta[name="keywords"]')
+            if (metaKeywords) metaKeywords.setAttribute('content', this.data.meta_keywords)
+          }
+
+          // Dynamic Google Analytics Injection
+          if (this.data.google_analytics_id && !document.getElementById('ga-gtag-script')) {
+            const gaId = this.data.google_analytics_id.trim()
+            if (gaId && (gaId.startsWith('G-') || gaId.startsWith('UA-'))) {
+              const script = document.createElement('script')
+              script.id = 'ga-gtag-script'
+              script.async = true
+              script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`
+              document.head.appendChild(script)
+
+              const inlineScript = document.createElement('script')
+              inlineScript.id = 'ga-gtag-init'
+              inlineScript.innerHTML = `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${gaId}');
+              `
+              document.head.appendChild(inlineScript)
+            }
           }
         }
 
