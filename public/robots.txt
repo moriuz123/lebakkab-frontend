@@ -1,0 +1,43 @@
+# ==============================================================================
+# Enterprise Robots Configuration - Portal Pemerintah Kabupaten Lebak
+# Domain: https://lebakkab.go.id
+# ==============================================================================
+
+User-agent: *
+Allow: /
+Allow: /berita/
+Allow: /pengumuman/
+Allow: /dokumen/
+Allow: /layanan/
+Allow: /profil-kabupaten
+Allow: /profil-pejabat
+Allow: /opd/
+Allow: /kecamatan/
+Allow: /aplikasi/
+Allow: /agenda/
+Allow: /kontak
+
+# Disallow Private & Admin Areas
+Disallow: /admin
+Disallow: /api/
+Disallow: /temp/
+Disallow: /cache/
+
+# Search Engine Crawl Optimizations
+User-agent: Googlebot
+Allow: /
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.svg$
+Allow: /*.webp$
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Sitemaps Declaration
+Sitemap: https://lebakkab.go.id/sitemap.xml
+Sitemap: https://lebakkab.go.id/rss.xml

@@ -79,6 +79,7 @@ import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
+import { useSeo } from '@/composables/useSeo'
 
 import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarPengumuman from '@/components/SidebarPengumuman.vue'
@@ -87,6 +88,18 @@ const route = useRoute()
 const loading = ref(true)
 const pengumuman = ref(null)
 const error = ref(null)
+
+useSeo({
+  title: computed(() => pengumuman.value?.judul ? `${pengumuman.value.judul} - Pengumuman Resmi` : 'Pengumuman'),
+  description: computed(() => {
+    if (!pengumuman.value?.isi) return 'Pengumuman resmi Pemerintah Kabupaten Lebak.'
+    return pengumuman.value.isi.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').substring(0, 160).trim() + '...'
+  }),
+  image: computed(() => pengumuman.value?.gambar ? getStorageUrl(pengumuman.value.gambar) : '/images/logo.png'),
+  url: computed(() => `https://lebakkab.go.id/pengumuman/${route.params.slug}`),
+  type: 'article',
+  publishedTime: computed(() => pengumuman.value?.created_at || null),
+})
 
 // Fetch detail pengumuman
 const fetchDetail = async (slug) => {

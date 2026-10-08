@@ -159,10 +159,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useDokumentStore } from '@/stores/dokument'
 import { formatDate, getStorageUrl } from '@/utils/helpers'
+import { useSeo } from '@/composables/useSeo'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import VuePdfApp from 'vue3-pdf-app'
 import 'vue3-pdf-app/dist/icons/main.css'
@@ -171,6 +172,33 @@ const route = useRoute()
 const dokumentStore = useDokumentStore()
 const dokumen = ref(null)
 const pdfContainer = ref(null)
+
+useSeo({
+  title: computed(() => dokumen.value?.judul ? `${dokumen.value.judul} - Dokumen Resmi` : 'Detail Dokumen'),
+  description: computed(() => dokumen.value?.judul ? `Unduh dan pratinjau dokumen resmi ${dokumen.value.judul} yang diterbitkan oleh Pemerintah Kabupaten Lebak.` : 'Detail dokumen resmi Pemerintah Kabupaten Lebak.'),
+  url: computed(() => `https://lebakkab.go.id/dokumen/${route.params.slug}`),
+  type: 'article',
+  author: computed(() => dokumen.value?.sumber || dokumen.value?.opd?.nama || 'Pemerintah Kabupaten Lebak'),
+  publishedTime: computed(() => dokumen.value?.created_at || null),
+  schema: computed(() => {
+    if (!dokumen.value?.judul) return null
+    const docUrl = `https://lebakkab.go.id/dokumen/${route.params.slug}`
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'DigitalDocument',
+      '@id': `${docUrl}#document`,
+      'name': dokumen.value.judul,
+      'description': `Dokumen resmi: ${dokumen.value.judul}`,
+      'url': docUrl,
+      'publisher': {
+        '@type': 'GovernmentOrganization',
+        'name': 'Pemerintah Daerah Kabupaten Lebak'
+      },
+      'datePublished': dokumen.value.created_at,
+      'fileFormat': 'application/pdf'
+    }
+  })
+})
 
 onMounted(async () => {
   const slug = route.params.slug

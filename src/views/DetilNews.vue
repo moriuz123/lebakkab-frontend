@@ -79,7 +79,7 @@
 import { onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useBeritaStore } from '../stores/useBeritaStore'
-import { useHead } from '@vueuse/head'
+import { useSeo } from '@/composables/useSeo'
 import SidebarNews from '../components/SidebarNews.vue'
 import PageHeader2 from '../components/PageHeader2.vue'
 import EnterpriseShare from '../components/EnterpriseShare.vue'
@@ -91,7 +91,7 @@ const store = useBeritaStore()
 
 const excerptText = computed(() => {
   if (!store.beritaDetail?.konten) return ''
-  return store.beritaDetail.konten.replace(/<[^>]*>?/gm, '').substring(0, 160) + '...'
+  return store.beritaDetail.konten.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').substring(0, 160).trim() + '...'
 })
 
 // Fungsi untuk load berita berdasarkan slug
@@ -99,25 +99,79 @@ const loadBerita = (slug) => {
   if (slug) store.fetchBeritaDetail(slug)
 }
 
-useHead({
-  title: computed(() => store.beritaDetail?.judul ? `${store.beritaDetail.judul} - Berita` : 'Memuat Berita...'),
-  meta: [
-    {
-      name: 'description',
-      content: computed(() => {
-        if (!store.beritaDetail?.konten) return ''
-        return store.beritaDetail.konten.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...'
-      })
-    },
-    {
-      property: 'og:title',
-      content: computed(() => store.beritaDetail?.judul || '')
-    },
-    {
-      property: 'og:image',
-      content: computed(() => store.beritaDetail?.image || '')
+// Enterprise SEO: Title, OpenGraph, Twitter, and Schema.org NewsArticle
+useSeo({
+  title: computed(() => store.beritaDetail?.judul ? `${store.beritaDetail.judul} - Berita Lebak` : 'Memuat Berita...'),
+  description: excerptText,
+  image: computed(() => store.beritaDetail?.image || '/images/logo.png'),
+  url: computed(() => `https://lebakkab.go.id/berita/${route.params.slug}`),
+  type: 'article',
+  author: computed(() => store.beritaDetail?.penulis || store.beritaDetail?.opd?.nama || 'Pemerintah Kabupaten Lebak'),
+  publishedTime: computed(() => store.beritaDetail?.tanggal_publish || store.beritaDetail?.created_at || null),
+  schema: computed(() => {
+    if (!store.beritaDetail?.judul) return null
+    const articleUrl = `https://lebakkab.go.id/berita/${route.params.slug}`
+    const imageUrl = store.beritaDetail?.image || 'https://lebakkab.go.id/images/logo.png'
+    return {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'NewsArticle',
+          '@id': `${articleUrl}#article`,
+          'isPartOf': {
+            '@type': 'WebPage',
+            '@id': articleUrl,
+            'url': articleUrl,
+            'name': store.beritaDetail.judul
+          },
+          'headline': store.beritaDetail.judul,
+          'description': excerptText.value,
+          'image': [imageUrl],
+          'datePublished': store.beritaDetail.tanggal_publish || store.beritaDetail.created_at,
+          'dateModified': store.beritaDetail.updated_at || store.beritaDetail.created_at,
+          'mainEntityOfPage': articleUrl,
+          'author': {
+            '@type': 'Person',
+            'name': store.beritaDetail.penulis || 'Redaksi Portal Lebak'
+          },
+          'publisher': {
+            '@type': 'GovernmentOrganization',
+            'name': 'Pemerintah Daerah Kabupaten Lebak',
+            'url': 'https://lebakkab.go.id',
+            'logo': {
+              '@type': 'ImageObject',
+              'url': 'https://lebakkab.go.id/images/logo.png'
+            }
+          },
+          'articleSection': store.beritaDetail.kategori?.nama || 'Berita Daerah'
+        },
+        {
+          '@type': 'BreadcrumbList',
+          '@id': `${articleUrl}#breadcrumb`,
+          'itemListElement': [
+            {
+              '@type': 'ListItem',
+              'position': 1,
+              'name': 'Beranda',
+              'item': 'https://lebakkab.go.id'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 2,
+              'name': 'Berita',
+              'item': 'https://lebakkab.go.id/berita'
+            },
+            {
+              '@type': 'ListItem',
+              'position': 3,
+              'name': store.beritaDetail.judul,
+              'item': articleUrl
+            }
+          ]
+        }
+      ]
     }
-  ]
+  })
 })
 
 // Jalankan saat pertama kali halaman dibuka

@@ -104,12 +104,39 @@ import axios from '@/utils/api'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import SidebarLayanan from '@/components/SidebarLayanan.vue'
 import { useLayananStore } from '@/stores/layanan'
+import { useSeo } from '@/composables/useSeo'
 
 const route = useRoute()
 const layananStore = useLayananStore()
 
 const layanan = computed(() => layananStore.layananDetail)
 const loading = computed(() => layananStore.loading)
+
+useSeo({
+  title: computed(() => layanan.value?.judul ? `${layanan.value.judul} - Layanan Publik Lebak` : 'Detail Layanan Publik'),
+  description: computed(() => {
+    if (!layanan.value?.deskripsi) return 'Informasi persyaratan dan prosedur layanan publik di Kabupaten Lebak.'
+    return layanan.value.deskripsi.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').substring(0, 160).trim() + '...'
+  }),
+  image: computed(() => layanan.value?.cover || '/images/logo.png'),
+  url: computed(() => `https://lebakkab.go.id/layanan/${route.params.slug}`),
+  schema: computed(() => {
+    if (!layanan.value?.judul) return null
+    const serviceUrl = `https://lebakkab.go.id/layanan/${route.params.slug}`
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'GovernmentService',
+      'name': layanan.value.judul,
+      'serviceType': layanan.value.jenis || 'Layanan Masyarakat',
+      'description': layanan.value.deskripsi ? layanan.value.deskripsi.replace(/<[^>]*>?/gm, ' ').substring(0, 200).trim() : 'Layanan Publik Kabupaten Lebak',
+      'url': serviceUrl,
+      'provider': {
+        '@type': 'GovernmentOrganization',
+        'name': layanan.value.unit_pelaksana || 'Pemerintah Kabupaten Lebak'
+      }
+    }
+  })
+})
 
 // Load pertama saat halaman dibuka
 onMounted(() => {
