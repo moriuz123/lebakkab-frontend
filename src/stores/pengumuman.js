@@ -9,7 +9,7 @@ export const usePengumumanStore = defineStore('pengumumanStore', {
 
     // Pagination
     currentPage: 1,
-    perPage: 8,
+    perPage: 9,
 
     // Search
     searchQuery: '',

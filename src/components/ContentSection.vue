@@ -376,7 +376,11 @@ export default {
       try {
         const bannerRes = await axios.get('/api/banner?kategori=ucapan')
         if (Array.isArray(bannerRes.data)) {
-          banners.value = bannerRes.data.flatMap((item) => {
+          const sortedBanners = [...bannerRes.data].sort((a, b) => {
+            const dateDiff = new Date(b.created_at || 0) - new Date(a.created_at || 0)
+            return dateDiff !== 0 ? dateDiff : (b.id - a.id)
+          })
+          banners.value = sortedBanners.flatMap((item) => {
             const urls = Array.isArray(item.gambar_url) 
               ? item.gambar_url 
               : (item.gambar_url ? [item.gambar_url] : [item.gambar])
