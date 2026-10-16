@@ -16,6 +16,8 @@
       <router-view />
     </main>
     <FloatingWidget />
+    <!-- Dynamic Visitor Popup Modal -->
+    <PopupModal />
     <!-- Footer tetap -->
     <FooterSection />
   </div>
@@ -27,6 +29,7 @@ import { useSettingsStore } from '@/stores/settings'
 import { useHead } from '@vueuse/head'
 import { computed } from 'vue'
 import FloatingWidget from '@/components/FloatingWidget.vue'
+import PopupModal from '@/components/PopupModal.vue'
 import MaintenanceOverlay from '@/components/MaintenanceOverlay.vue'
 import HeaderNav from './components/HeaderNav.vue'
 import FooterSection from './components/AppFooter.vue'
