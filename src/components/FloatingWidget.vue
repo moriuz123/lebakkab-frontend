@@ -1,143 +1,13 @@
 <template>
   <div>
     <!-- ==============================================
-         DESKTOP FLOATING DRAWERS - LEFT EDGE (SISTEM LACI KIRI)
-         Laci Statistik Pengunjung & Live Streaming
-         ============================================== -->
-    <div class="hidden md:flex fixed left-0 top-1/2 -translate-y-1/2 z-40 flex-col gap-1.5 items-start">
-      
-      <!-- 1. LACI: STATISTIK PENGUNJUNG -->
-      <div 
-        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
-        :class="activeDrawer === 'statistik' ? 'translate-x-[280px]' : 'translate-x-0'"
-        @mouseleave="onMouseLeaveDrawer('statistik')"
-      >
-        <!-- Drawer Content (Off-screen to the left when closed) -->
-        <div class="absolute left-[-280px] top-0 bg-white border-y border-r border-gray-200 p-5 w-[280px] rounded-br-3xl shadow-[8px_0_30px_rgba(0,0,0,0.15)] flex flex-col">
-          <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-emerald-600 to-teal-400"></div>
-          
-          <div class="flex items-center justify-between mb-5 mt-1 border-b border-gray-100 pb-3">
-            <div class="flex items-center gap-2.5">
-              <div class="bg-emerald-800 p-2 rounded-xl text-[#e8a020] shadow-inner">
-                <Icon name="lucide:users" class="w-4 h-4" />
-              </div>
-              <div>
-                <h3 class="text-gray-900 font-bold text-base leading-tight uppercase tracking-wider">Statistik</h3>
-                <p class="text-[11px] text-gray-500">Pengunjung Portal</p>
-              </div>
-            </div>
-            <button @click="activeDrawer = null" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors">
-              <Icon name="lucide:x" class="w-4 h-4" />
-            </button>
-          </div>
-          
-          <div class="space-y-2.5 relative z-10">
-            <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-              <span class="text-gray-600 text-xs font-semibold">Hari Ini</span>
-              <span class="font-bold text-[#0a2463] bg-white shadow-xs px-2.5 py-0.5 rounded-lg text-xs">{{ stats.today.toLocaleString('id-ID') }}</span>
-            </div>
-            <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-              <span class="text-gray-600 text-xs font-semibold">Bulan Ini</span>
-              <span class="font-bold text-[#0a2463] bg-white shadow-xs px-2.5 py-0.5 rounded-lg text-xs">{{ stats.thisMonth.toLocaleString('id-ID') }}</span>
-            </div>
-            <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-              <span class="text-gray-600 text-xs font-semibold">Tahun Ini</span>
-              <span class="font-bold text-[#0a2463] bg-white shadow-xs px-2.5 py-0.5 rounded-lg text-xs">{{ stats.thisYear.toLocaleString('id-ID') }}</span>
-            </div>
-            <div class="flex justify-between items-center bg-gradient-to-r from-[#0a2463] to-emerald-700 p-3 rounded-xl text-white shadow-md mt-3">
-              <span class="text-blue-50 text-xs font-bold">Total Pengunjung</span>
-              <span class="font-bold bg-white/20 px-2.5 py-0.5 rounded-lg backdrop-blur-sm text-xs">{{ stats.total.toLocaleString('id-ID') }}</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab Handle -->
-        <button 
-          @click="toggleDrawer('statistik')"
-          @mouseenter="onMouseEnterTab('statistik')"
-          class="relative z-10 bg-emerald-700 hover:bg-emerald-600 text-white py-3.5 px-2 rounded-r-2xl shadow-[4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-2 transition-all border-t border-r border-b border-emerald-800 cursor-pointer group"
-          title="Statistik Pengunjung Portal"
-        >
-          <Icon name="lucide:bar-chart-2" class="w-4 h-4 group-hover:scale-110 transition-transform text-[#e8a020]" />
-          <span class="vertical-text-left text-[11px] font-black tracking-[0.15em] uppercase">Statistik</span>
-          <div class="bg-white/20 rounded-full p-1">
-            <Icon name="lucide:chevron-right" class="w-3.5 h-3.5 transition-transform duration-500" :class="activeDrawer === 'statistik' ? 'rotate-180' : ''" />
-          </div>
-        </button>
-      </div>
-
-      <!-- 2. LACI: LIVE STREAMING -->
-      <div 
-        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
-        :class="activeDrawer === 'live' ? 'translate-x-[280px]' : 'translate-x-0'"
-        @mouseleave="onMouseLeaveDrawer('live')"
-      >
-        <!-- Drawer Content -->
-        <div class="absolute left-[-280px] top-0 bg-white border-y border-r border-gray-200 p-5 w-[280px] rounded-br-3xl shadow-[8px_0_30px_rgba(0,0,0,0.15)] flex flex-col">
-          <div class="absolute top-0 left-0 w-full h-1.5" :class="ytData.is_live ? 'bg-gradient-to-r from-[#cc0000] to-rose-400' : 'bg-gradient-to-r from-gray-500 to-gray-700'"></div>
-          
-          <div class="flex items-center justify-between mb-4 mt-1 border-b border-gray-100 pb-3">
-            <div class="flex items-center gap-2.5">
-              <div class="p-2 rounded-xl text-white shadow-inner" :class="ytData.is_live ? 'bg-[#cc0000] animate-pulse' : 'bg-gray-700'">
-                <Icon name="lucide:youtube" class="w-4 h-4" />
-              </div>
-              <div>
-                <h3 class="text-gray-900 font-bold text-base leading-tight uppercase tracking-wider">Live Stream</h3>
-                <p class="text-[11px] text-gray-500">Diskominfosp Lebak</p>
-              </div>
-            </div>
-            <button @click="activeDrawer = null" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors">
-              <Icon name="lucide:x" class="w-4 h-4" />
-            </button>
-          </div>
-
-          <div class="mb-3">
-            <span v-if="ytData.is_live" class="inline-flex items-center gap-1.5 text-xs font-bold text-red-700 bg-red-50 px-3 py-1 rounded-full border border-red-200">
-              <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
-              Sedang Siaran Langsung
-            </span>
-            <span v-else class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
-              Siaran Terakhir / Arsip
-            </span>
-          </div>
-          
-          <div class="space-y-3 relative z-10">
-            <button
-              @click="showLiveModal = true; activeDrawer = null"
-              class="w-full flex items-center justify-center gap-2.5 p-3 rounded-xl transition-all font-bold text-xs shadow-md"
-              :class="ytData.is_live ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-200' : 'bg-gray-800 hover:bg-gray-900 text-white'"
-            >
-              <Icon name="lucide:play" class="w-4 h-4 text-white" />
-              <span>{{ ytData.is_live ? 'Tonton Live Sekarang' : 'Tonton Siaran Ulang' }}</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- Tab Handle -->
-        <button 
-          @click="toggleDrawer('live')"
-          @mouseenter="onMouseEnterTab('live')"
-          class="relative z-10 text-white py-3.5 px-2 rounded-r-2xl shadow-[4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-2 transition-all border-t border-r border-b cursor-pointer group"
-          :class="ytData.is_live ? 'bg-[#cc0000] hover:bg-[#b30000] border-[#990000]' : 'bg-[#990000] hover:bg-[#cc0000] border-[#770000]'"
-          title="Live Streaming Diskominfosp"
-        >
-          <div class="relative">
-            <Icon name="lucide:youtube" class="w-4 h-4 group-hover:scale-110 transition-transform" />
-            <span v-if="ytData.is_live" class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 border border-white rounded-full animate-ping"></span>
-          </div>
-          <span class="vertical-text-left text-[11px] font-black tracking-[0.15em] uppercase">Live</span>
-          <div class="bg-white/20 rounded-full p-1">
-            <Icon name="lucide:chevron-right" class="w-3.5 h-3.5 transition-transform duration-500" :class="activeDrawer === 'live' ? 'rotate-180' : ''" />
-          </div>
-        </button>
-      </div>
-
-    </div>
-
-
-    <!-- ==============================================
-         DESKTOP FLOATING DRAWERS - RIGHT EDGE (SISTEM LACI KANAN)
-         Laci Interaksi, CCTV, Aksesibilitas
+         DESKTOP FLOATING DRAWERS - RIGHT EDGE (SEMUA LACI DI SEBELAH KANAN)
+         1. Interaksi
+         2. Statistik
+         3. Live
+         4. CCTV
+         5. Aksesibilitas
+         (Menu, Beranda, & 112 Darurat telah dihilangkan dari desktop)
          ============================================== -->
     <div class="hidden md:flex fixed right-0 top-1/2 -translate-y-1/2 z-40 flex-col gap-1.5 items-end">
       
@@ -222,7 +92,133 @@
         </div>
       </div>
 
-      <!-- 2. LACI: CCTV (DINAMIS) -->
+      <!-- 2. LACI: STATISTIK PENGUNJUNG -->
+      <div 
+        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="activeDrawer === 'statistik' ? '-translate-x-[280px]' : 'translate-x-0'"
+        @mouseleave="onMouseLeaveDrawer('statistik')"
+      >
+        <!-- Tab Handle -->
+        <button 
+          @click="toggleDrawer('statistik')"
+          @mouseenter="onMouseEnterTab('statistik')"
+          class="relative z-10 bg-emerald-700 hover:bg-emerald-600 text-white py-3.5 px-2 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-2 transition-all border-t border-l border-b border-emerald-800 cursor-pointer group"
+          title="Statistik Pengunjung Portal"
+        >
+          <div class="bg-white/20 rounded-full p-1">
+            <Icon name="lucide:chevron-left" class="w-3.5 h-3.5 transition-transform duration-500" :class="activeDrawer === 'statistik' ? 'rotate-180' : ''" />
+          </div>
+          <span class="vertical-text-right text-[11px] font-black tracking-[0.15em] uppercase">Statistik</span>
+          <Icon name="lucide:bar-chart-2" class="w-4 h-4 group-hover:scale-110 transition-transform text-[#e8a020]" />
+        </button>
+
+        <!-- Drawer Content -->
+        <div class="absolute right-[-280px] top-0 bg-white border-y border-l border-gray-200 p-5 w-[280px] rounded-bl-3xl shadow-[-8px_0_30px_rgba(0,0,0,0.15)] flex flex-col">
+          <div class="absolute top-0 right-0 w-full h-1.5 bg-gradient-to-l from-emerald-600 to-teal-400"></div>
+          
+          <div class="flex items-center justify-between mb-5 mt-1 border-b border-gray-100 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="bg-emerald-800 p-2 rounded-xl text-[#e8a020] shadow-inner">
+                <Icon name="lucide:users" class="w-4 h-4" />
+              </div>
+              <div>
+                <h3 class="text-gray-900 font-bold text-base leading-tight uppercase tracking-wider">Statistik</h3>
+                <p class="text-[11px] text-gray-500">Pengunjung Portal</p>
+              </div>
+            </div>
+            <button @click="activeDrawer = null" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors">
+              <Icon name="lucide:x" class="w-4 h-4" />
+            </button>
+          </div>
+          
+          <div class="space-y-2.5 relative z-10">
+            <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+              <span class="text-gray-600 text-xs font-semibold">Hari Ini</span>
+              <span class="font-bold text-[#0a2463] bg-white shadow-xs px-2.5 py-0.5 rounded-lg text-xs">{{ stats.today.toLocaleString('id-ID') }}</span>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+              <span class="text-gray-600 text-xs font-semibold">Bulan Ini</span>
+              <span class="font-bold text-[#0a2463] bg-white shadow-xs px-2.5 py-0.5 rounded-lg text-xs">{{ stats.thisMonth.toLocaleString('id-ID') }}</span>
+            </div>
+            <div class="flex justify-between items-center bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+              <span class="text-gray-600 text-xs font-semibold">Tahun Ini</span>
+              <span class="font-bold text-[#0a2463] bg-white shadow-xs px-2.5 py-0.5 rounded-lg text-xs">{{ stats.thisYear.toLocaleString('id-ID') }}</span>
+            </div>
+            <div class="flex justify-between items-center bg-gradient-to-r from-[#0a2463] to-emerald-700 p-3 rounded-xl text-white shadow-md mt-3">
+              <span class="text-blue-50 text-xs font-bold">Total Pengunjung</span>
+              <span class="font-bold bg-white/20 px-2.5 py-0.5 rounded-lg backdrop-blur-sm text-xs">{{ stats.total.toLocaleString('id-ID') }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. LACI: LIVE STREAMING -->
+      <div 
+        class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
+        :class="activeDrawer === 'live' ? '-translate-x-[280px]' : 'translate-x-0'"
+        @mouseleave="onMouseLeaveDrawer('live')"
+      >
+        <!-- Tab Handle -->
+        <button 
+          @click="toggleDrawer('live')"
+          @mouseenter="onMouseEnterTab('live')"
+          class="relative z-10 text-white py-3.5 px-2 rounded-l-2xl shadow-[-4px_4px_15px_rgba(0,0,0,0.15)] flex flex-col items-center justify-center gap-2 transition-all border-t border-l border-b cursor-pointer group"
+          :class="ytData.is_live ? 'bg-[#cc0000] hover:bg-[#b30000] border-[#990000]' : 'bg-[#990000] hover:bg-[#cc0000] border-[#770000]'"
+          title="Live Streaming Diskominfosp"
+        >
+          <div class="bg-white/20 rounded-full p-1">
+            <Icon name="lucide:chevron-left" class="w-3.5 h-3.5 transition-transform duration-500" :class="activeDrawer === 'live' ? 'rotate-180' : ''" />
+          </div>
+          <span class="vertical-text-right text-[11px] font-black tracking-[0.15em] uppercase">Live</span>
+          <div class="relative">
+            <Icon name="lucide:youtube" class="w-4 h-4 group-hover:scale-110 transition-transform" />
+            <span v-if="ytData.is_live" class="absolute -top-1 -right-1 w-2 h-2 bg-emerald-400 border border-white rounded-full animate-ping"></span>
+          </div>
+        </button>
+
+        <!-- Drawer Content -->
+        <div class="absolute right-[-280px] top-0 bg-white border-y border-l border-gray-200 p-5 w-[280px] rounded-bl-3xl shadow-[-8px_0_30px_rgba(0,0,0,0.15)] flex flex-col">
+          <div class="absolute top-0 right-0 w-full h-1.5" :class="ytData.is_live ? 'bg-gradient-to-l from-[#cc0000] to-rose-400' : 'bg-gradient-to-l from-gray-500 to-gray-700'"></div>
+          
+          <div class="flex items-center justify-between mb-4 mt-1 border-b border-gray-100 pb-3">
+            <div class="flex items-center gap-2.5">
+              <div class="p-2 rounded-xl text-white shadow-inner" :class="ytData.is_live ? 'bg-[#cc0000] animate-pulse' : 'bg-gray-700'">
+                <Icon name="lucide:youtube" class="w-4 h-4" />
+              </div>
+              <div>
+                <h3 class="text-gray-900 font-bold text-base leading-tight uppercase tracking-wider">Live Stream</h3>
+                <p class="text-[11px] text-gray-500">Diskominfosp Lebak</p>
+              </div>
+            </div>
+            <button @click="activeDrawer = null" class="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors">
+              <Icon name="lucide:x" class="w-4 h-4" />
+            </button>
+          </div>
+
+          <div class="mb-3">
+            <span v-if="ytData.is_live" class="inline-flex items-center gap-1.5 text-xs font-bold text-red-700 bg-red-50 px-3 py-1 rounded-full border border-red-200">
+              <span class="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+              Sedang Siaran Langsung
+            </span>
+            <span v-else class="inline-flex items-center gap-1.5 text-xs font-medium text-gray-600 bg-gray-100 px-3 py-1 rounded-full">
+              Siaran Terakhir / Arsip
+            </span>
+          </div>
+          
+          <div class="space-y-3 relative z-10">
+            <button
+              @click="showLiveModal = true; activeDrawer = null"
+              class="w-full flex items-center justify-center gap-2.5 p-3 rounded-xl transition-all font-bold text-xs shadow-md"
+              :class="ytData.is_live ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-200' : 'bg-gray-800 hover:bg-gray-900 text-white'"
+            >
+              <Icon name="lucide:play" class="w-4 h-4 text-white" />
+              <span>{{ ytData.is_live ? 'Tonton Live Sekarang' : 'Tonton Siaran Ulang' }}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. LACI: CCTV (DINAMIS) -->
       <div 
         class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
         :class="activeDrawer === 'cctv' ? '-translate-x-[280px]' : 'translate-x-0'"
@@ -288,7 +284,7 @@
         </div>
       </div>
 
-      <!-- 3. LACI: AKSESIBILITAS (DIPISAHKAN DI SEBELAH KANAN) -->
+      <!-- 5. LACI: AKSESIBILITAS -->
       <div 
         class="relative flex items-start transition-transform duration-500 ease-out drop-shadow-2xl"
         :class="activeDrawer === 'aksesibilitas' ? '-translate-x-[360px]' : 'translate-x-0'"
@@ -430,28 +426,6 @@
 
 
     <!-- ==============================================
-         EMERGENCY CALL 112 FLOATING BUTTON (DESKTOP)
-         Tombol Melayang di Bawah Pinggir
-         ============================================== -->
-    <div class="hidden md:flex fixed bottom-6 right-6 z-40 items-center">
-      <a
-        href="tel:112"
-        class="group relative flex items-center gap-3 bg-gradient-to-r from-red-600 via-rose-600 to-red-700 hover:from-red-700 hover:to-rose-800 text-white font-black px-4 py-3 rounded-full shadow-[0_10px_25px_rgba(225,29,72,0.45)] hover:shadow-[0_12px_30px_rgba(225,29,72,0.6)] transition-all duration-300 hover:scale-105 border-2 border-white/50 cursor-pointer"
-        title="Panggilan Darurat Bebas Pulsa 112"
-      >
-        <div class="relative flex items-center justify-center w-8 h-8 rounded-full bg-white/20 shadow-inner">
-          <Icon name="lucide:phone-call" class="w-4 h-4 animate-bounce text-white" />
-          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 bg-yellow-400 rounded-full animate-ping"></span>
-        </div>
-        <div class="flex flex-col text-left pr-1">
-          <span class="text-[9px] uppercase tracking-wider font-extrabold text-rose-100 leading-none">Darurat 24 Jam</span>
-          <span class="text-sm font-black tracking-wide leading-tight">CALL 112</span>
-        </div>
-      </a>
-    </div>
-
-
-    <!-- ==============================================
          MOBILE FLOATING BOTTOM BAR (WARNA UTAMA & NON-TRANSPARAN)
          Fixed bottom bar across the screen on mobile
          ============================================== -->
@@ -536,7 +510,8 @@
       <!-- 7. Call Center Darurat 112 -->
       <a
         href="tel:112"
-        class="flex flex-col items-center justify-center flex-1 py-1 bg-red-600 hover:bg-red-700 text-white rounded-xl focus:outline-none transition-transform active:scale-95 shadow-md mx-1 border border-red-500"
+        @click="call112Direct"
+        class="flex flex-col items-center justify-center flex-1 py-1 bg-red-600 hover:bg-red-700 text-white rounded-xl focus:outline-none transition-transform active:scale-95 shadow-md mx-1 border border-red-500 cursor-pointer"
         title="Panggil 112"
       >
         <Icon name="lucide:phone-call" class="w-4 h-4 mb-0.5 animate-pulse text-white" />
@@ -1086,6 +1061,11 @@ const handleCctvClick = () => {
     }
   }
   router.push('/cctv')
+}
+
+// Direct Call 112 for Mobile
+const call112Direct = () => {
+  window.location.href = 'tel:112'
 }
 
 // Subaction triggers from Interaksi
