@@ -1,5 +1,5 @@
 <template>
-  <section class="relative w-full h-screen min-h-[600px] overflow-hidden bg-emerald-900">
+  <section class="relative w-full min-h-screen lg:h-screen lg:min-h-[720px] flex flex-col justify-between overflow-hidden bg-emerald-900">
     <div class="absolute inset-0 z-0">
       <transition-group name="fade">
         <img
@@ -27,169 +27,202 @@
 
     <!-- Hero content -->
     <div
-      class="relative z-20 h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left pt-20 lg:pt-0"
+      class="relative z-20 flex-grow flex items-center w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4 lg:py-0"
     >
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.15] tracking-tight drop-shadow-lg">
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e8a020] to-yellow-300">
-          {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.judul || 'Selamat Datang') : 'Selamat Datang' }}
-        </span>
-      </h1>
-      <h2
-        class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-200 drop-shadow-xl mt-4 mb-6 max-w-2xl"
-      >
-        {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.deskripsi || 'Website Resmi Pemerintah Kabupaten Lebak') : 'Website Resmi Pemerintah Kabupaten Lebak' }}
-      </h2>
+      <div class="w-full flex flex-col justify-center items-center lg:items-start text-center lg:text-left">
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-[1.15] tracking-tight drop-shadow-lg">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[#e8a020] to-yellow-300">
+            {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.judul || 'Selamat Datang') : 'Selamat Datang' }}
+          </span>
+        </h1>
+        <h2
+          class="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-200 drop-shadow-xl mt-4 mb-6 max-w-2xl"
+        >
+          {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.deskripsi || 'Website Resmi Pemerintah Kabupaten Lebak') : 'Website Resmi Pemerintah Kabupaten Lebak' }}
+        </h2>
 
-      <!-- Mobile: Logo Hero & Taglines (Above Form) -->
-      <div
-        class="flex lg:hidden flex-col items-center justify-center gap-3 mb-6 z-30 w-full pointer-events-auto"
-      >
-        <!-- Logo Hero -->
-        <img
-          v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
-          :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
-          alt="Hero Logo Mobile"
-          class="h-32 sm:h-40 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] opacity-95 animate-floating"
-        />
-        <!-- Taglines -->
-        <div class="flex items-center justify-center gap-4 mt-2">
-          <template v-if="logoTaglines.length > 0">
-            <img
-              v-for="item in logoTaglines"
-              :key="item.id"
-              :src="item.url + cacheBuster"
-              :alt="item.judul || 'Tagline'"
-              class="h-10 sm:h-14 object-contain drop-shadow-lg"
-            />
-          </template>
-          <template v-else>
-            <img
-              v-if="logoTagline"
-              :src="logoTagline + cacheBuster"
-              alt="Tagline 1"
-              class="h-10 sm:h-14 object-contain drop-shadow-lg"
-            />
-            <img
-              v-if="logoTagline2"
-              :src="logoTagline2 + cacheBuster"
-              alt="Tagline 2"
-              class="h-8 sm:h-11 object-contain drop-shadow-lg"
-            />
-          </template>
-        </div>
-      </div>
-
-      <!-- Form Pencarian (Glassmorphism) -->
-      <div class="w-full max-w-xl lg:max-w-2xl relative group mb-10 z-30">
+        <!-- Mobile: Logo Hero (Above Form) -->
         <div
-          class="absolute inset-0 bg-[#1e5ca8]/20 blur-xl rounded-2xl group-hover:bg-[#1e5ca8]/30 transition-all duration-500"
-        ></div>
-        <form
-          @submit.prevent="doSearch"
-          class="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-1.5 sm:p-2 shadow-2xl overflow-hidden transition-all duration-300 focus-within:bg-white/20 focus-within:border-white/40"
+          class="flex lg:hidden flex-col items-center justify-center mb-6 z-30 w-full pointer-events-auto"
         >
-          <Icon name="lucide:search" class="w-5 h-5 sm:w-6 sm:h-6 text-white/70 ml-3 sm:ml-4 flex-shrink-0" />
-          <input
-            v-model="searchQuery"
-            type="text"
-            maxlength="50"
-            placeholder="Cari informasi, layanan, atau dokumen..."
-            class="flex-grow px-3 sm:px-4 py-2 sm:py-3 bg-transparent text-white placeholder-white/60 focus:outline-none text-sm sm:text-base md:text-lg font-medium w-full"
+          <img
+            v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
+            :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
+            alt="Hero Logo Mobile"
+            class="h-32 sm:h-40 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] opacity-95 animate-floating"
           />
-          <button
-            type="submit"
-            class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-[#e8a020] to-[#d48f10] hover:from-[#c98918] hover:to-[#b3770d] text-[#0a2463] font-black rounded-xl shadow-lg shadow-[#e8a020]/20 transform transition-all duration-300 hover:scale-[1.02] active:scale-95 flex-shrink-0"
-          >
-            Cari
-          </button>
-        </form>
-      </div>
+        </div>
 
-      <!-- Icon Menu (Glass Dock) -->
-      <div v-if="menus.length > 0" class="w-full max-w-3xl z-30">
-        <p
-          class="text-white/60 text-xs sm:text-sm font-bold uppercase tracking-widest mb-4 lg:text-left"
-        >
-          DATA SEKTORAL LEBAK
-        </p>
-        <div class="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-5">
-          <a
-            v-for="(item, index) in menus"
-            :key="index"
-            :href="resolveUrl(item)"
-            class="flex flex-col items-center w-20 sm:w-24 group relative"
-            target="_blank"
-            rel="noopener noreferrer"
-            :title="item.title"
+        <!-- Form Pencarian (Glassmorphism) -->
+        <div class="w-full max-w-xl lg:max-w-2xl relative group mb-8 z-30">
+          <div
+            class="absolute inset-0 bg-[#1e5ca8]/20 blur-xl rounded-2xl group-hover:bg-[#1e5ca8]/30 transition-all duration-500"
+          ></div>
+          <form
+            @submit.prevent="doSearch"
+            class="relative flex items-center bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-1.5 sm:p-2 shadow-2xl overflow-hidden transition-all duration-300 focus-within:bg-white/20 focus-within:border-white/40"
           >
-            <div
-              class="absolute inset-0 bg-white/5 rounded-2xl blur-md group-hover:bg-[#1e5ca8]/20 transition-all duration-300"
-            ></div>
-            <div
-              class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-[#0a2463] group-hover:to-[#071840] group-hover:border-[#1e5ca8]/50 group-hover:shadow-[#1e5ca8]/50 flex items-center justify-center"
+            <Icon name="lucide:search" class="w-5 h-5 sm:w-6 sm:h-6 text-white/70 ml-3 sm:ml-4 flex-shrink-0" />
+            <input
+              v-model="searchQuery"
+              type="text"
+              maxlength="50"
+              placeholder="Cari informasi, layanan, atau dokumen..."
+              class="flex-grow px-3 sm:px-4 py-2 sm:py-3 bg-transparent text-white placeholder-white/60 focus:outline-none text-sm sm:text-base md:text-lg font-medium w-full"
+            />
+            <button
+              type="submit"
+              class="px-6 sm:px-8 py-2.5 sm:py-3 bg-gradient-to-r from-[#e8a020] to-[#d48f10] hover:from-[#c98918] hover:to-[#b3770d] text-[#0a2463] font-black rounded-xl shadow-lg shadow-[#e8a020]/20 transform transition-all duration-300 hover:scale-[1.02] active:scale-95 flex-shrink-0 cursor-pointer"
             >
-              <Icon
-                :name="formatIconName(item.icon)"
-                class="h-6 w-6 sm:h-8 sm:w-8"
-              />
-            </div>
-            <span
-              class="mt-2.5 text-[10px] sm:text-xs font-bold text-gray-300 group-hover:text-[#e8a020] transition-colors text-center leading-tight tracking-wide drop-shadow-md"
+              Cari
+            </button>
+          </form>
+        </div>
+
+        <!-- Icon Menu (Glass Dock) -->
+        <div v-if="menus.length > 0" class="w-full max-w-3xl z-30">
+          <p
+            class="text-white/60 text-xs sm:text-sm font-bold uppercase tracking-widest mb-3.5 lg:text-left"
+          >
+            DATA SEKTORAL LEBAK
+          </p>
+          <div class="flex flex-wrap justify-center lg:justify-start gap-3 sm:gap-4 lg:gap-5">
+            <a
+              v-for="(item, index) in menus"
+              :key="index"
+              :href="resolveUrl(item)"
+              class="flex flex-col items-center w-20 sm:w-24 group relative"
+              target="_blank"
+              rel="noopener noreferrer"
+              :title="item.title"
             >
-              {{ item.title }}
-            </span>
-          </a>
+              <div
+                class="absolute inset-0 bg-white/5 rounded-2xl blur-md group-hover:bg-[#1e5ca8]/20 transition-all duration-300"
+              ></div>
+              <div
+                class="relative bg-white/10 backdrop-blur-lg border border-white/10 text-white p-3.5 sm:p-4 rounded-2xl shadow-lg transform transition-all duration-300 group-hover:-translate-y-2 group-hover:bg-gradient-to-br group-hover:from-[#0a2463] group-hover:to-[#071840] group-hover:border-[#1e5ca8]/50 group-hover:shadow-[#1e5ca8]/50 flex items-center justify-center"
+              >
+                <Icon
+                  :name="formatIconName(item.icon)"
+                  class="h-6 w-6 sm:h-8 sm:w-8"
+                />
+              </div>
+              <span
+                class="mt-2.5 text-[10px] sm:text-xs font-bold text-gray-300 group-hover:text-[#e8a020] transition-colors text-center leading-tight tracking-wide drop-shadow-md"
+              >
+                {{ item.title }}
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Desktop: Logo Hero & Taglines (Symmetrically positioned with offset to align with form) -->
+    <!-- Desktop: Logo Hero (Right Side, centered) -->
     <div
-      class="hidden lg:flex absolute inset-y-0 right-10 w-1/2 z-10 pointer-events-none flex-col justify-center items-center gap-6 pr-10 pt-32"
+      class="hidden lg:flex absolute inset-y-0 right-10 w-1/2 z-10 pointer-events-none flex-col justify-center items-center pr-10 pt-12"
     >
-      <!-- Logo Hero -->
       <img
         v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
         :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
         alt="Hero Logo"
-        class="w-auto h-[35%] sm:h-[45%] lg:h-[53%] max-h-[530px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 animate-floating pointer-events-auto"
+        class="w-auto h-[45%] lg:h-[55%] max-h-[500px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 animate-floating pointer-events-auto"
       />
-
-      <!-- Taglines -->
-      <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto mt-4">
-        <template v-if="logoTaglines.length > 0">
-          <img
-            v-for="(item, idx) in logoTaglines"
-            :key="item.id"
-            :src="item.url + cacheBuster"
-            :alt="item.judul || 'Tagline'"
-            class="object-contain drop-shadow-lg transition-transform hover:scale-105"
-            :class="idx === 0 ? 'h-14 sm:h-20 lg:h-24' : 'h-12 sm:h-16 lg:h-20'"
-          />
-        </template>
-        <template v-else>
-          <img
-            v-if="logoTagline"
-            :src="logoTagline + cacheBuster"
-            alt="Tagline 1"
-            class="h-14 sm:h-20 lg:h-24 object-contain drop-shadow-lg transition-transform hover:scale-105"
-          />
-          <img
-            v-if="logoTagline2"
-            :src="logoTagline2 + cacheBuster"
-            alt="Tagline 2"
-            class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105"
-          />
-        </template>
-      </div>
     </div>
 
-    <!-- Scroll Down Indicator -->
+    <!-- Scroll Down Indicator (Centered above bottom bar) -->
     <div
-      class="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 animate-bounce hidden sm:flex flex-col items-center text-white/50"
+      class="hidden lg:flex flex-col items-center justify-center text-white/40 hover:text-white/80 transition-colors cursor-pointer mb-1 pointer-events-auto select-none z-30"
+      @click="scrollToContent"
     >
-      <span class="text-xs font-bold tracking-widest uppercase mb-2">Jelajahi</span>
-      <Icon name="lucide:chevron-down" class="w-6 h-6" />
+      <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-0.5">Jelajahi</span>
+      <Icon name="lucide:chevron-down" class="w-4 h-4 animate-bounce" />
+    </div>
+
+    <!-- ==============================================
+         ENTERPRISE BOTTOM LOGO TAGLINE BAR (MEMANJANG DI BAWAH)
+         Presisi, elegan, responsif dengan glassmorphism modern
+         ============================================== -->
+    <div
+      v-if="logoTaglines.length > 0 || logoTagline || logoTagline2"
+      class="relative z-30 w-full pb-4 sm:pb-5 px-4 sm:px-6 lg:px-8 mt-auto"
+    >
+      <div class="max-w-7xl mx-auto w-full">
+        <div
+          class="relative w-full bg-slate-950/45 hover:bg-slate-950/55 backdrop-blur-xl border border-white/15 rounded-2xl sm:rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-3 sm:py-3.5 px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-300"
+        >
+          <!-- Subtle Top Gold Gradient Hairline Accent -->
+          <div class="absolute -top-px left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1.5px] bg-gradient-to-r from-transparent via-[#e8a020]/80 to-transparent"></div>
+
+          <!-- Left: Enterprise Badge / Label -->
+          <div class="flex items-center gap-3 shrink-0">
+            <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-white/10 border border-white/15 text-[#e8a020] shadow-inner">
+              <Icon name="lucide:sparkles" class="w-4 h-4 animate-pulse" />
+            </div>
+            <div class="text-left">
+              <span class="block text-[11px] font-black uppercase tracking-[0.2em] text-[#e8a020]">
+                Tagline & Identitas Daerah
+              </span>
+              <span class="block text-[10px] font-medium text-white/60">
+                Pemerintah Kabupaten Lebak
+              </span>
+            </div>
+          </div>
+
+          <!-- Right/Center: Tagline Logos Horizontally Aligned with Precision -->
+          <div class="flex items-center justify-center md:justify-end gap-6 sm:gap-10 lg:gap-12 flex-wrap sm:flex-nowrap w-full md:w-auto">
+            <template v-if="logoTaglines.length > 0">
+              <div
+                v-for="(item, idx) in logoTaglines"
+                :key="item.id"
+                class="flex items-center gap-6 sm:gap-10 lg:gap-12 group"
+              >
+                <!-- Divider between logos (except first item) -->
+                <div v-if="idx > 0" class="h-8 w-px bg-white/15 hidden sm:block"></div>
+
+                <div
+                  class="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md"
+                  :title="item.judul || 'Logo Tagline Lebak'"
+                >
+                  <img
+                    :src="item.url + cacheBuster"
+                    :alt="item.judul || 'Tagline'"
+                    class="h-9 sm:h-11 lg:h-12 w-auto max-w-[150px] sm:max-w-[200px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </template>
+
+            <!-- Fallback if logoTaglines array is empty but legacy props exist -->
+            <template v-else>
+              <div v-if="logoTagline" class="flex items-center group">
+                <div class="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                  <img
+                    :src="logoTagline + cacheBuster"
+                    alt="Tagline 1"
+                    class="h-9 sm:h-11 lg:h-12 w-auto max-w-[150px] sm:max-w-[200px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+
+              <div v-if="logoTagline && logoTagline2" class="h-8 w-px bg-white/15 hidden sm:block"></div>
+
+              <div v-if="logoTagline2" class="flex items-center group">
+                <div class="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
+                  <img
+                    :src="logoTagline2 + cacheBuster"
+                    alt="Tagline 2"
+                    class="h-9 sm:h-11 lg:h-12 w-auto max-w-[150px] sm:max-w-[200px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
@@ -307,6 +340,14 @@ const doSearch = () => {
     searchQuery.value = query // Update tampilan di kotak input jika ada yang dihapus
     router.push({ name: 'SearchPage', query: { q: query.trim() } })
   }
+}
+
+// === Smooth Scroll to Content ===
+const scrollToContent = () => {
+  window.scrollTo({
+    top: window.innerHeight - 50,
+    behavior: 'smooth'
+  })
 }
 
 onMounted(() => {
