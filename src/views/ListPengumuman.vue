@@ -183,15 +183,20 @@
                 <Icon name="lucide:arrow-right" class="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform duration-300" />
               </router-link>
 
-              <!-- Attachment indicator if available -->
-              <span
+              <!-- Attachment link & download if available -->
+              <a
                 v-if="item.file_lampiran"
-                class="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2.5 py-1 rounded-md border border-gray-200/60"
-                title="Memiliki lampiran dokumen"
+                :href="$storageUrl(item.file_lampiran)"
+                target="_blank"
+                rel="noopener noreferrer"
+                :download="getFileName(item.file_lampiran)"
+                @click.stop
+                class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1e5ca8] hover:text-white bg-blue-50/80 hover:bg-[#1e5ca8] px-2.5 py-1 rounded-xl border border-blue-100 transition-all shadow-2xs group/btn"
+                title="Buka atau unduh berkas dokumen lampiran"
               >
-                <Icon name="lucide:paperclip" class="w-3.5 h-3.5 text-gray-400" />
-                <span class="text-[11px] font-medium">Lampiran</span>
-              </span>
+                <Icon name="lucide:file-down" class="w-3.5 h-3.5 text-[#e8a020] group-hover/btn:text-white transition-colors" />
+                <span class="text-[11px] font-semibold">Unduh Dokumen</span>
+              </a>
             </div>
           </div>
         </article>
@@ -273,6 +278,14 @@ const handlePageChange = (page) => {
 const stripHtml = (html) => {
   if (!html) return ''
   return html.replace(/<[^>]*>?/gm, '').replace(/&nbsp;/g, ' ').trim()
+}
+
+const getFileName = (path) => {
+  if (!path) return 'Dokumen-Lampiran'
+  const cleanPath = path.split('?')[0]
+  const parts = cleanPath.split('/')
+  const raw = parts[parts.length - 1]
+  return decodeURIComponent(raw) || 'Dokumen-Lampiran'
 }
 
 const handleKeyDown = (e) => {
