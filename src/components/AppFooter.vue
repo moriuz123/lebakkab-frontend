@@ -38,7 +38,7 @@
             </div>
           </div>
           <p class="text-[13.6px] text-white/55 leading-[1.8] mb-6 max-w-[38ch]">
-            Mewujudkan tata kelola pemerintahan yang transparan, efektif, dan efisien melalui pemanfaatan teknologi informasi dan komunikasi di Kabupaten Lebak.
+            {{ footer.site_description || 'Mewujudkan tata kelola pemerintahan yang transparan, efektif, dan efisien melalui pemanfaatan teknologi informasi dan komunikasi di Kabupaten Lebak.' }}
           </p>
           <!-- Sosial Media (Seperti halaman Kontak) -->
           <div class="flex flex-wrap gap-3 mt-2">
@@ -135,8 +135,7 @@
         class="container mx-auto px-6 max-w-screen-xl py-5 flex justify-center text-center items-center gap-4 text-sm text-[#e8a020]"
       >
         <p>
-          &copy; {{ new Date().getFullYear() }} Pemerintah Kabupaten Lebak. Dikembangkan oleh
-          Diskominfo Lebak.
+          {{ footer.footer_text || ('&copy; ' + new Date().getFullYear() + ' Pemerintah Kabupaten Lebak. Dikembangkan oleh Diskominfo Lebak.') }}
         </p>
       </div>
     </div>
@@ -153,6 +152,7 @@ export default {
     return {
       footer: {
         site_name: '',
+        site_description: '',
         satuan_kerja: '',
         logo_url: null,
         address: '',
