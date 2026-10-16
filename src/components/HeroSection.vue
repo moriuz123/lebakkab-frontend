@@ -41,7 +41,7 @@
           {{ heroSlides.length > 0 ? (heroSlides[currentImage % heroSlides.length]?.deskripsi || 'Website Resmi Pemerintah Kabupaten Lebak') : 'Website Resmi Pemerintah Kabupaten Lebak' }}
         </h2>
 
-        <!-- Mobile: Logo Hero (Above Form) -->
+        <!-- Mobile: Foto Konten Hero & Card Tagline (Above Form) -->
         <div
           class="flex lg:hidden flex-col items-center justify-center mb-6 z-30 w-full pointer-events-auto"
         >
@@ -49,8 +49,60 @@
             v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
             :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
             alt="Hero Logo Mobile"
-            class="h-32 sm:h-40 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] opacity-95 animate-floating"
+            class="h-32 sm:h-36 w-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.5)] opacity-95 animate-floating"
           />
+
+          <!-- Mobile: Card / Kotak Tagline di Bawah Foto Konten Hero -->
+          <div
+            v-if="logoTaglines.length > 0 || logoTagline || logoTagline2"
+            class="w-full max-w-sm mt-4 px-2"
+          >
+            <div
+              class="relative w-full bg-slate-950/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-3 px-4 sm:px-6 flex items-center justify-center transition-all duration-300"
+            >
+              <!-- Subtle Top Gold Gradient Hairline Accent -->
+              <div
+                class="absolute -top-px left-1/2 -translate-x-1/2 w-3/4 h-[1.5px] bg-gradient-to-r from-transparent via-[#e8a020]/80 to-transparent"
+              ></div>
+
+              <!-- Tagline Logos Mobile -->
+              <div class="w-full flex items-center justify-center gap-5 sm:gap-6 flex-wrap">
+                <template v-if="logoTaglines.length > 0">
+                  <div
+                    v-for="item in logoTaglines"
+                    :key="item.id"
+                    class="flex items-center justify-center group cursor-pointer"
+                    :title="item.judul || 'Logo Tagline Lebak'"
+                  >
+                    <img
+                      :src="item.url + cacheBuster"
+                      :alt="item.judul || 'Tagline'"
+                      class="h-9 sm:h-11 w-auto max-w-[130px] sm:max-w-[160px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                </template>
+                <template v-else>
+                  <div v-if="logoTagline" class="flex items-center justify-center group cursor-pointer">
+                    <img
+                      :src="logoTagline + cacheBuster"
+                      alt="Tagline 1"
+                      class="h-9 sm:h-11 w-auto max-w-[130px] sm:max-w-[160px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div v-if="logoTagline2" class="flex items-center justify-center group cursor-pointer">
+                    <img
+                      :src="logoTagline2 + cacheBuster"
+                      alt="Tagline 2"
+                      class="h-9 sm:h-11 w-auto max-w-[130px] sm:max-w-[160px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)]"
+                      loading="lazy"
+                    />
+                  </div>
+                </template>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Form Pencarian (Glassmorphism) -->
@@ -118,44 +170,32 @@
       </div>
     </div>
 
-    <!-- Desktop: Logo Hero (Right Side, centered) -->
+    <!-- Desktop: Foto Konten Hero & Card Tagline (Right Side, centered) -->
     <div
-      class="hidden lg:flex absolute inset-y-0 right-10 w-1/2 z-10 pointer-events-none flex-col justify-center items-center pr-10 pt-12"
+      class="hidden lg:flex absolute inset-y-0 right-8 xl:right-12 w-1/2 z-20 pointer-events-none flex-col justify-center items-center pr-6 xl:pr-10 pt-10"
     >
       <img
         v-if="heroSlides.length > 0 && heroSlides[currentImage % heroSlides.length]?.gambar"
         :src="$storageUrl(heroSlides[currentImage % heroSlides.length].gambar)"
-        alt="Hero Logo"
-        class="w-auto h-[45%] lg:h-[55%] max-h-[500px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 animate-floating pointer-events-auto"
+        alt="Foto Konten Hero"
+        class="w-auto h-[40%] lg:h-[48%] max-h-[440px] object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)] opacity-95 hover:opacity-100 transition-all duration-500 animate-floating pointer-events-auto"
       />
-    </div>
 
-    <!-- Scroll Down Indicator (Centered above bottom bar) -->
-    <div
-      class="hidden lg:flex flex-col items-center justify-center text-white/40 hover:text-white/80 transition-colors cursor-pointer mb-1 pointer-events-auto select-none z-30"
-      @click="scrollToContent"
-    >
-      <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-0.5">Jelajahi</span>
-      <Icon name="lucide:chevron-down" class="w-4 h-4 animate-bounce" />
-    </div>
-
-    <!-- ==============================================
-         ENTERPRISE BOTTOM LOGO TAGLINE BAR (MEMANJANG DI BAWAH & TENGAH PRESISI)
-         Tanpa garis pembatas, presisi di tengah
-         ============================================== -->
-    <div
-      v-if="logoTaglines.length > 0 || logoTagline || logoTagline2"
-      class="relative z-30 w-full pb-4 sm:pb-5 px-4 sm:px-6 lg:px-8 mt-auto"
-    >
-      <div class="max-w-7xl mx-auto w-full">
+      <!-- Card / Kotak Tagline di Bawah Foto Konten Hero -->
+      <div
+        v-if="logoTaglines.length > 0 || logoTagline || logoTagline2"
+        class="w-full max-w-lg mt-6 pointer-events-auto"
+      >
         <div
-          class="relative w-full bg-slate-950/40 hover:bg-slate-950/50 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-4 sm:py-5 px-6 sm:px-10 flex items-center justify-center transition-all duration-300"
+          class="relative w-full bg-slate-950/40 hover:bg-slate-950/50 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-4 px-6 sm:px-8 flex items-center justify-center transition-all duration-300"
         >
           <!-- Subtle Top Gold Gradient Hairline Accent -->
-          <div class="absolute -top-px left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1.5px] bg-gradient-to-r from-transparent via-[#e8a020]/80 to-transparent"></div>
+          <div
+            class="absolute -top-px left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1.5px] bg-gradient-to-r from-transparent via-[#e8a020]/80 to-transparent"
+          ></div>
 
-          <!-- Tagline Logos Centered with Exact Symmetry (Presisi di Tengah, Tanpa Garis Pembatas, Ukuran +30%) -->
-          <div class="w-full flex items-center justify-center gap-8 sm:gap-12 lg:gap-16 flex-wrap sm:flex-nowrap">
+          <!-- Tagline Logos Centered with Exact Symmetry -->
+          <div class="w-full flex items-center justify-center gap-6 sm:gap-8 flex-wrap sm:flex-nowrap">
             <template v-if="logoTaglines.length > 0">
               <div
                 v-for="item in logoTaglines"
@@ -166,28 +206,25 @@
                 <img
                   :src="item.url + cacheBuster"
                   :alt="item.judul || 'Tagline'"
-                  class="h-12 sm:h-14 lg:h-16 w-auto max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  class="h-11 sm:h-12 lg:h-14 w-auto max-w-[160px] sm:max-w-[210px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
                   loading="lazy"
                 />
               </div>
             </template>
-
-            <!-- Fallback if logoTaglines array is empty but legacy props exist -->
             <template v-else>
               <div v-if="logoTagline" class="flex items-center justify-center group cursor-pointer">
                 <img
                   :src="logoTagline + cacheBuster"
                   alt="Tagline 1"
-                  class="h-12 sm:h-14 lg:h-16 w-auto max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  class="h-11 sm:h-12 lg:h-14 w-auto max-w-[160px] sm:max-w-[210px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
                   loading="lazy"
                 />
               </div>
-
               <div v-if="logoTagline2" class="flex items-center justify-center group cursor-pointer">
                 <img
                   :src="logoTagline2 + cacheBuster"
                   alt="Tagline 2"
-                  class="h-12 sm:h-14 lg:h-16 w-auto max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  class="h-11 sm:h-12 lg:h-14 w-auto max-w-[160px] sm:max-w-[210px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
                   loading="lazy"
                 />
               </div>
@@ -195,6 +232,15 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Scroll Down Indicator (Bottom Center) -->
+    <div
+      class="hidden lg:flex flex-col items-center justify-center text-white/40 hover:text-white/80 transition-colors cursor-pointer pb-6 pointer-events-auto select-none z-30 mt-auto"
+      @click="scrollToContent"
+    >
+      <span class="text-[10px] font-bold tracking-[0.2em] uppercase mb-0.5">Jelajahi</span>
+      <Icon name="lucide:chevron-down" class="w-4 h-4 animate-bounce" />
     </div>
   </section>
 </template>
