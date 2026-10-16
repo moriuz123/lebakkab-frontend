@@ -140,8 +140,8 @@
     </div>
 
     <!-- ==============================================
-         ENTERPRISE BOTTOM LOGO TAGLINE BAR (MEMANJANG DI BAWAH)
-         Presisi, elegan, responsif dengan glassmorphism modern
+         ENTERPRISE BOTTOM LOGO TAGLINE BAR (MEMANJANG DI BAWAH & TENGAH PRESISI)
+         Tanpa garis pembatas, presisi di tengah
          ============================================== -->
     <div
       v-if="logoTaglines.length > 0 || logoTagline || logoTagline2"
@@ -149,75 +149,47 @@
     >
       <div class="max-w-7xl mx-auto w-full">
         <div
-          class="relative w-full bg-slate-950/45 hover:bg-slate-950/55 backdrop-blur-xl border border-white/15 rounded-2xl sm:rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-3 sm:py-3.5 px-4 sm:px-8 flex flex-col md:flex-row items-center justify-between gap-4 transition-all duration-300"
+          class="relative w-full bg-slate-950/40 hover:bg-slate-950/50 backdrop-blur-xl border border-white/10 rounded-2xl sm:rounded-3xl shadow-[0_8px_32px_rgba(0,0,0,0.35)] py-4 sm:py-5 px-6 sm:px-10 flex items-center justify-center transition-all duration-300"
         >
           <!-- Subtle Top Gold Gradient Hairline Accent -->
           <div class="absolute -top-px left-1/2 -translate-x-1/2 w-3/4 sm:w-1/2 h-[1.5px] bg-gradient-to-r from-transparent via-[#e8a020]/80 to-transparent"></div>
 
-          <!-- Left: Enterprise Badge / Label -->
-          <div class="flex items-center gap-3 shrink-0">
-            <div class="relative flex items-center justify-center w-8 h-8 rounded-xl bg-white/10 border border-white/15 text-[#e8a020] shadow-inner">
-              <Icon name="lucide:sparkles" class="w-4 h-4 animate-pulse" />
-            </div>
-            <div class="text-left">
-              <span class="block text-[11px] font-black uppercase tracking-[0.2em] text-[#e8a020]">
-                Tagline & Identitas Daerah
-              </span>
-              <span class="block text-[10px] font-medium text-white/60">
-                Pemerintah Kabupaten Lebak
-              </span>
-            </div>
-          </div>
-
-          <!-- Right/Center: Tagline Logos Horizontally Aligned with Precision -->
-          <div class="flex items-center justify-center md:justify-end gap-6 sm:gap-10 lg:gap-12 flex-wrap sm:flex-nowrap w-full md:w-auto">
+          <!-- Tagline Logos Centered with Exact Symmetry (Presisi di Tengah, Tanpa Garis Pembatas, Ukuran +30%) -->
+          <div class="w-full flex items-center justify-center gap-8 sm:gap-12 lg:gap-16 flex-wrap sm:flex-nowrap">
             <template v-if="logoTaglines.length > 0">
               <div
-                v-for="(item, idx) in logoTaglines"
+                v-for="item in logoTaglines"
                 :key="item.id"
-                class="flex items-center gap-6 sm:gap-10 lg:gap-12 group"
+                class="flex items-center justify-center group cursor-pointer"
+                :title="item.judul || 'Logo Tagline Lebak'"
               >
-                <!-- Divider between logos (except first item) -->
-                <div v-if="idx > 0" class="h-8 w-px bg-white/15 hidden sm:block"></div>
-
-                <div
-                  class="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer shadow-xs hover:shadow-md"
-                  :title="item.judul || 'Logo Tagline Lebak'"
-                >
-                  <img
-                    :src="item.url + cacheBuster"
-                    :alt="item.judul || 'Tagline'"
-                    class="h-9 sm:h-11 lg:h-12 w-auto max-w-[150px] sm:max-w-[200px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
-                    loading="lazy"
-                  />
-                </div>
+                <img
+                  :src="item.url + cacheBuster"
+                  :alt="item.judul || 'Tagline'"
+                  class="h-12 sm:h-14 lg:h-16 w-auto max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  loading="lazy"
+                />
               </div>
             </template>
 
             <!-- Fallback if logoTaglines array is empty but legacy props exist -->
             <template v-else>
-              <div v-if="logoTagline" class="flex items-center group">
-                <div class="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
-                  <img
-                    :src="logoTagline + cacheBuster"
-                    alt="Tagline 1"
-                    class="h-9 sm:h-11 lg:h-12 w-auto max-w-[150px] sm:max-w-[200px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
+              <div v-if="logoTagline" class="flex items-center justify-center group cursor-pointer">
+                <img
+                  :src="logoTagline + cacheBuster"
+                  alt="Tagline 1"
+                  class="h-12 sm:h-14 lg:h-16 w-auto max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  loading="lazy"
+                />
               </div>
 
-              <div v-if="logoTagline && logoTagline2" class="h-8 w-px bg-white/15 hidden sm:block"></div>
-
-              <div v-if="logoTagline2" class="flex items-center group">
-                <div class="flex items-center justify-center p-1.5 sm:p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 transition-all duration-300 cursor-pointer">
-                  <img
-                    :src="logoTagline2 + cacheBuster"
-                    alt="Tagline 2"
-                    class="h-9 sm:h-11 lg:h-12 w-auto max-w-[150px] sm:max-w-[200px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
+              <div v-if="logoTagline2" class="flex items-center justify-center group cursor-pointer">
+                <img
+                  :src="logoTagline2 + cacheBuster"
+                  alt="Tagline 2"
+                  class="h-12 sm:h-14 lg:h-16 w-auto max-w-[200px] sm:max-w-[260px] object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.5)] transition-all duration-300 group-hover:scale-105 group-hover:brightness-110"
+                  loading="lazy"
+                />
               </div>
             </template>
           </div>
