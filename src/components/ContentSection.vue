@@ -218,19 +218,19 @@
           </div>
         </div>
 
-        <!-- 4 Kolom x 2 Baris Grid (Total 8 Berita) -->
+        <!-- Grid / List Berita Terkini (List di Mobile, 4 Kolom di SM/LG) -->
         <div 
           v-if="gridNews.length > 0"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+          class="flex flex-col gap-3.5 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6"
         >
           <article
             v-for="item in gridNews"
             :key="item.id || item.slug"
             @click="$router.push(`/berita/${item.slug}`)"
-            class="bg-white rounded-2xl border border-gray-100 border-t-4 border-t-[#e8a020] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_24px_rgba(10,36,99,0.08)] hover:border-[#1e5ca8]/30 transition-all duration-300 flex flex-col h-full group cursor-pointer overflow-hidden transform hover:-translate-y-1"
+            class="bg-white rounded-2xl border border-gray-100 sm:border-t-4 sm:border-t-[#e8a020] shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_24px_rgba(10,36,99,0.08)] hover:border-[#1e5ca8]/30 transition-all duration-300 flex flex-row sm:flex-col h-full group cursor-pointer overflow-hidden transform hover:-translate-y-0.5 sm:hover:-translate-y-1 p-3 sm:p-0 items-center sm:items-stretch"
           >
-            <!-- Compact Thumbnail (16:10 Ratio) -->
-            <div class="relative w-full aspect-[16/10] overflow-hidden bg-gray-100">
+            <!-- Thumbnail: Compact di Mobile List, 16:10 di Desktop Grid -->
+            <div class="relative w-28 h-24 sm:w-full sm:h-auto sm:aspect-[16/10] shrink-0 overflow-hidden rounded-xl sm:rounded-none bg-gray-100">
               <img
                 :src="item.image"
                 :alt="item.title"
@@ -238,10 +238,10 @@
                 loading="lazy"
                 @error="$event.target.src = '/images/default-thumbnail.jpg'"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
+              <div class="hidden sm:block absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60"></div>
               
-              <!-- Category Badge -->
-              <div class="absolute top-2.5 left-2.5 z-10">
+              <!-- Category Badge (Desktop Overlay) -->
+              <div class="hidden sm:block absolute top-2.5 left-2.5 z-10">
                 <span class="px-2.5 py-0.5 rounded-md text-[10px] font-black uppercase tracking-wider bg-white/95 backdrop-blur-md text-[#1e5ca8] shadow-sm border border-gray-100">
                   {{ item.kategori || 'Warta' }}
                 </span>
@@ -249,32 +249,41 @@
             </div>
 
             <!-- Card Content Body -->
-            <div class="p-4 flex flex-col flex-1 justify-between bg-white">
+            <div class="pl-3.5 pr-1 py-0.5 sm:p-4 flex flex-col flex-1 min-w-0 justify-between h-full">
               <div>
-                <!-- Date & OPD Meta -->
-                <div class="flex items-center gap-2 text-[11px] font-medium text-gray-500 mb-2">
+                <!-- Date, Category & OPD Meta -->
+                <div class="flex items-center gap-2 text-[10px] sm:text-[11px] font-medium text-gray-500 mb-1.5 sm:mb-2 flex-wrap">
+                  <!-- Category Badge di Mobile List -->
+                  <span class="sm:hidden px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-blue-50 text-[#1e5ca8] border border-blue-100/80">
+                    {{ item.kategori || 'Warta' }}
+                  </span>
+
                   <span class="flex items-center gap-1 text-gray-500">
-                    <Icon name="lucide:calendar" class="w-3.5 h-3.5 text-[#1e5ca8]" />
+                    <Icon name="lucide:calendar" class="w-3 h-3 sm:w-3.5 sm:h-3.5 text-[#1e5ca8]" />
                     {{ formatDate(item.date) }}
                   </span>
-                  <span v-if="item.opd" class="text-gray-300">•</span>
-                  <span v-if="item.opd" class="truncate max-w-[110px] text-gray-500 font-semibold" :title="item.opd">
+                  <span v-if="item.opd" class="hidden sm:inline text-gray-300">•</span>
+                  <span v-if="item.opd" class="hidden sm:inline truncate max-w-[110px] text-gray-500 font-semibold" :title="item.opd">
                     {{ item.opd }}
                   </span>
                 </div>
 
                 <!-- Title (Clean 2-line clamp) -->
-                <h4 class="text-sm font-bold text-gray-900 group-hover:text-[#1e5ca8] line-clamp-2 leading-snug transition-colors mb-3">
+                <h4 class="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-[#1e5ca8] line-clamp-2 leading-snug transition-colors mb-1 sm:mb-3">
                   {{ item.title }}
                 </h4>
               </div>
 
-              <!-- Footer Row -->
-              <div class="pt-3 border-t border-gray-100/80 flex items-center justify-between text-[11px] text-gray-500 font-medium mt-auto">
-                <span class="font-semibold text-gray-500 group-hover:text-[#1e5ca8] transition-colors flex items-center gap-1">
+              <!-- Footer Row / OPD on Mobile -->
+              <div class="pt-1 sm:pt-3 sm:border-t sm:border-gray-100/80 flex items-center justify-between text-[10px] sm:text-[11px] text-gray-500 font-medium mt-auto">
+                <span v-if="item.opd" class="sm:hidden text-[10px] text-gray-500 font-medium truncate max-w-[170px] flex items-center gap-1">
+                  <Icon name="lucide:building-2" class="w-3 h-3 text-[#e8a020] shrink-0" />
+                  <span class="truncate">{{ item.opd }}</span>
+                </span>
+                <span class="hidden sm:flex font-semibold text-gray-500 group-hover:text-[#1e5ca8] transition-colors items-center gap-1">
                   Baca Berita
                 </span>
-                <div class="w-6 h-6 rounded-full bg-gray-50 flex items-center justify-center text-gray-400 group-hover:bg-[#1e5ca8] group-hover:text-white transition-all transform group-hover:translate-x-0.5">
+                <div class="hidden sm:flex w-6 h-6 rounded-full bg-gray-50 items-center justify-center text-gray-400 group-hover:bg-[#1e5ca8] group-hover:text-white transition-all transform group-hover:translate-x-0.5">
                   <Icon name="lucide:arrow-right" class="w-3 h-3" />
                 </div>
               </div>
@@ -282,21 +291,22 @@
           </article>
         </div>
 
-        <!-- Skeleton Loading State for Grid -->
+        <!-- Skeleton Loading State for Grid / List -->
         <div 
           v-else-if="beritaStore.loading"
-          class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6"
+          class="flex flex-col gap-3.5 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6"
         >
           <div 
             v-for="i in 8" 
             :key="'skeleton-' + i" 
-            class="bg-white rounded-2xl border border-gray-100 p-4 animate-pulse flex flex-col gap-3 h-[280px]"
+            class="bg-white rounded-2xl border border-gray-100 p-3 sm:p-4 animate-pulse flex flex-row sm:flex-col gap-3 h-[104px] sm:h-[280px]"
           >
-            <div class="w-full h-32 bg-gray-200 rounded-xl"></div>
-            <div class="w-24 h-3 bg-gray-200 rounded"></div>
-            <div class="w-full h-4 bg-gray-200 rounded"></div>
-            <div class="w-3/4 h-4 bg-gray-200 rounded"></div>
-            <div class="w-full h-3 bg-gray-200 rounded mt-auto"></div>
+            <div class="w-28 h-20 sm:w-full sm:h-32 bg-gray-200 rounded-xl shrink-0"></div>
+            <div class="flex flex-col flex-1 justify-between py-1">
+              <div class="w-20 h-3 bg-gray-200 rounded"></div>
+              <div class="w-full h-4 bg-gray-200 rounded"></div>
+              <div class="w-24 h-3 bg-gray-200 rounded mt-auto"></div>
+            </div>
           </div>
         </div>
       </div>
