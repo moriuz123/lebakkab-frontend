@@ -20,11 +20,18 @@
         />
 
         <div class="header-title flex flex-col justify-center border-l pl-4" :class="isScrolled || isHovered ? 'border-gray-200' : 'border-white/30'">
-          <p class="header-parent text-xs font-semibold tracking-wide uppercase transition-colors duration-300" :class="isScrolled || isHovered ? 'text-gray-500' : 'text-gray-200'">
+          <p class="header-parent text-xs font-semibold tracking-wide uppercase leading-tight transition-colors duration-300" :class="isScrolled || isHovered ? 'text-gray-500' : 'text-gray-200'">
             {{ header.satuan_kerja }}
           </p>
-          <p class="header-name text-lg font-bold tracking-tight transition-colors duration-300" :class="isScrolled || isHovered ? 'text-[#0a2463]' : 'text-white'">
+          <p class="header-name text-lg font-bold tracking-tight leading-tight transition-colors duration-300" :class="isScrolled || isHovered ? 'text-[#0a2463]' : 'text-white'">
             {{ header.site_name }}
+          </p>
+          <p
+            v-if="header.tagline"
+            class="header-tagline italic text-xs font-medium tracking-wide leading-tight mt-0.5 transition-colors duration-300"
+            :class="isScrolled || isHovered ? 'text-red-600' : 'text-white/80'"
+          >
+            {{ header.tagline }}
           </p>
         </div>
       </a>
@@ -134,6 +141,7 @@ const menu = ref([])
 const header = computed(() => settingsStore.data || {
   site_name: '',
   satuan_kerja: '',
+  tagline: '',
   logo_url: null,
 })
 
