@@ -18,6 +18,9 @@ export const useSettingsStore = defineStore('settings', {
     logoUrl: (state) => state.data?.logo_url || '/images/logo.png',
     faviconUrl: (state) => state.data?.favicon_url || '/favicon.ico',
     headerSettings: (state) => state.data || {},
+    cctvStatus: (state) => state.data?.cctv_status || 'coming_soon',
+    cctvUrl: (state) => state.data?.cctv_url || '',
+    cctvMaintenanceMessage: (state) => state.data?.cctv_maintenance_message || 'Layanan CCTV sedang dalam pemeliharaan sistem rutin.',
     socialMedia: (state) => ({
       facebook: state.data?.facebook || '',
       instagram: state.data?.instagram || '',
