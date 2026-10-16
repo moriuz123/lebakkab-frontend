@@ -53,18 +53,29 @@
         />
         <!-- Taglines -->
         <div class="flex items-center justify-center gap-4 mt-2">
-          <img
-            v-if="logoTagline"
-            :src="logoTagline + cacheBuster"
-            alt="Tagline 1"
-            class="h-10 sm:h-14 object-contain drop-shadow-lg"
-          />
-          <img
-            v-if="logoTagline2"
-            :src="logoTagline2 + cacheBuster"
-            alt="Tagline 2"
-            class="h-8 sm:h-11 object-contain drop-shadow-lg"
-          />
+          <template v-if="logoTaglines.length > 0">
+            <img
+              v-for="item in logoTaglines"
+              :key="item.id"
+              :src="item.url + cacheBuster"
+              :alt="item.judul || 'Tagline'"
+              class="h-10 sm:h-14 object-contain drop-shadow-lg"
+            />
+          </template>
+          <template v-else>
+            <img
+              v-if="logoTagline"
+              :src="logoTagline + cacheBuster"
+              alt="Tagline 1"
+              class="h-10 sm:h-14 object-contain drop-shadow-lg"
+            />
+            <img
+              v-if="logoTagline2"
+              :src="logoTagline2 + cacheBuster"
+              alt="Tagline 2"
+              class="h-8 sm:h-11 object-contain drop-shadow-lg"
+            />
+          </template>
         </div>
       </div>
 
@@ -146,19 +157,30 @@
 
       <!-- Taglines -->
       <div class="flex items-center gap-4 sm:gap-6 pointer-events-auto mt-4">
-        <!-- Tagline 1 diperbesar ~20% -->
-        <img
-          v-if="logoTagline"
-          :src="logoTagline + cacheBuster"
-          alt="Tagline 1"
-          class="h-14 sm:h-20 lg:h-24 object-contain drop-shadow-lg transition-transform hover:scale-105"
-        />
-        <img
-          v-if="logoTagline2"
-          :src="logoTagline2 + cacheBuster"
-          alt="Tagline 2"
-          class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105"
-        />
+        <template v-if="logoTaglines.length > 0">
+          <img
+            v-for="(item, idx) in logoTaglines"
+            :key="item.id"
+            :src="item.url + cacheBuster"
+            :alt="item.judul || 'Tagline'"
+            class="object-contain drop-shadow-lg transition-transform hover:scale-105"
+            :class="idx === 0 ? 'h-14 sm:h-20 lg:h-24' : 'h-12 sm:h-16 lg:h-20'"
+          />
+        </template>
+        <template v-else>
+          <img
+            v-if="logoTagline"
+            :src="logoTagline + cacheBuster"
+            alt="Tagline 1"
+            class="h-14 sm:h-20 lg:h-24 object-contain drop-shadow-lg transition-transform hover:scale-105"
+          />
+          <img
+            v-if="logoTagline2"
+            :src="logoTagline2 + cacheBuster"
+            alt="Tagline 2"
+            class="h-12 sm:h-16 lg:h-20 object-contain drop-shadow-lg transition-transform hover:scale-105"
+          />
+        </template>
       </div>
     </div>
 
@@ -263,6 +285,7 @@ const resolveUrl = (item) => {
 
 // === Logos & Backgrounds ===
 const backgrounds = computed(() => settingsStore.data?.backgrounds || [])
+const logoTaglines = computed(() => settingsStore.data?.logo_taglines || [])
 const logoTagline = computed(() => settingsStore.data?.logo_tagline_url || null)
 const logoTagline2 = computed(() => settingsStore.data?.logo_tagline2_url || null)
 
