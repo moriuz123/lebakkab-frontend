@@ -120,7 +120,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useHead } from '@vueuse/head'
+import { useSeo } from '@/composables/useSeo'
 import { useSettingsStore } from '@/stores/settings'
 
 const settingsStore = useSettingsStore()
@@ -131,15 +131,16 @@ const cctvMaintenanceMessage = computed(() => {
   return settingsStore.cctvMaintenanceMessage || 'Layanan pemantauan CCTV sedang dalam pemeliharaan berkala untuk peningkatan kualitas layanan. Silakan kembali beberapa saat lagi.'
 })
 
-useHead({
+// 🔹 Proteksi Google: Hanya indeks jika siaran CCTV aktif, noindex jika coming_soon / pemeliharaan
+useSeo({
   title: computed(() => {
     if (cctvStatus.value === 'maintenance') return 'Pemeliharaan CCTV - Portal Kabupaten Lebak'
     if (cctvStatus.value === 'active') return 'Pantauan CCTV Lebak - Portal Kabupaten Lebak'
     return 'Segera Hadir CCTV - Portal Kabupaten Lebak'
   }),
-  meta: [
-    { name: 'description', content: 'Layanan pemantauan kamera CCTV publik Pemerintah Kabupaten Lebak.' }
-  ]
+  description: 'Layanan pemantauan kamera CCTV publik Pemerintah Kabupaten Lebak.',
+  robotsIndex: computed(() => cctvStatus.value === 'active'),
+  robotsFollow: true,
 })
 </script>
 

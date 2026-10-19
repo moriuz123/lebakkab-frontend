@@ -18,6 +18,13 @@
 
 <script setup>
 import PageHeader2 from '@/components/PageHeader2.vue'
+import { useSeo } from '@/composables/useSeo'
 
-// Tidak perlu script khusus, cukup router-link untuk navigasi
+// 🔹 Proteksi Google: Jangan pernah indeks halaman 404
+useSeo({
+  title: 'Halaman Tidak Ditemukan (404)',
+  description: 'Maaf, halaman yang Anda cari tidak tersedia atau telah dipindahkan.',
+  robotsIndex: false,
+  robotsFollow: false,
+})
 </script>

@@ -359,7 +359,8 @@ const router = createRouter({
       component: NotFound,
       meta: {
         title: 'Halaman Tidak Ditemukan (404)',
-        description: 'Maaf, halaman yang Anda tuju tidak ditemukan pada portal ini.'
+        description: 'Maaf, halaman yang Anda tuju tidak ditemukan pada portal ini.',
+        robots: 'noindex, nofollow',
       }
     },
   ],
@@ -391,6 +392,16 @@ router.afterEach((to) => {
   if (to.meta?.title && !to.meta?.title.includes(siteSuffix)) {
     document.title = `${to.meta.title} | ${siteSuffix}`
   }
+
+  // Synchronize Meta Robots (Proteksi Google: noindex, nofollow untuk 404 & halaman khusus)
+  let robotsMeta = document.querySelector('meta[name="robots"]')
+  if (!robotsMeta) {
+    robotsMeta = document.createElement('meta')
+    robotsMeta.setAttribute('name', 'robots')
+    document.head.appendChild(robotsMeta)
+  }
+  const robotsDirective = to.meta?.robots || 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'
+  robotsMeta.setAttribute('content', robotsDirective)
 
   // Synchronize Canonical Link Tag
   let canonical = document.querySelector('link[rel="canonical"]')
