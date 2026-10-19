@@ -32,8 +32,8 @@ export function sanitizeMetaDescription(text, maxLen = 160) {
 }
 
 /**
- * Enterprise SEO Composable for Vue 3 + VueUse Head
- * Integrated with dynamic backend settings from Filament CMS
+ * Enterprise Yoast SEO Composable for Vue 3 + VueUse Head
+ * Integrated with dynamic backend settings & polymorphic SeoMeta from Filament CMS
  */
 export function useSeo(options = {}) {
   let settingsStore = null
@@ -45,11 +45,19 @@ export function useSeo(options = {}) {
 
   const dynamicSiteName = computed(() => settingsStore?.siteName || DEFAULT_SITE_NAME)
   const dynamicDefaultDesc = computed(() => settingsStore?.metaDescription || DEFAULT_DESCRIPTION)
-  const dynamicDefaultKeywords = computed(() => settingsStore?.metaKeywords || 'Kabupaten Lebak, Portal Lebak, Pemkab Lebak, Berita Lebak, Rangkasbitung, Layanan Lebak, Diskominfo')
+  const dynamicDefaultKeywords = computed(
+    () =>
+      settingsStore?.metaKeywords ||
+      'Kabupaten Lebak, Portal Lebak, Pemkab Lebak, Berita Lebak, Rangkasbitung, Layanan Lebak, Diskominfo'
+  )
   const dynamicDefaultLogo = computed(() => settingsStore?.logoUrl || DEFAULT_IMAGE)
 
+  // Ambil objek SEO kustom (jika disediakan dari payload backend API)
+  const seoPayload = computed(() => unref(options.seo) || {})
+
   const finalTitle = computed(() => {
-    const raw = unref(options.title)
+    const rawSeo = seoPayload.value
+    const raw = rawSeo.meta_title || unref(options.title)
     const site = dynamicSiteName.value
     if (!raw) return site
     if (options.rawTitle || raw.includes(site)) return raw
@@ -57,25 +65,39 @@ export function useSeo(options = {}) {
   })
 
   const finalDescription = computed(() => {
-    const raw = unref(options.description)
+    const rawSeo = seoPayload.value
+    const raw = rawSeo.meta_description || unref(options.description)
     if (!raw) return dynamicDefaultDesc.value
     return sanitizeMetaDescription(raw) || dynamicDefaultDesc.value
   })
 
   const finalKeywords = computed(() => {
+    const rawSeo = seoPayload.value
+    const fk = rawSeo.focus_keyword
     const raw = unref(options.keywords)
-    if (Array.isArray(raw)) return raw.join(', ')
-    return raw || dynamicDefaultKeywords.value
+    let baseKeywords = ''
+    if (Array.isArray(raw)) {
+      baseKeywords = raw.join(', ')
+    } else {
+      baseKeywords = raw || dynamicDefaultKeywords.value
+    }
+
+    if (fk && !baseKeywords.toLowerCase().includes(fk.toLowerCase())) {
+      return `${fk}, ${baseKeywords}`
+    }
+    return baseKeywords
   })
 
   const finalImage = computed(() => {
-    const raw = unref(options.image)
+    const rawSeo = seoPayload.value
+    const raw = rawSeo.og_image || unref(options.image)
     if (!raw) return toAbsoluteUrl(dynamicDefaultLogo.value)
     return toAbsoluteUrl(raw)
   })
 
   const finalUrl = computed(() => {
-    const raw = unref(options.url)
+    const rawSeo = seoPayload.value
+    const raw = rawSeo.canonical_url || unref(options.url)
     if (!raw) {
       if (typeof window !== 'undefined') return window.location.href
       return DEFAULT_BASE_URL
@@ -83,19 +105,40 @@ export function useSeo(options = {}) {
     return toAbsoluteUrl(raw)
   })
 
+  const ogTitle = computed(() => {
+    const rawSeo = seoPayload.value
+    return rawSeo.og_title || rawSeo.meta_title || unref(options.ogTitle) || finalTitle.value
+  })
+
+  const ogDescription = computed(() => {
+    const rawSeo = seoPayload.value
+    const raw = rawSeo.og_description || rawSeo.meta_description || unref(options.ogDescription)
+    if (raw) return sanitizeMetaDescription(raw)
+    return finalDescription.value
+  })
+
+  const robotsDirective = computed(() => {
+    const rawSeo = seoPayload.value
+    const allowIndex = rawSeo.robots_index !== false && unref(options.robotsIndex) !== false
+    const allowFollow = rawSeo.robots_follow !== false && unref(options.robotsFollow) !== false
+    const indexPart = allowIndex ? 'index' : 'noindex'
+    const followPart = allowFollow ? 'follow' : 'nofollow'
+    return `${indexPart}, ${followPart}, max-image-preview:large, max-snippet:-1, max-video-preview:-1`
+  })
+
   const headMeta = computed(() => {
     const type = unref(options.type) || 'website'
     const metaList = [
       { name: 'description', content: finalDescription.value },
       { name: 'keywords', content: finalKeywords.value },
-      { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
-      
+      { name: 'robots', content: robotsDirective.value },
+
       // Open Graph
       { property: 'og:site_name', content: dynamicSiteName.value },
       { property: 'og:locale', content: 'id_ID' },
       { property: 'og:type', content: type },
-      { property: 'og:title', content: finalTitle.value },
-      { property: 'og:description', content: finalDescription.value },
+      { property: 'og:title', content: ogTitle.value },
+      { property: 'og:description', content: ogDescription.value },
       { property: 'og:image', content: finalImage.value },
       { property: 'og:url', content: finalUrl.value },
 
@@ -103,8 +146,8 @@ export function useSeo(options = {}) {
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:site', content: settingsStore?.twitterHandle || '@protokollebak' },
       { name: 'twitter:creator', content: settingsStore?.twitterHandle || '@protokollebak' },
-      { name: 'twitter:title', content: finalTitle.value },
-      { name: 'twitter:description', content: finalDescription.value },
+      { name: 'twitter:title', content: ogTitle.value },
+      { name: 'twitter:description', content: ogDescription.value },
       { name: 'twitter:image', content: finalImage.value },
     ]
 
@@ -122,13 +165,52 @@ export function useSeo(options = {}) {
     return metaList
   })
 
-  const headLinks = computed(() => [
-    { rel: 'canonical', href: finalUrl.value }
-  ])
+  const headLinks = computed(() => [{ rel: 'canonical', href: finalUrl.value }])
 
   const headScripts = computed(() => {
-    const schemaObj = unref(options.schema)
-    if (!schemaObj) return []
+    const explicitSchema = unref(options.schema)
+    if (explicitSchema) {
+      return [
+        {
+          type: 'application/ld+json',
+          children: JSON.stringify(explicitSchema),
+        },
+      ]
+    }
+
+    const rawSeo = seoPayload.value
+    const schemaType = rawSeo.schema_type || unref(options.schemaType)
+    if (!schemaType || schemaType === 'None') return []
+
+    // Automatic structured data schema generator
+    const schemaObj = {
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': schemaType,
+          '@id': `${finalUrl.value}#${schemaType.toLowerCase()}`,
+          url: finalUrl.value,
+          name: finalTitle.value,
+          description: finalDescription.value,
+          isPartOf: {
+            '@type': 'WebSite',
+            '@id': `${DEFAULT_BASE_URL}#website`,
+            name: dynamicSiteName.value,
+            url: DEFAULT_BASE_URL,
+          },
+          publisher: {
+            '@type': 'GovernmentOrganization',
+            name: 'Pemerintah Daerah Kabupaten Lebak',
+            url: DEFAULT_BASE_URL,
+            logo: {
+              '@type': 'ImageObject',
+              url: toAbsoluteUrl(dynamicDefaultLogo.value),
+            },
+          },
+        },
+      ],
+    }
+
     return [
       {
         type: 'application/ld+json',

@@ -62,10 +62,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
 import { useBeritaStore } from '@/stores/useBeritaStore'
+import { useSeo } from '@/composables/useSeo'
 import PageHeader2 from '@/components/PageHeader2.vue'
 import NewsCard from '@/components/NewsCard.vue'
 import SidebarNews from '@/components/SidebarNews.vue'
@@ -74,7 +75,17 @@ import PaginationNav from '@/components/PaginationNav.vue'
 const route = useRoute()
 const store = useBeritaStore()
 const kategoriSlug = ref(route.params.slug)
+const kategoriInfo = ref(null)
 const pagination = ref({ current_page: 1, last_page: 1 })
+
+// 🔹 Yoast SEO Support for Category Page
+useSeo({
+  seo: computed(() => kategoriInfo.value?.seo || {}),
+  title: computed(() => kategoriInfo.value?.nama ? `Kategori: ${kategoriInfo.value.nama}` : `Berita Kategori ${kategoriSlug.value}`),
+  description: computed(() => `Kumpulan informasi dan berita daerah terkini seputar kategori ${kategoriInfo.value?.nama || kategoriSlug.value} Kabupaten Lebak.`),
+  url: computed(() => `https://lebakkab.go.id/berita/kategori/${kategoriSlug.value}`),
+  schemaType: 'CollectionPage',
+})
 
 // 🔹 Fungsi bersihkan HTML
 const stripHtml = (html) => {
@@ -91,6 +102,9 @@ const fetchKategoriBerita = async (slug, page = 1) => {
     const res = await axios.get(`/api/berita/kategori/${slug}?page=${page}&limit=8&per_page=8`)
     const raw = res.data.data || res.data || []
     store.beritas = (Array.isArray(raw) ? raw : []).slice(0, 8)
+    if (res.data.kategori_info) {
+      kategoriInfo.value = res.data.kategori_info
+    }
     
     // Set status pagination
     pagination.value = {

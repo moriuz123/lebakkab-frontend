@@ -1,13 +1,29 @@
 <script setup>
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import axios from '@/utils/api'
+import { useSeo } from '@/composables/useSeo'
 import SidebarStatic from '../components/SidebarStatic.vue'
 import PageHeader2 from '../components/PageHeader2.vue'
 
 const route = useRoute()
 const page = ref(null)
 const loading = ref(true)
+
+const excerptText = computed(() => {
+  if (!page.value?.isi) return ''
+  return page.value.isi.replace(/<[^>]*>?/gm, ' ').replace(/\s+/g, ' ').substring(0, 160).trim() + '...'
+})
+
+// 🔹 Yoast SEO Support for Static Page
+useSeo({
+  seo: computed(() => page.value?.seo || {}),
+  title: computed(() => page.value?.judul ? `${page.value.judul} - Kabupaten Lebak` : 'Memuat Halaman...'),
+  description: excerptText,
+  image: computed(() => page.value?.cover || '/images/logo.png'),
+  url: computed(() => `https://lebakkab.go.id/page/${route.params.slug}`),
+  schemaType: 'WebPage',
+})
 
 const loadPage = async (slug) => {
   loading.value = true

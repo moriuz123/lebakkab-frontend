@@ -101,6 +101,7 @@ const loadBerita = (slug) => {
 
 // Enterprise SEO: Title, OpenGraph, Twitter, and Schema.org NewsArticle
 useSeo({
+  seo: computed(() => store.beritaDetail?.seo || {}),
   title: computed(() => store.beritaDetail?.judul ? `${store.beritaDetail.judul} - Berita Lebak` : 'Memuat Berita...'),
   description: excerptText,
   image: computed(() => store.beritaDetail?.image || '/images/logo.png'),
@@ -110,22 +111,25 @@ useSeo({
   publishedTime: computed(() => store.beritaDetail?.tanggal_publish || store.beritaDetail?.created_at || null),
   schema: computed(() => {
     if (!store.beritaDetail?.judul) return null
-    const articleUrl = `https://lebakkab.go.id/berita/${route.params.slug}`
-    const imageUrl = store.beritaDetail?.image || 'https://lebakkab.go.id/images/logo.png'
+    const articleUrl = store.beritaDetail?.seo?.canonical_url || `https://lebakkab.go.id/berita/${route.params.slug}`
+    const imageUrl = store.beritaDetail?.seo?.og_image || store.beritaDetail?.image || 'https://lebakkab.go.id/images/logo.png'
+    const finalDesc = store.beritaDetail?.seo?.meta_description || excerptText.value
+    const finalHeadline = store.beritaDetail?.seo?.meta_title || store.beritaDetail.judul
+    const schemaType = store.beritaDetail?.seo?.schema_type || 'NewsArticle'
     return {
       '@context': 'https://schema.org',
       '@graph': [
         {
-          '@type': 'NewsArticle',
+          '@type': schemaType,
           '@id': `${articleUrl}#article`,
           'isPartOf': {
             '@type': 'WebPage',
             '@id': articleUrl,
             'url': articleUrl,
-            'name': store.beritaDetail.judul
+            'name': finalHeadline
           },
-          'headline': store.beritaDetail.judul,
-          'description': excerptText.value,
+          'headline': finalHeadline,
+          'description': finalDesc,
           'image': [imageUrl],
           'datePublished': store.beritaDetail.tanggal_publish || store.beritaDetail.created_at,
           'dateModified': store.beritaDetail.updated_at || store.beritaDetail.created_at,
