@@ -82,7 +82,11 @@
                     <router-link :to="`/dokumen/${doc.slug}`">
                       <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors leading-tight mb-1.5 cursor-pointer">{{ doc.judul }}</h3>
                     </router-link>
-                    <div class="flex items-center gap-3 text-xs text-gray-500 font-medium">
+                    <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-medium">
+                      <span v-if="doc.opd?.nama" class="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-1 rounded-md border border-blue-100 font-semibold">
+                        <Icon name="lucide:building-2" class="w-3.5 h-3.5"/> 
+                        {{ doc.opd.nama }}
+                      </span>
                       <span class="flex items-center gap-1.5 bg-gray-50 px-2 py-1 rounded-md border border-gray-100">
                         <Icon name="lucide:calendar" class="w-3.5 h-3.5"/> 
                         {{ formatDate(doc.created_at) }}

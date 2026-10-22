@@ -46,6 +46,9 @@
                     <h3 class="font-bold text-gray-900 text-lg group-hover:text-blue-600 transition-colors leading-tight mb-1.5 cursor-pointer">{{ dokument.judul }}</h3>
                   </router-link>
                   <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 font-medium">
+                    <span v-if="dokument.opd?.nama" class="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-2.5 py-1 rounded-md border border-blue-100 font-semibold">
+                      <Icon name="lucide:building-2" class="w-3.5 h-3.5"/> {{ dokument.opd.nama }}
+                    </span>
                     <span v-for="kat in dokument.kategoris" :key="kat.id" class="bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 border border-gray-200/60 flex items-center gap-1.5 font-bold cursor-pointer hover:bg-gray-200 transition-colors" @click="selectedCategory = kat.nama">
                       <Icon name="lucide:folder-open" class="w-3.5 h-3.5"/> {{ kat.nama }}
                     </span>
