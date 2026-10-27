@@ -90,17 +90,28 @@ export default {
       try {
         const response = await axios.get('/api/data-aplikasi', {
           // get top 8 newest
-          params: { page: 1 }, 
+          params: { page: 1, per_page: 8 }, 
         })
+        let items = []
         if (response.data?.status === 'success' && response.data.data?.data) {
-          this.aplikasiItems = response.data.data.data.slice(0, 8)
+          items = response.data.data.data
         } else if (response.data?.status === 'success' && Array.isArray(response.data.data)) {
-          this.aplikasiItems = response.data.data.slice(0, 8)
+          items = response.data.data
         } else if (Array.isArray(response.data)) {
-          this.aplikasiItems = response.data.slice(0, 8)
+          items = response.data
         } else {
           console.warn('API returned unexpected format:', response.data)
         }
+
+        // Pastikan data terbaru berada di urutan pertama (posisi paling kiri grid)
+        items.sort((a, b) => {
+          const dateA = new Date(a.created_at || 0).getTime()
+          const dateB = new Date(b.created_at || 0).getTime()
+          if (dateA !== dateB) return dateB - dateA
+          return (b.id || 0) - (a.id || 0)
+        })
+
+        this.aplikasiItems = items.slice(0, 8)
       } catch (error) {
         console.error('Gagal fetch data aplikasi:', error)
       }
