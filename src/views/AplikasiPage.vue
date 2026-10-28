@@ -185,7 +185,7 @@ const onKategoriChange = () => {
 }
 
 const loadData = (page = 1) => {
-  const params = { page }
+  const params = { page, per_page: 12 }
   if (selectedKategori.value) params.kategori_aplikasi_id = selectedKategori.value
   if (selectedSubkategori.value) params.subkategori_aplikasi_id = selectedSubkategori.value
   if (selectedSumber.value) params.sumber = selectedSumber.value
